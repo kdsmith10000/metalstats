@@ -130,13 +130,76 @@ export function ozToMetricTons(oz: number): number {
   return oz / 32150.7;
 }
 
-// Load data from public JSON
+// Validate and sanitize numeric values
+function sanitizeNumber(value: unknown): number {
+  if (typeof value === 'number' && !isNaN(value) && isFinite(value)) {
+    return Math.max(0, value); // Ensure non-negative
+  }
+  return 0;
+}
+
+// Validate data structure
+function validateMetalData(data: unknown): data is MetalData {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  
+  return (
+    typeof d.metal === 'string' &&
+    typeof d.totals === 'object' &&
+    d.totals !== null &&
+    Array.isArray(d.depositories)
+  );
+}
+
+// Load data from public JSON with validation
 export async function loadWarehouseData(): Promise<WarehouseStocksData | null> {
   try {
-    const response = await fetch('/data.json');
-    if (!response.ok) return null;
-    return await response.json();
-  } catch {
+    const response = await fetch('/data.json', {
+      // Security: Only allow same-origin requests
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to load warehouse data:', response.statusText);
+      return null;
+    }
+    
+    const data = await response.json();
+    
+    // Validate data structure
+    if (!data || typeof data !== 'object') {
+      console.error('Invalid data format');
+      return null;
+    }
+    
+    // Sanitize numeric values in the data
+    const sanitized: WarehouseStocksData = {} as WarehouseStocksData;
+    
+    for (const [key, metalData] of Object.entries(data)) {
+      if (validateMetalData(metalData)) {
+        sanitized[key as keyof WarehouseStocksData] = {
+          ...metalData,
+          totals: {
+            registered: sanitizeNumber(metalData.totals.registered),
+            eligible: sanitizeNumber(metalData.totals.eligible),
+            total: sanitizeNumber(metalData.totals.total),
+          },
+          depositories: metalData.depositories.map(dep => ({
+            ...dep,
+            registered: sanitizeNumber(dep.registered),
+            eligible: sanitizeNumber(dep.eligible),
+            total: sanitizeNumber(dep.total),
+          })),
+        };
+      }
+    }
+    
+    return sanitized;
+  } catch (error) {
+    console.error('Error loading warehouse data:', error);
     return null;
   }
 }

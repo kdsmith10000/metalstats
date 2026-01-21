@@ -151,7 +151,7 @@ export default function DemandChart({ metal = 'silver' }: DemandChartProps) {
                   boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                 }}
                 labelStyle={{ fontWeight: 600, marginBottom: 4 }}
-                formatter={(value: number) => [value?.toLocaleString() || '—', '']}
+                formatter={(value: number | undefined) => [value ? value.toLocaleString() : '—', '']}
               />
               <Bar 
                 dataKey="y2025" 

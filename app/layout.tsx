@@ -12,6 +12,17 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'COMEX Metals | Supply & Demand',
   description: 'Real-time supply and demand tracking for COMEX metals',
+  keywords: ['COMEX', 'metals', 'supply', 'demand', 'inventory', 'warehouse'],
+  authors: [{ name: 'COMEX Metals Dashboard' }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: 'website',
+    title: 'COMEX Metals | Supply & Demand',
+    description: 'Real-time supply and demand tracking for COMEX metals',
+  },
 };
 
 export default function RootLayout({
