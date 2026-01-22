@@ -8,6 +8,8 @@ import pandas as pd
 import io
 import json
 import sys
+import time
+import random
 from datetime import datetime
 from pathlib import Path
 
@@ -26,39 +28,73 @@ def fetch_excel_file(url, metal_name):
     """Fetch an Excel file from a URL and return as pandas DataFrame."""
     try:
         print(f"Fetching {metal_name} stocks from {url}...")
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Connection': 'keep-alive',
-        }
-        response = requests.get(url, headers=headers, timeout=30)
-        response.raise_for_status()
         
-        # Try parsing as HTML table first (CME Group often serves HTML as .xls)
+        # Create a session to handle cookies
+        session = requests.Session()
+        
+        # More comprehensive browser-like headers
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Cache-Control': 'max-age=0',
+            'Referer': 'https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html',
+        }
+        
+        session.headers.update(headers)
+        
+        # First visit the main page to get cookies
         try:
-            dfs = pd.read_html(io.BytesIO(response.content))
-            if dfs:
-                df = dfs[0]
-                print(f"  [OK] Parsed as HTML table ({len(df)} rows)")
-                return df
-        except Exception as e:
+            session.get('https://www.cmegroup.com/clearing/operations-and-deliveries/nymex-delivery-notices.html', timeout=15)
+        except:
             pass
         
-        # Try reading as Excel file
+        # Now fetch the actual file
+        response = session.get(url, timeout=30)
+        response.raise_for_status()
+        
+        # Try reading as Excel file first (most CME files are old-style XLS)
         try:
             df = pd.read_excel(io.BytesIO(response.content), engine='xlrd')
-            print(f"  [OK] Parsed as Excel file ({len(df)} rows)")
+            print(f"  [OK] Parsed as Excel/xlrd ({len(df)} rows)")
             return df
-        except Exception as e:
+        except Exception as e1:
+            print(f"  [DEBUG] xlrd failed: {e1}")
+            
+            # Try with openpyxl for newer Excel formats
             try:
                 df = pd.read_excel(io.BytesIO(response.content), engine='openpyxl')
-                print(f"  [OK] Parsed as Excel file ({len(df)} rows)")
+                print(f"  [OK] Parsed as Excel/openpyxl ({len(df)} rows)")
                 return df
-            except:
-                pass
+            except Exception as e2:
+                print(f"  [DEBUG] openpyxl failed: {e2}")
+                
+                # Try parsing as HTML table (CME sometimes serves HTML as .xls)
+                try:
+                    dfs = pd.read_html(io.BytesIO(response.content))
+                    if dfs:
+                        df = dfs[0]
+                        print(f"  [OK] Parsed as HTML table ({len(df)} rows)")
+                        return df
+                except Exception as e3:
+                    print(f"  [DEBUG] HTML parsing failed: {e3}")
+                
+                # Try with calamine engine (supports more formats)
+                try:
+                    df = pd.read_excel(io.BytesIO(response.content), engine='calamine')
+                    print(f"  [OK] Parsed as Excel/calamine ({len(df)} rows)")
+                    return df
+                except Exception as e4:
+                    print(f"  [DEBUG] calamine failed: {e4}")
         
-        print(f"  [ERROR] Could not parse {metal_name} file")
+        print(f"  [ERROR] Could not parse {metal_name} file with any method")
         return None
     except Exception as e:
         print(f"  [ERROR] Error fetching {metal_name}: {e}")
@@ -196,20 +232,40 @@ def fetch_all_stocks():
     all_data = {}
     
     for metal, url in URLS.items():
-        try:
-            df = fetch_excel_file(url, metal)
-            if df is not None:
-                parsed = parse_warehouse_stocks(df, metal)
-                if parsed and (parsed['totals']['total'] > 0 or len(parsed['depositories']) > 0):
-                    all_data[metal] = parsed
-                    print(f"  [OK] Parsed {metal}: {len(parsed['depositories'])} depositories, "
-                          f"Registered: {parsed['totals']['registered']:,.0f}, "
-                          f"Eligible: {parsed['totals']['eligible']:,.0f}")
+        # Add random delay between requests to avoid rate limiting
+        delay = random.uniform(2, 5)
+        print(f"  [INFO] Waiting {delay:.1f}s before next request...")
+        time.sleep(delay)
+        
+        # Try up to 3 times with increasing delays
+        for attempt in range(3):
+            try:
+                df = fetch_excel_file(url, metal)
+                if df is not None:
+                    parsed = parse_warehouse_stocks(df, metal)
+                    if parsed and (parsed['totals']['total'] > 0 or len(parsed['depositories']) > 0):
+                        all_data[metal] = parsed
+                        print(f"  [OK] Parsed {metal}: {len(parsed['depositories'])} depositories, "
+                              f"Registered: {parsed['totals']['registered']:,.0f}, "
+                              f"Eligible: {parsed['totals']['eligible']:,.0f}")
+                        break
+                    else:
+                        print(f"  [WARNING] No data found for {metal}")
+                        break
                 else:
-                    print(f"  [WARNING] No data found for {metal}")
-        except Exception as e:
-            print(f"  [ERROR] Failed to process {metal}: {e}")
-            continue
+                    if attempt < 2:
+                        retry_delay = (attempt + 1) * 5
+                        print(f"  [RETRY] Attempt {attempt + 1} failed, retrying in {retry_delay}s...")
+                        time.sleep(retry_delay)
+                    else:
+                        print(f"  [FAILED] All attempts failed for {metal}")
+            except Exception as e:
+                if attempt < 2:
+                    print(f"  [RETRY] Error: {e}, retrying...")
+                    time.sleep((attempt + 1) * 5)
+                else:
+                    print(f"  [ERROR] Failed to process {metal}: {e}")
+                continue
     
     return all_data
 
