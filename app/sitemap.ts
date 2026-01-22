@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const baseUrl = 'https://metalstats.vercel.app';
+const baseUrl = 'https://heavymetalstats.com';
 
 // Static page last modified dates (update these when you modify pages)
 const STATIC_PAGES_LAST_MODIFIED = '2026-01-22';

@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const baseUrl = 'https://metalstats.vercel.app';
+const baseUrl = 'https://heavymetalstats.com';
 
 export default function robots(): MetadataRoute.Robots {
   return {

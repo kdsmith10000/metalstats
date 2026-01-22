@@ -5,12 +5,12 @@ export const metadata = {
   title: 'API Endpoints & Data Sources',
   description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker. Access gold, silver, copper, and aluminum warehouse stock data.',
   alternates: {
-    canonical: 'https://metalstats.vercel.app/api-info',
+    canonical: 'https://heavymetalstats.com/api-info',
   },
   openGraph: {
     title: 'API Endpoints & Data Sources | COMEX Metals Tracker',
     description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker.',
-    url: 'https://metalstats.vercel.app/api-info',
+    url: 'https://heavymetalstats.com/api-info',
   },
 };
 

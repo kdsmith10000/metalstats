@@ -5,12 +5,12 @@ export const metadata = {
   title: 'Terms of Service',
   description: 'Terms of Service for Metal Stats - COMEX Metals Inventory Tracker. Understand the terms and conditions for using our precious metals tracking service.',
   alternates: {
-    canonical: 'https://metalstats.vercel.app/terms',
+    canonical: 'https://heavymetalstats.com/terms',
   },
   openGraph: {
     title: 'Terms of Service | COMEX Metals Tracker',
     description: 'Terms of Service for Metal Stats - COMEX Metals Inventory Tracker.',
-    url: 'https://metalstats.vercel.app/terms',
+    url: 'https://heavymetalstats.com/terms',
   },
 };
 

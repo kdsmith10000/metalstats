@@ -5,12 +5,12 @@ export const metadata = {
   title: 'Privacy Policy',
   description: 'Privacy Policy for Metal Stats - COMEX Metals Inventory Tracker. Learn how we handle your data and protect your privacy.',
   alternates: {
-    canonical: 'https://metalstats.vercel.app/privacy',
+    canonical: 'https://heavymetalstats.com/privacy',
   },
   openGraph: {
     title: 'Privacy Policy | COMEX Metals Tracker',
     description: 'Privacy Policy for Metal Stats - COMEX Metals Inventory Tracker.',
-    url: 'https://metalstats.vercel.app/privacy',
+    url: 'https://heavymetalstats.com/privacy',
   },
 };
 
