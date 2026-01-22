@@ -13,12 +13,25 @@ export interface MetalTotals {
   total: number;
 }
 
+export interface PercentChanges {
+  registered: number | null;
+  eligible: number | null;
+  total: number | null;
+}
+
+export interface MetalChanges {
+  day: PercentChanges;
+  month: PercentChanges;
+}
+
 export interface MetalData {
   metal: string;
   report_date: string | null;
   activity_date: string | null;
+  last_synced?: string | null;
   depositories: Depository[];
   totals: MetalTotals;
+  changes?: MetalChanges;
 }
 
 export interface WarehouseStocksData {
@@ -151,11 +164,54 @@ function validateMetalData(data: unknown): data is MetalData {
   );
 }
 
-// Load data from public JSON with validation
+// Load data from API (with database percent changes) or fallback to JSON
 export async function loadWarehouseData(): Promise<WarehouseStocksData | null> {
   try {
+    // First try to load from API (includes percent changes from database)
+    const apiData = await loadFromApi();
+    if (apiData) {
+      return apiData;
+    }
+    
+    // Fallback to static JSON file
+    return await loadFromJson();
+  } catch (error) {
+    console.error('Error loading warehouse data:', error);
+    return null;
+  }
+}
+
+// Load from API endpoint (server-side database)
+async function loadFromApi(): Promise<WarehouseStocksData | null> {
+  try {
+    const response = await fetch('/api/metals', {
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      return null;
+    }
+    
+    const result = await response.json();
+    
+    if (!result.success || !result.data) {
+      return null;
+    }
+    
+    return sanitizeData(result.data);
+  } catch {
+    // API not available, will fallback to JSON
+    return null;
+  }
+}
+
+// Load from static JSON file
+async function loadFromJson(): Promise<WarehouseStocksData | null> {
+  try {
     const response = await fetch('/data.json', {
-      // Security: Only allow same-origin requests
       credentials: 'same-origin',
       headers: {
         'Accept': 'application/json',
@@ -168,38 +224,67 @@ export async function loadWarehouseData(): Promise<WarehouseStocksData | null> {
     }
     
     const data = await response.json();
-    
-    // Validate data structure
-    if (!data || typeof data !== 'object') {
-      console.error('Invalid data format');
-      return null;
-    }
-    
-    // Sanitize numeric values in the data
-    const sanitized: WarehouseStocksData = {} as WarehouseStocksData;
-    
-    for (const [key, metalData] of Object.entries(data)) {
-      if (validateMetalData(metalData)) {
-        sanitized[key as keyof WarehouseStocksData] = {
-          ...metalData,
-          totals: {
-            registered: sanitizeNumber(metalData.totals.registered),
-            eligible: sanitizeNumber(metalData.totals.eligible),
-            total: sanitizeNumber(metalData.totals.total),
-          },
-          depositories: metalData.depositories.map(dep => ({
-            ...dep,
-            registered: sanitizeNumber(dep.registered),
-            eligible: sanitizeNumber(dep.eligible),
-            total: sanitizeNumber(dep.total),
-          })),
-        };
-      }
-    }
-    
-    return sanitized;
+    return sanitizeData(data);
   } catch (error) {
-    console.error('Error loading warehouse data:', error);
+    console.error('Error loading JSON data:', error);
     return null;
   }
+}
+
+// Sanitize and validate data
+function sanitizeData(data: unknown): WarehouseStocksData | null {
+  if (!data || typeof data !== 'object') {
+    console.error('Invalid data format');
+    return null;
+  }
+  
+  const sanitized: WarehouseStocksData = {} as WarehouseStocksData;
+  
+  for (const [key, metalData] of Object.entries(data)) {
+    if (validateMetalData(metalData)) {
+      sanitized[key as keyof WarehouseStocksData] = {
+        ...metalData,
+        totals: {
+          registered: sanitizeNumber(metalData.totals.registered),
+          eligible: sanitizeNumber(metalData.totals.eligible),
+          total: sanitizeNumber(metalData.totals.total),
+        },
+        depositories: metalData.depositories.map(dep => ({
+          ...dep,
+          registered: sanitizeNumber(dep.registered),
+          eligible: sanitizeNumber(dep.eligible),
+          total: sanitizeNumber(dep.total),
+        })),
+        changes: metalData.changes ? {
+          day: {
+            registered: metalData.changes.day?.registered ?? null,
+            eligible: metalData.changes.day?.eligible ?? null,
+            total: metalData.changes.day?.total ?? null,
+          },
+          month: {
+            registered: metalData.changes.month?.registered ?? null,
+            eligible: metalData.changes.month?.eligible ?? null,
+            total: metalData.changes.month?.total ?? null,
+          },
+        } : undefined,
+      };
+    }
+  }
+  
+  return sanitized;
+}
+
+// Format percent change for display
+export function formatPercentChange(value: number | null | undefined): string {
+  if (value === null || value === undefined) return '—';
+  const sign = value >= 0 ? '+' : '';
+  return `${sign}${value.toFixed(2)}%`;
+}
+
+// Get color class for percent change
+export function getPercentChangeColor(value: number | null | undefined): string {
+  if (value === null || value === undefined) return 'text-slate-400';
+  if (value > 0) return 'text-emerald-500';
+  if (value < 0) return 'text-red-500';
+  return 'text-slate-400';
 }

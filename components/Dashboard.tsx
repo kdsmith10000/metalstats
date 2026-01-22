@@ -1,6 +1,6 @@
 'use client';
 
-import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio } from '@/lib/data';
+import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor } from '@/lib/data';
 import { motion, AnimatePresence } from 'framer-motion';
 import DemandChart from './DemandChart';
 import { ChevronRight } from 'lucide-react';
@@ -79,7 +79,7 @@ export default function Dashboard({ data }: DashboardProps) {
                   {/* Subtle Background Accent Gradient */}
                   <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                   
-                  {/* Status Indicator */}
+                  {/* Status Indicator - Top Right */}
                   <div className="absolute top-5 right-5 md:top-6 md:right-6 flex items-center gap-2">
                     <div className={`w-2.5 h-2.5 rounded-full ${isStress ? 'bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.6)]' : 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]'}`} />
                   </div>
@@ -90,13 +90,31 @@ export default function Dashboard({ data }: DashboardProps) {
                       {config.name}
                     </p>
                     <p className={`text-3xl md:text-4xl font-black tracking-tighter tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
-                      {ratio.toFixed(1)}<span className="text-base md:text-lg ml-0.5">x</span>
+                      {ratio.toFixed(2)}<span className="text-base md:text-lg ml-0.5">x</span>
                     </p>
                     <div className="mt-3 md:mt-4 px-3 py-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-full border border-slate-200/50 dark:border-slate-700/50">
                       <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
                         Coverage Ratio
                       </p>
                     </div>
+                    
+                    {/* Percent Change */}
+                    {metalData.changes && (
+                      <div className="mt-4 flex gap-4 text-[10px] font-bold">
+                        <div className="flex flex-col items-center">
+                          <span className="text-slate-400 uppercase tracking-wider">24h</span>
+                          <span className={getPercentChangeColor(metalData.changes.day.registered)}>
+                            {formatPercentChange(metalData.changes.day.registered)}
+                          </span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <span className="text-slate-400 uppercase tracking-wider">30d</span>
+                          <span className={getPercentChangeColor(metalData.changes.month.registered)}>
+                            {formatPercentChange(metalData.changes.month.registered)}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -159,7 +177,7 @@ export default function Dashboard({ data }: DashboardProps) {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-16">
+                    <div className="flex flex-wrap items-center gap-8 lg:gap-12">
                       <div className="w-40">
                         <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
                           <span>Vault Capacity</span>
@@ -174,15 +192,20 @@ export default function Dashboard({ data }: DashboardProps) {
                         </div>
                       </div>
 
-                      <div className="text-right">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Coverage</p>
-                        <p className={`text-4xl font-black tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
-                          {ratio.toFixed(2)}x
-                        </p>
-                      </div>
-                      
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
-                        <ChevronRight className="w-5 h-5 text-slate-400" />
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Coverage</p>
+                          <p className={`text-4xl font-black tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
+                            {ratio.toFixed(2)}x
+                          </p>
+                        </div>
+                        
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 rotate-90 align-top">
+                          <ChevronRight 
+                            className="w-5 h-5 text-slate-400 transition-transform duration-300" 
+                            style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -197,14 +220,48 @@ export default function Dashboard({ data }: DashboardProps) {
                     >
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                         {[
-                          { label: 'Total Supply', value: formatNumber(metalData.totals.total) },
-                          { label: 'Registered', value: formatNumber(metalData.totals.registered) },
-                          { label: 'Eligible', value: formatNumber(metalData.totals.eligible) },
-                          { label: 'Demand', value: formatNumber(config.monthlyDemand) }
+                          { 
+                            label: 'Total Supply', 
+                            value: formatNumber(metalData.totals.total),
+                            dayChange: metalData.changes?.day.total,
+                            monthChange: metalData.changes?.month.total
+                          },
+                          { 
+                            label: 'Registered', 
+                            value: formatNumber(metalData.totals.registered),
+                            dayChange: metalData.changes?.day.registered,
+                            monthChange: metalData.changes?.month.registered
+                          },
+                          { 
+                            label: 'Eligible', 
+                            value: formatNumber(metalData.totals.eligible),
+                            dayChange: metalData.changes?.day.eligible,
+                            monthChange: metalData.changes?.month.eligible
+                          },
+                          { 
+                            label: 'Demand', 
+                            value: formatNumber(config.monthlyDemand),
+                            dayChange: null,
+                            monthChange: null
+                          }
                         ].map((stat, i) => (
                           <div key={i} className="p-4 bg-white/40 dark:bg-black/40 rounded-2xl border border-white/30 text-center">
                             <p className="text-[10px] font-black text-slate-400 uppercase mb-1 tracking-wider">{stat.label}</p>
                             <p className="text-xl font-bold">{stat.value}</p>
+                            {(stat.dayChange !== null || stat.monthChange !== null) && (
+                              <div className="mt-2 flex justify-center gap-3 text-[9px] font-bold">
+                                {stat.dayChange !== null && (
+                                  <span className={getPercentChangeColor(stat.dayChange)}>
+                                    24h: {formatPercentChange(stat.dayChange)}
+                                  </span>
+                                )}
+                                {stat.monthChange !== null && (
+                                  <span className={getPercentChangeColor(stat.monthChange)}>
+                                    30d: {formatPercentChange(stat.monthChange)}
+                                  </span>
+                                )}
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>

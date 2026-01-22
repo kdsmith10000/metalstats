@@ -5,52 +5,22 @@
     "activity_date": "1/20/2026",
     "depositories": [
       {
-        "name": "BRINK'S, INC.",
-        "registered": 7827567.943,
-        "eligible": 2603691.844,
-        "total": 10431259.787
-      },
-      {
-        "name": "HSBC BANK, USA",
-        "registered": 2121451.681,
-        "eligible": 4959419.566,
-        "total": 7080871.2469999995
-      },
-      {
         "name": "JP MORGAN CHASE BANK NA",
-        "registered": 3072441.267,
-        "eligible": 3819972.635,
-        "total": 6892413.902
-      },
-      {
-        "name": "LOOMIS INTERNATIONAL (US) LLC",
-        "registered": 872246.905,
-        "eligible": 229509.629,
-        "total": 1101756.534
-      },
-      {
-        "name": "MALCA-AMIT USA, LLC",
-        "registered": 1380892.833,
-        "eligible": 5533.719,
-        "total": 1386426.5520000001
-      },
-      {
-        "name": "MANFRA, TORDELLA & BROOKES, LLC",
-        "registered": 1486457.957,
-        "eligible": 986135.64,
-        "total": 2472593.597
+        "registered": 0.0,
+        "eligible": 3696328.027,
+        "total": 3696328.027
       },
       {
         "name": "STONEX PRECIOUS METALS LLC",
-        "registered": 23806.443,
-        "eligible": 16268.406,
-        "total": 40074.849
+        "registered": 0.0,
+        "eligible": 3981.0,
+        "total": 3981.0
       }
     ],
     "totals": {
-      "registered": 16784865.029,
-      "eligible": 12620531.439000001,
-      "total": 29405396.468000002
+      "registered": 18864396.637999997,
+      "eligible": 17278483.186,
+      "total": 36142879.824
     }
   },
   "Silver": {
@@ -59,16 +29,22 @@
     "activity_date": "1/20/2026",
     "depositories": [
       {
+        "name": "SILVER",
+        "registered": 27041141.382,
+        "eligible": 7743122.138,
+        "total": 34784263.519999996
+      },
+      {
         "name": "BRINK'S, INC.",
-        "registered": 23147924.637,
-        "eligible": 33079287.406,
-        "total": 56227212.043
+        "registered": 2208789.888,
+        "eligible": 15596361.209,
+        "total": 17805151.097
       },
       {
         "name": "HSBC BANK, USA",
-        "registered": 3754407.32,
-        "eligible": 24303659.134,
-        "total": 28058066.454
+        "registered": 635240.035,
+        "eligible": 3280756.079,
+        "total": 3915996.114
       },
       {
         "name": "JP MORGAN CHASE BANK NA",
@@ -102,9 +78,9 @@
       }
     ],
     "totals": {
-      "registered": 66817155.168999985,
-      "eligible": 262992946.04399997,
-      "total": 329810101.21299994
+      "registered": 116026431.73399998,
+      "eligible": 306287226.57000005,
+      "total": 422313658.304
     }
   },
   "Copper": {
@@ -168,15 +144,15 @@
     "depositories": [
       {
         "name": "BRINK'S, INC.",
-        "registered": 91733.761,
-        "eligible": 27494.288,
-        "total": 119228.049
+        "registered": 1633.941,
+        "eligible": 18459.584,
+        "total": 20093.524999999998
       },
       {
         "name": "HSBC BANK, USA",
-        "registered": 1394.758,
-        "eligible": 9281.979,
-        "total": 10676.737
+        "registered": 2395.448,
+        "eligible": 0.0,
+        "total": 2395.448
       },
       {
         "name": "JP MORGAN CHASE BANK NA",
@@ -210,15 +186,9 @@
       },
       {
         "name": "BRINK'S, INC.",
-        "registered": 7448.018,
-        "eligible": 9785.668,
-        "total": 17233.686
-      },
-      {
-        "name": "HSBC BANK, USA",
-        "registered": 585.9,
-        "eligible": 2023.213,
-        "total": 2609.113
+        "registered": 788.244,
+        "eligible": 3208.1,
+        "total": 3996.344
       },
       {
         "name": "JP MORGAN CHASE BANK NA",
@@ -246,9 +216,9 @@
       }
     ],
     "totals": {
-      "registered": 479742.66099999996,
-      "eligible": 384461.353,
-      "total": 864204.014
+      "registered": 144029.465,
+      "eligible": 72236.845,
+      "total": 216266.31
     }
   },
   "Aluminum": {

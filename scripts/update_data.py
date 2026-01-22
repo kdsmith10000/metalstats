@@ -1,6 +1,6 @@
 """
 Fetch Warehouse & Depository Stocks from CME Group Excel files
-and update the Next.js dashboard data.json file.
+and update the Next.js dashboard data.json file and Neon database.
 """
 
 import requests
@@ -10,8 +10,18 @@ import json
 import sys
 import time
 import random
+import os
 from datetime import datetime
 from pathlib import Path
+
+# Optional: psycopg2 for direct database connection
+try:
+    import psycopg2
+    from psycopg2.extras import execute_values
+    HAS_PSYCOPG2 = True
+except ImportError:
+    HAS_PSYCOPG2 = False
+    print("[INFO] psycopg2 not installed. Will use API endpoint for database sync.")
 
 # URLs for the warehouse stocks reports
 # Note: URLs are case-sensitive and CME uses inconsistent naming!
@@ -327,6 +337,186 @@ if __name__ == '__main__':
         json.dump(data, f, indent=2, default=str)
     
     print(f"\n[OK] Data saved to {data_file}")
+    
+    # Sync to database
+    print("\n" + "=" * 70)
+    print("  Syncing to Database")
+    print("=" * 70)
+    
+    sync_to_database(data)
+    
     print("\n" + "=" * 70)
     print("  Done!")
     print("=" * 70)
+
+
+def sync_to_database(data):
+    """Sync the data to the Neon database."""
+    
+    # Try direct database connection first (faster and more reliable)
+    database_url = os.environ.get('DATABASE_URL')
+    
+    if database_url and HAS_PSYCOPG2:
+        try:
+            sync_via_direct_connection(data, database_url)
+            return
+        except Exception as e:
+            print(f"[WARNING] Direct database sync failed: {e}")
+            print("[INFO] Falling back to API sync...")
+    
+    # Fallback to API endpoint
+    api_url = os.environ.get('API_URL', 'http://localhost:3000')
+    sync_via_api(data, api_url)
+
+
+def sync_via_direct_connection(data, database_url):
+    """Sync data directly to Neon database using psycopg2."""
+    print("[INFO] Connecting to database directly...")
+    
+    conn = psycopg2.connect(database_url)
+    cur = conn.cursor()
+    
+    try:
+        # Ensure tables exist
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS metal_snapshots (
+                id SERIAL PRIMARY KEY,
+                metal VARCHAR(50) NOT NULL,
+                report_date DATE NOT NULL,
+                activity_date DATE,
+                registered DECIMAL(20, 3) NOT NULL DEFAULT 0,
+                eligible DECIMAL(20, 3) NOT NULL DEFAULT 0,
+                total DECIMAL(20, 3) NOT NULL DEFAULT 0,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(metal, report_date)
+            )
+        """)
+        
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS depository_snapshots (
+                id SERIAL PRIMARY KEY,
+                metal_snapshot_id INTEGER REFERENCES metal_snapshots(id) ON DELETE CASCADE,
+                name VARCHAR(255) NOT NULL,
+                registered DECIMAL(20, 3) NOT NULL DEFAULT 0,
+                eligible DECIMAL(20, 3) NOT NULL DEFAULT 0,
+                total DECIMAL(20, 3) NOT NULL DEFAULT 0
+            )
+        """)
+        
+        cur.execute("""
+            CREATE INDEX IF NOT EXISTS idx_metal_snapshots_metal_date 
+            ON metal_snapshots(metal, report_date DESC)
+        """)
+        
+        cur.execute("""
+            CREATE INDEX IF NOT EXISTS idx_depository_snapshots_metal_id 
+            ON depository_snapshots(metal_snapshot_id)
+        """)
+        
+        conn.commit()
+        print("[OK] Database tables verified")
+        
+        # Insert/update data for each metal
+        for metal_name, metal_data in data.items():
+            try:
+                report_date = parse_date_for_db(metal_data.get('report_date'))
+                activity_date = parse_date_for_db(metal_data.get('activity_date'))
+                totals = metal_data.get('totals', {})
+                
+                # Upsert metal snapshot
+                cur.execute("""
+                    INSERT INTO metal_snapshots (metal, report_date, activity_date, registered, eligible, total)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (metal, report_date) 
+                    DO UPDATE SET 
+                        activity_date = EXCLUDED.activity_date,
+                        registered = EXCLUDED.registered,
+                        eligible = EXCLUDED.eligible,
+                        total = EXCLUDED.total,
+                        created_at = CURRENT_TIMESTAMP
+                    RETURNING id
+                """, (
+                    metal_name,
+                    report_date,
+                    activity_date,
+                    totals.get('registered', 0),
+                    totals.get('eligible', 0),
+                    totals.get('total', 0)
+                ))
+                
+                snapshot_id = cur.fetchone()[0]
+                
+                # Delete existing depositories
+                cur.execute("DELETE FROM depository_snapshots WHERE metal_snapshot_id = %s", (snapshot_id,))
+                
+                # Insert depositories
+                depositories = metal_data.get('depositories', [])
+                if depositories:
+                    execute_values(cur, """
+                        INSERT INTO depository_snapshots (metal_snapshot_id, name, registered, eligible, total)
+                        VALUES %s
+                    """, [
+                        (snapshot_id, dep['name'], dep['registered'], dep['eligible'], dep['total'])
+                        for dep in depositories
+                    ])
+                
+                conn.commit()
+                print(f"  [OK] Synced {metal_name} to database")
+                
+            except Exception as e:
+                conn.rollback()
+                print(f"  [ERROR] Failed to sync {metal_name}: {e}")
+        
+        print("[OK] Database sync complete")
+        
+    finally:
+        cur.close()
+        conn.close()
+
+
+def sync_via_api(data, api_url):
+    """Sync data via the Next.js API endpoint."""
+    sync_url = f"{api_url}/api/metals/sync"
+    
+    print(f"[INFO] Syncing to database via API: {sync_url}")
+    
+    try:
+        response = requests.post(
+            sync_url,
+            json=data,
+            headers={'Content-Type': 'application/json'},
+            timeout=30
+        )
+        
+        if response.ok:
+            result = response.json()
+            print(f"[OK] API sync successful: {result.get('message', 'Done')}")
+        else:
+            print(f"[ERROR] API sync failed: {response.status_code} - {response.text}")
+    except requests.exceptions.ConnectionError:
+        print(f"[WARNING] Could not connect to API at {sync_url}")
+        print("[INFO] Make sure the Next.js server is running or set API_URL environment variable")
+    except Exception as e:
+        print(f"[ERROR] API sync error: {e}")
+
+
+def parse_date_for_db(date_str):
+    """Parse a date string to YYYY-MM-DD format for database."""
+    if not date_str:
+        return datetime.now().strftime('%Y-%m-%d')
+    
+    # Already in ISO format
+    if isinstance(date_str, str) and len(date_str) == 10 and date_str[4] == '-':
+        return date_str
+    
+    # Handle MM/DD/YYYY format
+    try:
+        parts = str(date_str).split('/')
+        if len(parts) == 3:
+            month, day, year = parts
+            return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+    except:
+        pass
+    
+    # Fallback to current date
+    return datetime.now().strftime('%Y-%m-%d')

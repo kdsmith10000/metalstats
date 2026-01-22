@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
+import { getLatestSnapshots } from '@/lib/db';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -108,11 +109,31 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch the latest report date from the database
+  let lastUpdatedText = 'Loading...';
+  try {
+    const snapshots = await getLatestSnapshots();
+    if (snapshots.length > 0) {
+      const reportDate = snapshots[0].report_date;
+      if (reportDate) {
+        const date = new Date(reportDate);
+        lastUpdatedText = date.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch last updated date:', error);
+    lastUpdatedText = 'January 21, 2026'; // Fallback
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
@@ -122,7 +143,7 @@ export default function RootLayout({
             <div className="absolute top-4 right-6 z-50 flex items-center gap-4">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                <span>Last updated: January 21, 2026 • CME Group</span>
+                <span>Last updated: {lastUpdatedText} • CME Group</span>
               </div>
               <ThemeToggle />
             </div>

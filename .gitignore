@@ -56,3 +56,6 @@ next-env.d.ts
 # OS
 Thumbs.db
 .DS_Store
+
+# Local data files (Excel files from CME)
+/data/

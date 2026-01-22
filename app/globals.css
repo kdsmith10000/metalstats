@@ -125,6 +125,24 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Remove hover shadow effect on Recharts bars */
+.recharts-bar-rectangle {
+  filter: none !important;
+}
+
+.recharts-bar-rectangle:hover {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.recharts-active-bar {
+  filter: none !important;
+}
+
+.recharts-bar-rectangle[style*="filter"] {
+  filter: none !important;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
