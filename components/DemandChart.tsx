@@ -173,13 +173,21 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
               </YAxis>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: isDark ? 'hsl(240 10% 3.9%)' : 'hsl(0 0% 100%)',
-                  border: `1px solid ${isDark ? 'hsl(240 3.7% 15.9%)' : 'hsl(240 5.9% 90%)'}`,
+                  backgroundColor: isDark ? 'hsl(240 10% 10%)' : 'hsl(0 0% 100%)',
+                  border: `1px solid ${isDark ? 'hsl(240 3.7% 20%)' : 'hsl(240 5.9% 90%)'}`,
                   borderRadius: '8px',
                   padding: '12px 16px',
-                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                  boxShadow: isDark ? '0 4px 12px rgb(0 0 0 / 0.5)' : '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                 }}
-                labelStyle={{ fontWeight: 600, marginBottom: 4 }}
+                labelStyle={{ 
+                  fontWeight: 600, 
+                  marginBottom: 8,
+                  color: isDark ? '#ffffff' : '#0f172a'
+                }}
+                itemStyle={{
+                  color: isDark ? '#e2e8f0' : '#334155',
+                  fontWeight: 500
+                }}
                 formatter={(value: number | undefined) => [value ? value.toLocaleString() : '—', '']}
               />
               <Bar 

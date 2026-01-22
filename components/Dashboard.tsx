@@ -202,7 +202,7 @@ export default function Dashboard({ data }: DashboardProps) {
                           { label: 'Eligible', value: formatNumber(metalData.totals.eligible) },
                           { label: 'Demand', value: formatNumber(config.monthlyDemand) }
                         ].map((stat, i) => (
-                          <div key={i} className="p-4 bg-white/40 dark:bg-black/40 rounded-2xl border border-white/30">
+                          <div key={i} className="p-4 bg-white/40 dark:bg-black/40 rounded-2xl border border-white/30 text-center">
                             <p className="text-[10px] font-black text-slate-400 uppercase mb-1 tracking-wider">{stat.label}</p>
                             <p className="text-xl font-bold">{stat.value}</p>
                           </div>
