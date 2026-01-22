@@ -2,8 +2,16 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export const metadata = {
-  title: 'Terms of Service | COMEX Metals Tracker',
-  description: 'Terms of Service for the COMEX Metals Inventory Tracker application.',
+  title: 'Terms of Service',
+  description: 'Terms of Service for Metal Stats - COMEX Metals Inventory Tracker. Understand the terms and conditions for using our precious metals tracking service.',
+  alternates: {
+    canonical: 'https://metalstats.vercel.app/terms',
+  },
+  openGraph: {
+    title: 'Terms of Service | COMEX Metals Tracker',
+    description: 'Terms of Service for Metal Stats - COMEX Metals Inventory Tracker.',
+    url: 'https://metalstats.vercel.app/terms',
+  },
 };
 
 export default function TermsOfService() {

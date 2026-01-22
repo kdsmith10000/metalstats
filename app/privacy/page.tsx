@@ -2,8 +2,16 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export const metadata = {
-  title: 'Privacy Policy | COMEX Metals Tracker',
-  description: 'Privacy Policy for the COMEX Metals Inventory Tracker application.',
+  title: 'Privacy Policy',
+  description: 'Privacy Policy for Metal Stats - COMEX Metals Inventory Tracker. Learn how we handle your data and protect your privacy.',
+  alternates: {
+    canonical: 'https://metalstats.vercel.app/privacy',
+  },
+  openGraph: {
+    title: 'Privacy Policy | COMEX Metals Tracker',
+    description: 'Privacy Policy for Metal Stats - COMEX Metals Inventory Tracker.',
+    url: 'https://metalstats.vercel.app/privacy',
+  },
 };
 
 export default function PrivacyPolicy() {

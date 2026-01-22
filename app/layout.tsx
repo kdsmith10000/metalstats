@@ -17,33 +17,57 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'COMEX Metals Inventory Tracker | Real-Time Supply & Demand Analysis',
-  description: 'Monitor real-time COMEX precious metals warehouse inventory levels. Track gold, silver, copper, and aluminum stocks with supply coverage ratios and demand trends.',
+  metadataBase: new URL('https://metalstats.vercel.app'),
+  title: {
+    default: 'COMEX Metals Inventory Tracker | Real-Time Gold & Silver Supply Analysis',
+    template: '%s | COMEX Metals Tracker',
+  },
+  description: 'Track real-time COMEX precious metals warehouse inventory levels. Monitor gold, silver, copper, and aluminum stocks with live supply coverage ratios, demand trends, and delivery data from CME Group.',
   keywords: [
-    'COMEX', 
-    'precious metals', 
-    'gold inventory', 
-    'silver inventory', 
-    'warehouse stocks', 
-    'supply and demand', 
-    'metals tracker', 
-    'CME Group', 
-    'registered inventory', 
-    'eligible inventory', 
-    'metals analysis', 
+    'COMEX',
+    'COMEX inventory',
+    'COMEX warehouse stocks',
+    'precious metals',
+    'gold inventory',
+    'silver inventory',
+    'gold warehouse',
+    'silver warehouse',
+    'warehouse stocks',
+    'supply and demand',
+    'metals tracker',
+    'CME Group',
+    'CME Group data',
+    'registered inventory',
+    'eligible inventory',
+    'metals analysis',
     'commodities tracking',
     'silver squeeze',
     'gold tracking',
     'platinum inventory',
-    'palladium inventory'
+    'palladium inventory',
+    'copper inventory',
+    'aluminum inventory',
+    'gold delivery',
+    'silver delivery',
+    'COMEX delivery notices',
+    'precious metals supply',
+    'gold supply shortage',
+    'silver supply shortage',
+    'metals dashboard',
+    'commodity prices',
+    'gold market',
+    'silver market',
   ],
-  authors: [{ name: 'COMEX Metals Dashboard' }],
-  creator: 'COMEX Metals Dashboard',
-  publisher: 'COMEX Metals Dashboard',
+  authors: [{ name: 'Metal Stats' }],
+  creator: 'Metal Stats',
+  publisher: 'Metal Stats',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
+  },
+  alternates: {
+    canonical: 'https://metalstats.vercel.app',
   },
   robots: {
     index: true,
@@ -59,18 +83,29 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://comex-metals.vercel.app', // Placeholder URL
-    title: 'COMEX Metals Inventory Tracker | Real-Time Supply & Demand Analysis',
-    description: 'Monitor real-time COMEX precious metals warehouse inventory levels. Track gold, silver, copper, and aluminum stocks with supply coverage ratios.',
-    siteName: 'COMEX Metals Dashboard',
+    url: 'https://metalstats.vercel.app',
+    title: 'COMEX Metals Inventory Tracker | Real-Time Gold & Silver Supply Analysis',
+    description: 'Track real-time COMEX precious metals warehouse inventory levels. Monitor gold, silver, copper, and aluminum stocks with live supply coverage ratios and demand trends.',
+    siteName: 'Metal Stats - COMEX Metals Dashboard',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'COMEX Metals Inventory Tracker Dashboard',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'COMEX Metals Inventory Tracker | Real-Time Supply & Demand Analysis',
-    description: 'Monitor real-time COMEX precious metals warehouse inventory levels. Track gold, silver, and other metals.',
-    creator: '@ComexTracker', // Placeholder
+    title: 'COMEX Metals Inventory Tracker | Real-Time Supply Analysis',
+    description: 'Track real-time COMEX precious metals warehouse inventory. Monitor gold, silver, copper & aluminum stocks with live supply coverage ratios.',
+    images: ['/og-image.png'],
   },
   category: 'finance',
+  verification: {
+    google: 'your-google-verification-code', // Add your Google Search Console verification code
+  },
 };
 
 export default function RootLayout({
@@ -100,16 +135,57 @@ export default function RootLayout({
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
                   '@context': 'https://schema.org',
-                  '@type': 'WebApplication',
-                  name: 'COMEX Metals Inventory Tracker',
-                  description: 'Real-time supply and demand tracking for COMEX precious metals warehouse inventory.',
-                  applicationCategory: 'FinanceApplication',
-                  operatingSystem: 'All',
-                  offers: {
-                    '@type': 'Offer',
-                    price: '0',
-                    priceCurrency: 'USD',
-                  },
+                  '@graph': [
+                    {
+                      '@type': 'WebApplication',
+                      '@id': 'https://metalstats.vercel.app/#webapp',
+                      name: 'COMEX Metals Inventory Tracker',
+                      description: 'Real-time supply and demand tracking for COMEX precious metals warehouse inventory including gold, silver, copper, and aluminum.',
+                      url: 'https://metalstats.vercel.app',
+                      applicationCategory: 'FinanceApplication',
+                      operatingSystem: 'All',
+                      browserRequirements: 'Requires JavaScript',
+                      offers: {
+                        '@type': 'Offer',
+                        price: '0',
+                        priceCurrency: 'USD',
+                      },
+                    },
+                    {
+                      '@type': 'WebSite',
+                      '@id': 'https://metalstats.vercel.app/#website',
+                      url: 'https://metalstats.vercel.app',
+                      name: 'Metal Stats - COMEX Metals Dashboard',
+                      description: 'Track real-time COMEX precious metals warehouse inventory levels with supply coverage ratios and demand trends.',
+                      publisher: {
+                        '@type': 'Organization',
+                        name: 'Metal Stats',
+                      },
+                    },
+                    {
+                      '@type': 'FinancialProduct',
+                      '@id': 'https://metalstats.vercel.app/#service',
+                      name: 'COMEX Metals Data Tracker',
+                      description: 'Free real-time tracking of COMEX warehouse inventory for gold, silver, copper, and aluminum with CME Group data.',
+                      provider: {
+                        '@type': 'Organization',
+                        name: 'Metal Stats',
+                      },
+                      category: 'Financial Data Service',
+                    },
+                    {
+                      '@type': 'BreadcrumbList',
+                      '@id': 'https://metalstats.vercel.app/#breadcrumb',
+                      itemListElement: [
+                        {
+                          '@type': 'ListItem',
+                          position: 1,
+                          name: 'Home',
+                          item: 'https://metalstats.vercel.app',
+                        },
+                      ],
+                    },
+                  ],
                 }),
               }}
             />

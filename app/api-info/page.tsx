@@ -2,8 +2,16 @@ import Link from 'next/link';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 
 export const metadata = {
-  title: 'API Endpoints | COMEX Metals Tracker',
-  description: 'API Endpoints and data sources used by the COMEX Metals Inventory Tracker.',
+  title: 'API Endpoints & Data Sources',
+  description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker. Access gold, silver, copper, and aluminum warehouse stock data.',
+  alternates: {
+    canonical: 'https://metalstats.vercel.app/api-info',
+  },
+  openGraph: {
+    title: 'API Endpoints & Data Sources | COMEX Metals Tracker',
+    description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker.',
+    url: 'https://metalstats.vercel.app/api-info',
+  },
 };
 
 const endpoints = [
