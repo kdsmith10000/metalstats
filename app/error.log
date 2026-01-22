@@ -1,0 +1,269 @@
+2026-01-22T13:42:32.2093959Z Current runner version: '2.331.0'
+2026-01-22T13:42:32.2118393Z ##[group]Runner Image Provisioner
+2026-01-22T13:42:32.2119378Z Hosted Compute Agent
+2026-01-22T13:42:32.2119942Z Version: 20251211.462
+2026-01-22T13:42:32.2120578Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2026-01-22T13:42:32.2121306Z Build Date: 2025-12-11T16:28:49Z
+2026-01-22T13:42:32.2121918Z Worker ID: {4a4f2d2b-2ed8-444f-8c99-807d76dd6cea}
+2026-01-22T13:42:32.2122632Z ##[endgroup]
+2026-01-22T13:42:32.2123215Z ##[group]Operating System
+2026-01-22T13:42:32.2124052Z Ubuntu
+2026-01-22T13:42:32.2124584Z 24.04.3
+2026-01-22T13:42:32.2125039Z LTS
+2026-01-22T13:42:32.2125551Z ##[endgroup]
+2026-01-22T13:42:32.2126000Z ##[group]Runner Image
+2026-01-22T13:42:32.2126649Z Image: ubuntu-24.04
+2026-01-22T13:42:32.2127137Z Version: 20260111.209.1
+2026-01-22T13:42:32.2128125Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260111.209/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-22T13:42:32.2129703Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260111.209
+2026-01-22T13:42:32.2130731Z ##[endgroup]
+2026-01-22T13:42:32.2131732Z ##[group]GITHUB_TOKEN Permissions
+2026-01-22T13:42:32.2133922Z Contents: write
+2026-01-22T13:42:32.2134583Z Metadata: read
+2026-01-22T13:42:32.2135090Z ##[endgroup]
+2026-01-22T13:42:32.2137251Z Secret source: Actions
+2026-01-22T13:42:32.2138059Z Prepare workflow directory
+2026-01-22T13:42:32.2465790Z Prepare all required actions
+2026-01-22T13:42:32.2503946Z Getting action download info
+2026-01-22T13:42:32.7267461Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-22T13:42:32.8097004Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-01-22T13:42:33.0492511Z Complete job name: update-data
+2026-01-22T13:42:33.1192249Z ##[group]Run actions/checkout@v4
+2026-01-22T13:42:33.1193085Z with:
+2026-01-22T13:42:33.1193462Z   fetch-depth: 0
+2026-01-22T13:42:33.1194118Z   repository: kdsmith10000/metalstats
+2026-01-22T13:42:33.1194822Z   token: ***
+2026-01-22T13:42:33.1195199Z   ssh-strict: true
+2026-01-22T13:42:33.1195596Z   ssh-user: git
+2026-01-22T13:42:33.1195998Z   persist-credentials: true
+2026-01-22T13:42:33.1196450Z   clean: true
+2026-01-22T13:42:33.1196842Z   sparse-checkout-cone-mode: true
+2026-01-22T13:42:33.1197325Z   fetch-tags: false
+2026-01-22T13:42:33.1197716Z   show-progress: true
+2026-01-22T13:42:33.1198118Z   lfs: false
+2026-01-22T13:42:33.1198481Z   submodules: false
+2026-01-22T13:42:33.1198891Z   set-safe-directory: true
+2026-01-22T13:42:33.1199576Z ##[endgroup]
+2026-01-22T13:42:33.2272256Z Syncing repository: kdsmith10000/metalstats
+2026-01-22T13:42:33.2274305Z ##[group]Getting Git version info
+2026-01-22T13:42:33.2275095Z Working directory is '/home/runner/work/metalstats/metalstats'
+2026-01-22T13:42:33.2276057Z [command]/usr/bin/git version
+2026-01-22T13:42:33.2349312Z git version 2.52.0
+2026-01-22T13:42:33.2375207Z ##[endgroup]
+2026-01-22T13:42:33.2388858Z Temporarily overriding HOME='/home/runner/work/_temp/513c6e30-7360-4bba-bf93-f8766da494a0' before making global git config changes
+2026-01-22T13:42:33.2390275Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-22T13:42:33.2401955Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/metalstats/metalstats
+2026-01-22T13:42:33.2440880Z Deleting the contents of '/home/runner/work/metalstats/metalstats'
+2026-01-22T13:42:33.2444464Z ##[group]Initializing the repository
+2026-01-22T13:42:33.2448306Z [command]/usr/bin/git init /home/runner/work/metalstats/metalstats
+2026-01-22T13:42:33.2546662Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-22T13:42:33.2547832Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-22T13:42:33.2548766Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-22T13:42:33.2549501Z hint: call:
+2026-01-22T13:42:33.2550055Z hint:
+2026-01-22T13:42:33.2551235Z hint: 	git config --global init.defaultBranch <name>
+2026-01-22T13:42:33.2551861Z hint:
+2026-01-22T13:42:33.2552424Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-22T13:42:33.2553368Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-22T13:42:33.2554536Z hint:
+2026-01-22T13:42:33.2554953Z hint: 	git branch -m <name>
+2026-01-22T13:42:33.2555524Z hint:
+2026-01-22T13:42:33.2556270Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-22T13:42:33.2557319Z Initialized empty Git repository in /home/runner/work/metalstats/metalstats/.git/
+2026-01-22T13:42:33.2561634Z [command]/usr/bin/git remote add origin https://github.com/kdsmith10000/metalstats
+2026-01-22T13:42:33.2592878Z ##[endgroup]
+2026-01-22T13:42:33.2593937Z ##[group]Disabling automatic garbage collection
+2026-01-22T13:42:33.2597216Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-22T13:42:33.2624363Z ##[endgroup]
+2026-01-22T13:42:33.2625056Z ##[group]Setting up auth
+2026-01-22T13:42:33.2631167Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-22T13:42:33.2660106Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-22T13:42:33.2980162Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-22T13:42:33.3007656Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-22T13:42:33.3237845Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-22T13:42:33.3280287Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-22T13:42:33.3525587Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-22T13:42:33.3564519Z ##[endgroup]
+2026-01-22T13:42:33.3576558Z ##[group]Fetching the repository
+2026-01-22T13:42:33.3577800Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-01-22T13:42:33.9037738Z From https://github.com/kdsmith10000/metalstats
+2026-01-22T13:42:33.9038928Z  * [new branch]      main       -> origin/main
+2026-01-22T13:42:33.9076424Z [command]/usr/bin/git branch --list --remote origin/main
+2026-01-22T13:42:33.9100271Z   origin/main
+2026-01-22T13:42:33.9187677Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-01-22T13:42:33.9189255Z fcafbe1316f1c57abf63cd742f70f494c821d372
+2026-01-22T13:42:33.9191860Z ##[endgroup]
+2026-01-22T13:42:33.9193118Z ##[group]Determining the checkout info
+2026-01-22T13:42:33.9194923Z ##[endgroup]
+2026-01-22T13:42:33.9195875Z [command]/usr/bin/git sparse-checkout disable
+2026-01-22T13:42:33.9198381Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-22T13:42:33.9209398Z ##[group]Checking out the ref
+2026-01-22T13:42:33.9216365Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-01-22T13:42:33.9302101Z Switched to a new branch 'main'
+2026-01-22T13:42:33.9304672Z branch 'main' set up to track 'origin/main'.
+2026-01-22T13:42:33.9310844Z ##[endgroup]
+2026-01-22T13:42:33.9346929Z [command]/usr/bin/git log -1 --format=%H
+2026-01-22T13:42:33.9369610Z fcafbe1316f1c57abf63cd742f70f494c821d372
+2026-01-22T13:42:33.9651261Z ##[group]Run actions/setup-python@v5
+2026-01-22T13:42:33.9652300Z with:
+2026-01-22T13:42:33.9652975Z   python-version: 3.11
+2026-01-22T13:42:33.9653922Z   check-latest: false
+2026-01-22T13:42:33.9654967Z   token: ***
+2026-01-22T13:42:33.9655699Z   update-environment: true
+2026-01-22T13:42:33.9656591Z   allow-prereleases: false
+2026-01-22T13:42:33.9657652Z   freethreaded: false
+2026-01-22T13:42:33.9658424Z ##[endgroup]
+2026-01-22T13:42:34.1311608Z ##[group]Installed versions
+2026-01-22T13:42:34.5845285Z Successfully set up CPython (3.11.14)
+2026-01-22T13:42:34.5846429Z ##[endgroup]
+2026-01-22T13:42:34.5964578Z ##[group]Run python -m pip install --upgrade pip
+2026-01-22T13:42:34.5965101Z [36;1mpython -m pip install --upgrade pip[0m
+2026-01-22T13:42:34.5965482Z [36;1mpip install -r scripts/requirements.txt[0m
+2026-01-22T13:42:34.6113967Z shell: /usr/bin/bash -e {0}
+2026-01-22T13:42:34.6114309Z env:
+2026-01-22T13:42:34.6114623Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:34.6115117Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-22T13:42:34.6115605Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:34.6116029Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:34.6116446Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:34.6116891Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-22T13:42:34.6117236Z ##[endgroup]
+2026-01-22T13:42:41.4698361Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (25.3)
+2026-01-22T13:42:42.6146105Z Collecting requests>=2.31.0 (from -r scripts/requirements.txt (line 1))
+2026-01-22T13:42:42.6706171Z   Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+2026-01-22T13:42:42.8022257Z Collecting pandas>=2.0.0 (from -r scripts/requirements.txt (line 2))
+2026-01-22T13:42:42.8069754Z   Downloading pandas-3.0.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (79 kB)
+2026-01-22T13:42:42.8693929Z Collecting openpyxl>=3.1.0 (from -r scripts/requirements.txt (line 3))
+2026-01-22T13:42:42.8729590Z   Downloading openpyxl-3.1.5-py2.py3-none-any.whl.metadata (2.5 kB)
+2026-01-22T13:42:42.8847000Z Collecting xlrd>=2.0.1 (from -r scripts/requirements.txt (line 4))
+2026-01-22T13:42:42.8883738Z   Downloading xlrd-2.0.2-py2.py3-none-any.whl.metadata (3.5 kB)
+2026-01-22T13:42:43.0728791Z Collecting lxml>=4.9.0 (from -r scripts/requirements.txt (line 5))
+2026-01-22T13:42:43.0766455Z   Downloading lxml-6.0.2-cp311-cp311-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.6 kB)
+2026-01-22T13:42:43.0890496Z Collecting html5lib>=1.1 (from -r scripts/requirements.txt (line 6))
+2026-01-22T13:42:43.0927279Z   Downloading html5lib-1.1-py2.py3-none-any.whl.metadata (16 kB)
+2026-01-22T13:42:43.1744382Z Collecting charset_normalizer<4,>=2 (from requests>=2.31.0->-r scripts/requirements.txt (line 1))
+2026-01-22T13:42:43.1782421Z   Downloading charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+2026-01-22T13:42:43.1944197Z Collecting idna<4,>=2.5 (from requests>=2.31.0->-r scripts/requirements.txt (line 1))
+2026-01-22T13:42:43.1981299Z   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2026-01-22T13:42:43.2256441Z Collecting urllib3<3,>=1.21.1 (from requests>=2.31.0->-r scripts/requirements.txt (line 1))
+2026-01-22T13:42:43.2304414Z   Downloading urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+2026-01-22T13:42:43.2508723Z Collecting certifi>=2017.4.17 (from requests>=2.31.0->-r scripts/requirements.txt (line 1))
+2026-01-22T13:42:43.2544585Z   Downloading certifi-2026.1.4-py3-none-any.whl.metadata (2.5 kB)
+2026-01-22T13:42:43.4560270Z Collecting numpy>=1.26.0 (from pandas>=2.0.0->-r scripts/requirements.txt (line 2))
+2026-01-22T13:42:43.4602142Z   Downloading numpy-2.4.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+2026-01-22T13:42:43.4745650Z Collecting python-dateutil>=2.8.2 (from pandas>=2.0.0->-r scripts/requirements.txt (line 2))
+2026-01-22T13:42:43.4780664Z   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+2026-01-22T13:42:43.4888419Z Collecting et-xmlfile (from openpyxl>=3.1.0->-r scripts/requirements.txt (line 3))
+2026-01-22T13:42:43.4920444Z   Downloading et_xmlfile-2.0.0-py3-none-any.whl.metadata (2.7 kB)
+2026-01-22T13:42:43.5085804Z Collecting six>=1.9 (from html5lib>=1.1->-r scripts/requirements.txt (line 6))
+2026-01-22T13:42:43.5122478Z   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+2026-01-22T13:42:43.5210130Z Collecting webencodings (from html5lib>=1.1->-r scripts/requirements.txt (line 6))
+2026-01-22T13:42:43.5250704Z   Downloading webencodings-0.5.1-py2.py3-none-any.whl.metadata (2.1 kB)
+2026-01-22T13:42:43.5392856Z Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+2026-01-22T13:42:43.5452990Z Downloading charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (151 kB)
+2026-01-22T13:42:43.5539670Z Downloading idna-3.11-py3-none-any.whl (71 kB)
+2026-01-22T13:42:43.5594798Z Downloading urllib3-2.6.3-py3-none-any.whl (131 kB)
+2026-01-22T13:42:43.5659591Z Downloading pandas-3.0.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (11.2 MB)
+2026-01-22T13:42:43.6369186Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.2/11.2 MB 168.0 MB/s  0:00:00
+2026-01-22T13:42:43.6406584Z Downloading openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+2026-01-22T13:42:43.6471328Z Downloading xlrd-2.0.2-py2.py3-none-any.whl (96 kB)
+2026-01-22T13:42:43.6566579Z Downloading lxml-6.0.2-cp311-cp311-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.2 MB)
+2026-01-22T13:42:43.6828248Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 211.3 MB/s  0:00:00
+2026-01-22T13:42:43.6864034Z Downloading html5lib-1.1-py2.py3-none-any.whl (112 kB)
+2026-01-22T13:42:43.6925489Z Downloading certifi-2026.1.4-py3-none-any.whl (152 kB)
+2026-01-22T13:42:43.6989565Z Downloading numpy-2.4.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+2026-01-22T13:42:43.8045446Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.7/16.7 MB 164.4 MB/s  0:00:00
+2026-01-22T13:42:43.8086097Z Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-01-22T13:42:43.8153650Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-01-22T13:42:43.8207119Z Downloading et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+2026-01-22T13:42:43.8264820Z Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+2026-01-22T13:42:43.9432672Z Installing collected packages: webencodings, xlrd, urllib3, six, numpy, lxml, idna, et-xmlfile, charset_normalizer, certifi, requests, python-dateutil, openpyxl, html5lib, pandas
+2026-01-22T13:42:50.5540280Z 
+2026-01-22T13:42:50.5562352Z Successfully installed certifi-2026.1.4 charset_normalizer-3.4.4 et-xmlfile-2.0.0 html5lib-1.1 idna-3.11 lxml-6.0.2 numpy-2.4.1 openpyxl-3.1.5 pandas-3.0.0 python-dateutil-2.9.0.post0 requests-2.32.5 six-1.17.0 urllib3-2.6.3 webencodings-0.5.1 xlrd-2.0.2
+2026-01-22T13:42:50.6624689Z ##[group]Run python scripts/update_data.py
+2026-01-22T13:42:50.6625042Z [36;1mpython scripts/update_data.py[0m
+2026-01-22T13:42:50.6658465Z shell: /usr/bin/bash -e {0}
+2026-01-22T13:42:50.6658691Z env:
+2026-01-22T13:42:50.6658929Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:50.6659393Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-22T13:42:50.6659818Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:50.6660172Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:50.6660545Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:42:50.6660907Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-22T13:42:50.6661217Z ##[endgroup]
+2026-01-22T13:43:39.5455715Z ======================================================================
+2026-01-22T13:43:39.5461167Z   CME Group Warehouse & Depository Stocks Fetcher
+2026-01-22T13:43:39.5461667Z ======================================================================
+2026-01-22T13:43:39.5461947Z 
+2026-01-22T13:43:39.5462262Z [INFO] Loaded existing data from /home/runner/work/metalstats/metalstats/public/data.json
+2026-01-22T13:43:39.5462828Z   [INFO] Waiting 4.8s before next request...
+2026-01-22T13:43:39.5464024Z Fetching Gold stocks from https://www.cmegroup.com/delivery_reports/Gold_stocks.xls...
+2026-01-22T13:43:39.5464742Z   [ERROR] Error fetching Gold: 403 Client Error: Forbidden for url: https://www.cmegroup.com/delivery_reports/Gold_stocks.xls
+2026-01-22T13:43:39.5465289Z   [RETRY] Attempt 1 failed, retrying in 5s...
+2026-01-22T13:43:39.5465707Z Fetching Gold stocks from https://www.cmegroup.com/delivery_reports/Gold_stocks.xls...
+2026-01-22T13:43:39.5466388Z   [ERROR] Error fetching Gold: 403 Client Error: Forbidden for url: https://www.cmegroup.com/delivery_reports/Gold_stocks.xls
+2026-01-22T13:43:39.5466925Z   [RETRY] Attempt 2 failed, retrying in 10s...
+2026-01-22T13:43:39.5467342Z Fetching Gold stocks from https://www.cmegroup.com/delivery_reports/Gold_stocks.xls...
+2026-01-22T13:43:39.5468005Z   [ERROR] Error fetching Gold: 403 Client Error: Forbidden for url: https://www.cmegroup.com/delivery_reports/Gold_stocks.xls
+2026-01-22T13:43:39.5468546Z   [FAILED] All attempts failed for Gold
+2026-01-22T13:43:39.5468818Z   [INFO] Waiting 4.4s before next request...
+2026-01-22T13:43:39.5469236Z Fetching Silver stocks from https://www.cmegroup.com/delivery_reports/Silver_stocks.xls...
+2026-01-22T13:43:39.5469672Z   [OK] Parsed as Excel/xlrd (81 rows)
+2026-01-22T13:43:39.5469913Z   [WARNING] No data found for Silver
+2026-01-22T13:43:39.5470167Z   [INFO] Waiting 4.6s before next request...
+2026-01-22T13:43:39.5470585Z Fetching Copper stocks from https://www.cmegroup.com/delivery_reports/Copper_Stocks.xls...
+2026-01-22T13:43:39.5471019Z   [OK] Parsed as Excel/xlrd (56 rows)
+2026-01-22T13:43:39.5471292Z   [WARNING] Could not find header row for Copper
+2026-01-22T13:43:39.5471565Z   [WARNING] No data found for Copper
+2026-01-22T13:43:39.5471815Z   [INFO] Waiting 4.3s before next request...
+2026-01-22T13:43:39.5472305Z Fetching Platinum_Palladium stocks from https://www.cmegroup.com/delivery_reports/PA-PL_Stck_Rprt.xls...
+2026-01-22T13:43:39.5472802Z   [OK] Parsed as Excel/xlrd (151 rows)
+2026-01-22T13:43:39.5473070Z   [WARNING] No data found for Platinum_Palladium
+2026-01-22T13:43:39.5473362Z   [INFO] Waiting 3.8s before next request...
+2026-01-22T13:43:39.5473916Z Fetching Aluminum stocks from https://www.cmegroup.com/delivery_reports/Aluminum_Stocks.xls...
+2026-01-22T13:43:39.5474392Z   [OK] Parsed as Excel/xlrd (86 rows)
+2026-01-22T13:43:39.5474638Z   [WARNING] No data found for Aluminum
+2026-01-22T13:43:39.5474885Z   [INFO] Waiting 3.9s before next request...
+2026-01-22T13:43:39.5475293Z Fetching Zinc stocks from https://www.cmegroup.com/delivery_reports/Zinc_Stocks.xls...
+2026-01-22T13:43:39.5475701Z   [OK] Parsed as Excel/xlrd (91 rows)
+2026-01-22T13:43:39.5476191Z   [WARNING] Could not find header row for Zinc
+2026-01-22T13:43:39.5476458Z   [WARNING] No data found for Zinc
+2026-01-22T13:43:39.5476702Z   [INFO] Waiting 3.0s before next request...
+2026-01-22T13:43:39.5477106Z Fetching Lead stocks from https://www.cmegroup.com/delivery_reports/Lead_Stocks.xls...
+2026-01-22T13:43:39.5477511Z   [OK] Parsed as Excel/xlrd (101 rows)
+2026-01-22T13:43:39.5477775Z   [WARNING] Could not find header row for Lead
+2026-01-22T13:43:39.5478043Z   [WARNING] No data found for Lead
+2026-01-22T13:43:39.5478206Z 
+2026-01-22T13:43:39.5478289Z [WARNING] No new data fetched.
+2026-01-22T13:43:39.5478520Z Keeping existing data.json unchanged.
+2026-01-22T13:43:39.5978580Z ##[group]Run if [ -n "$(git status --porcelain)" ]; then
+2026-01-22T13:43:39.5979012Z [36;1mif [ -n "$(git status --porcelain)" ]; then[0m
+2026-01-22T13:43:39.5979333Z [36;1m  echo "changed=true" >> $GITHUB_OUTPUT[0m
+2026-01-22T13:43:39.5979598Z [36;1melse[0m
+2026-01-22T13:43:39.5979805Z [36;1m  echo "changed=false" >> $GITHUB_OUTPUT[0m
+2026-01-22T13:43:39.5980069Z [36;1mfi[0m
+2026-01-22T13:43:39.6011966Z shell: /usr/bin/bash -e {0}
+2026-01-22T13:43:39.6012188Z env:
+2026-01-22T13:43:39.6012437Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:43:39.6012859Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-22T13:43:39.6013460Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:43:39.6014152Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:43:39.6014517Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-22T13:43:39.6014922Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-22T13:43:39.6015232Z ##[endgroup]
+2026-01-22T13:43:39.6195103Z Post job cleanup.
+2026-01-22T13:43:39.7815498Z Post job cleanup.
+2026-01-22T13:43:39.8744913Z [command]/usr/bin/git version
+2026-01-22T13:43:39.8783184Z git version 2.52.0
+2026-01-22T13:43:39.8827809Z Temporarily overriding HOME='/home/runner/work/_temp/a9e8d985-8a0f-4e6a-acf4-919b75cf38dc' before making global git config changes
+2026-01-22T13:43:39.8829168Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-22T13:43:39.8834194Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/metalstats/metalstats
+2026-01-22T13:43:39.8870083Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-22T13:43:39.8902393Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-22T13:43:39.9127884Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-22T13:43:39.9150569Z http.https://github.com/.extraheader
+2026-01-22T13:43:39.9162882Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-01-22T13:43:39.9193011Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-22T13:43:39.9416456Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-22T13:43:39.9445938Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-22T13:43:39.9766912Z Cleaning up orphan processes
