@@ -1,0 +1,272 @@
+'use client';
+
+import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio } from '@/lib/data';
+import { motion, AnimatePresence } from 'framer-motion';
+import DemandChart from './DemandChart';
+import { ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import Link from 'next/link';
+
+interface DashboardProps {
+  data: WarehouseStocksData;
+}
+
+export default function Dashboard({ data }: DashboardProps) {
+  const activeMetals = metalConfigs.filter(config => {
+    const metalData = data[config.key];
+    return metalData && metalData.totals.total > 0;
+  });
+
+  const [expandedMetal, setExpandedMetal] = useState<string | null>(null);
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
+      {/* Hero Section */}
+      <section className="relative flex flex-col justify-start overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-white/30 dark:bg-black/20">
+        {/* Optimized Aurora Background with Silver Tones */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div 
+            className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-slate-300/20 dark:bg-slate-700/10 blur-[100px] rounded-full transform-gpu" 
+            style={{ willChange: 'transform' }}
+          />
+          <div 
+            className="absolute top-0 right-[-5%] w-[30%] h-[30%] bg-slate-400/15 dark:bg-slate-800/10 blur-[100px] rounded-full transform-gpu" 
+            style={{ willChange: 'transform' }}
+          />
+          <div className="absolute inset-0 bg-white/5 dark:bg-black/5 backdrop-blur-[1px]" />
+        </div>
+
+        {/* Hero Title & Subtitle */}
+        <div className="relative w-full px-8 lg:px-24 pt-24 pb-12 md:pt-32 md:pb-16 text-left">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="leading-[1.1] tracking-tighter mb-4 md:mb-6 text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
+              COMEX Metals
+              <span className="text-muted-foreground font-medium"> — Inventory</span>
+            </h1>
+
+            <p className="leading-relaxed text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium whitespace-nowrap">
+              Advanced analytics for global warehouse inventory levels and supply-demand coverage metrics.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Spacer */}
+        <div className="h-6 md:h-10 lg:h-12" />
+
+        {/* Stats Cards */}
+        <div className="relative w-full px-8 lg:px-24 pb-24 md:pb-32 text-center mx-auto">
+          <motion.div
+            className="flex flex-wrap gap-4 md:gap-6 justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {activeMetals.map(config => {
+              const metalData = data[config.key];
+              if (!metalData) return null;
+              const ratio = calculateCoverageRatio(metalData.totals.registered, config.monthlyDemand);
+              const isStress = ratio < 5;
+              
+              return (
+                <div 
+                  key={config.key} 
+                  className="relative group min-w-[220px] md:min-w-[260px] px-8 py-10 md:px-10 md:py-12 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                >
+                  {/* Subtle Background Accent Gradient */}
+                  <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  
+                  {/* Status Indicator */}
+                  <div className="absolute top-5 right-5 md:top-6 md:right-6 flex items-center gap-2">
+                    <div className={`w-2.5 h-2.5 rounded-full ${isStress ? 'bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.6)]' : 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]'}`} />
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    <p className="text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 md:mb-3 whitespace-nowrap">
+                      {config.name}
+                    </p>
+                    <p className={`text-3xl md:text-4xl font-black tracking-tighter tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
+                      {ratio.toFixed(1)}<span className="text-base md:text-lg ml-0.5">x</span>
+                    </p>
+                    <div className="mt-3 md:mt-4 px-3 py-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                      <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
+                        Coverage Ratio
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Spacer between hero and supply section */}
+      <div className="h-12 md:h-20 lg:h-24" />
+
+      {/* Main Content */}
+      <section className="w-full px-8 pl-16 md:pl-24 lg:pl-48 pt-16 md:pt-20 pb-32 md:pb-48">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16">
+          <div className="max-w-xl space-y-8">
+            <h2 className="tracking-tighter text-5xl font-black uppercase">
+              Supply Overview
+            </h2>
+            <p className="text-xl text-slate-500 dark:text-slate-400 font-medium uppercase whitespace-nowrap">
+              LIVE REGISTERED INVENTORY VS AGGREGATE MONTHLY DEMAND
+            </p>
+          </div>
+        </div>
+
+        {/* Metal Rows */}
+        <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
+          {activeMetals.map((config, index) => {
+            const metalData = data[config.key];
+            if (!metalData) return null;
+            
+            const ratio = calculateCoverageRatio(metalData.totals.registered, config.monthlyDemand);
+            const isStress = ratio < 5;
+            const isWatch = ratio >= 5 && ratio < 12;
+            const registeredPercent = metalData.totals.total > 0 
+              ? (metalData.totals.registered / metalData.totals.total) * 100 
+              : 0;
+            const isExpanded = expandedMetal === config.key;
+
+            return (
+              <div
+                key={config.key}
+                className="relative"
+              >
+                <button
+                  onClick={() => setExpandedMetal(isExpanded ? null : config.key)}
+                  className={`relative w-full text-left p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300`}
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                    <div className="flex items-center gap-12">
+                      <div className="relative">
+                        <div className={`absolute -inset-2 bg-gradient-to-tr ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'} rounded-2xl blur-md opacity-20`} />
+                        <div className="relative w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                          {config.name.substring(0, 2).toUpperCase()}
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">{config.name}</h3>
+                        <p className="text-slate-500 font-bold text-sm">{config.unit}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-16">
+                      <div className="w-40">
+                        <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
+                          <span>Vault Capacity</span>
+                          <span>{registeredPercent.toFixed(0)}%</span>
+                        </div>
+                        <div className="h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                          <motion.div 
+                            initial={false}
+                            animate={{ width: `${registeredPercent}%` }}
+                            className={`h-full rounded-full bg-gradient-to-r ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'}`}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="text-right">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Coverage</p>
+                        <p className={`text-4xl font-black tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
+                          {ratio.toFixed(2)}x
+                        </p>
+                      </div>
+                      
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
+                        <ChevronRight className="w-5 h-5 text-slate-400" />
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="mt-6 p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
+                    >
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {[
+                          { label: 'Total Supply', value: formatNumber(metalData.totals.total) },
+                          { label: 'Registered', value: formatNumber(metalData.totals.registered) },
+                          { label: 'Eligible', value: formatNumber(metalData.totals.eligible) },
+                          { label: 'Demand', value: formatNumber(config.monthlyDemand) }
+                        ].map((stat, i) => (
+                          <div key={i} className="p-4 bg-white/40 dark:bg-black/40 rounded-2xl border border-white/30">
+                            <p className="text-[10px] font-black text-slate-400 uppercase mb-1 tracking-wider">{stat.label}</p>
+                            <p className="text-xl font-bold">{stat.value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Spacer between sections */}
+      <div className="h-12 md:h-20 lg:h-24" />
+
+      {/* Demand Chart Section */}
+      <section className="relative mt-0 pt-16 md:pt-24 pb-20 md:pb-32 bg-transparent overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] bg-slate-300/5 dark:bg-slate-700/5 blur-[100px] rounded-full" />
+        </div>
+        <div className="w-full px-8 pl-16 md:pl-24 lg:pl-48">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 md:mb-28">
+            <div className="max-w-xl space-y-8">
+              <h2 className="tracking-tighter text-5xl font-black uppercase">
+                Demand Trends
+              </h2>
+              <p className="text-xl text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest whitespace-nowrap">
+                HISTORICAL DELIVERY PERFORMANCE VS PROJECTED DEMAND
+              </p>
+            </div>
+          </div>
+          
+          <div className="p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[3rem] shadow-sm">
+            <DemandChart metal="gold" />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 md:py-16 bg-white/30 dark:bg-black/20 border-t border-slate-200 dark:border-slate-800">
+        <div className="w-full px-8 lg:px-24">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
+            <div className="flex items-center gap-4">
+              <div className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span>CME Group Stocks Verified 2026</span>
+            </div>
+            
+            <div className="flex gap-8">
+              <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
+                Terms of Service
+              </Link>
+              <Link href="/api-info" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
+                API Endpoint
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
