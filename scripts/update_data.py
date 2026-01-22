@@ -14,10 +14,11 @@ from datetime import datetime
 from pathlib import Path
 
 # URLs for the warehouse stocks reports
-# Note: URLs are case-sensitive! Gold_Stocks.xls works, Gold_stocks.xls returns 403
+# Note: URLs are case-sensitive and CME uses inconsistent naming!
+# Gold_Stocks.xls (capital S) vs Silver_stocks.xls (lowercase s)
 URLS = {
     'Gold': 'https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls',
-    'Silver': 'https://www.cmegroup.com/delivery_reports/Silver_Stocks.xls',
+    'Silver': 'https://www.cmegroup.com/delivery_reports/Silver_stocks.xls',
     'Copper': 'https://www.cmegroup.com/delivery_reports/Copper_Stocks.xls',
     'Platinum_Palladium': 'https://www.cmegroup.com/delivery_reports/PA-PL_Stck_Rprt.xls',
     'Aluminum': 'https://www.cmegroup.com/delivery_reports/Aluminum_Stocks.xls',
