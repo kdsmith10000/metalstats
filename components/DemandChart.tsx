@@ -328,15 +328,16 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
   
   const isDaily = timeRange === 'daily';
   const data = isDaily ? dailyDeliveryData[selectedMetal] : monthlyDeliveryData[selectedMetal];
-  const stats = isDaily ? dailyStats[selectedMetal] : monthlyStats[selectedMetal];
+  const dailyStatsData = dailyStats[selectedMetal];
+  const monthlyStatsData = monthlyStats[selectedMetal];
   
-  // Calculate change percentage
+  // Calculate change percentage with proper type handling
   const changeValue = isDaily 
-    ? stats.todayContracts - stats.avgDaily
-    : stats.current2026 - stats.previous2025;
+    ? dailyStatsData.todayContracts - dailyStatsData.avgDaily
+    : monthlyStatsData.current2026 - monthlyStatsData.previous2025;
   const changePercent = isDaily
-    ? stats.avgDaily > 0 ? ((stats.todayContracts - stats.avgDaily) / stats.avgDaily * 100).toFixed(0) : 0
-    : stats.previous2025 > 0 ? ((stats.current2026 - stats.previous2025) / stats.previous2025 * 100).toFixed(0) : 0;
+    ? dailyStatsData.avgDaily > 0 ? ((dailyStatsData.todayContracts - dailyStatsData.avgDaily) / dailyStatsData.avgDaily * 100).toFixed(0) : 0
+    : monthlyStatsData.previous2025 > 0 ? ((monthlyStatsData.current2026 - monthlyStatsData.previous2025) / monthlyStatsData.previous2025 * 100).toFixed(0) : 0;
   const isPositive = Number(changePercent) >= 0;
 
   const metalLabels = {
@@ -557,15 +558,15 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
           <>
             <div className="space-y-2">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">7-Day Total</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{stats.weekTotal.toLocaleString()}</p>
+              <p className="text-4xl font-bold tabular-nums tracking-tight">{dailyStatsData.weekTotal.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground font-medium">contracts delivered</p>
             </div>
             
             <div className="border-t border-dashed border-slate-300 dark:border-slate-700" />
             
             <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">{stats.label}</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{stats.todayContracts.toLocaleString()}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">{dailyStatsData.label}</p>
+              <p className="text-4xl font-bold tabular-nums tracking-tight">{dailyStatsData.todayContracts.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground font-medium">contracts</p>
             </div>
             
@@ -576,22 +577,22 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
               <p className={`text-4xl font-bold tabular-nums tracking-tight ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
                 {isPositive ? '+' : ''}{changePercent}%
               </p>
-              <p className="text-sm text-muted-foreground font-medium">{stats.previousLabel}</p>
+              <p className="text-sm text-muted-foreground font-medium">{dailyStatsData.previousLabel}</p>
             </div>
           </>
         ) : (
           <>
             <div className="space-y-2">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">2025 Total</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{stats.total2025.toLocaleString()}</p>
+              <p className="text-4xl font-bold tabular-nums tracking-tight">{monthlyStatsData.total2025.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground font-medium">contracts delivered</p>
             </div>
             
             <div className="border-t border-dashed border-slate-300 dark:border-slate-700" />
             
             <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">{stats.label}</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{stats.current2026.toLocaleString()}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">{monthlyStatsData.label}</p>
+              <p className="text-4xl font-bold tabular-nums tracking-tight">{monthlyStatsData.current2026.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground font-medium">projected</p>
             </div>
             
@@ -602,7 +603,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
               <p className={`text-4xl font-bold tabular-nums tracking-tight ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
                 {isPositive ? '+' : ''}{changePercent}%
               </p>
-              <p className="text-sm text-muted-foreground font-medium">{stats.previousLabel}</p>
+              <p className="text-sm text-muted-foreground font-medium">{monthlyStatsData.previousLabel}</p>
             </div>
           </>
         )}
