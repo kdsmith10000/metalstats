@@ -1,76 +1,35 @@
 {
   "bulletin_number": 13,
-  "date": "wed, Jan 21, 2026",
+  "date": "wed, jan 21, 2026",
   "parsed_date": "2026-01-21",
   "products": [
     {
+      "symbol": "1OZ",
+      "name": "1 OUNCE GOLD FUTURES",
+      "contracts": [],
+      "total_volume": 141855,
+      "total_open_interest": 19380,
+      "total_oi_change": 1290
+    },
+    {
       "symbol": "GC",
       "name": "COMEX GOLD FUTURES",
-      "contracts": [
-        {
-          "month": "FEB26",
-          "settle": 4837.5,
-          "change": 71.7,
-          "globex_volume": 393564,
-          "pnt_volume": 6954,
-          "oi_change": -17878
-        },
-        {
-          "month": "MAR26",
-          "settle": 4854.8,
-          "change": 71.9,
-          "globex_volume": 4371,
-          "pnt_volume": 0,
-          "oi_change": 114
-        },
-        {
-          "month": "AUG26",
-          "settle": 4944.0,
-          "change": 73.7,
-          "globex_volume": 2535,
-          "pnt_volume": 363,
-          "oi_change": -309
-        },
-        {
-          "month": "JAN26",
-          "settle": 4831.8,
-          "change": 72.2,
-          "globex_volume": 1706,
-          "pnt_volume": 0,
-          "oi_change": 1518
-        },
-        {
-          "month": "DEC28",
-          "settle": 5342.4,
-          "change": 69.5,
-          "globex_volume": 10,
-          "pnt_volume": 91,
-          "oi_change": 0
-        },
-        {
-          "month": "JUN29",
-          "settle": 5426.8,
-          "change": 66.6,
-          "globex_volume": 3,
-          "pnt_volume": 35,
-          "oi_change": 0
-        }
-      ],
+      "contracts": [],
       "total_volume": 488026,
-      "total_open_interest": 12494,
-      "total_oi_change": 532136
+      "total_open_interest": 532136,
+      "total_oi_change": 4132
     },
     {
       "symbol": "SI",
       "name": "COMEX SILVER FUTURES",
       "contracts": [],
       "total_volume": 148448,
-      "total_open_interest": 643,
-      "total_oi_change": 153311
+      "total_open_interest": 153311,
+      "total_oi_change": 1291
     },
     {
       "symbol": "SIL",
-      "name": "5000 OZ SILVER FUTURES",
+      "name": "MICRO SILVER FUTURES",
       "contracts": [],
       "total_volume": 346357,
       "total_open_interest": 33078,
@@ -79,16 +38,7 @@
     {
       "symbol": "HG",
       "name": "COMEX COPPER FUTURES",
-      "contracts": [
-        {
-          "month": "JUL26",
-          "settle": 5.8845,
-          "change": -0.04,
-          "globex_volume": 2922,
-          "pnt_volume": 121,
-          "oi_change": -132
-        }
-      ],
+      "contracts": [],
       "total_volume": 73635,
       "total_open_interest": 280000,
       "total_oi_change": 1569
@@ -98,8 +48,8 @@
       "name": "NYMEX PLATINUM FUTURES",
       "contracts": [],
       "total_volume": 45276,
-      "total_open_interest": 1086,
-      "total_oi_change": 78650
+      "total_open_interest": 78650,
+      "total_oi_change": -359
     },
     {
       "symbol": "PA",
@@ -116,7 +66,15 @@
       "total_volume": 21174,
       "total_open_interest": 1862,
       "total_oi_change": 8
+    },
+    {
+      "symbol": "MGC",
+      "name": "MICRO GOLD FUTURES",
+      "contracts": [],
+      "total_volume": 861130,
+      "total_open_interest": 77997,
+      "total_oi_change": -973
     }
   ],
-  "last_updated": "2026-01-22T18:35:41.704615"
+  "last_updated": "2026-01-23T09:10:04.492589"
 }
