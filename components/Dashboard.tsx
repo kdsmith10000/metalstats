@@ -156,7 +156,7 @@ export default function Dashboard({ data, bulletinData, deliveryData }: Dashboar
                         <span className={ratioChange > 0 ? 'text-emerald-500' : ratioChange < 0 ? 'text-red-500' : 'text-slate-400'}>
                           {ratioChange > 0 ? '+' : ''}{Math.round(ratioChange)}
                         </span>
-                        <span className="text-slate-400 ml-1">vs yesterday</span>
+                        <span className="text-slate-400 ml-1.5">vs yesterday</span>
                       </div>
                     )}
                   </div>
