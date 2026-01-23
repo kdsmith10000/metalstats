@@ -87,14 +87,13 @@ def parse_bulletin_header(text: str) -> dict:
 
 
 def parse_product_totals(text: str) -> dict:
-    """Parse TOTAL lines for each product to get volume and OI."""
+    """Parse product lines for each product to get volume and OI."""
     products = {}
     
-    # Format from pdftotext -layout:
-    # TOTAL GC FUT                      488026          12494            532136    +  4132
-    # TOTAL SI FUT                      148448            643            153311    +    1291
-    # TOTAL SIL FUT                     346357                            33078    +    1671
-    # Format: TOTAL SYMBOL FUT ... VOLUME [PNT_VOL] OI SIGN OI_CHANGE
+    # Section02B format (Exchange Summary):
+    # MGC MICRO GOLD FUTURES                         557540                                557540            82478    +         4481
+    # GC COMEX GOLD FUTURES                          353277                       3872     357149           555309    +        23173
+    # Format: SYMBOL NAME ... GLOBEX_VOL [blank] PNT_VOL COMBINED_VOL OI SIGN OI_CHANGE
     
     product_configs = [
         ('1OZ', '1 OUNCE GOLD FUTURES'),
@@ -109,8 +108,32 @@ def parse_product_totals(text: str) -> dict:
     ]
     
     for symbol, name in product_configs:
-        # Match TOTAL SYMBOL FUT line with flexible whitespace
-        # Pattern captures: volume, oi, sign, oi_change
+        # Try Section02B format first (summary lines)
+        # Pattern: SYMBOL NAME ... numbers ... COMBINED_VOL OI SIGN OI_CHANGE
+        pattern = rf'^{symbol}\s+.*?(\d+)\s+(\d+)\s+([+-])\s+(\d+)'
+        match = re.search(pattern, text, re.MULTILINE)
+        if match:
+            try:
+                total_volume = int(match.group(1))
+                total_oi = int(match.group(2))
+                sign = match.group(3)
+                oi_change = int(match.group(4))
+                if sign == '-':
+                    oi_change = -oi_change
+                
+                products[symbol] = {
+                    'symbol': symbol,
+                    'name': name,
+                    'contracts': [],
+                    'total_volume': total_volume,
+                    'total_open_interest': total_oi,
+                    'total_oi_change': oi_change,
+                }
+                continue
+            except (ValueError, IndexError):
+                pass
+        
+        # Fallback to Section62 format (TOTAL lines)
         pattern = rf'TOTAL\s+{symbol}\s+FUT\s+(\d+)\s+(?:\d+\s+)?(\d+)\s+([+-])\s+(\d+)'
         match = re.search(pattern, text)
         if match:
@@ -452,11 +475,24 @@ def main():
     # Get paths
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
-    pdf_path = project_root / 'data' / 'Section62_Metals_Futures_Products.pdf'
     output_file = project_root / 'public' / 'bulletin.json'
     
-    if not pdf_path.exists():
-        print(f"[ERROR] PDF not found: {pdf_path}")
+    # Try different PDF names (Section02B is the newer format)
+    pdf_names = [
+        'Section02B_Summary_Volume_And_Open_Interest_Metals_Futures_And_Options.pdf',
+        'Section62_Metals_Futures_Products.pdf',
+    ]
+    
+    pdf_path = None
+    for name in pdf_names:
+        candidate = project_root / 'data' / name
+        if candidate.exists():
+            pdf_path = candidate
+            break
+    
+    if not pdf_path:
+        print(f"[ERROR] No bulletin PDF found in data/")
+        print(f"  Looked for: {', '.join(pdf_names)}")
         return
     
     print(f"[INFO] Parsing: {pdf_path}")
