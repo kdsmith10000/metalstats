@@ -200,10 +200,18 @@ export default function Dashboard({ data, bulletinData, deliveryData }: Dashboar
         <div className="sm:hidden flex items-center justify-center gap-2 mt-3 text-xs text-muted-foreground">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
           <span>Last updated: {activeMetals[0] && data[activeMetals[0].key]?.report_date ? (() => {
-            // Parse date string directly to avoid timezone issues
+            // Parse date string - handles both "M/D/YYYY" and "YYYY-MM-DD" formats
             const dateStr = data[activeMetals[0].key].report_date!;
-            const [year, month, day] = dateStr.split('-').map(Number);
-            const date = new Date(year, month - 1, day);
+            let date: Date;
+            if (dateStr.includes('/')) {
+              // Format: M/D/YYYY
+              const [month, day, year] = dateStr.split('/').map(Number);
+              date = new Date(year, month - 1, day);
+            } else {
+              // Format: YYYY-MM-DD
+              const [year, month, day] = dateStr.split('-').map(Number);
+              date = new Date(year, month - 1, day);
+            }
             return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
           })() : 'N/A'} • CME Group</span>
         </div>
