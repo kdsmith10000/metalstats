@@ -392,32 +392,34 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      <div className="lg:col-span-3 space-y-6">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8">
+      <div className="lg:col-span-3 space-y-4 sm:space-y-6">
         {/* Controls Row */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          {/* Metal Tabs */}
-          <div className="flex gap-3 p-2 bg-slate-100 dark:bg-slate-800/50 rounded-2xl w-fit">
-            {Object.entries(metalLabels).map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setSelectedMetal(key as MetalType)}
-                className={`px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
-                  selectedMetal === key 
-                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md' 
-                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+          {/* Metal Tabs - Scrollable on mobile */}
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="flex gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800/50 rounded-xl sm:rounded-2xl w-max sm:w-fit">
+              {Object.entries(metalLabels).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setSelectedMetal(key as MetalType)}
+                  className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 whitespace-nowrap ${
+                    selectedMetal === key 
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md' 
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Time Range Toggle */}
-          <div className="flex gap-3 p-2 bg-slate-100 dark:bg-slate-800/50 rounded-2xl w-fit">
+          <div className="flex gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800/50 rounded-xl sm:rounded-2xl w-full sm:w-fit">
             <button
               onClick={() => setTimeRange('daily')}
-              className={`px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
+              className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 ${
                 timeRange === 'daily'
                   ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
@@ -427,7 +429,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
             </button>
             <button
               onClick={() => setTimeRange('monthly')}
-              className={`px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
+              className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 ${
                 timeRange === 'monthly'
                   ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
@@ -439,7 +441,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
         </div>
 
         {/* Chart */}
-        <div className="h-80">
+        <div className="h-56 sm:h-72 md:h-80">
           <ResponsiveContainer width="100%" height="100%">
             {isDaily ? (
               <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 30 }}>
@@ -576,20 +578,20 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-6 text-sm">
+        <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm">
           {isDaily ? (
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded bg-emerald-500" />
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-emerald-500" />
               <span className="text-muted-foreground">Jan 2026 Daily</span>
             </div>
           ) : (
             <>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded bg-muted-foreground/30" />
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-muted-foreground/30" />
                 <span className="text-muted-foreground">2025</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded bg-emerald-500" />
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-emerald-500" />
                 <span className="text-muted-foreground">2026</span>
               </div>
             </>
@@ -598,57 +600,57 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
       </div>
 
       {/* Stats Panel - Updates based on selected metal and time range */}
-      <div className="flex flex-col justify-between p-6 h-[26rem]">
+      <div className="grid grid-cols-3 lg:grid-cols-1 lg:flex lg:flex-col lg:justify-between gap-4 p-4 sm:p-6 lg:h-[26rem] bg-slate-50/50 dark:bg-slate-900/30 rounded-xl lg:rounded-none lg:bg-transparent">
         {isDaily ? (
           <>
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">7-Day Total</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{dailyStatsData.weekTotal.toLocaleString()}</p>
-              <p className="text-sm text-muted-foreground font-medium">contracts delivered</p>
+            <div className="space-y-1 sm:space-y-2 text-center lg:text-left">
+              <p className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest">7-Day Total</p>
+              <p className="text-xl sm:text-2xl lg:text-4xl font-bold tabular-nums tracking-tight">{dailyStatsData.weekTotal.toLocaleString()}</p>
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium hidden sm:block">contracts</p>
             </div>
             
-            <div className="border-t border-dashed border-slate-300 dark:border-slate-700" />
+            <div className="hidden lg:block border-t border-dashed border-slate-300 dark:border-slate-700" />
             
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">{dailyStatsData.label}</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{dailyStatsData.todayContracts.toLocaleString()}</p>
-              <p className="text-sm text-muted-foreground font-medium">contracts</p>
+            <div className="space-y-1 sm:space-y-2 text-center lg:text-left">
+              <p className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest">{dailyStatsData.label}</p>
+              <p className="text-xl sm:text-2xl lg:text-4xl font-bold tabular-nums tracking-tight">{dailyStatsData.todayContracts.toLocaleString()}</p>
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium hidden sm:block">contracts</p>
             </div>
             
-            <div className="border-t border-dashed border-slate-300 dark:border-slate-700" />
+            <div className="hidden lg:block border-t border-dashed border-slate-300 dark:border-slate-700" />
             
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Daily Change</p>
-              <p className={`text-4xl font-bold tabular-nums tracking-tight ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
+            <div className="space-y-1 sm:space-y-2 text-center lg:text-left">
+              <p className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest">Change</p>
+              <p className={`text-xl sm:text-2xl lg:text-4xl font-bold tabular-nums tracking-tight ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
                 {isPositive ? '+' : ''}{changePercent}%
               </p>
-              <p className="text-sm text-muted-foreground font-medium">{dailyStatsData.previousLabel}</p>
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium hidden sm:block">{dailyStatsData.previousLabel}</p>
             </div>
           </>
         ) : (
           <>
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">2025 Total</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{monthlyStatsData.total2025.toLocaleString()}</p>
-              <p className="text-sm text-muted-foreground font-medium">contracts delivered</p>
+            <div className="space-y-1 sm:space-y-2 text-center lg:text-left">
+              <p className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest">2025 Total</p>
+              <p className="text-xl sm:text-2xl lg:text-4xl font-bold tabular-nums tracking-tight">{monthlyStatsData.total2025.toLocaleString()}</p>
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium hidden sm:block">delivered</p>
             </div>
             
-            <div className="border-t border-dashed border-slate-300 dark:border-slate-700" />
+            <div className="hidden lg:block border-t border-dashed border-slate-300 dark:border-slate-700" />
             
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">{monthlyStatsData.label}</p>
-              <p className="text-4xl font-bold tabular-nums tracking-tight">{monthlyStatsData.current2026.toLocaleString()}</p>
-              <p className="text-sm text-muted-foreground font-medium">projected</p>
+            <div className="space-y-1 sm:space-y-2 text-center lg:text-left">
+              <p className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest">{monthlyStatsData.label}</p>
+              <p className="text-xl sm:text-2xl lg:text-4xl font-bold tabular-nums tracking-tight">{monthlyStatsData.current2026.toLocaleString()}</p>
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium hidden sm:block">projected</p>
             </div>
             
-            <div className="border-t border-dashed border-slate-300 dark:border-slate-700" />
+            <div className="hidden lg:block border-t border-dashed border-slate-300 dark:border-slate-700" />
             
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">YoY Change</p>
-              <p className={`text-4xl font-bold tabular-nums tracking-tight ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
+            <div className="space-y-1 sm:space-y-2 text-center lg:text-left">
+              <p className="text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest">YoY Change</p>
+              <p className={`text-xl sm:text-2xl lg:text-4xl font-bold tabular-nums tracking-tight ${isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
                 {isPositive ? '+' : ''}{changePercent}%
               </p>
-              <p className="text-sm text-muted-foreground font-medium">{monthlyStatsData.previousLabel}</p>
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium hidden sm:block">{monthlyStatsData.previousLabel}</p>
             </div>
           </>
         )}

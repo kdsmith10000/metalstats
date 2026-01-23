@@ -56,26 +56,26 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
   const totalOI = sortedProducts.reduce((sum, p) => sum + p.total_open_interest, 0);
 
   return (
-    <div className="space-y-20 md:space-y-28">
+    <div className="space-y-12 sm:space-y-20 md:space-y-28">
       {/* Market Activity Section */}
       <div>
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16">
-          <div className="max-w-xl space-y-8">
-            <h2 className="tracking-tighter text-5xl font-black uppercase">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16 gap-4">
+          <div className="max-w-xl space-y-3 sm:space-y-8">
+            <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
               Market Activity
             </h2>
-            <p className="text-xl text-slate-500 dark:text-slate-400 font-medium uppercase whitespace-nowrap">
+            <p className="text-sm sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase">
               DAILY FUTURES VOLUME & OPEN INTEREST — BULLETIN #{data.bulletin_number}
             </p>
           </div>
-          <div className="mt-8 md:mt-0 flex items-center gap-4 px-6 py-3 bg-white/50 dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl">
-            <Calendar className="w-4 h-4 text-slate-400" />
-            <span className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{data.date}</span>
+          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white/50 dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl w-fit">
+            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
+            <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{data.date}</span>
           </div>
         </div>
 
         {/* Main Product Rows - Matching Inventory Style */}
-        <div className="grid gap-4 md:gap-6 grid-cols-1">
+        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-1">
           {sortedProducts.map((product, index) => {
             const config = productConfig[product.symbol];
             const isExpanded = expandedProduct === product.symbol;
@@ -87,37 +87,39 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
               <div key={product.symbol} className="relative">
                 <button
                   onClick={() => setExpandedProduct(isExpanded ? null : product.symbol)}
-                  className="relative w-full text-left p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
+                  className="relative w-full text-left p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                    <div className="flex items-center gap-12">
-                      <div className="relative">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
+                    {/* Product Info */}
+                    <div className="flex items-center gap-4 sm:gap-6 lg:gap-12">
+                      <div className="relative flex-shrink-0">
                         <div 
-                          className="absolute -inset-2 rounded-2xl blur-md opacity-20"
+                          className="absolute -inset-1.5 sm:-inset-2 rounded-xl sm:rounded-2xl blur-md opacity-20"
                           style={{ backgroundColor: config?.color || '#64748b' }}
                         />
-                        <div className="relative w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-slate-900 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl shadow-lg">
                           {product.symbol.substring(0, 2).toUpperCase()}
                         </div>
                       </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">
+                      <div className="min-w-0">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight truncate">
                           {config?.displayName || product.symbol}
                         </h3>
-                        <p className="text-slate-500 font-bold text-sm uppercase tracking-wider">
+                        <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-wider">
                           {product.symbol} • {frontContract?.month || 'N/A'}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-16">
-                      {/* Volume Bar */}
-                      <div className="w-40 hidden xl:block">
-                        <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
-                          <span>Volume Share</span>
+                    {/* Stats */}
+                    <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 lg:gap-16">
+                      {/* Volume Bar - Hidden on small screens */}
+                      <div className="w-32 lg:w-40 hidden xl:block">
+                        <div className="flex justify-between text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">
+                          <span>Volume</span>
                           <span>{volumePercent.toFixed(0)}%</span>
                         </div>
-                        <div className="h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                        <div className="h-2 sm:h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${volumePercent}%` }}
@@ -128,30 +130,30 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                       </div>
 
                       {/* Settlement Price */}
-                      <div className="text-right min-w-[120px]">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Settlement</p>
-                        <p className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
+                      <div className="text-right min-w-0 sm:min-w-[100px] lg:min-w-[120px]">
+                        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Settle</p>
+                        <p className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 dark:text-white tabular-nums">
                           {frontContract ? frontContract.settle.toFixed(2) : '—'}
                         </p>
                       </div>
 
                       {/* Change */}
-                      <div className="text-right min-w-[100px]">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Change</p>
-                        <p className={`text-2xl font-black tabular-nums ${changeFormatted?.color || 'text-slate-400'}`}>
+                      <div className="text-right min-w-0 sm:min-w-[80px] lg:min-w-[100px]">
+                        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Change</p>
+                        <p className={`text-lg sm:text-xl md:text-2xl font-black tabular-nums ${changeFormatted?.color || 'text-slate-400'}`}>
                           {changeFormatted?.text || 'UNCH'}
                         </p>
                       </div>
 
-                      {/* Total Volume */}
-                      <div className="text-right min-w-[100px] hidden md:block">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Volume</p>
-                        <p className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
+                      {/* Total Volume - Hidden on smallest screens */}
+                      <div className="text-right min-w-[80px] lg:min-w-[100px] hidden md:block">
+                        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Volume</p>
+                        <p className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 dark:text-white tabular-nums">
                           {formatVolume(product.total_volume)}
                         </p>
                       </div>
                       
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
+                      <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
                         <ChevronRight className="w-5 h-5 text-slate-400" />
                       </div>
                     </div>
@@ -164,52 +166,54 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="mt-6 p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
+                      className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
                     >
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
                         {[
                           { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
                           { label: 'OI Change', value: (product.total_oi_change > 0 ? '+' : '') + formatNumber(product.total_oi_change), color: product.total_oi_change > 0 ? 'text-emerald-500' : product.total_oi_change < 0 ? 'text-red-500' : '' },
                           { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
                           { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
                         ].map((stat, i) => (
-                          <div key={i} className="p-4 bg-white/40 dark:bg-black/40 rounded-2xl border border-white/30 text-center">
-                            <p className="text-[10px] font-black text-slate-400 uppercase mb-1 tracking-wider">{stat.label}</p>
-                            <p className={`text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
+                          <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
+                            <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
+                            <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
                           </div>
                         ))}
                       </div>
 
-                      {/* Contract Details Table */}
+                      {/* Contract Details Table - Scrollable on mobile */}
                       {product.contracts.length > 0 && (
-                        <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-                          <table className="w-full text-sm">
-                            <thead className="bg-slate-50 dark:bg-slate-900/50">
-                              <tr>
-                                <th className="text-left px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Month</th>
-                                <th className="text-right px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Settle</th>
-                                <th className="text-right px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Change</th>
-                                <th className="text-right px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Volume</th>
-                                <th className="text-right px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">OI Chg</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                              {product.contracts.map((contract) => {
-                                const cChange = formatPriceChange(contract.change);
-                                return (
-                                  <tr key={contract.month} className="hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
-                                    <td className="px-6 py-3 font-bold text-slate-900 dark:text-white">{contract.month}</td>
-                                    <td className="px-6 py-3 text-right font-medium tabular-nums">{contract.settle.toFixed(2)}</td>
-                                    <td className={`px-6 py-3 text-right font-bold tabular-nums ${cChange.color}`}>{cChange.text}</td>
-                                    <td className="px-6 py-3 text-right tabular-nums">{formatNumber(contract.globex_volume + contract.pnt_volume)}</td>
-                                    <td className={`px-6 py-3 text-right font-medium tabular-nums ${contract.oi_change > 0 ? 'text-emerald-500' : contract.oi_change < 0 ? 'text-red-500' : ''}`}>
-                                      {contract.oi_change > 0 ? '+' : ''}{contract.oi_change !== 0 ? formatNumber(contract.oi_change) : 'UNCH'}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
+                        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                          <div className="overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 min-w-[500px] sm:min-w-0">
+                            <table className="w-full text-xs sm:text-sm">
+                              <thead className="bg-slate-50 dark:bg-slate-900/50">
+                                <tr>
+                                  <th className="text-left px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Month</th>
+                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Settle</th>
+                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Change</th>
+                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Volume</th>
+                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">OI Chg</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                                {product.contracts.map((contract) => {
+                                  const cChange = formatPriceChange(contract.change);
+                                  return (
+                                    <tr key={contract.month} className="hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
+                                      <td className="px-3 sm:px-6 py-2 sm:py-3 font-bold text-slate-900 dark:text-white">{contract.month}</td>
+                                      <td className="px-3 sm:px-6 py-2 sm:py-3 text-right font-medium tabular-nums">{contract.settle.toFixed(2)}</td>
+                                      <td className={`px-3 sm:px-6 py-2 sm:py-3 text-right font-bold tabular-nums ${cChange.color}`}>{cChange.text}</td>
+                                      <td className="px-3 sm:px-6 py-2 sm:py-3 text-right tabular-nums">{formatNumber(contract.globex_volume + contract.pnt_volume)}</td>
+                                      <td className={`px-3 sm:px-6 py-2 sm:py-3 text-right font-medium tabular-nums ${contract.oi_change > 0 ? 'text-emerald-500' : contract.oi_change < 0 ? 'text-red-500' : ''}`}>
+                                        {contract.oi_change > 0 ? '+' : ''}{contract.oi_change !== 0 ? formatNumber(contract.oi_change) : 'UNCH'}
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       )}
                     </motion.div>
@@ -222,40 +226,40 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
       </div>
 
       {/* Spacer between sections */}
-      <div className="h-12 md:h-20 lg:h-24" />
+      <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
 
       {/* Statistically Significant Insights Section */}
       <div>
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16">
-          <div className="max-w-xl space-y-8">
-            <h2 className="tracking-tighter text-5xl font-black uppercase">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16">
+          <div className="max-w-xl space-y-3 sm:space-y-8">
+            <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
               Market Signals
             </h2>
-            <p className="text-xl text-slate-500 dark:text-slate-400 font-medium uppercase whitespace-nowrap">
+            <p className="text-sm sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase">
               STATISTICALLY SIGNIFICANT INSIGHTS & PATTERNS
             </p>
           </div>
         </div>
 
         {/* Spacer between header and content */}
-        <div className="h-12 md:h-20 lg:h-24" />
+        <div className="h-6 sm:h-12 md:h-20 lg:h-24" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Precious Metals Divergence */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-sm"
+            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
           >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-amber-500" />
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
               </div>
-              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-xl">
-                Precious Metals Divergence
+              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
+                Metals Divergence
               </h4>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2 sm:space-y-4">
               {(() => {
                 const gc = data.products.find(p => p.symbol === 'GC');
                 const si = data.products.find(p => p.symbol === 'SI');
@@ -277,10 +281,10 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 return metals.map((metal, i) => {
                   const Icon = getIcon(metal.data.total_oi_change);
                   return (
-                    <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                      <Icon className={`w-5 h-5 ${getIconColor(metal.data.total_oi_change)} mt-1 flex-shrink-0`} />
-                      <p className="text-slate-600 dark:text-slate-300 font-medium">
-                        <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">{metal.name}</span>
+                    <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                      <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(metal.data.total_oi_change)} mt-0.5 sm:mt-1 flex-shrink-0`} />
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                        <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
                         {metal.description}
                       </p>
                     </div>
@@ -295,39 +299,39 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-sm"
+            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
           >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center">
-                <PieChart className="w-6 h-6 text-blue-500" />
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
               </div>
-              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-xl">
+              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
                 Volume Concentration
               </h4>
             </div>
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs font-black text-slate-400 uppercase tracking-widest">
+            <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-1.5 sm:space-y-2">
+                <div className="flex justify-between text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest">
                   <span>Silver vs Gold Volume</span>
                   <span>2.4x Ratio</span>
                 </div>
-                <div className="h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
+                <div className="h-2.5 sm:h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
                   <div className="h-full bg-slate-400 w-[70%]" />
                   <div className="h-full bg-amber-500 w-[30%]" />
                 </div>
-                <p className="text-sm text-slate-500 font-medium">Silver dominates with 346,357 contracts vs Gold's 141,855</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium">Silver dominates with 346,357 contracts vs Gold's 141,855</p>
               </div>
 
-              <div className="grid grid-cols-1 gap-4">
-                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
-                    <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">Gold Front-Month</span>
-                    FEB26 Gold accounts for 92% of total 1oz Gold volume (131,092 / 141,855)
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                    <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Gold Front-Month</span>
+                    FEB26 Gold accounts for 92% of total 1oz Gold volume
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
-                    <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">Platinum Activity</span>
+                <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                    <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Platinum Activity</span>
                     APR26 captures 93% of total volume (41,931 / 45,276)
                   </p>
                 </div>
@@ -340,17 +344,17 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-sm"
+            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
           >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center">
-                <Activity className="w-6 h-6 text-emerald-500" />
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />
               </div>
-              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-xl">
+              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
                 Open Interest Trends
               </h4>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2 sm:space-y-4">
               {(() => {
                 const getSignal = (change: number, volume: number) => {
                   if (change > 1000) return 'Strong accumulation';
@@ -376,12 +380,12 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                   const color = change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
                   
                   return (
-                    <div key={i} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <div key={i} className="flex items-center justify-between p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
                       <div>
-                        <p className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs mb-1">{metal.name}</p>
-                        <p className="text-sm text-slate-500 font-medium">{getSignal(change, product.total_volume)}</p>
+                        <p className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs mb-0.5 sm:mb-1">{metal.name}</p>
+                        <p className="text-xs sm:text-sm text-slate-500 font-medium">{getSignal(change, product.total_volume)}</p>
                       </div>
-                      <div className={`text-xl font-black tabular-nums ${color}`}>
+                      <div className={`text-base sm:text-lg md:text-xl font-black tabular-nums ${color}`}>
                         {change > 0 ? '+' : ''}{formatNumber(change)}
                       </div>
                     </div>
@@ -396,26 +400,26 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-sm"
+            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
           >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-purple-500" />
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
               </div>
-              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-xl">
+              <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
                 Physical Delivery (EFP)
               </h4>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {[
                 { label: 'Gold JAN26', value: '2,925' },
                 { label: 'Gold FEB26', value: '4,029' },
                 { label: 'Silver JAN26', value: '4,934' },
                 { label: 'Copper JAN26', value: '6,033' }
               ].map((item, i) => (
-                <div key={i} className="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{item.label}</p>
-                  <p className="text-3xl font-black text-slate-900 dark:text-white tabular-nums">{item.value}</p>
+                <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
+                  <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{item.label}</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{item.value}</p>
                 </div>
               ))}
             </div>
@@ -424,41 +428,41 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
       </div>
 
       {/* Key Takeaways Section */}
-      <div className="mt-40 md:mt-64 pt-20 md:pt-32 border-t border-slate-200 dark:border-slate-800">
+      <div className="mt-16 sm:mt-24 md:mt-40 lg:mt-64 pt-12 sm:pt-16 md:pt-20 lg:pt-32 border-t border-slate-200 dark:border-slate-800">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="p-12 bg-slate-900 dark:bg-black border border-slate-800 shadow-2xl overflow-hidden relative"
+          className="p-4 sm:p-8 md:p-12 bg-slate-900 dark:bg-black border border-slate-800 shadow-2xl overflow-hidden relative rounded-2xl sm:rounded-none"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-emerald-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           
           <div className="relative z-10">
             {/* Added spacer at the top of the card to move everything down */}
-            <div className="h-12 md:h-20 lg:h-32" />
+            <div className="h-4 sm:h-12 md:h-20 lg:h-32" />
 
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16">
-              <div className="max-w-xl space-y-8">
-                <h2 className="tracking-tighter text-5xl font-black uppercase text-white">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16">
+              <div className="max-w-xl space-y-3 sm:space-y-8">
+                <h2 className="tracking-tighter text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase text-white">
                   Strategic Summary
                 </h2>
-                <p className="text-xl text-slate-400 font-medium uppercase tracking-widest whitespace-nowrap">
+                <p className="text-xs sm:text-base md:text-xl text-slate-400 font-medium uppercase tracking-widest">
                   KEY MARKET TAKEAWAYS & ACTIONABLE INTELLIGENCE
                 </p>
               </div>
             </div>
 
             {/* Spacer to move Key Takeaways block further down */}
-            <div className="h-12 md:h-20 lg:h-24" />
+            <div className="h-4 sm:h-12 md:h-20 lg:h-24" />
 
-            <div className="flex items-center gap-4 mb-12">
-              <AlertTriangle className="w-8 h-8 text-amber-500" />
-              <h4 className="text-3xl font-black text-white uppercase tracking-tighter">
+            <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-12">
+              <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
+              <h4 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tighter">
                 Key Takeaways
               </h4>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               {(() => {
                 const gc = data.products.find(p => p.symbol === 'GC');
                 const si = data.products.find(p => p.symbol === 'SI');
@@ -504,11 +508,11 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 }
                 
                 return takeaways.map((item, i) => (
-                  <div key={i} className="space-y-3">
-                    <p className={`text-sm font-black uppercase tracking-[0.2em] ${item.color}`}>
+                  <div key={i} className="space-y-1.5 sm:space-y-3">
+                    <p className={`text-xs sm:text-sm font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] ${item.color}`}>
                       {item.title}
                     </p>
-                    <p className="text-lg text-slate-400 font-medium leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-slate-400 font-medium leading-relaxed">
                       {item.text}
                     </p>
                   </div>
@@ -520,8 +524,8 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
       </div>
 
       {/* Last Updated Footer - Matching Global Style */}
-      <div className="pt-12 border-t border-slate-200 dark:border-slate-800 text-center">
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+      <div className="pt-8 sm:pt-12 border-t border-slate-200 dark:border-slate-800 text-center">
+        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] sm:tracking-[0.3em]">
           Bulletin Data Verified • Last Updated {new Date(data.last_updated).toLocaleTimeString()}
         </p>
       </div>

@@ -77,29 +77,29 @@ export default function VolumeOIChart({
   const priceChangePercent = firstSettle > 0 ? (priceChange / firstSettle) * 100 : 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             {displayName} Volume & Open Interest
           </h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Last {data.length} trading days
           </p>
         </div>
 
         {/* Metric Toggle */}
-        <div className="flex gap-2 p-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl">
+        <div className="flex gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg sm:rounded-xl">
           {[
             { key: 'both', label: 'Both' },
             { key: 'volume', label: 'Volume' },
-            { key: 'oi', label: 'Open Interest' },
+            { key: 'oi', label: 'OI' },
           ].map((option) => (
             <button
               key={option.key}
               onClick={() => setMetric(option.key as 'volume' | 'oi' | 'both')}
-              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-md sm:rounded-lg transition-all ${
                 metric === option.key
                   ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -112,29 +112,29 @@ export default function VolumeOIChart({
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Avg Daily Volume</p>
-          <p className="text-xl font-bold text-slate-900 dark:text-white">{formatVolume(avgVolume)}</p>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg sm:rounded-xl">
+          <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Avg Volume</p>
+          <p className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">{formatVolume(avgVolume)}</p>
         </div>
-        <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Avg Open Interest</p>
-          <p className="text-xl font-bold text-slate-900 dark:text-white">{formatVolume(avgOI)}</p>
+        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg sm:rounded-xl">
+          <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Avg OI</p>
+          <p className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">{formatVolume(avgOI)}</p>
         </div>
-        <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Latest Settle</p>
-          <p className="text-xl font-bold text-slate-900 dark:text-white">${latestSettle.toFixed(2)}</p>
+        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg sm:rounded-xl">
+          <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Settle</p>
+          <p className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">${latestSettle.toFixed(2)}</p>
         </div>
-        <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Period Change</p>
-          <p className={`text-xl font-bold ${priceChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg sm:rounded-xl">
+          <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Change</p>
+          <p className={`text-base sm:text-xl font-bold ${priceChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {priceChange >= 0 ? '+' : ''}{priceChangePercent.toFixed(2)}%
           </p>
         </div>
       </div>
 
       {/* Chart */}
-      <div className="h-80">
+      <div className="h-56 sm:h-72 md:h-80">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
             <defs>
@@ -307,16 +307,16 @@ export default function VolumeOIChart({
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-center gap-6 text-sm">
+      <div className="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
         {(metric === 'both' || metric === 'volume') && (
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded" style={{ backgroundColor: color }} />
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded" style={{ backgroundColor: color }} />
             <span className="text-slate-500 dark:text-slate-400">Volume</span>
           </div>
         )}
         {(metric === 'both' || metric === 'oi') && (
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded bg-violet-500" />
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-violet-500" />
             <span className="text-slate-500 dark:text-slate-400">Open Interest</span>
           </div>
         )}
