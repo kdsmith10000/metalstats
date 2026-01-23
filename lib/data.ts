@@ -288,3 +288,26 @@ export function getPercentChangeColor(value: number | null | undefined): string 
   if (value < 0) return 'text-red-500';
   return 'text-slate-400';
 }
+
+// Format price change for bulletin display
+export function formatPriceChange(change: number): { text: string; color: string } {
+  if (change === 0) {
+    return { text: 'UNCH', color: 'text-slate-400' };
+  }
+  const sign = change > 0 ? '+' : '';
+  return {
+    text: `${sign}${change.toFixed(2)}`,
+    color: change > 0 ? 'text-emerald-500' : 'text-red-500'
+  };
+}
+
+// Format volume for compact display
+export function formatVolume(volume: number): string {
+  if (volume >= 1000000) {
+    return `${(volume / 1000000).toFixed(1)}M`;
+  }
+  if (volume >= 1000) {
+    return `${(volume / 1000).toFixed(1)}K`;
+  }
+  return volume.toString();
+}
