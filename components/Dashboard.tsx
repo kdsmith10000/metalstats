@@ -114,6 +114,15 @@ export default function Dashboard({ data, bulletinData, deliveryData }: Dashboar
               const ratio = calculateCoverageRatio(metalData.totals.registered, config.monthlyDemand);
               const isStress = ratio < 5;
               
+              // Calculate ratio change from previous day
+              let ratioChange: number | null = null;
+              if (metalData.changes?.day.registered !== null && metalData.changes?.day.registered !== undefined) {
+                // Previous registered = current / (1 + percent_change/100)
+                const previousRegistered = metalData.totals.registered / (1 + metalData.changes.day.registered / 100);
+                const previousRatio = calculateCoverageRatio(previousRegistered, config.monthlyDemand);
+                ratioChange = ratio - previousRatio;
+              }
+              
               return (
                 <div 
                   key={config.key} 
@@ -141,21 +150,13 @@ export default function Dashboard({ data, bulletinData, deliveryData }: Dashboar
                       </p>
                     </div>
                     
-                    {/* Percent Change */}
-                    {metalData.changes && (
-                      <div className="mt-4 flex gap-4 text-[10px] font-bold">
-                        <div className="flex flex-col items-center">
-                          <span className="text-slate-400 uppercase tracking-wider">24h</span>
-                          <span className={getPercentChangeColor(metalData.changes.day.registered)}>
-                            {formatPercentChange(metalData.changes.day.registered)}
-                          </span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <span className="text-slate-400 uppercase tracking-wider">30d</span>
-                          <span className={getPercentChangeColor(metalData.changes.month.registered)}>
-                            {formatPercentChange(metalData.changes.month.registered)}
-                          </span>
-                        </div>
+                    {/* Ratio Change - Shows absolute change in coverage ratio */}
+                    {ratioChange !== null && (
+                      <div className="mt-4 text-[11px] font-bold">
+                        <span className={ratioChange > 0 ? 'text-emerald-500' : ratioChange < 0 ? 'text-red-500' : 'text-slate-400'}>
+                          {ratioChange > 0 ? '+' : ''}{Math.round(ratioChange)}
+                        </span>
+                        <span className="text-slate-400 ml-1">vs yesterday</span>
                       </div>
                     )}
                   </div>
