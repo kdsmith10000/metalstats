@@ -93,7 +93,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className={`relative overflow-hidden p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-sm hover:shadow-lg transition-all duration-300`}
+              className={`relative overflow-hidden p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300`}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-50`} />
@@ -103,7 +103,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-2xl ${colors.accent} bg-opacity-20 flex items-center justify-center`}>
+                    <div className={`w-12 h-12 rounded-lg ${colors.accent} bg-opacity-20 flex items-center justify-center`}>
                       <Package className={`w-6 h-6 ${colors.text}`} />
                     </div>
                     <div>
@@ -115,7 +115,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
                       </p>
                     </div>
                   </div>
-                  <div className={`px-3 py-1.5 rounded-full ${colors.accent} bg-opacity-10`}>
+                  <div className={`px-3 py-1.5 rounded ${colors.accent} bg-opacity-10`}>
                     <span className={`text-xs font-black ${colors.text} uppercase tracking-wider`}>
                       {delivery.symbol}
                     </span>
@@ -124,7 +124,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="p-4 bg-white/50 dark:bg-black/30 rounded-2xl border border-white/30 dark:border-white/5">
+                  <div className="p-4 bg-white/50 dark:bg-black/30 rounded-lg border border-white/30 dark:border-white/5">
                     <div className="flex items-center gap-2 mb-2">
                       <ArrowRight className="w-4 h-4 text-emerald-500" />
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Issued Today</p>
@@ -133,7 +133,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
                       {formatNumber(delivery.daily_issued)}
                     </p>
                   </div>
-                  <div className="p-4 bg-white/50 dark:bg-black/30 rounded-2xl border border-white/30 dark:border-white/5">
+                  <div className="p-4 bg-white/50 dark:bg-black/30 rounded-lg border border-white/30 dark:border-white/5">
                     <div className="flex items-center gap-2 mb-2">
                       <Calendar className="w-4 h-4 text-blue-500" />
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Month to Date</p>
@@ -150,12 +150,12 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
                     <span>Daily vs Avg</span>
                     <span>{mtdProgress.toFixed(0)}% of typical</span>
                   </div>
-                  <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min(mtdProgress, 100)}%` }}
                       transition={{ duration: 0.8, delay: index * 0.1 + 0.3 }}
-                      className={`h-full rounded-full ${colors.accent}`}
+                      className={`h-full rounded ${colors.accent}`}
                     />
                   </div>
                 </div>
