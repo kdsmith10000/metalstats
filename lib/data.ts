@@ -97,6 +97,16 @@ export const metalConfigs: MetalConfig[] = [
     monthlyDemand: 50000,
     pricePerUnit: 1000,
   },
+  {
+    key: 'Copper',
+    name: 'Copper',
+    color: '#f97316',      // Orange color for copper
+    colorDark: '#fb923c',
+    unit: 'lbs',
+    contractSize: 25000,   // Standard COMEX copper contract
+    monthlyDemand: 15000000, // Estimated monthly delivery demand
+    pricePerUnit: 4.50,    // Current copper price per lb
+  },
 ];
 
 // Calculate coverage ratio and status
