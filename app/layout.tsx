@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
-import { getLatestSnapshots } from '@/lib/db';
+import { getLatestSnapshots, isDatabaseAvailable } from '@/lib/db';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -115,23 +115,25 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Fetch the latest report date from the database
-  let lastUpdatedText = 'Loading...';
-  try {
-    const snapshots = await getLatestSnapshots();
-    if (snapshots.length > 0) {
-      const reportDate = snapshots[0].report_date;
-      if (reportDate) {
-        const date = new Date(reportDate);
-        lastUpdatedText = date.toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        });
+  let lastUpdatedText = 'January 22, 2026'; // Default fallback
+  
+  if (isDatabaseAvailable()) {
+    try {
+      const snapshots = await getLatestSnapshots();
+      if (snapshots.length > 0) {
+        const reportDate = snapshots[0].report_date;
+        if (reportDate) {
+          const date = new Date(reportDate);
+          lastUpdatedText = date.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+          });
+        }
       }
+    } catch (error) {
+      console.error('Failed to fetch last updated date:', error);
     }
-  } catch (error) {
-    console.error('Failed to fetch last updated date:', error);
-    lastUpdatedText = 'January 21, 2026'; // Fallback
   }
 
   return (

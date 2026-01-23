@@ -1,9 +1,22 @@
-import { neon } from '@neondatabase/serverless';
+import { neon, NeonQueryFunction } from '@neondatabase/serverless';
 
-// Create a SQL query function using the DATABASE_URL
-const sql = neon(process.env.DATABASE_URL!);
+// Lazy database connection - only connects when actually used
+let _sql: NeonQueryFunction<false, false> | null = null;
 
-export { sql };
+function sql(strings: TemplateStringsArray, ...values: unknown[]) {
+  if (!_sql) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is not set');
+    }
+    _sql = neon(process.env.DATABASE_URL);
+  }
+  return _sql(strings, ...values);
+}
+
+// Helper to check if database is available
+export function isDatabaseAvailable(): boolean {
+  return !!process.env.DATABASE_URL;
+}
 
 // Types for database records
 export interface MetalSnapshot {
