@@ -142,8 +142,9 @@ export default async function RootLayout({
         <ThemeProvider>
           <div className="min-h-screen">
             {/* Theme Toggle & Last Updated - Static position */}
-            <div className="absolute top-4 right-6 z-50 flex items-center gap-4">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="absolute top-4 right-4 sm:right-6 z-50 flex items-center gap-4">
+              {/* Last Updated - Hidden on mobile, shown on sm: and larger */}
+              <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
                 <span>Last updated: {lastUpdatedText} • CME Group</span>
               </div>

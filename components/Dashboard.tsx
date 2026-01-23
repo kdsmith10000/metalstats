@@ -195,40 +195,16 @@ export default function Dashboard({ data, bulletinData, deliveryData }: Dashboar
             <span className="hidden xs:inline">Daily</span> Bulletin
           </button>
         </div>
-      </div>
-
-      {/* Mobile-only: Last Updated Info */}
-      <div className="sm:hidden px-4 py-3 bg-slate-100/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-          {activeTab === 'inventory' && activeMetals[0] && (
-            <>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span>Report: {activeMetals[0] && data[activeMetals[0].key]?.report_date || 'N/A'}</span>
-              </div>
-              {data[activeMetals[0].key]?.last_synced && (
-                <>
-                  <span className="text-slate-300 dark:text-slate-600">•</span>
-                  <span>Updated: {new Date(data[activeMetals[0].key].last_synced!).toLocaleDateString()}</span>
-                </>
-              )}
-            </>
-          )}
-          {activeTab === 'bulletin' && bulletinData && (
-            <>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span>Bulletin #{bulletinData.bulletin_number}</span>
-              </div>
-              <span className="text-slate-300 dark:text-slate-600">•</span>
-              <span>{bulletinData.date}</span>
-            </>
-          )}
+        
+        {/* Mobile-only: Last Updated (moved from header) */}
+        <div className="sm:hidden flex items-center justify-center gap-2 mt-3 text-xs text-muted-foreground">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+          <span>Last updated: {activeMetals[0] && data[activeMetals[0].key]?.report_date ? new Date(data[activeMetals[0].key].report_date!).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'N/A'} • CME Group</span>
         </div>
       </div>
 
       {/* Spacer between nav and content */}
-      <div className="h-4 sm:h-8 md:h-12 lg:h-16" />
+      <div className="h-8 md:h-12 lg:h-16" />
 
       {/* Bulletin Section */}
       {activeTab === 'bulletin' && bulletinData && (
