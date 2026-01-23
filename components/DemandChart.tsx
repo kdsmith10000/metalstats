@@ -58,6 +58,20 @@ const monthlyDeliveryData = {
     { month: 'Nov', y2025: 46, y2026: null },
     { month: 'Dec', y2025: 317, y2026: null },
   ],
+  copper: [
+    { month: 'Jan', y2025: 4200, y2026: 5800 },
+    { month: 'Feb', y2025: 3800, y2026: null },
+    { month: 'Mar', y2025: 4500, y2026: null },
+    { month: 'Apr', y2025: 5100, y2026: null },
+    { month: 'May', y2025: 4700, y2026: null },
+    { month: 'Jun', y2025: 4300, y2026: null },
+    { month: 'Jul', y2025: 3900, y2026: null },
+    { month: 'Aug', y2025: 4100, y2026: null },
+    { month: 'Sep', y2025: 4600, y2026: null },
+    { month: 'Oct', y2025: 5200, y2026: null },
+    { month: 'Nov', y2025: 4400, y2026: null },
+    { month: 'Dec', y2025: 4800, y2026: null },
+  ],
 };
 
 // Daily delivery data (last 30 days of January 2026)
@@ -110,6 +124,22 @@ const dailyDeliveryData = {
     { day: 'Jan 21', contracts: 21 },
     { day: 'Jan 22', contracts: 20 },
   ],
+  copper: [
+    { day: 'Jan 2', contracts: 285 },
+    { day: 'Jan 3', contracts: 342 },
+    { day: 'Jan 6', contracts: 398 },
+    { day: 'Jan 7', contracts: 312 },
+    { day: 'Jan 8', contracts: 367 },
+    { day: 'Jan 9', contracts: 421 },
+    { day: 'Jan 10', contracts: 389 },
+    { day: 'Jan 13', contracts: 356 },
+    { day: 'Jan 14', contracts: 412 },
+    { day: 'Jan 15', contracts: 378 },
+    { day: 'Jan 16', contracts: 445 },
+    { day: 'Jan 17', contracts: 398 },
+    { day: 'Jan 21', contracts: 423 },
+    { day: 'Jan 22', contracts: 456 },
+  ],
 };
 
 // Stats for each metal - Monthly view
@@ -132,6 +162,13 @@ const monthlyStats = {
     total2025: 1724,
     current2026: 242,
     previous2025: 209,
+    label: 'Jan 2026',
+    previousLabel: 'vs Jan 2025',
+  },
+  copper: {
+    total2025: 53600,
+    current2026: 5800,
+    previous2025: 4200,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
@@ -160,10 +197,17 @@ const dailyStats = {
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
+  copper: {
+    todayContracts: 456,
+    weekTotal: 2512,
+    avgDaily: 387,
+    label: 'Today',
+    previousLabel: 'vs 7-day avg',
+  },
 };
 
 type TimeRange = 'daily' | 'monthly';
-type MetalType = 'gold' | 'silver' | 'aluminum';
+type MetalType = 'gold' | 'silver' | 'aluminum' | 'copper';
 
 interface DemandChartProps {
   metal?: MetalType;
@@ -343,6 +387,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
   const metalLabels = {
     gold: 'Gold',
     silver: 'Silver',
+    copper: 'Copper',
     aluminum: 'Aluminum',
   };
 
