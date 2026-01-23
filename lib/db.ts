@@ -183,32 +183,63 @@ export async function getDepositories(snapshotId: number): Promise<DepositorySna
   }
 }
 
-// Get snapshot from N days ago for a metal
-export async function getSnapshotFromDaysAgo(metal: string, daysAgo: number): Promise<MetalSnapshot | null> {
+// Get the previous snapshot before the latest one for a metal
+export async function getPreviousSnapshot(metal: string): Promise<MetalSnapshot | null> {
   try {
+    // Get the second most recent snapshot (the one before the latest)
     const result = await sql`
       SELECT id, metal, report_date, activity_date, registered, eligible, total, created_at
       FROM metal_snapshots
       WHERE metal = ${metal}
-        AND report_date <= CURRENT_DATE - ${daysAgo}::integer
+      ORDER BY report_date DESC
+      LIMIT 1 OFFSET 1
+    `;
+    return result.length > 0 ? result[0] as MetalSnapshot : null;
+  } catch (error) {
+    console.error(`Error fetching previous snapshot for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get snapshot from approximately N days before the latest for a metal
+export async function getSnapshotDaysBeforeLatest(metal: string, daysAgo: number): Promise<MetalSnapshot | null> {
+  try {
+    // First get the latest report date for this metal
+    const latestResult = await sql`
+      SELECT report_date FROM metal_snapshots
+      WHERE metal = ${metal}
+      ORDER BY report_date DESC
+      LIMIT 1
+    `;
+    
+    if (latestResult.length === 0) return null;
+    
+    const latestDate = latestResult[0].report_date;
+    
+    // Get the snapshot from approximately N days before the latest
+    const result = await sql`
+      SELECT id, metal, report_date, activity_date, registered, eligible, total, created_at
+      FROM metal_snapshots
+      WHERE metal = ${metal}
+        AND report_date <= ${latestDate}::date - ${daysAgo}::integer
       ORDER BY report_date DESC
       LIMIT 1
     `;
     return result.length > 0 ? result[0] as MetalSnapshot : null;
   } catch (error) {
-    console.error(`Error fetching snapshot from ${daysAgo} days ago:`, error);
+    console.error(`Error fetching snapshot from ${daysAgo} days before latest:`, error);
     throw error;
   }
 }
 
 // Get snapshot from approximately 30 days ago (for month-over-month)
 export async function getMonthAgoSnapshot(metal: string): Promise<MetalSnapshot | null> {
-  return getSnapshotFromDaysAgo(metal, 30);
+  return getSnapshotDaysBeforeLatest(metal, 30);
 }
 
-// Get yesterday's snapshot (for day-over-day)
+// Get yesterday's snapshot (for day-over-day) - returns the previous snapshot
 export async function getYesterdaySnapshot(metal: string): Promise<MetalSnapshot | null> {
-  return getSnapshotFromDaysAgo(metal, 1);
+  return getPreviousSnapshot(metal);
 }
 
 // Calculate percent change
