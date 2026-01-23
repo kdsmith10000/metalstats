@@ -1,0 +1,122 @@
+{
+  "bulletin_number": 13,
+  "date": "wed, Jan 21, 2026",
+  "parsed_date": "2026-01-21",
+  "products": [
+    {
+      "symbol": "GC",
+      "name": "COMEX GOLD FUTURES",
+      "contracts": [
+        {
+          "month": "FEB26",
+          "settle": 4837.5,
+          "change": 71.7,
+          "globex_volume": 393564,
+          "pnt_volume": 6954,
+          "oi_change": -17878
+        },
+        {
+          "month": "MAR26",
+          "settle": 4854.8,
+          "change": 71.9,
+          "globex_volume": 4371,
+          "pnt_volume": 0,
+          "oi_change": 114
+        },
+        {
+          "month": "AUG26",
+          "settle": 4944.0,
+          "change": 73.7,
+          "globex_volume": 2535,
+          "pnt_volume": 363,
+          "oi_change": -309
+        },
+        {
+          "month": "JAN26",
+          "settle": 4831.8,
+          "change": 72.2,
+          "globex_volume": 1706,
+          "pnt_volume": 0,
+          "oi_change": 1518
+        },
+        {
+          "month": "DEC28",
+          "settle": 5342.4,
+          "change": 69.5,
+          "globex_volume": 10,
+          "pnt_volume": 91,
+          "oi_change": 0
+        },
+        {
+          "month": "JUN29",
+          "settle": 5426.8,
+          "change": 66.6,
+          "globex_volume": 3,
+          "pnt_volume": 35,
+          "oi_change": 0
+        }
+      ],
+      "total_volume": 488026,
+      "total_open_interest": 12494,
+      "total_oi_change": 532136
+    },
+    {
+      "symbol": "SI",
+      "name": "COMEX SILVER FUTURES",
+      "contracts": [],
+      "total_volume": 148448,
+      "total_open_interest": 643,
+      "total_oi_change": 153311
+    },
+    {
+      "symbol": "SIL",
+      "name": "5000 OZ SILVER FUTURES",
+      "contracts": [],
+      "total_volume": 346357,
+      "total_open_interest": 33078,
+      "total_oi_change": 1671
+    },
+    {
+      "symbol": "HG",
+      "name": "COMEX COPPER FUTURES",
+      "contracts": [
+        {
+          "month": "JUL26",
+          "settle": 5.8845,
+          "change": -0.04,
+          "globex_volume": 2922,
+          "pnt_volume": 121,
+          "oi_change": -132
+        }
+      ],
+      "total_volume": 73635,
+      "total_open_interest": 280000,
+      "total_oi_change": 1569
+    },
+    {
+      "symbol": "PL",
+      "name": "NYMEX PLATINUM FUTURES",
+      "contracts": [],
+      "total_volume": 45276,
+      "total_open_interest": 1086,
+      "total_oi_change": 78650
+    },
+    {
+      "symbol": "PA",
+      "name": "NYMEX PALLADIUM FUTURES",
+      "contracts": [],
+      "total_volume": 4858,
+      "total_open_interest": 19131,
+      "total_oi_change": -36
+    },
+    {
+      "symbol": "ALI",
+      "name": "COMEX PHYSICAL ALUMINUM FUTURES",
+      "contracts": [],
+      "total_volume": 21174,
+      "total_open_interest": 1862,
+      "total_oi_change": 8
+    }
+  ],
+  "last_updated": "2026-01-22T18:35:41.704615"
+}
