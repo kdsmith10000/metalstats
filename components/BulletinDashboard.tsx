@@ -256,34 +256,37 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
               </h4>
             </div>
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                <ArrowUpRight className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
-                <p className="text-slate-600 dark:text-slate-300 font-medium">
-                  <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">Gold</span>
-                  Strong bullish momentum with +$71-74 gains across all contract months
-                </p>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                <Minus className="w-5 h-5 text-slate-400 mt-1 flex-shrink-0" />
-                <p className="text-slate-600 dark:text-slate-300 font-medium">
-                  <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">Silver</span>
-                  Slight decline (-0.061) despite massive volume (346,357 contracts)
-                </p>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                <ArrowUpRight className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
-                <p className="text-slate-600 dark:text-slate-300 font-medium">
-                  <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">Platinum</span>
-                  Up +$44-46 across the curve
-                </p>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                <ArrowDownRight className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
-                <p className="text-slate-600 dark:text-slate-300 font-medium">
-                  <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">Palladium</span>
-                  Down $25-28 with declining open interest (-36 total)
-                </p>
-              </div>
+              {(() => {
+                const gc = data.products.find(p => p.symbol === 'GC');
+                const si = data.products.find(p => p.symbol === 'SI');
+                const hg = data.products.find(p => p.symbol === 'HG');
+                const pl = data.products.find(p => p.symbol === 'PL');
+                const pa = data.products.find(p => p.symbol === 'PA');
+                
+                const getIcon = (change: number) => change > 0 ? ArrowUpRight : change < 0 ? ArrowDownRight : Minus;
+                const getIconColor = (change: number) => change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
+                
+                const metals = [
+                  gc && { name: 'Gold', data: gc, description: `OI change: ${gc.total_oi_change > 0 ? '+' : ''}${formatNumber(gc.total_oi_change)} with ${formatVolume(gc.total_volume)} volume` },
+                  si && { name: 'Silver', data: si, description: `OI change: ${si.total_oi_change > 0 ? '+' : ''}${formatNumber(si.total_oi_change)} with ${formatVolume(si.total_volume)} volume` },
+                  hg && { name: 'Copper', data: hg, description: `OI change: ${hg.total_oi_change > 0 ? '+' : ''}${formatNumber(hg.total_oi_change)} with ${formatVolume(hg.total_volume)} volume` },
+                  pl && { name: 'Platinum', data: pl, description: `OI change: ${pl.total_oi_change > 0 ? '+' : ''}${formatNumber(pl.total_oi_change)} with ${formatVolume(pl.total_volume)} volume` },
+                  pa && { name: 'Palladium', data: pa, description: `OI change: ${pa.total_oi_change > 0 ? '+' : ''}${formatNumber(pa.total_oi_change)} with ${formatVolume(pa.total_volume)} volume` },
+                ].filter(Boolean) as Array<{ name: string; data: BulletinProduct; description: string }>;
+                
+                return metals.map((metal, i) => {
+                  const Icon = getIcon(metal.data.total_oi_change);
+                  return (
+                    <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                      <Icon className={`w-5 h-5 ${getIconColor(metal.data.total_oi_change)} mt-1 flex-shrink-0`} />
+                      <p className="text-slate-600 dark:text-slate-300 font-medium">
+                        <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs block mb-1">{metal.name}</span>
+                        {metal.description}
+                      </p>
+                    </div>
+                  );
+                });
+              })()}
             </div>
           </motion.div>
 
@@ -348,22 +351,43 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
               </h4>
             </div>
             <div className="space-y-4">
-              {[
-                { metal: 'Gold', change: '+1,290', signal: 'New longs entering (bullish)', color: 'text-emerald-500' },
-                { metal: 'Silver', change: '+1,671', signal: 'Accumulation despite price drop', color: 'text-emerald-500' },
-                { metal: 'Platinum', change: '-359', signal: 'Position liquidation', color: 'text-red-500' },
-                { metal: 'Palladium', change: '-36', signal: 'Mild liquidation', color: 'text-red-500' }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <div>
-                    <p className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs mb-1">{item.metal}</p>
-                    <p className="text-sm text-slate-500 font-medium">{item.signal}</p>
-                  </div>
-                  <div className={`text-xl font-black tabular-nums ${item.color}`}>
-                    {item.change}
-                  </div>
-                </div>
-              ))}
+              {(() => {
+                const getSignal = (change: number, volume: number) => {
+                  if (change > 1000) return 'Strong accumulation';
+                  if (change > 0) return 'New positions entering';
+                  if (change < -1000) return 'Heavy liquidation';
+                  if (change < 0) return 'Position unwinding';
+                  return 'Neutral activity';
+                };
+                
+                const metals = [
+                  { symbol: 'GC', name: 'Gold' },
+                  { symbol: 'SI', name: 'Silver' },
+                  { symbol: 'HG', name: 'Copper' },
+                  { symbol: 'PL', name: 'Platinum' },
+                  { symbol: 'PA', name: 'Palladium' },
+                ];
+                
+                return metals.map((metal, i) => {
+                  const product = data.products.find(p => p.symbol === metal.symbol);
+                  if (!product) return null;
+                  
+                  const change = product.total_oi_change;
+                  const color = change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
+                  
+                  return (
+                    <div key={i} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                      <div>
+                        <p className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs mb-1">{metal.name}</p>
+                        <p className="text-sm text-slate-500 font-medium">{getSignal(change, product.total_volume)}</p>
+                      </div>
+                      <div className={`text-xl font-black tabular-nums ${color}`}>
+                        {change > 0 ? '+' : ''}{formatNumber(change)}
+                      </div>
+                    </div>
+                  );
+                }).filter(Boolean);
+              })()}
             </div>
           </motion.div>
 
@@ -435,21 +459,61 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                { title: "Silver Divergence", text: "Massive 346K volume with minimal price change suggests significant two-way flow and hedging activity.", color: "text-amber-500" },
-                { title: "Gold Strength", text: "+$71.75 move with increasing OI (+1,290) indicates new money entering long positions, not short covering.", color: "text-emerald-500" },
-                { title: "Palladium Weakness", text: "Weakness (-$25) with declining OI suggests long liquidation in an already thin market.", color: "text-red-500" },
-                { title: "Platinum Health", text: "Shows the healthiest OI structure at 78,650 contracts despite a slight daily decline.", color: "text-violet-500" }
-              ].map((item, i) => (
-                <div key={i} className="space-y-3">
-                  <p className={`text-sm font-black uppercase tracking-[0.2em] ${item.color}`}>
-                    {item.title}
-                  </p>
-                  <p className="text-lg text-slate-400 font-medium leading-relaxed">
-                    {item.text}
-                  </p>
-                </div>
-              ))}
+              {(() => {
+                const gc = data.products.find(p => p.symbol === 'GC');
+                const si = data.products.find(p => p.symbol === 'SI');
+                const hg = data.products.find(p => p.symbol === 'HG');
+                const pl = data.products.find(p => p.symbol === 'PL');
+                const pa = data.products.find(p => p.symbol === 'PA');
+                
+                const takeaways = [];
+                
+                if (gc) {
+                  const signal = gc.total_oi_change > 0 ? 'bullish accumulation' : gc.total_oi_change < 0 ? 'profit taking' : 'consolidation';
+                  takeaways.push({
+                    title: "Gold Activity",
+                    text: `${formatVolume(gc.total_volume)} contracts traded with OI ${gc.total_oi_change > 0 ? 'up' : gc.total_oi_change < 0 ? 'down' : 'unchanged'} ${formatNumber(Math.abs(gc.total_oi_change))} indicating ${signal}.`,
+                    color: gc.total_oi_change > 0 ? "text-emerald-500" : gc.total_oi_change < 0 ? "text-red-500" : "text-amber-500"
+                  });
+                }
+                
+                if (si) {
+                  takeaways.push({
+                    title: "Silver Flow",
+                    text: `${formatVolume(si.total_volume)} volume with ${si.total_oi_change > 0 ? '+' : ''}${formatNumber(si.total_oi_change)} OI change suggests ${si.total_volume > 100000 ? 'significant institutional' : 'moderate'} activity.`,
+                    color: "text-slate-400"
+                  });
+                }
+                
+                if (hg) {
+                  const copperSignal = hg.total_oi_change > 0 ? 'growing interest in industrial metals' : 'reduced industrial hedging';
+                  takeaways.push({
+                    title: "Copper Positioning",
+                    text: `OI at ${formatNumber(hg.total_open_interest)} with ${hg.total_oi_change > 0 ? '+' : ''}${formatNumber(hg.total_oi_change)} change signals ${copperSignal}.`,
+                    color: "text-orange-500"
+                  });
+                }
+                
+                if (pl && pa) {
+                  const pgmSignal = (pl.total_oi_change + pa.total_oi_change) > 0 ? 'net accumulation' : 'net liquidation';
+                  takeaways.push({
+                    title: "PGM Complex",
+                    text: `Platinum (${pl.total_oi_change > 0 ? '+' : ''}${formatNumber(pl.total_oi_change)}) and Palladium (${pa.total_oi_change > 0 ? '+' : ''}${formatNumber(pa.total_oi_change)}) show ${pgmSignal} in the auto-catalyst sector.`,
+                    color: "text-violet-500"
+                  });
+                }
+                
+                return takeaways.map((item, i) => (
+                  <div key={i} className="space-y-3">
+                    <p className={`text-sm font-black uppercase tracking-[0.2em] ${item.color}`}>
+                      {item.title}
+                    </p>
+                    <p className="text-lg text-slate-400 font-medium leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+                ));
+              })()}
             </div>
           </div>
         </motion.div>
