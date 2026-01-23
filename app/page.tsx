@@ -1,6 +1,6 @@
 import Dashboard from '@/components/Dashboard';
 import { WarehouseStocksData } from '@/lib/data';
-import { getWarehouseDataWithChanges, isDatabaseAvailable } from '@/lib/db';
+import { getWarehouseDataWithChanges, getLatestSnapshots, isDatabaseAvailable } from '@/lib/db';
 import data from '../public/data.json';
 import bulletinJson from '../public/bulletin.json';
 import deliveryJson from '../public/delivery.json';
@@ -8,6 +8,7 @@ import deliveryJson from '../public/delivery.json';
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
+  let lastUpdatedText = 'January 22, 2026'; // Default fallback
   
   if (isDatabaseAvailable()) {
     try {
@@ -18,6 +19,20 @@ export default async function Home() {
       } else {
         // Fallback to static JSON
         dashboardData = data as WarehouseStocksData;
+      }
+      
+      // Get the last updated date (same logic as layout.tsx)
+      const snapshots = await getLatestSnapshots();
+      if (snapshots.length > 0) {
+        const reportDate = snapshots[0].report_date;
+        if (reportDate) {
+          const date = new Date(reportDate);
+          lastUpdatedText = date.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+          });
+        }
       }
     } catch (error) {
       // If database fails, use static JSON
@@ -35,5 +50,5 @@ export default async function Home() {
   // Load delivery data
   const deliveryData = deliveryJson || null;
   
-  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} />;
+  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} lastUpdatedText={lastUpdatedText} />;
 }

@@ -51,9 +51,10 @@ interface DashboardProps {
   data: WarehouseStocksData;
   bulletinData?: BulletinData | null;
   deliveryData?: DeliveryData | null;
+  lastUpdatedText?: string;
 }
 
-export default function Dashboard({ data, bulletinData, deliveryData }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData, lastUpdatedText = 'January 22, 2026' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
@@ -199,21 +200,7 @@ export default function Dashboard({ data, bulletinData, deliveryData }: Dashboar
         {/* Mobile-only: Last Updated (moved from header) */}
         <div className="sm:hidden flex items-center justify-center gap-2 mt-3 text-xs text-muted-foreground">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-          <span>Last updated: {activeMetals[0] && data[activeMetals[0].key]?.report_date ? (() => {
-            // Parse date string - handles both "M/D/YYYY" and "YYYY-MM-DD" formats
-            const dateStr = data[activeMetals[0].key].report_date!;
-            let date: Date;
-            if (dateStr.includes('/')) {
-              // Format: M/D/YYYY
-              const [month, day, year] = dateStr.split('/').map(Number);
-              date = new Date(year, month - 1, day);
-            } else {
-              // Format: YYYY-MM-DD
-              const [year, month, day] = dateStr.split('-').map(Number);
-              date = new Date(year, month - 1, day);
-            }
-            return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-          })() : 'N/A'} • CME Group</span>
+          <span>Last updated: {lastUpdatedText} • CME Group</span>
         </div>
       </div>
 
