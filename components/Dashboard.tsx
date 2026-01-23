@@ -3,21 +3,47 @@
 import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor } from '@/lib/data';
 import { motion, AnimatePresence } from 'framer-motion';
 import DemandChart from './DemandChart';
-import { ChevronRight } from 'lucide-react';
+import BulletinDashboard from './BulletinDashboard';
+import VolumeOIChart from './VolumeOIChart';
+import { ChevronRight, FileText, BarChart3 } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 
-interface DashboardProps {
-  data: WarehouseStocksData;
+interface BulletinData {
+  bulletin_number: number;
+  date: string;
+  parsed_date: string;
+  products: Array<{
+    symbol: string;
+    name: string;
+    contracts: Array<{
+      month: string;
+      settle: number;
+      change: number;
+      globex_volume: number;
+      pnt_volume: number;
+      oi_change: number;
+    }>;
+    total_volume: number;
+    total_open_interest: number;
+    total_oi_change: number;
+  }>;
+  last_updated: string;
 }
 
-export default function Dashboard({ data }: DashboardProps) {
+interface DashboardProps {
+  data: WarehouseStocksData;
+  bulletinData?: BulletinData | null;
+}
+
+export default function Dashboard({ data, bulletinData }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
   });
 
   const [expandedMetal, setExpandedMetal] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'inventory' | 'bulletin'>('inventory');
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
@@ -123,10 +149,74 @@ export default function Dashboard({ data }: DashboardProps) {
         </div>
       </section>
 
-      {/* Spacer between hero and supply section */}
-      <div className="h-12 md:h-20 lg:h-24" />
+      {/* Navigation Tabs */}
+      <div className="w-full px-8 lg:px-24 py-8 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
+        <div className="flex items-center gap-2 p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit mx-auto">
+          <button
+            onClick={() => setActiveTab('inventory')}
+            className={`flex items-center gap-2 px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
+              activeTab === 'inventory'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
+            }`}
+          >
+            <BarChart3 className="w-4 h-4" />
+            Warehouse Inventory
+          </button>
+          <button
+            onClick={() => setActiveTab('bulletin')}
+            className={`flex items-center gap-2 px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
+              activeTab === 'bulletin'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            Daily Bulletin
+          </button>
+        </div>
+      </div>
 
-      {/* Main Content */}
+      {/* Spacer between nav and content */}
+      <div className="h-8 md:h-12 lg:h-16" />
+
+      {/* Bulletin Section */}
+      {activeTab === 'bulletin' && bulletinData && (
+        <section className="w-full px-8 pl-16 md:pl-24 lg:pl-48 pt-16 md:pt-20 pb-32 md:pb-48">
+          <BulletinDashboard data={bulletinData} />
+          
+          {/* Spacer between bulletin dashboard and volume chart */}
+          <div className="h-12 md:h-20 lg:h-24" />
+
+          {/* Volume & OI Chart */}
+          <div className="p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[3rem] shadow-sm">
+            <VolumeOIChart />
+          </div>
+        </section>
+      )}
+
+      {/* No Bulletin Data Message */}
+      {activeTab === 'bulletin' && !bulletinData && (
+        <section className="w-full px-8 lg:px-24 pb-16">
+          <div className="p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl text-center">
+            <FileText className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Bulletin Data Available</h3>
+            <p className="text-slate-500 dark:text-slate-400">
+              Run the bulletin parser script to extract data from CME daily bulletins.
+            </p>
+            <code className="mt-4 inline-block px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm text-slate-600 dark:text-slate-300">
+              python scripts/parse_bulletin.py
+            </code>
+          </div>
+        </section>
+      )}
+
+      {/* Main Content - Inventory Tab */}
+      {activeTab === 'inventory' && (
+        <>
+      {/* Spacer between hero and supply section */}
+      <div className="h-4 md:h-8 lg:h-12" />
+
       <section className="w-full px-8 pl-16 md:pl-24 lg:pl-48 pt-16 md:pt-20 pb-32 md:pb-48">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16">
@@ -299,6 +389,8 @@ export default function Dashboard({ data }: DashboardProps) {
           </div>
         </div>
       </section>
+        </>
+      )}
 
       {/* Footer */}
       <footer className="py-12 md:py-16 bg-white/30 dark:bg-black/20 border-t border-slate-200 dark:border-slate-800">
