@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DemandChart from './DemandChart';
 import BulletinDashboard from './BulletinDashboard';
 import VolumeOIChart from './VolumeOIChart';
+import DeliverySection from './DeliverySection';
 import { ChevronRight, FileText, BarChart3 } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -31,12 +32,28 @@ interface BulletinData {
   last_updated: string;
 }
 
+interface DeliveryData {
+  business_date: string;
+  parsed_date: string;
+  deliveries: Array<{
+    metal: string;
+    symbol: string;
+    contract_month: string;
+    settlement: number;
+    daily_issued: number;
+    daily_stopped: number;
+    month_to_date: number;
+  }>;
+  last_updated: string;
+}
+
 interface DashboardProps {
   data: WarehouseStocksData;
   bulletinData?: BulletinData | null;
+  deliveryData?: DeliveryData | null;
 }
 
-export default function Dashboard({ data, bulletinData }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
@@ -366,6 +383,18 @@ export default function Dashboard({ data, bulletinData }: DashboardProps) {
 
       {/* Spacer between sections */}
       <div className="h-12 md:h-20 lg:h-24" />
+
+      {/* Delivery Notices Section */}
+      {deliveryData && deliveryData.deliveries && deliveryData.deliveries.length > 0 && (
+        <>
+          <section className="w-full px-8 pl-16 md:pl-24 lg:pl-48 pb-16 md:pb-24">
+            <DeliverySection data={deliveryData} />
+          </section>
+          
+          {/* Spacer between sections */}
+          <div className="h-12 md:h-20 lg:h-24" />
+        </>
+      )}
 
       {/* Demand Chart Section */}
       <section className="relative mt-0 pt-16 md:pt-24 pb-20 md:pb-32 bg-transparent overflow-hidden">

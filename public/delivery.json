@@ -1,0 +1,290 @@
+{
+  "business_date": "01/22/2026",
+  "parsed_date": "2026-01-22",
+  "deliveries": [
+    {
+      "metal": "Gold",
+      "symbol": "GC",
+      "contract_name": "JANUARY 2026 COMEX 100 GOLD FUTURES",
+      "contract_month": "JAN26",
+      "settlement": 4908.8,
+      "delivery_date": "01/26/2026",
+      "daily_issued": 1090,
+      "daily_stopped": 1090,
+      "month_to_date": 11577,
+      "firms": [
+        {
+          "code": "132",
+          "org": "C",
+          "name": "SG AMERICAS",
+          "issued": 25,
+          "stopped": 0
+        },
+        {
+          "code": "332",
+          "org": "H",
+          "name": "STANDARD CHARTERED B",
+          "issued": 4,
+          "stopped": 0
+        },
+        {
+          "code": "363",
+          "org": "H",
+          "name": "WELLS FARGO SECURITI",
+          "issued": 11,
+          "stopped": 0
+        },
+        {
+          "code": "624",
+          "org": "H",
+          "name": "BOFA SECURITIES",
+          "issued": 988,
+          "stopped": 0
+        },
+        {
+          "code": "661",
+          "org": "C",
+          "name": "JP MORGAN SECURITIES",
+          "issued": 48,
+          "stopped": 83
+        },
+        {
+          "code": "737",
+          "org": "C",
+          "name": "ADVANTAGE FUTURES",
+          "issued": 7,
+          "stopped": 4
+        },
+        {
+          "code": "905",
+          "org": "C",
+          "name": "ADM",
+          "issued": 5,
+          "stopped": 0
+        }
+      ]
+    },
+    {
+      "metal": "Copper",
+      "symbol": "HG",
+      "contract_name": "JANUARY 2026 COMEX COPPER FUTURES",
+      "contract_month": "JAN26",
+      "settlement": 5.7425,
+      "delivery_date": "01/26/2026",
+      "daily_issued": 600,
+      "daily_stopped": 600,
+      "month_to_date": 12550,
+      "firms": [
+        {
+          "code": "152",
+          "org": "C",
+          "name": "DORMAN TRADING, LLC",
+          "issued": 19,
+          "stopped": 19
+        },
+        {
+          "code": "159",
+          "org": "C",
+          "name": "MAREX CAPITAL MARKET",
+          "issued": 9,
+          "stopped": 10
+        },
+        {
+          "code": "167",
+          "org": "C",
+          "name": "MAREX",
+          "issued": 63,
+          "stopped": 0
+        },
+        {
+          "code": "190",
+          "org": "H",
+          "name": "BMO CAPITAL MARKETS",
+          "issued": 5,
+          "stopped": 0
+        },
+        {
+          "code": "363",
+          "org": "H",
+          "name": "WELLS FARGO SECURITI",
+          "issued": 53,
+          "stopped": 0
+        },
+        {
+          "code": "365",
+          "org": "C",
+          "name": "MAREX CAPITAL MARKET",
+          "issued": 2,
+          "stopped": 0
+        },
+        {
+          "code": "555",
+          "org": "C",
+          "name": "BNP PARIBAS SEC CORP",
+          "issued": 267,
+          "stopped": 0
+        },
+        {
+          "code": "661",
+          "org": "C",
+          "name": "JP MORGAN SECURITIES",
+          "issued": 88,
+          "stopped": 0
+        },
+        {
+          "code": "686",
+          "org": "C",
+          "name": "STONEX FINANCIAL INC",
+          "issued": 181,
+          "stopped": 186
+        },
+        {
+          "code": "690",
+          "org": "C",
+          "name": "ABN AMRO CLR USA LLC",
+          "issued": 6,
+          "stopped": 0
+        },
+        {
+          "code": "732",
+          "org": "C",
+          "name": "RBC CAP MARKETS",
+          "issued": 36,
+          "stopped": 32
+        },
+        {
+          "code": "737",
+          "org": "C",
+          "name": "ADVANTAGE FUTURES",
+          "issued": 86,
+          "stopped": 86
+        },
+        {
+          "code": "880",
+          "org": "H",
+          "name": "CITIGROUP",
+          "issued": 5,
+          "stopped": 0
+        },
+        {
+          "code": "905",
+          "org": "C",
+          "name": "ADM",
+          "issued": 47,
+          "stopped": 0
+        }
+      ]
+    },
+    {
+      "metal": "Platinum",
+      "symbol": "PL",
+      "contract_name": "JANUARY 2026 PLATINUM FUTURES NYMEX",
+      "contract_month": "JAN26",
+      "settlement": 2561.8,
+      "delivery_date": "01/26/2026",
+      "daily_issued": 1,
+      "daily_stopped": 1,
+      "month_to_date": 2765,
+      "firms": [
+        {
+          "code": "365",
+          "org": "C",
+          "name": "MAREX CAPITAL MARKET",
+          "issued": 1,
+          "stopped": 0
+        },
+        {
+          "code": "686",
+          "org": "C",
+          "name": "STONEX FINANCIAL INC",
+          "issued": 1,
+          "stopped": 0
+        }
+      ]
+    },
+    {
+      "metal": "Silver",
+      "symbol": "SI",
+      "contract_name": "JANUARY 2026 COMEX 5000 SILVER FUTURES",
+      "contract_month": "JAN26",
+      "settlement": 95.976,
+      "delivery_date": "01/26/2026",
+      "daily_issued": 265,
+      "daily_stopped": 265,
+      "month_to_date": 8826,
+      "firms": [
+        {
+          "code": "118",
+          "org": "H",
+          "name": "MACQUARIE FUTURES US",
+          "issued": 5,
+          "stopped": 0
+        },
+        {
+          "code": "323",
+          "org": "C",
+          "name": "HSBC",
+          "issued": 6,
+          "stopped": 0
+        },
+        {
+          "code": "323",
+          "org": "H",
+          "name": "HSBC",
+          "issued": 34,
+          "stopped": 0
+        },
+        {
+          "code": "365",
+          "org": "C",
+          "name": "MAREX CAPITAL MARKET",
+          "issued": 10,
+          "stopped": 0
+        },
+        {
+          "code": "624",
+          "org": "H",
+          "name": "BOFA SECURITIES",
+          "issued": 233,
+          "stopped": 0
+        },
+        {
+          "code": "661",
+          "org": "C",
+          "name": "JP MORGAN SECURITIES",
+          "issued": 156,
+          "stopped": 0
+        },
+        {
+          "code": "685",
+          "org": "C",
+          "name": "RJ OBRIEN",
+          "issued": 1,
+          "stopped": 0
+        },
+        {
+          "code": "686",
+          "org": "C",
+          "name": "STONEX FINANCIAL INC",
+          "issued": 24,
+          "stopped": 0
+        },
+        {
+          "code": "737",
+          "org": "C",
+          "name": "ADVANTAGE FUTURES",
+          "issued": 11,
+          "stopped": 0
+        },
+        {
+          "code": "905",
+          "org": "C",
+          "name": "ADM",
+          "issued": 3,
+          "stopped": 30
+        }
+      ]
+    }
+  ],
+  "last_updated": "2026-01-23T09:11:22.170321"
+}

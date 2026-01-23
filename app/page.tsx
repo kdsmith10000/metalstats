@@ -3,6 +3,7 @@ import { WarehouseStocksData } from '@/lib/data';
 import { getWarehouseDataWithChanges, isDatabaseAvailable } from '@/lib/db';
 import data from '../public/data.json';
 import bulletinJson from '../public/bulletin.json';
+import deliveryJson from '../public/delivery.json';
 
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
@@ -31,5 +32,8 @@ export default async function Home() {
   // Load bulletin data
   const bulletinData = bulletinJson || null;
   
-  return <Dashboard data={dashboardData} bulletinData={bulletinData} />;
+  // Load delivery data
+  const deliveryData = deliveryJson || null;
+  
+  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} />;
 }
