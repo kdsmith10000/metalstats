@@ -12,6 +12,9 @@ export const metadata = {
     description: 'Terms of Service for Metal Stats - COMEX Metals Inventory Tracker.',
     url: 'https://heavymetalstats.com/terms',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-1319414449875714',
+  },
 };
 
 export default function TermsOfService() {

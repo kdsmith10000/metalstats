@@ -12,6 +12,9 @@ export const metadata = {
     description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker.',
     url: 'https://heavymetalstats.com/api-info',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-1319414449875714',
+  },
 };
 
 const endpoints = [

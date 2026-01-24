@@ -12,6 +12,9 @@ export const metadata = {
     description: 'Privacy Policy for Metal Stats - COMEX Metals Inventory Tracker.',
     url: 'https://heavymetalstats.com/privacy',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-1319414449875714',
+  },
 };
 
 export default function PrivacyPolicy() {
