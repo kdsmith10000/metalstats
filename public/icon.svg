@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="gold3d" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE55C"/>
+      <stop offset="50%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#B8860B"/>
+    </linearGradient>
+    <linearGradient id="silver3d" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="50%" style="stop-color:#D4D4D4"/>
+      <stop offset="100%" style="stop-color:#A0A0A0"/>
+    </linearGradient>
+    <linearGradient id="copper3d" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8A87C"/>
+      <stop offset="50%" style="stop-color:#B87333"/>
+      <stop offset="100%" style="stop-color:#8B4513"/>
+    </linearGradient>
+  </defs>
+  <!-- Bottom bar - copper (widest) -->
+  <path d="M4 44 L12 38 L60 38 L60 52 L52 58 L4 58 Z" fill="url(#copper3d)"/>
+  <path d="M60 38 L60 52 L52 58 L52 44 Z" fill="#8B4513"/>
+  <!-- Middle bar - silver -->
+  <path d="M10 30 L18 24 L54 24 L54 36 L46 42 L10 42 Z" fill="url(#silver3d)"/>
+  <path d="M54 24 L54 36 L46 42 L46 30 Z" fill="#808080"/>
+  <!-- Top bar - gold (smallest) -->
+  <path d="M16 16 L24 10 L48 10 L48 22 L40 28 L16 28 Z" fill="url(#gold3d)"/>
+  <path d="M48 10 L48 22 L40 28 L40 16 Z" fill="#B8860B"/>
+</svg>
