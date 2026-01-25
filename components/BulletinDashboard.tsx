@@ -50,6 +50,20 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
   
   // Sort products by volume (descending)
   const sortedProducts = [...data.products].sort((a, b) => b.total_volume - a.total_volume);
+  
+  // Format the last_updated date for display
+  const formatDisplayDate = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+      const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+      return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+    } catch {
+      return data.date; // Fallback to original date
+    }
+  };
+  
+  const displayDate = data.last_updated ? formatDisplayDate(data.last_updated) : data.date;
 
   // Calculate total volume and OI across all products
   const totalVolume = sortedProducts.reduce((sum, p) => sum + p.total_volume, 0);
@@ -70,7 +84,7 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
           </div>
           <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white/50 dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl w-fit">
             <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
-            <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{data.date}</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{displayDate}</span>
           </div>
         </div>
 
