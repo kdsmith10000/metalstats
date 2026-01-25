@@ -316,9 +316,15 @@ if __name__ == '__main__':
     
     # Merge with existing data (keep existing metals if not fetched)
     for metal in existing_data:
-        if metal not in data:
+        if metal not in data and metal != '_metadata':
             data[metal] = existing_data[metal]
             print(f"[INFO] Keeping existing data for {metal}")
+    
+    # Add metadata with last updated timestamp
+    data['_metadata'] = {
+        'last_updated': datetime.now().isoformat(),
+        'source': 'CME Group'
+    }
     
     print("\n" + "=" * 70)
     print("  Summary")

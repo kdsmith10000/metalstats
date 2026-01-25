@@ -5,7 +5,7 @@ import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
-import { getLatestSnapshots, isDatabaseAvailable } from '@/lib/db';
+import dataJson from '@/public/data.json';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -118,26 +118,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch the latest report date from the database
-  let lastUpdatedText = 'January 22, 2026'; // Default fallback
+  // Get the last updated timestamp from data.json metadata
+  let lastUpdatedText = 'January 23, 2026'; // Default fallback
   
-  if (isDatabaseAvailable()) {
-    try {
-      const snapshots = await getLatestSnapshots();
-      if (snapshots.length > 0) {
-        const reportDate = snapshots[0].report_date;
-        if (reportDate) {
-          const date = new Date(reportDate);
-          lastUpdatedText = date.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Failed to fetch last updated date:', error);
+  try {
+    const metadata = (dataJson as { _metadata?: { last_updated?: string } })._metadata;
+    if (metadata?.last_updated) {
+      const date = new Date(metadata.last_updated);
+      lastUpdatedText = date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      });
     }
+  } catch (error) {
+    console.error('Failed to parse last updated date:', error);
   }
 
   return (
