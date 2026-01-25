@@ -7,6 +7,14 @@ export const metadata = {
   alternates: {
     canonical: 'https://heavymetalstats.com/api-info',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: 'API Endpoints & Data Sources | COMEX Metals Tracker',
     description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker.',

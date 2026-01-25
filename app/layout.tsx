@@ -91,18 +91,18 @@ export const metadata: Metadata = {
     siteName: 'Metal Stats - COMEX Metals Dashboard',
     images: [
       {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'COMEX Metals Inventory Tracker Dashboard',
+        url: '/icon.svg',
+        width: 64,
+        height: 64,
+        alt: 'COMEX Metals Inventory Tracker',
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: 'COMEX Metals Inventory Tracker | Real-Time Supply Analysis',
     description: 'Track real-time COMEX precious metals warehouse inventory. Monitor gold, silver, copper & aluminum stocks with live supply coverage ratios.',
-    images: ['/og-image.png'],
+    images: ['/icon.svg'],
   },
   category: 'finance',
   verification: {

@@ -32,13 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/privacy`,
       lastModified: new Date(STATIC_PAGES_LAST_MODIFIED),
       changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.5,
     },
     {
       url: `${baseUrl}/terms`,
       lastModified: new Date(STATIC_PAGES_LAST_MODIFIED),
       changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.5,
     },
   ];
 

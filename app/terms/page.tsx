@@ -7,6 +7,14 @@ export const metadata = {
   alternates: {
     canonical: 'https://heavymetalstats.com/terms',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: 'Terms of Service | COMEX Metals Tracker',
     description: 'Terms of Service for Metal Stats - COMEX Metals Inventory Tracker.',

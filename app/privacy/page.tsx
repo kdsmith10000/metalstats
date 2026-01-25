@@ -7,6 +7,14 @@ export const metadata = {
   alternates: {
     canonical: 'https://heavymetalstats.com/privacy',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: 'Privacy Policy | COMEX Metals Tracker',
     description: 'Privacy Policy for Metal Stats - COMEX Metals Inventory Tracker.',
