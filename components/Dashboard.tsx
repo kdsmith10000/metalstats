@@ -203,7 +203,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             <span>Last updated: {lastUpdatedText} • CME Group</span>
           </div>
-          <span className="text-[10px] text-slate-400">Updated nightly at 9:30 PM EST</span>
+          <span className="text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
         </div>
       </div>
 
