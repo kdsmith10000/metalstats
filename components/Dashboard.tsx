@@ -450,6 +450,11 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
               <span>CME Group Stocks Verified 2026</span>
             </div>
             
+            {/* Disclaimer */}
+            <p className="max-w-2xl text-center text-[8px] sm:text-[9px] font-medium normal-case tracking-normal leading-relaxed text-slate-400">
+              This site provides informational data only. Nothing on this site constitutes financial advice, investment recommendations, or buy/sell signals. Always consult a qualified financial advisor before making investment decisions.
+            </p>
+            
             <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
               <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
                 Privacy
