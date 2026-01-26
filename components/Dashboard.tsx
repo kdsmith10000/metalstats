@@ -198,9 +198,12 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
         </div>
         
         {/* Mobile-only: Last Updated (moved from header) */}
-        <div className="sm:hidden flex items-center justify-center gap-2 mt-3 text-xs text-muted-foreground">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-          <span>Last updated: {lastUpdatedText} • CME Group</span>
+        <div className="sm:hidden flex flex-col items-center justify-center gap-1 mt-3 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+            <span>Last updated: {lastUpdatedText} • CME Group</span>
+          </div>
+          <span className="text-[10px] text-slate-400">Updated nightly at 9:30 PM EST</span>
         </div>
       </div>
 

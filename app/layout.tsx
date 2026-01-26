@@ -152,9 +152,12 @@ export default async function RootLayout({
             {/* Theme Toggle & Last Updated - Static position */}
             <div className="absolute top-4 right-4 sm:right-6 z-50 flex items-center gap-4">
               {/* Last Updated - Hidden on mobile, shown on sm: and larger */}
-              <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                <span>Last updated: {lastUpdatedText} • CME Group</span>
+              <div className="hidden sm:flex flex-col items-end gap-0.5 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                  <span>Last updated: {lastUpdatedText} • CME Group</span>
+                </div>
+                <span className="text-[10px] text-slate-400">Updated nightly at 9:30 PM EST</span>
               </div>
               <ThemeToggle />
             </div>
