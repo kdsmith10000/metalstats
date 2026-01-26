@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, BarChart3, Activity, AlertTriangle, Zap, PieChart, ArrowUpRight, ArrowDownRight, Minus, ChevronRight, Calendar, Info } from 'lucide-react';
 import { formatNumber, formatPriceChange, formatVolume } from '@/lib/data';
 import { useState } from 'react';
@@ -134,11 +134,9 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                           <span>{volumePercent.toFixed(0)}%</span>
                         </div>
                         <div className="h-2 sm:h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                          <motion.div 
-                            initial={{ width: 0 }}
-                            animate={{ width: `${volumePercent}%` }}
-                            className="h-full rounded-full"
-                            style={{ backgroundColor: config?.color || '#64748b' }}
+                          <div 
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{ backgroundColor: config?.color || '#64748b', width: `${volumePercent}%` }}
                           />
                         </div>
                       </div>
@@ -260,11 +258,7 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Precious Metals Divergence */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
-          >
+          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
@@ -306,15 +300,10 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 });
               })()}
             </div>
-          </motion.div>
+          </div>
 
           {/* Volume Concentration Analysis */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
-          >
+          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
@@ -351,15 +340,10 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Open Interest Trends */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
-          >
+          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />
@@ -407,15 +391,10 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 }).filter(Boolean);
               })()}
             </div>
-          </motion.div>
+          </div>
 
           {/* EFP Activity */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm"
-          >
+          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
@@ -437,18 +416,13 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Key Takeaways Section */}
       <div className="mt-16 sm:mt-24 md:mt-40 lg:mt-64 pt-12 sm:pt-16 md:pt-20 lg:pt-32 border-t border-slate-200 dark:border-slate-800">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="p-4 sm:p-8 md:p-12 bg-slate-900 dark:bg-black border border-slate-800 shadow-2xl overflow-hidden relative rounded-2xl sm:rounded-none"
-        >
+        <div className="p-4 sm:p-8 md:p-12 bg-slate-900 dark:bg-black border border-slate-800 shadow-2xl overflow-hidden relative rounded-2xl sm:rounded-none">
           <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-emerald-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           
           <div className="relative z-10">
@@ -534,7 +508,7 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
               })()}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Last Updated Footer - Matching Global Style */}

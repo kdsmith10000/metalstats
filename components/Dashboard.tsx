@@ -1,14 +1,28 @@
 'use client';
 
 import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor } from '@/lib/data';
-import { motion, AnimatePresence } from 'framer-motion';
-import DemandChart from './DemandChart';
-import BulletinDashboard from './BulletinDashboard';
-import VolumeOIChart from './VolumeOIChart';
+import { AnimatePresence, motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import DeliverySection from './DeliverySection';
 import { ChevronRight, FileText, BarChart3 } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+
+// Lazy load heavy chart components
+const DemandChart = dynamic(() => import('./DemandChart'), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+});
+
+const BulletinDashboard = dynamic(() => import('./BulletinDashboard'), {
+  ssr: false,
+  loading: () => <div className="h-96 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+});
+
+const VolumeOIChart = dynamic(() => import('./VolumeOIChart'), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+});
 
 interface BulletinData {
   bulletin_number: number;
@@ -82,11 +96,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
 
         {/* Hero Title & Subtitle */}
         <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 md:pt-32 md:pb-16 text-left">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="animate-fadeIn">
             <h1 className="leading-[1.1] tracking-tighter mb-3 sm:mb-4 md:mb-6 text-3xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
               COMEX Metals
               <span className="text-muted-foreground font-medium block sm:inline"> — Inventory</span>
@@ -95,7 +105,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
             <p className="leading-relaxed text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium">
               Advanced analytics for global warehouse inventory levels and supply-demand coverage metrics.
             </p>
-          </motion.div>
+          </div>
         </div>
 
         {/* Spacer */}
@@ -103,12 +113,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
 
         {/* Stats Cards */}
         <div className="relative w-full px-4 sm:px-8 lg:px-24 pb-16 sm:pb-24 md:pb-32 text-center mx-auto">
-          <motion.div
-            className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center animate-fadeIn">
             {activeMetals.map(config => {
               const metalData = data[config.key];
               if (!metalData) return null;
@@ -166,7 +171,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
                 </div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -307,10 +312,9 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
                           <span>{registeredPercent.toFixed(0)}%</span>
                         </div>
                         <div className="h-2 sm:h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                          <motion.div 
-                            initial={false}
-                            animate={{ width: `${registeredPercent}%` }}
-                            className={`h-full rounded-full bg-gradient-to-r ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'}`}
+                          <div 
+                            style={{ width: `${registeredPercent}%` }}
+                            className={`h-full rounded-full bg-gradient-to-r transition-all duration-500 ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'}`}
                           />
                         </div>
                       </div>

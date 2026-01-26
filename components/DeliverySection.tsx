@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Package, TrendingUp, Calendar, ArrowRight } from 'lucide-react';
 
 interface DeliveryData {
@@ -88,12 +87,9 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
             : 0;
 
           return (
-            <motion.div
+            <div
               key={delivery.symbol}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className={`relative overflow-hidden p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-lg shadow-sm hover:shadow-lg transition-all duration-300`}
+              className="relative overflow-hidden p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-lg shadow-sm hover:shadow-lg transition-all duration-300"
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-50`} />
@@ -151,16 +147,14 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
                     <span>{mtdProgress.toFixed(0)}%</span>
                   </div>
                   <div className="h-1.5 sm:h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.min(mtdProgress, 100)}%` }}
-                      transition={{ duration: 0.8, delay: index * 0.1 + 0.3 }}
-                      className={`h-full rounded ${colors.accent}`}
+                    <div
+                      style={{ width: `${Math.min(mtdProgress, 100)}%` }}
+                      className={`h-full rounded transition-all duration-500 ${colors.accent}`}
                     />
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>
