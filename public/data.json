@@ -2,7 +2,7 @@
   "Gold": {
     "metal": "Gold",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "ASAHI DEPOSITORY LLC",
@@ -98,7 +98,7 @@
   "Silver": {
     "metal": "Silver",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "ASAHI DEPOSITORY LLC",
@@ -176,7 +176,7 @@
   "Copper": {
     "metal": "Copper",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "BALTIMORE",
@@ -218,7 +218,7 @@
   "Platinum_Palladium": {
     "metal": "Platinum_Palladium",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "BRINK'S, INC.",
@@ -278,7 +278,7 @@
   "Aluminum": {
     "metal": "Aluminum",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "DETROIT",
@@ -302,7 +302,7 @@
   "Zinc": {
     "metal": "Zinc",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "NEW ORLEANS",
@@ -320,7 +320,7 @@
   "Lead": {
     "metal": "Lead",
     "report_date": "1/26/2026",
-    "activity_date": "1/24/2026",
+    "activity_date": "1/23/2026",
     "depositories": [
       {
         "name": "NEW ORLEANS",
