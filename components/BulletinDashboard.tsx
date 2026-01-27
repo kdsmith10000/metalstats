@@ -586,33 +586,24 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 ].filter(Boolean) as Array<{ name: string; data: BulletinProduct }>;
                 
                 return metals.map((metal, i) => {
-                  const prevOI = previousDayData?.[metal.data.symbol]?.totalOpenInterest;
-                  // Calculate actual change from our previous database snapshot
-                  const actualChange = prevOI ? metal.data.total_open_interest - prevOI : null;
-                  // Use actual change if we have previous data, otherwise fall back to CME daily change
-                  const displayChange = actualChange !== null ? actualChange : metal.data.total_oi_change;
-                  const Icon = getIcon(displayChange);
-                  const changePercent = prevOI && prevOI > 0
-                    ? ((displayChange / prevOI) * 100).toFixed(2)
-                    : metal.data.total_open_interest > 0 
-                      ? ((metal.data.total_oi_change / metal.data.total_open_interest) * 100).toFixed(2)
-                      : '0.00';
-                  const isPositive = displayChange > 0;
-                  const isNegative = displayChange < 0;
+                  // Always use CME daily change for consistency with Key Takeaways
+                  const dailyChange = metal.data.total_oi_change;
+                  const Icon = getIcon(dailyChange);
+                  const changePercent = metal.data.total_open_interest > 0 
+                    ? ((dailyChange / metal.data.total_open_interest) * 100).toFixed(2)
+                    : '0.00';
+                  const isPositive = dailyChange > 0;
+                  const isNegative = dailyChange < 0;
                   return (
                     <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
-                      <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(displayChange)} mt-0.5 sm:mt-1 flex-shrink-0`} />
+                      <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(dailyChange)} mt-0.5 sm:mt-1 flex-shrink-0`} />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                           <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
-                          OI: {formatNumber(metal.data.total_open_interest)} {prevOI && <span className="text-slate-400">(prev: {formatNumber(prevOI)})</span>}
+                          OI: {formatNumber(metal.data.total_open_interest)}
                         </p>
                         <p className="text-xs text-slate-500 mt-0.5">
-                          {prevOI ? (
-                            <>Chg from prev: {isPositive ? '+' : ''}{formatNumber(displayChange)} • Vol: {formatVolume(metal.data.total_volume)}</>
-                          ) : (
-                            <>Daily chg: {metal.data.total_oi_change > 0 ? '+' : ''}{formatNumber(metal.data.total_oi_change)} • Vol: {formatVolume(metal.data.total_volume)}</>
-                          )}
+                          OI chg: {isPositive ? '+' : ''}{formatNumber(dailyChange)} • Vol: {formatVolume(metal.data.total_volume)}
                         </p>
                       </div>
                       <div className={`flex-shrink-0 px-2 py-1 rounded-lg text-xs sm:text-sm font-bold tabular-nums ${
@@ -640,32 +631,63 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
               </h4>
             </div>
             <div className="space-y-4 sm:space-y-6">
-              <div className="space-y-1.5 sm:space-y-2">
-                <div className="flex justify-between text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest">
-                  <span>Silver vs Gold Volume</span>
-                  <span>2.4x Ratio</span>
-                </div>
-                <div className="h-2.5 sm:h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
-                  <div className="h-full bg-slate-400 w-[70%]" />
-                  <div className="h-full bg-amber-500 w-[30%]" />
-                </div>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium">Silver dominates with 346,357 contracts vs Gold's 141,855</p>
-              </div>
+              {(() => {
+                const gc = data.products.find(p => p.symbol === 'GC');
+                const si = data.products.find(p => p.symbol === 'SI');
+                const pl = data.products.find(p => p.symbol === 'PL');
+                const oneOz = data.products.find(p => p.symbol === '1OZ');
+                
+                const gcVol = gc?.total_volume || 0;
+                const siVol = si?.total_volume || 0;
+                const totalGoldSilver = gcVol + siVol;
+                const goldPercent = totalGoldSilver > 0 ? (gcVol / totalGoldSilver) * 100 : 50;
+                const silverPercent = 100 - goldPercent;
+                const ratio = gcVol > 0 ? (siVol / gcVol).toFixed(1) : '0';
+                
+                // Get front month data
+                const gcFront = gc?.contracts[0];
+                const gcFrontPercent = gc && gcFront ? ((gcFront.globex_volume / gc.total_volume) * 100).toFixed(0) : 0;
+                
+                const plFront = pl?.contracts[0];
+                const plFrontPercent = pl && plFront ? ((plFront.globex_volume / pl.total_volume) * 100).toFixed(0) : 0;
+                
+                return (
+                  <>
+                    <div className="space-y-1.5 sm:space-y-2">
+                      <div className="flex justify-between text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest">
+                        <span>Gold vs Silver Volume</span>
+                        <span>{siVol > gcVol ? `${ratio}x Silver` : gcVol > siVol ? `${(gcVol/siVol).toFixed(1)}x Gold` : 'Even'}</span>
+                      </div>
+                      <div className="h-2.5 sm:h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
+                        <div className="h-full bg-amber-500" style={{ width: `${goldPercent}%` }} />
+                        <div className="h-full bg-slate-400" style={{ width: `${silverPercent}%` }} />
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-500 font-medium">
+                        Gold: {formatVolume(gcVol)} vs Silver: {formatVolume(siVol)}
+                      </p>
+                    </div>
 
-              <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
-                    <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Gold Front-Month</span>
-                    FEB26 Gold accounts for 92% of total 1oz Gold volume
-                  </p>
-                </div>
-                <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
-                    <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Platinum Activity</span>
-                    APR26 captures 93% of total volume (41,931 / 45,276)
-                  </p>
-                </div>
-              </div>
+                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                      {gc && gcFront && (
+                        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                            <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Gold Front-Month</span>
+                            {gcFront.month} accounts for {gcFrontPercent}% of GC volume ({formatVolume(gcFront.globex_volume)} / {formatVolume(gc.total_volume)})
+                          </p>
+                        </div>
+                      )}
+                      {pl && plFront && (
+                        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                            <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Platinum Activity</span>
+                            {plFront.month} captures {plFrontPercent}% of PL volume ({formatVolume(plFront.globex_volume)} / {formatVolume(pl.total_volume)})
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
 
