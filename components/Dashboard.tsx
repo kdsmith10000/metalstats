@@ -184,28 +184,28 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
       </section>
 
       {/* Navigation Tabs */}
-      <div className="w-full px-4 sm:px-8 lg:px-24 py-4 sm:py-8 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
-        <div className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-2xl w-full sm:w-fit mx-auto">
+      <div className="w-full px-4 sm:px-8 lg:px-24 py-6 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
+        <div className="flex items-center gap-3 sm:gap-4 p-2 sm:p-2.5 bg-slate-100 dark:bg-slate-800 rounded-2xl sm:rounded-3xl w-full sm:w-fit mx-auto shadow-inner">
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 ${
               activeTab === 'inventory'
-                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
+                ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-2 ring-slate-200 dark:ring-slate-700'
+                : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="hidden xs:inline">Warehouse</span> Inventory
           </button>
           <button
             onClick={() => setActiveTab('bulletin')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 ${
               activeTab === 'bulletin'
-                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
+                ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-2 ring-slate-200 dark:ring-slate-700'
+                : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="hidden xs:inline">Daily</span> Bulletin
           </button>
         </div>
