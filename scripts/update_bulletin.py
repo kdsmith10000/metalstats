@@ -90,10 +90,12 @@ def parse_product_totals(text: str) -> dict:
     """Parse product lines for each product to get volume and OI."""
     products = {}
     
-    # Section02B format (Exchange Summary):
-    # MGC MICRO GOLD FUTURES                         557540                                557540            82478    +         4481
-    # GC COMEX GOLD FUTURES                          353277                       3872     357149           555309    +        23173
-    # Format: SYMBOL NAME ... GLOBEX_VOL [blank] PNT_VOL COMBINED_VOL OI SIGN OI_CHANGE
+    # Section02B format varies by PDF extraction method
+    # PyPDF2 format (symbol at END of line):
+    # 79247	MICRO GOLD FUTURES 946168 - 2832	946168 37318	146334	MGC
+    # 531609	COMEX GOLD FUTURES 655762 - 7555	640341 583174	337585	15421	GC
+    # pdftotext format (symbol at START of line):
+    # MGC MICRO GOLD FUTURES ... 557540 82478 + 4481
     
     product_configs = [
         ('1OZ', '1 OUNCE GOLD FUTURES'),
@@ -105,10 +107,40 @@ def parse_product_totals(text: str) -> dict:
         ('PA', 'NYMEX PALLADIUM FUTURES'),
         ('ALI', 'COMEX PHYSICAL ALUMINUM FUTURES'),
         ('MGC', 'MICRO GOLD FUTURES'),
+        ('MHG', 'COMEX MICRO COPPER FUTURES'),
+        ('QO', 'E-MINI GOLD FUTURES'),
+        ('QI', 'E-MINI SILVER FUTURES'),
     ]
     
     for symbol, name in product_configs:
-        # Try Section02B format first (summary lines)
+        # Try PyPDF2 format first (symbol at end of line)
+        # Format: VOLUME NAME OI SIGN OI_CHANGE ... SYMBOL
+        # Example: 531609	COMEX GOLD FUTURES 655762 - 7555	640341 583174	337585	15421	GC
+        # Note: sometimes the sign is attached to the number: -14103 instead of - 14103
+        pattern = rf'(\d+)\s+{re.escape(name)}\s+(\d+)\s+([+-])\s*(\d+).*?{symbol}\b'
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            try:
+                total_volume = int(match.group(1))
+                total_oi = int(match.group(2))
+                sign = match.group(3)
+                oi_change = int(match.group(4))
+                if sign == '-':
+                    oi_change = -oi_change
+                
+                products[symbol] = {
+                    'symbol': symbol,
+                    'name': name,
+                    'contracts': [],
+                    'total_volume': total_volume,
+                    'total_open_interest': total_oi,
+                    'total_oi_change': oi_change,
+                }
+                continue
+            except (ValueError, IndexError):
+                pass
+        
+        # Try pdftotext format (symbol at start of line)
         # Pattern: SYMBOL NAME ... numbers ... COMBINED_VOL OI SIGN OI_CHANGE
         pattern = rf'^{symbol}\s+.*?(\d+)\s+(\d+)\s+([+-])\s+(\d+)'
         match = re.search(pattern, text, re.MULTILINE)
