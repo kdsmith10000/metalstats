@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { TrendingUp, TrendingDown, BarChart3, Activity, AlertTriangle, Zap, PieChart, ArrowUpRight, ArrowDownRight, Minus, ChevronRight, Calendar, Info } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart3, Activity, AlertTriangle, Zap, PieChart, ArrowUpRight, ArrowDownRight, Minus, ChevronRight, Calendar, Info, ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
 import { formatNumber, formatPriceChange, formatVolume } from '@/lib/data';
 import { useState } from 'react';
 
@@ -49,8 +49,117 @@ const productConfig: Record<string, { displayName: string; color: string; unit: 
   'ALI': { displayName: 'Aluminum', color: '#64748b', unit: '$/mt', description: 'Physical Aluminum Futures' },
 };
 
+// Sort configuration type
+type SortField = 'month' | 'settle' | 'change' | 'volume' | 'oi_change';
+type SortDirection = 'asc' | 'desc';
+
+interface SortConfig {
+  field: SortField;
+  direction: SortDirection;
+}
+
+// Helper to parse month string to sortable value (e.g., "FEB26" -> 202602)
+const parseMonth = (month: string): number => {
+  const monthMap: Record<string, number> = {
+    'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6,
+    'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12
+  };
+  const monthStr = month.substring(0, 3).toUpperCase();
+  const yearStr = month.substring(3);
+  const year = 2000 + parseInt(yearStr, 10);
+  const monthNum = monthMap[monthStr] || 1;
+  return year * 100 + monthNum;
+};
+
 export default function BulletinDashboard({ data }: BulletinDashboardProps) {
   const [expandedProduct, setExpandedProduct] = useState<string | null>(null);
+  const [sortConfigs, setSortConfigs] = useState<Record<string, SortConfig>>({});
+  
+  // Get sort config for a product, default to month ascending
+  const getSortConfig = (symbol: string): SortConfig => {
+    return sortConfigs[symbol] || { field: 'month', direction: 'asc' };
+  };
+  
+  // Toggle sort for a product's table
+  const toggleSort = (symbol: string, field: SortField) => {
+    setSortConfigs(prev => {
+      const current = prev[symbol] || { field: 'month', direction: 'asc' };
+      let newDirection: SortDirection = 'asc';
+      
+      if (current.field === field) {
+        // Toggle direction if same field
+        newDirection = current.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        // Default to descending for numeric fields, ascending for month
+        newDirection = field === 'month' ? 'asc' : 'desc';
+      }
+      
+      return { ...prev, [symbol]: { field, direction: newDirection } };
+    });
+  };
+  
+  // Sort contracts based on config
+  const sortContracts = (contracts: BulletinProduct['contracts'], config: SortConfig) => {
+    return [...contracts].sort((a, b) => {
+      let aVal: number, bVal: number;
+      
+      switch (config.field) {
+        case 'month':
+          aVal = parseMonth(a.month);
+          bVal = parseMonth(b.month);
+          break;
+        case 'settle':
+          aVal = a.settle;
+          bVal = b.settle;
+          break;
+        case 'change':
+          aVal = a.change;
+          bVal = b.change;
+          break;
+        case 'volume':
+          aVal = a.globex_volume + a.pnt_volume;
+          bVal = b.globex_volume + b.pnt_volume;
+          break;
+        case 'oi_change':
+          aVal = a.oi_change;
+          bVal = b.oi_change;
+          break;
+        default:
+          return 0;
+      }
+      
+      const diff = aVal - bVal;
+      return config.direction === 'asc' ? diff : -diff;
+    });
+  };
+  
+  // Sortable header component
+  const SortableHeader = ({ symbol, field, label, align = 'right' }: { symbol: string; field: SortField; label: string; align?: 'left' | 'right' }) => {
+    const config = getSortConfig(symbol);
+    const isActive = config.field === field;
+    
+    return (
+      <th 
+        className={`${align === 'left' ? 'text-left' : 'text-right'} px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black uppercase tracking-widest cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors select-none`}
+        onClick={() => toggleSort(symbol, field)}
+      >
+        <div className={`flex items-center gap-1 ${align === 'right' ? 'justify-end' : 'justify-start'}`}>
+          <span className={isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400'}>{label}</span>
+          <span className="w-3 h-3 flex items-center justify-center">
+            {isActive ? (
+              config.direction === 'asc' ? (
+                <ChevronUp className="w-3 h-3 text-slate-900 dark:text-white" />
+              ) : (
+                <ChevronDown className="w-3 h-3 text-slate-900 dark:text-white" />
+              )
+            ) : (
+              <ChevronsUpDown className="w-3 h-3 text-slate-300 dark:text-slate-600" />
+            )}
+          </span>
+        </div>
+      </th>
+    );
+  };
   
   // Sort products by volume (descending)
   const sortedProducts = [...data.products].sort((a, b) => b.total_volume - a.total_volume);
@@ -206,15 +315,15 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                             <table className="w-full text-xs sm:text-sm">
                               <thead className="bg-slate-50 dark:bg-slate-900/50">
                                 <tr>
-                                  <th className="text-left px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Month</th>
-                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Settle</th>
-                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Change</th>
-                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Volume</th>
-                                  <th className="text-right px-3 sm:px-6 py-2 sm:py-3 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">OI Chg</th>
+                                  <SortableHeader symbol={product.symbol} field="month" label="Month" align="left" />
+                                  <SortableHeader symbol={product.symbol} field="settle" label="Settle" />
+                                  <SortableHeader symbol={product.symbol} field="change" label="Change" />
+                                  <SortableHeader symbol={product.symbol} field="volume" label="Volume" />
+                                  <SortableHeader symbol={product.symbol} field="oi_change" label="OI Chg" />
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                                {product.contracts.map((contract) => {
+                                {sortContracts(product.contracts, getSortConfig(product.symbol)).map((contract) => {
                                   const cChange = formatPriceChange(contract.change);
                                   return (
                                     <tr key={contract.month} className="hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
