@@ -495,6 +495,110 @@ def save_to_database(data: dict, database_url: str):
         print(f"[ERROR] Database error: {e}")
 
 
+def parse_section62_contracts(text: str) -> dict:
+    """Parse contract details from Section 62 PDF text."""
+    products = {}
+    
+    # Product symbols to look for
+    product_configs = [
+        ('1OZ', '1 OUNCE GOLD FUTURES', '1OZ FUT'),
+        ('GC', 'COMEX GOLD FUTURES', 'GC FUT'),
+        ('SI', 'COMEX SILVER FUTURES', 'SI FUT'),
+        ('SIL', 'MICRO SILVER FUTURES', 'SIL FUT'),
+        ('HG', 'COMEX COPPER FUTURES', 'HG FUT'),
+        ('PL', 'NYMEX PLATINUM FUTURES', 'PL FUT'),
+        ('PA', 'NYMEX PALLADIUM FUTURES', 'PA FUT'),
+        ('ALI', 'COMEX PHYSICAL ALUMINUM FUTURES', 'ALI FUT'),
+        ('MGC', 'MICRO GOLD FUTURES', 'MGC FUT'),
+        ('MHG', 'COMEX MICRO COPPER FUTURES', 'MHG FUT'),
+        ('QO', 'E-MINI GOLD FUTURES', 'QO FUT'),
+        ('QI', 'E-MINI SILVER FUTURES', 'QI FUT'),
+    ]
+    
+    for symbol, name, section_header in product_configs:
+        # Find the section for this product
+        # Pattern: "SYMBOL FUT PRODUCT_NAME" followed by contract lines until "TOTAL SYMBOL FUT"
+        section_pattern = rf'{re.escape(section_header)}\s+{re.escape(name)}(.*?)TOTAL\s+{re.escape(section_header)}'
+        section_match = re.search(section_pattern, text, re.DOTALL | re.IGNORECASE)
+        
+        if not section_match:
+            continue
+        
+        section = section_match.group(1)
+        contracts = []
+        
+        # Contract line pattern for Section 62:
+        # FEB26 + 422760	102.80	5082.50	5107.90 /4983.60 132930 - 56956	5013.40 10351
+        # MONTH SIGN VOLUME CHANGE SETTLE HIGH/LOW OI SIGN OI_CHANGE OPEN PNT
+        # Some have "----" for volume or "UNCH" for change
+        
+        # Pattern: MONTH SIGN? VOLUME CHANGE SETTLE ...
+        contract_pattern = r'([A-Z]{3})(\d{2})\s+([+-])?\s*([\d]+|----)\s+([\d.]+|UNCH)\s+([\d.]+)\s+'
+        
+        for match in re.finditer(contract_pattern, section):
+            try:
+                month = match.group(1) + match.group(2)
+                sign = match.group(3) or '+'
+                volume_str = match.group(4)
+                change_str = match.group(5)
+                settle = float(match.group(6))
+                
+                volume = 0 if volume_str == '----' else int(volume_str)
+                
+                if change_str == 'UNCH':
+                    change = 0.0
+                else:
+                    change = float(change_str)
+                    if sign == '-':
+                        change = -change
+                
+                contracts.append({
+                    'month': month,
+                    'settle': settle,
+                    'change': change,
+                    'globex_volume': volume,
+                    'pnt_volume': 0,
+                    'oi_change': 0,
+                })
+            except (ValueError, IndexError):
+                continue
+        
+        # Sort by volume descending (front month usually has most volume)
+        contracts.sort(key=lambda x: x['globex_volume'], reverse=True)
+        
+        # Get totals from TOTAL line
+        # Pattern: TOTAL SYMBOL FUT VOLUME OI_CHANGE SIGN
+        total_pattern = rf'(\d+)?\s*TOTAL\s+{re.escape(section_header)}\s+(\d+)(?:\s+(\d+))?\s*([+-])?\s*(\d+)?'
+        total_match = re.search(total_pattern, text, re.IGNORECASE)
+        
+        total_oi = 0
+        total_volume = 0
+        total_oi_change = 0
+        
+        if total_match:
+            if total_match.group(1):
+                total_oi = int(total_match.group(1))
+            total_volume = int(total_match.group(2)) if total_match.group(2) else 0
+            if total_match.group(3):
+                pnt_vol = int(total_match.group(3))
+            if total_match.group(5):
+                total_oi_change = int(total_match.group(5))
+                if total_match.group(4) == '-':
+                    total_oi_change = -total_oi_change
+        
+        if contracts:
+            products[symbol] = {
+                'symbol': symbol,
+                'name': name,
+                'contracts': contracts[:10],  # Top 10 contracts by volume
+                'total_volume': total_volume,
+                'total_open_interest': total_oi,
+                'total_oi_change': total_oi_change,
+            }
+    
+    return products
+
+
 def main():
     print("=" * 70)
     print("  CME Group Daily Bulletin Parser")
@@ -509,37 +613,60 @@ def main():
     project_root = script_dir.parent
     output_file = project_root / 'public' / 'bulletin.json'
     
-    # Try different PDF names (Section02B is the newer format)
-    pdf_names = [
-        'Section02B_Summary_Volume_And_Open_Interest_Metals_Futures_And_Options.pdf',
-        'Section62_Metals_Futures_Products.pdf',
-    ]
+    # Check for both PDFs - Section 62 has contract details, Section 02B has summaries
+    section62_path = project_root / 'data' / 'Section62_Metals_Futures_Products.pdf'
+    section02b_path = project_root / 'data' / 'Section02B_Summary_Volume_And_Open_Interest_Metals_Futures_And_Options.pdf'
     
-    pdf_path = None
-    for name in pdf_names:
-        candidate = project_root / 'data' / name
-        if candidate.exists():
-            pdf_path = candidate
-            break
-    
-    if not pdf_path:
+    # Prefer Section 62 for contract details
+    if section62_path.exists():
+        print(f"[INFO] Parsing Section 62: {section62_path}")
+        text = extract_pdf_text(str(section62_path))
+        
+        # Parse header
+        header = parse_bulletin_header(text)
+        
+        # Parse contracts from Section 62
+        products = parse_section62_contracts(text)
+        
+        # If Section 02B also exists, use it for more accurate totals
+        if section02b_path.exists():
+            print(f"[INFO] Also parsing Section 02B for totals: {section02b_path}")
+            text_02b = extract_pdf_text(str(section02b_path))
+            totals = parse_product_totals(text_02b)
+            
+            # Merge totals into products
+            for symbol, total_data in totals.items():
+                if symbol in products:
+                    products[symbol]['total_volume'] = total_data['total_volume']
+                    products[symbol]['total_open_interest'] = total_data['total_open_interest']
+                    products[symbol]['total_oi_change'] = total_data['total_oi_change']
+                else:
+                    products[symbol] = total_data
+        
+        data = {
+            'bulletin_number': header.get('bulletin_number'),
+            'date': header.get('date'),
+            'parsed_date': header.get('parsed_date'),
+            'products': list(products.values()),
+            'last_updated': datetime.now().isoformat(),
+        }
+    elif section02b_path.exists():
+        print(f"[INFO] Parsing Section 02B: {section02b_path}")
+        text = extract_pdf_text(str(section02b_path))
+        data = build_bulletin_data(text)
+    else:
         print(f"[ERROR] No bulletin PDF found in data/")
-        print(f"  Looked for: {', '.join(pdf_names)}")
+        print(f"  Looked for: Section62_Metals_Futures_Products.pdf, Section02B_*.pdf")
         return
-    
-    print(f"[INFO] Parsing: {pdf_path}")
-    
-    # Extract text from PDF
-    text = extract_pdf_text(str(pdf_path))
-    
-    # Build bulletin data
-    data = build_bulletin_data(text)
     
     print(f"[INFO] Bulletin #{data.get('bulletin_number')} - {data.get('date')}")
     print(f"[INFO] Found {len(data.get('products', []))} products")
     
     for product in data.get('products', []):
-        print(f"  {product['symbol']}: Vol={product['total_volume']:,}, OI={product['total_open_interest']:,}, OI Chg={product['total_oi_change']:+,}")
+        contracts_count = len(product.get('contracts', []))
+        front = product.get('contracts', [{}])[0] if product.get('contracts') else {}
+        settle = front.get('settle', 'N/A')
+        print(f"  {product['symbol']}: Vol={product['total_volume']:,}, OI={product['total_open_interest']:,}, OI Chg={product['total_oi_change']:+,}, Contracts={contracts_count}, Settle={settle}")
     
     # Save to JSON
     with open(output_file, 'w') as f:
