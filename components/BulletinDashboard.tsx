@@ -284,22 +284,36 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 const getIconColor = (change: number) => change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
                 
                 const metals = [
-                  gc && { name: 'Gold', data: gc, description: `OI change: ${gc.total_oi_change > 0 ? '+' : ''}${formatNumber(gc.total_oi_change)} with ${formatVolume(gc.total_volume)} volume` },
-                  si && { name: 'Silver', data: si, description: `OI change: ${si.total_oi_change > 0 ? '+' : ''}${formatNumber(si.total_oi_change)} with ${formatVolume(si.total_volume)} volume` },
-                  hg && { name: 'Copper', data: hg, description: `OI change: ${hg.total_oi_change > 0 ? '+' : ''}${formatNumber(hg.total_oi_change)} with ${formatVolume(hg.total_volume)} volume` },
-                  pl && { name: 'Platinum', data: pl, description: `OI change: ${pl.total_oi_change > 0 ? '+' : ''}${formatNumber(pl.total_oi_change)} with ${formatVolume(pl.total_volume)} volume` },
-                  pa && { name: 'Palladium', data: pa, description: `OI change: ${pa.total_oi_change > 0 ? '+' : ''}${formatNumber(pa.total_oi_change)} with ${formatVolume(pa.total_volume)} volume` },
-                ].filter(Boolean) as Array<{ name: string; data: BulletinProduct; description: string }>;
+                  gc && { name: 'Gold', data: gc },
+                  si && { name: 'Silver', data: si },
+                  hg && { name: 'Copper', data: hg },
+                  pl && { name: 'Platinum', data: pl },
+                  pa && { name: 'Palladium', data: pa },
+                ].filter(Boolean) as Array<{ name: string; data: BulletinProduct }>;
                 
                 return metals.map((metal, i) => {
                   const Icon = getIcon(metal.data.total_oi_change);
+                  const oiChangePercent = metal.data.total_open_interest > 0 
+                    ? ((metal.data.total_oi_change / metal.data.total_open_interest) * 100).toFixed(2)
+                    : '0.00';
+                  const isPositive = metal.data.total_oi_change > 0;
+                  const isNegative = metal.data.total_oi_change < 0;
                   return (
                     <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
                       <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(metal.data.total_oi_change)} mt-0.5 sm:mt-1 flex-shrink-0`} />
-                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
-                        <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
-                        {metal.description}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                          <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
+                          OI change: {isPositive ? '+' : ''}{formatNumber(metal.data.total_oi_change)} with {formatVolume(metal.data.total_volume)} volume
+                        </p>
+                      </div>
+                      <div className={`flex-shrink-0 px-2 py-1 rounded-lg text-xs sm:text-sm font-bold tabular-nums ${
+                        isPositive ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' : 
+                        isNegative ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 
+                        'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                      }`}>
+                        {isPositive ? '+' : ''}{oiChangePercent}%
+                      </div>
                     </div>
                   );
                 });
