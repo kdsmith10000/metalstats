@@ -217,6 +217,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
             <span>Last updated: {lastUpdatedText} • CME Group</span>
           </div>
           <span className="text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
+          <span className="text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
         </div>
       </div>
 
