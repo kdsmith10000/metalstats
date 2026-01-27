@@ -63,7 +63,8 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
     }
   };
   
-  const displayDate = data.last_updated ? formatDisplayDate(data.last_updated) : data.date;
+  // Use the bulletin date (when the data was published), not last_updated (when we parsed it)
+  const displayDate = data.date || (data.parsed_date ? formatDisplayDate(data.parsed_date) : 'N/A');
 
   // Calculate total volume and OI across all products
   const totalVolume = sortedProducts.reduce((sum, p) => sum + p.total_volume, 0);
