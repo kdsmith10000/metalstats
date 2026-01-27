@@ -91,6 +91,8 @@ const dailyDeliveryData = {
     { day: 'Jan 17', contracts: 634 },
     { day: 'Jan 21', contracts: 589 },
     { day: 'Jan 22', contracts: 651 },
+    { day: 'Jan 23', contracts: 1090 },
+    { day: 'Jan 26', contracts: 159 },
   ],
   silver: [
     { day: 'Jan 2', contracts: 845 },
@@ -107,6 +109,8 @@ const dailyDeliveryData = {
     { day: 'Jan 17', contracts: 1367 },
     { day: 'Jan 21', contracts: 1189 },
     { day: 'Jan 22', contracts: 1039 },
+    { day: 'Jan 23', contracts: 265 },
+    { day: 'Jan 26', contracts: 348 },
   ],
   aluminum: [
     { day: 'Jan 2', contracts: 12 },
@@ -123,6 +127,8 @@ const dailyDeliveryData = {
     { day: 'Jan 17', contracts: 19 },
     { day: 'Jan 21', contracts: 21 },
     { day: 'Jan 22', contracts: 20 },
+    { day: 'Jan 23', contracts: 0 },
+    { day: 'Jan 26', contracts: 0 },
   ],
   copper: [
     { day: 'Jan 2', contracts: 285 },
@@ -139,21 +145,23 @@ const dailyDeliveryData = {
     { day: 'Jan 17', contracts: 398 },
     { day: 'Jan 21', contracts: 423 },
     { day: 'Jan 22', contracts: 456 },
+    { day: 'Jan 23', contracts: 600 },
+    { day: 'Jan 26', contracts: 458 },
   ],
 };
 
-// Stats for each metal - Monthly view
+// Stats for each metal - Monthly view (MTD from delivery reports)
 const monthlyStats = {
   gold: {
     total2025: 91202,
-    current2026: 7750,
+    current2026: 11826,  // MTD from Jan 26 delivery report
     previous2025: 2370,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
   silver: {
     total2025: 50150,
-    current2026: 13200,
+    current2026: 9529,  // MTD from Jan 26 delivery report
     previous2025: 3083,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
@@ -167,7 +175,7 @@ const monthlyStats = {
   },
   copper: {
     total2025: 53600,
-    current2026: 5800,
+    current2026: 13630,  // MTD from Jan 26 delivery report
     previous2025: 4200,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
