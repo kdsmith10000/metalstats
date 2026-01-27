@@ -127,8 +127,6 @@ const dailyDeliveryData = {
     { day: 'Jan 17', contracts: 19 },
     { day: 'Jan 21', contracts: 21 },
     { day: 'Jan 22', contracts: 20 },
-    { day: 'Jan 23', contracts: 0 },
-    { day: 'Jan 26', contracts: 0 },
   ],
   copper: [
     { day: 'Jan 2', contracts: 285 },
