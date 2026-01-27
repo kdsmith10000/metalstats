@@ -122,11 +122,16 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
               
               // Calculate ratio change from previous day
               let ratioChange: number | null = null;
+              let ratioPercentChange: number | null = null;
               if (metalData.changes?.day.registered !== null && metalData.changes?.day.registered !== undefined) {
                 // Previous registered = current / (1 + percent_change/100)
                 const previousRegistered = metalData.totals.registered / (1 + metalData.changes.day.registered / 100);
                 const previousRatio = calculateCoverageRatio(previousRegistered, config.monthlyDemand);
                 ratioChange = ratio - previousRatio;
+                // Calculate percent change in ratio
+                if (previousRatio > 0) {
+                  ratioPercentChange = ((ratio - previousRatio) / previousRatio) * 100;
+                }
               }
               
               return (
@@ -156,15 +161,18 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
                       </p>
                     </div>
                     
-                    {/* Ratio Change - Shows absolute change in coverage ratio */}
+                    {/* Ratio Change - Shows absolute change and percent change */}
                     {ratioChange !== null && (
                       <div className="mt-2 sm:mt-4 text-[10px] sm:text-[11px] font-bold">
                         <span className={ratioChange > 0 ? 'text-emerald-500' : ratioChange < 0 ? 'text-red-500' : 'text-slate-400'}>
-                          {ratioChange > 0 ? '+' : ''}{Math.round(ratioChange)}
+                          {ratioChange > 0 ? '+' : ''}{ratioChange.toFixed(2)}x
                         </span>
-                        {' '}
-                        <span className="text-slate-400 hidden sm:inline">vs yesterday</span>
-                        <span className="text-slate-400 sm:hidden">24h</span>
+                        {ratioPercentChange !== null && (
+                          <span className={`ml-1 ${ratioPercentChange > 0 ? 'text-emerald-500' : ratioPercentChange < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                            ({ratioPercentChange > 0 ? '+' : ''}{ratioPercentChange.toFixed(2)}%)
+                          </span>
+                        )}
+                        <span className="text-slate-400 ml-1 hidden sm:inline">24h</span>
                       </div>
                     )}
                   </div>
