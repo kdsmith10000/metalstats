@@ -567,24 +567,27 @@ def parse_section62_contracts(text: str) -> dict:
         contracts.sort(key=lambda x: x['globex_volume'], reverse=True)
         
         # Get totals from TOTAL line
-        # Pattern: TOTAL SYMBOL FUT VOLUME OI_CHANGE SIGN
-        total_pattern = rf'(\d+)?\s*TOTAL\s+{re.escape(section_header)}\s+(\d+)(?:\s+(\d+))?\s*([+-])?\s*(\d+)?'
-        total_match = re.search(total_pattern, text, re.IGNORECASE)
-        
+        # Format: OI TOTAL SYMBOL FUT VOLUME [PNT_VOL] OI_CHANGE+/-
+        # Example: 640341 TOTAL  GC FUT 525061  15421 14103-
+        # Example: 946168 TOTAL  MGC FUT 78583 3496-
+        # Note: sign comes AFTER the number (e.g., "14103-" means -14103)
         total_oi = 0
         total_volume = 0
         total_oi_change = 0
         
-        if total_match:
-            if total_match.group(1):
-                total_oi = int(total_match.group(1))
-            total_volume = int(total_match.group(2)) if total_match.group(2) else 0
-            if total_match.group(3):
-                pnt_vol = int(total_match.group(3))
-            if total_match.group(5):
-                total_oi_change = int(total_match.group(5))
-                if total_match.group(4) == '-':
-                    total_oi_change = -total_oi_change
+        # Search line by line for the TOTAL line for this product
+        total_pattern = rf'(\d+)\s+TOTAL\s+{re.escape(section_header)}\s+(\d+).*?(\d+)([+-])\s*$'
+        for line in text.split('\n'):
+            if f'TOTAL' in line and section_header in line:
+                total_match = re.search(total_pattern, line, re.IGNORECASE)
+                if total_match:
+                    total_oi = int(total_match.group(1))
+                    total_volume = int(total_match.group(2))
+                    total_oi_change = int(total_match.group(3))
+                    # Sign comes AFTER the number in Section 62 format
+                    if total_match.group(4) == '-':
+                        total_oi_change = -total_oi_change
+                    break
         
         if contracts:
             products[symbol] = {

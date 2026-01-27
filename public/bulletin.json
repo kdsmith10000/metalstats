@@ -50,7 +50,7 @@
       ],
       "total_volume": 22896,
       "total_open_interest": 153942,
-      "total_oi_change": 0
+      "total_oi_change": 5166
     },
     {
       "symbol": "GC",
@@ -139,7 +139,7 @@
       ],
       "total_volume": 525061,
       "total_open_interest": 640341,
-      "total_oi_change": 14103
+      "total_oi_change": -14103
     },
     {
       "symbol": "SI",
@@ -293,7 +293,7 @@
       ],
       "total_volume": 34844,
       "total_open_interest": 715111,
-      "total_oi_change": 0
+      "total_oi_change": 1317
     },
     {
       "symbol": "HG",
@@ -382,7 +382,7 @@
       ],
       "total_volume": 282678,
       "total_open_interest": 88316,
-      "total_oi_change": 955
+      "total_oi_change": -955
     },
     {
       "symbol": "PL",
@@ -471,7 +471,7 @@
       ],
       "total_volume": 79921,
       "total_open_interest": 65550,
-      "total_oi_change": 574
+      "total_oi_change": -574
     },
     {
       "symbol": "PA",
@@ -560,7 +560,7 @@
       ],
       "total_volume": 19027,
       "total_open_interest": 13109,
-      "total_oi_change": 382
+      "total_oi_change": -382
     },
     {
       "symbol": "ALI",
@@ -649,7 +649,7 @@
       ],
       "total_volume": 2118,
       "total_open_interest": 9838,
-      "total_oi_change": 0
+      "total_oi_change": 58
     },
     {
       "symbol": "MGC",
@@ -738,7 +738,7 @@
       ],
       "total_volume": 78583,
       "total_open_interest": 946168,
-      "total_oi_change": 0
+      "total_oi_change": -3496
     },
     {
       "symbol": "MHG",
@@ -819,7 +819,7 @@
       ],
       "total_volume": 17850,
       "total_open_interest": 47597,
-      "total_oi_change": 0
+      "total_oi_change": 2159
     },
     {
       "symbol": "QO",
@@ -884,7 +884,7 @@
       ],
       "total_volume": 8210,
       "total_open_interest": 21578,
-      "total_oi_change": 0
+      "total_oi_change": 370
     },
     {
       "symbol": "QI",
@@ -957,8 +957,8 @@
       ],
       "total_volume": 1451,
       "total_open_interest": 11883,
-      "total_oi_change": 0
+      "total_oi_change": 147
     }
   ],
-  "last_updated": "2026-01-27T14:40:12.881723"
+  "last_updated": "2026-01-27T15:00:08.717934"
 }
