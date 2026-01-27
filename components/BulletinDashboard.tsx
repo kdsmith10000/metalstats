@@ -3,7 +3,21 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, BarChart3, Activity, AlertTriangle, Zap, PieChart, ArrowUpRight, ArrowDownRight, Minus, ChevronRight, Calendar, Info, ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
 import { formatNumber, formatPriceChange, formatVolume } from '@/lib/data';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+// Previous day OI data from database
+interface PreviousDayData {
+  [symbol: string]: {
+    symbol: string;
+    name: string;
+    totalVolume: number;
+    totalOpenInterest: number;
+    totalOiChange: number;
+    frontMonth: string;
+    frontMonthSettle: number;
+    frontMonthChange: number;
+  };
+}
 
 interface BulletinProduct {
   symbol: string;
@@ -74,6 +88,25 @@ const parseMonth = (month: string): number => {
 export default function BulletinDashboard({ data }: BulletinDashboardProps) {
   const [expandedProduct, setExpandedProduct] = useState<string | null>(null);
   const [sortConfigs, setSortConfigs] = useState<Record<string, SortConfig>>({});
+  const [previousDayData, setPreviousDayData] = useState<PreviousDayData | null>(null);
+  const [previousDate, setPreviousDate] = useState<string | null>(null);
+  
+  // Fetch previous day's OI data from database
+  useEffect(() => {
+    const fetchPreviousData = async () => {
+      try {
+        const response = await fetch('/api/bulletin/previous');
+        if (response.ok) {
+          const result = await response.json();
+          setPreviousDayData(result.previous);
+          setPreviousDate(result.previousDate);
+        }
+      } catch (error) {
+        console.error('Failed to fetch previous day data:', error);
+      }
+    };
+    fetchPreviousData();
+  }, []);
   
   // Get sort config for a product, default to month ascending
   const getSortConfig = (symbol: string): SortConfig => {
@@ -406,18 +439,26 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                         exit={{ opacity: 0, y: -10 }}
                         className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
                       >
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
-                          {[
-                            { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
-                            { label: 'OI Change', value: (product.total_oi_change > 0 ? '+' : '') + formatNumber(product.total_oi_change), color: product.total_oi_change > 0 ? 'text-emerald-500' : product.total_oi_change < 0 ? 'text-red-500' : '' },
-                            { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
-                            { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
-                          ].map((stat, i) => (
-                            <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
-                              <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
-                              <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
-                            </div>
-                          ))}
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
+                          {(() => {
+                            const prevOI = previousDayData?.[product.symbol]?.totalOpenInterest;
+                            const stats = [
+                              { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
+                              { label: 'Prev Day OI', value: prevOI ? formatNumber(prevOI) : '—', subtext: previousDate ? `(${new Date(previousDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : '' },
+                              { label: 'OI Change', value: (product.total_oi_change > 0 ? '+' : '') + formatNumber(product.total_oi_change), color: product.total_oi_change > 0 ? 'text-emerald-500' : product.total_oi_change < 0 ? 'text-red-500' : '' },
+                              { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
+                              { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
+                            ];
+                            return stats.map((stat, i) => (
+                              <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
+                                <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
+                                <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
+                                {'subtext' in stat && stat.subtext && (
+                                  <p className="text-[8px] sm:text-[9px] text-slate-400 mt-0.5">{stat.subtext}</p>
+                                )}
+                              </div>
+                            ));
+                          })()}
                         </div>
 
                         {/* Contract Details Table */}
@@ -520,13 +561,17 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                     : '0.00';
                   const isPositive = metal.data.total_oi_change > 0;
                   const isNegative = metal.data.total_oi_change < 0;
+                  const prevOI = previousDayData?.[metal.data.symbol]?.totalOpenInterest;
                   return (
                     <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
                       <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(metal.data.total_oi_change)} mt-0.5 sm:mt-1 flex-shrink-0`} />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                           <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
-                          OI change: {isPositive ? '+' : ''}{formatNumber(metal.data.total_oi_change)} with {formatVolume(metal.data.total_volume)} volume
+                          OI: {formatNumber(metal.data.total_open_interest)} {prevOI && <span className="text-slate-400">(prev: {formatNumber(prevOI)})</span>}
+                        </p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Change: {isPositive ? '+' : ''}{formatNumber(metal.data.total_oi_change)} • Vol: {formatVolume(metal.data.total_volume)}
                         </p>
                       </div>
                       <div className={`flex-shrink-0 px-2 py-1 rounded-lg text-xs sm:text-sm font-bold tabular-nums ${
