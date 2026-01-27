@@ -68,7 +68,7 @@ interface DashboardProps {
   lastUpdatedText?: string;
 }
 
-export default function Dashboard({ data, bulletinData, deliveryData, lastUpdatedText = 'January 22, 2026' }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;

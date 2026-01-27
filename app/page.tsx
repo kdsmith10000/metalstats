@@ -8,7 +8,7 @@ import deliveryJson from '../public/delivery.json';
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
-  let lastUpdatedText = 'January 22, 2026'; // Default fallback
+  let lastUpdatedText = 'January 26, 2026'; // Default fallback
   
   if (isDatabaseAvailable()) {
     try {
