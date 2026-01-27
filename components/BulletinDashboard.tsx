@@ -202,86 +202,136 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
           </div>
         </div>
 
-        {/* Main Product Rows - Matching Inventory Style */}
-        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-1">
-          {sortedProducts.map((product, index) => {
+        {/* Main Sortable Products Table - Always Visible */}
+        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="overflow-visible rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl min-w-[700px] sm:min-w-0">
+            <table className="w-full text-sm sm:text-base">
+              <thead className="bg-slate-100/80 dark:bg-slate-900/80">
+                <tr>
+                  <SortableHeader symbol="_products" field="month" label="Product" align="left" />
+                  <SortableHeader symbol="_products" field="settle" label="Settle" />
+                  <SortableHeader symbol="_products" field="change" label="Change" />
+                  <SortableHeader symbol="_products" field="volume" label="Volume" />
+                  <th className="text-right px-3 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-widest">Open Int</th>
+                  <SortableHeader symbol="_products" field="oi_change" label="OI Chg" />
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                {(() => {
+                  const config = getSortConfig('_products');
+                  const sorted = [...sortedProducts].sort((a, b) => {
+                    const aFront = a.contracts[0];
+                    const bFront = b.contracts[0];
+                    let aVal: number, bVal: number;
+                    
+                    switch (config.field) {
+                      case 'month':
+                        // Sort by symbol alphabetically
+                        return config.direction === 'asc' 
+                          ? a.symbol.localeCompare(b.symbol)
+                          : b.symbol.localeCompare(a.symbol);
+                      case 'settle':
+                        aVal = aFront?.settle || 0;
+                        bVal = bFront?.settle || 0;
+                        break;
+                      case 'change':
+                        aVal = aFront?.change || 0;
+                        bVal = bFront?.change || 0;
+                        break;
+                      case 'volume':
+                        aVal = a.total_volume;
+                        bVal = b.total_volume;
+                        break;
+                      case 'oi_change':
+                        aVal = a.total_oi_change;
+                        bVal = b.total_oi_change;
+                        break;
+                      default:
+                        return 0;
+                    }
+                    
+                    const diff = aVal - bVal;
+                    return config.direction === 'asc' ? diff : -diff;
+                  });
+                  
+                  return sorted.map((product) => {
+                    const prodConfig = productConfig[product.symbol];
+                    const frontContract = product.contracts[0];
+                    const changeFormatted = frontContract ? formatPriceChange(frontContract.change) : null;
+                    
+                    return (
+                      <tr key={product.symbol} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        <td className="px-3 sm:px-6 py-3 sm:py-4">
+                          <div className="flex items-center gap-3 sm:gap-4">
+                            <div 
+                              className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base shadow-md flex-shrink-0"
+                              style={{ backgroundColor: prodConfig?.color || '#64748b' }}
+                            >
+                              {product.symbol.substring(0, 2)}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">{product.symbol}</p>
+                              <p className="text-xs text-slate-500 truncate">{prodConfig?.displayName || product.name}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-3 sm:px-6 py-3 sm:py-4 text-right font-bold text-slate-900 dark:text-white tabular-nums text-base sm:text-lg">
+                          {frontContract ? frontContract.settle.toFixed(2) : '—'}
+                        </td>
+                        <td className={`px-3 sm:px-6 py-3 sm:py-4 text-right font-bold tabular-nums text-base sm:text-lg ${changeFormatted?.color || 'text-slate-400'}`}>
+                          {changeFormatted?.text || 'UNCH'}
+                        </td>
+                        <td className="px-3 sm:px-6 py-3 sm:py-4 text-right font-medium tabular-nums text-slate-700 dark:text-slate-300">
+                          {formatVolume(product.total_volume)}
+                        </td>
+                        <td className="px-3 sm:px-6 py-3 sm:py-4 text-right font-medium tabular-nums text-slate-700 dark:text-slate-300">
+                          {formatNumber(product.total_open_interest)}
+                        </td>
+                        <td className={`px-3 sm:px-6 py-3 sm:py-4 text-right font-bold tabular-nums ${product.total_oi_change > 0 ? 'text-emerald-500' : product.total_oi_change < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                          {product.total_oi_change > 0 ? '+' : ''}{product.total_oi_change !== 0 ? formatNumber(product.total_oi_change) : 'UNCH'}
+                        </td>
+                      </tr>
+                    );
+                  });
+                })()}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Expandable Product Details */}
+        <div className="mt-8 sm:mt-12 grid gap-3 sm:gap-4 md:gap-6 grid-cols-1">
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">
+            Contract Details <span className="text-slate-400 font-medium">(Click to expand)</span>
+          </h3>
+          {sortedProducts.map((product) => {
             const config = productConfig[product.symbol];
             const isExpanded = expandedProduct === product.symbol;
             const frontContract = product.contracts[0];
-            const changeFormatted = frontContract ? formatPriceChange(frontContract.change) : null;
-            const volumePercent = (product.total_volume / totalVolume) * 100;
 
             return (
               <div key={product.symbol} className="relative">
                 <button
                   onClick={() => setExpandedProduct(isExpanded ? null : product.symbol)}
-                  className="relative w-full text-left p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
+                  className="relative w-full text-left p-3 sm:p-4 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition-all duration-300"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
-                    {/* Product Info */}
-                    <div className="flex items-center gap-4 sm:gap-6 lg:gap-12">
-                      <div className="relative flex-shrink-0">
-                        <div 
-                          className="absolute -inset-1.5 sm:-inset-2 rounded-xl sm:rounded-2xl blur-md opacity-20"
-                          style={{ backgroundColor: config?.color || '#64748b' }}
-                        />
-                        <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-slate-900 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl shadow-lg">
-                          {product.symbol.substring(0, 2).toUpperCase()}
-                        </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div 
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-md"
+                        style={{ backgroundColor: config?.color || '#64748b' }}
+                      >
+                        {product.symbol.substring(0, 2)}
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight truncate">
-                          {product.symbol} <span className="text-slate-400 dark:text-slate-500 font-medium">({config?.displayName || product.name})</span>
-                        </h3>
-                        <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-wider">
-                          {frontContract?.month || 'N/A'} • {config?.description || product.name}
+                        <p className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+                          {product.symbol} <span className="text-slate-400 font-medium">({config?.displayName || product.name})</span>
                         </p>
+                        <p className="text-xs text-slate-500">{product.contracts.length} contracts • Front: {frontContract?.month || 'N/A'}</p>
                       </div>
                     </div>
-
-                    {/* Stats */}
-                    <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 lg:gap-16">
-                      {/* Volume Bar - Hidden on small screens */}
-                      <div className="w-32 lg:w-40 hidden xl:block">
-                        <div className="flex justify-between text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">
-                          <span>Volume</span>
-                          <span>{volumePercent.toFixed(0)}%</span>
-                        </div>
-                        <div className="h-2 sm:h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                          <div 
-                            className="h-full rounded-full transition-all duration-500"
-                            style={{ backgroundColor: config?.color || '#64748b', width: `${volumePercent}%` }}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Settlement Price */}
-                      <div className="text-right min-w-0 sm:min-w-[100px] lg:min-w-[120px]">
-                        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Settle</p>
-                        <p className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 dark:text-white tabular-nums">
-                          {frontContract ? frontContract.settle.toFixed(2) : '—'}
-                        </p>
-                      </div>
-
-                      {/* Change */}
-                      <div className="text-right min-w-0 sm:min-w-[80px] lg:min-w-[100px]">
-                        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Change</p>
-                        <p className={`text-lg sm:text-xl md:text-2xl font-black tabular-nums ${changeFormatted?.color || 'text-slate-400'}`}>
-                          {changeFormatted?.text || 'UNCH'}
-                        </p>
-                      </div>
-
-                      {/* Total Volume - Hidden on smallest screens */}
-                      <div className="text-right min-w-[80px] lg:min-w-[100px] hidden md:block">
-                        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Volume</p>
-                        <p className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 dark:text-white tabular-nums">
-                          {formatVolume(product.total_volume)}
-                        </p>
-                      </div>
-                      
-                      <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
-                        <ChevronRight className="w-5 h-5 text-slate-400" />
-                      </div>
+                    <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
+                      <ChevronRight className="w-4 h-4 text-slate-400" />
                     </div>
                   </div>
                 </button>
@@ -292,25 +342,11 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
+                      className="mt-2 sm:mt-3 p-3 sm:p-4 md:p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-white/40 dark:border-white/10 shadow-inner"
                     >
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
-                        {[
-                          { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
-                          { label: 'OI Change', value: (product.total_oi_change > 0 ? '+' : '') + formatNumber(product.total_oi_change), color: product.total_oi_change > 0 ? 'text-emerald-500' : product.total_oi_change < 0 ? 'text-red-500' : '' },
-                          { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
-                          { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
-                        ].map((stat, i) => (
-                          <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
-                            <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
-                            <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Contract Details Table - Scrollable on mobile */}
+                      {/* Contract Details Table */}
                       {product.contracts.length > 0 && (
-                        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                        <div className="overflow-x-auto -mx-3 px-3 sm:mx-0 sm:px-0">
                           <div className="overflow-visible rounded-lg border border-slate-200 dark:border-slate-800 min-w-[500px] sm:min-w-0">
                             <table className="w-full text-xs sm:text-sm">
                               <thead className="bg-slate-50 dark:bg-slate-900/50">
