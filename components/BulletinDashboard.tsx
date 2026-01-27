@@ -36,12 +36,16 @@ interface BulletinDashboardProps {
 // Product display configuration
 const productConfig: Record<string, { displayName: string; color: string; unit: string; description: string }> = {
   'GC': { displayName: 'Gold', color: '#fbbf24', unit: '$/oz', description: '100 Troy Ounce Gold Futures' },
-  '1OZ': { displayName: 'Gold (1oz)', color: '#fbbf24', unit: '$/oz', description: '1 Troy Ounce Gold Futures' },
-  'SI': { displayName: 'Silver', color: '#94a3b8', unit: 'cents/oz', description: '1000 Troy Ounce Silver Futures' },
-  'SIL': { displayName: 'Silver (5k)', color: '#94a3b8', unit: 'cents/oz', description: '5000 Troy Ounce Silver Futures' },
-  'HG': { displayName: 'Copper', color: '#b45309', unit: '$/lb', description: 'High Grade Copper Futures' },
-  'PL': { displayName: 'Platinum', color: '#a78bfa', unit: '$/oz', description: 'Platinum Futures' },
-  'PA': { displayName: 'Palladium', color: '#6366f1', unit: '$/oz', description: 'Palladium Futures' },
+  '1OZ': { displayName: '1oz Gold', color: '#fbbf24', unit: '$/oz', description: '1 Troy Ounce Gold Futures' },
+  'MGC': { displayName: 'Micro Gold', color: '#fbbf24', unit: '$/oz', description: '10 Troy Ounce Gold Futures' },
+  'QO': { displayName: 'E-Mini Gold', color: '#fbbf24', unit: '$/oz', description: '50 Troy Ounce Gold Futures' },
+  'SI': { displayName: 'Silver', color: '#94a3b8', unit: 'cents/oz', description: '5000 Troy Ounce Silver Futures' },
+  'SIL': { displayName: 'Micro Silver', color: '#94a3b8', unit: 'cents/oz', description: '1000 Troy Ounce Silver Futures' },
+  'QI': { displayName: 'E-Mini Silver', color: '#94a3b8', unit: 'cents/oz', description: '2500 Troy Ounce Silver Futures' },
+  'HG': { displayName: 'Copper', color: '#b45309', unit: '$/lb', description: '25,000 lbs High Grade Copper' },
+  'MHG': { displayName: 'Micro Copper', color: '#b45309', unit: '$/lb', description: '2,500 lbs Copper Futures' },
+  'PL': { displayName: 'Platinum', color: '#a78bfa', unit: '$/oz', description: '50 Troy Ounce Platinum Futures' },
+  'PA': { displayName: 'Palladium', color: '#6366f1', unit: '$/oz', description: '100 Troy Ounce Palladium Futures' },
   'ALI': { displayName: 'Aluminum', color: '#64748b', unit: '$/mt', description: 'Physical Aluminum Futures' },
 };
 
@@ -118,10 +122,10 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                       </div>
                       <div className="min-w-0">
                         <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight truncate">
-                          {config?.displayName || product.symbol}
+                          {product.symbol} <span className="text-slate-400 dark:text-slate-500 font-medium">({config?.displayName || product.name})</span>
                         </h3>
                         <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-wider">
-                          {product.symbol} • {frontContract?.month || 'N/A'}
+                          {frontContract?.month || 'N/A'} • {config?.description || product.name}
                         </p>
                       </div>
                     </div>
