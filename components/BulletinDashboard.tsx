@@ -384,8 +384,8 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                         </div>
                       </div>
 
-                      {/* Stats */}
-                      <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 lg:gap-16">
+                      {/* Stats - Desktop */}
+                      <div className="hidden sm:flex items-center justify-end gap-4 sm:gap-8 lg:gap-16">
                         {/* Volume Bar - Hidden on small screens */}
                         <div className="w-32 lg:w-40 hidden xl:block">
                           <div className="flex justify-between text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">
@@ -426,6 +426,33 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                         
                         <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
                           <ChevronRight className="w-5 h-5 text-slate-400" />
+                        </div>
+                      </div>
+
+                      {/* Stats - Mobile (compact grid) */}
+                      <div className="flex sm:hidden items-center justify-between gap-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-center">
+                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-wide">Settle</p>
+                            <p className="text-sm font-black text-slate-900 dark:text-white tabular-nums">
+                              {frontContract ? frontContract.settle.toFixed(2) : '—'}
+                            </p>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-wide">Chg</p>
+                            <p className={`text-sm font-black tabular-nums ${changeFormatted?.color || 'text-slate-400'}`}>
+                              {changeFormatted?.text || 'UNCH'}
+                            </p>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-wide">Vol</p>
+                            <p className="text-sm font-black text-slate-900 dark:text-white tabular-nums">
+                              {formatVolume(product.total_volume)}
+                            </p>
+                          </div>
+                        </div>
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-90' : ''}`}>
+                          <ChevronRight className="w-4 h-4 text-slate-400" />
                         </div>
                       </div>
                     </div>

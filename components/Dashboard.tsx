@@ -184,40 +184,39 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
       </section>
 
       {/* Navigation Tabs */}
-      <div className="w-full px-4 sm:px-8 lg:px-24 py-6 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
-        <div className="flex items-center gap-3 sm:gap-4 p-2 sm:p-2.5 bg-slate-100 dark:bg-slate-800 rounded-2xl sm:rounded-3xl w-full sm:w-fit mx-auto shadow-inner">
+      <div className="w-full px-3 sm:px-8 lg:px-24 py-4 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
+        <div className="flex items-center gap-2 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-3xl w-full sm:w-fit mx-auto shadow-inner">
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl transition-all duration-300 ${
               activeTab === 'inventory'
-                ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-2 ring-slate-200 dark:ring-slate-700'
+                ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="hidden xs:inline">Warehouse</span> Inventory
+            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <span className="truncate">Inventory</span>
           </button>
           <button
             onClick={() => setActiveTab('bulletin')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl transition-all duration-300 ${
               activeTab === 'bulletin'
-                ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-2 ring-slate-200 dark:ring-slate-700'
+                ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="hidden xs:inline">Daily</span> Bulletin
+            <FileText className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <span className="truncate">Bulletin</span>
           </button>
         </div>
         
         {/* Mobile-only: Last Updated (moved from header) */}
-        <div className="sm:hidden flex flex-col items-center justify-center gap-1 mt-3 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-            <span>Last updated: {lastUpdatedText} • CME Group</span>
+        <div className="sm:hidden flex flex-col items-center justify-center gap-0.5 mt-2 text-[10px] text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" />
+            <span>Updated: {lastUpdatedText}</span>
           </div>
-          <span className="text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
-          <span className="text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
+          <span className="text-slate-400">Nightly at 9:30 PM EST • CME data delayed 1 day</span>
         </div>
       </div>
 
