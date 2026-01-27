@@ -442,10 +442,14 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
                           {(() => {
                             const prevOI = previousDayData?.[product.symbol]?.totalOpenInterest;
+                            // Calculate actual change from previous snapshot
+                            const actualChange = prevOI ? product.total_open_interest - prevOI : null;
+                            const displayChange = actualChange !== null ? actualChange : product.total_oi_change;
+                            const changeColor = displayChange > 0 ? 'text-emerald-500' : displayChange < 0 ? 'text-red-500' : '';
                             const stats = [
                               { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
-                              { label: 'Prev Day OI', value: prevOI ? formatNumber(prevOI) : '—', subtext: previousDate ? `(${new Date(previousDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : '' },
-                              { label: 'OI Change', value: (product.total_oi_change > 0 ? '+' : '') + formatNumber(product.total_oi_change), color: product.total_oi_change > 0 ? 'text-emerald-500' : product.total_oi_change < 0 ? 'text-red-500' : '' },
+                              { label: 'Prev Snapshot', value: prevOI ? formatNumber(prevOI) : '—', subtext: previousDate ? `(${new Date(previousDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : '' },
+                              { label: 'Change', value: (displayChange > 0 ? '+' : '') + formatNumber(displayChange), color: changeColor, subtext: prevOI ? 'from prev snapshot' : 'CME daily' },
                               { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
                               { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
                             ];
@@ -555,23 +559,33 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                 ].filter(Boolean) as Array<{ name: string; data: BulletinProduct }>;
                 
                 return metals.map((metal, i) => {
-                  const Icon = getIcon(metal.data.total_oi_change);
-                  const oiChangePercent = metal.data.total_open_interest > 0 
-                    ? ((metal.data.total_oi_change / metal.data.total_open_interest) * 100).toFixed(2)
-                    : '0.00';
-                  const isPositive = metal.data.total_oi_change > 0;
-                  const isNegative = metal.data.total_oi_change < 0;
                   const prevOI = previousDayData?.[metal.data.symbol]?.totalOpenInterest;
+                  // Calculate actual change from our previous database snapshot
+                  const actualChange = prevOI ? metal.data.total_open_interest - prevOI : null;
+                  // Use actual change if we have previous data, otherwise fall back to CME daily change
+                  const displayChange = actualChange !== null ? actualChange : metal.data.total_oi_change;
+                  const Icon = getIcon(displayChange);
+                  const changePercent = prevOI && prevOI > 0
+                    ? ((displayChange / prevOI) * 100).toFixed(2)
+                    : metal.data.total_open_interest > 0 
+                      ? ((metal.data.total_oi_change / metal.data.total_open_interest) * 100).toFixed(2)
+                      : '0.00';
+                  const isPositive = displayChange > 0;
+                  const isNegative = displayChange < 0;
                   return (
                     <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
-                      <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(metal.data.total_oi_change)} mt-0.5 sm:mt-1 flex-shrink-0`} />
+                      <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(displayChange)} mt-0.5 sm:mt-1 flex-shrink-0`} />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                           <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
                           OI: {formatNumber(metal.data.total_open_interest)} {prevOI && <span className="text-slate-400">(prev: {formatNumber(prevOI)})</span>}
                         </p>
                         <p className="text-xs text-slate-500 mt-0.5">
-                          Change: {isPositive ? '+' : ''}{formatNumber(metal.data.total_oi_change)} • Vol: {formatVolume(metal.data.total_volume)}
+                          {prevOI ? (
+                            <>Chg from prev: {isPositive ? '+' : ''}{formatNumber(displayChange)} • Vol: {formatVolume(metal.data.total_volume)}</>
+                          ) : (
+                            <>Daily chg: {metal.data.total_oi_change > 0 ? '+' : ''}{formatNumber(metal.data.total_oi_change)} • Vol: {formatVolume(metal.data.total_volume)}</>
+                          )}
                         </p>
                       </div>
                       <div className={`flex-shrink-0 px-2 py-1 rounded-lg text-xs sm:text-sm font-bold tabular-nums ${
@@ -579,7 +593,7 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                         isNegative ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 
                         'bg-slate-100 dark:bg-slate-800 text-slate-500'
                       }`}>
-                        {isPositive ? '+' : ''}{oiChangePercent}%
+                        {isPositive ? '+' : ''}{changePercent}%
                       </div>
                     </div>
                   );
