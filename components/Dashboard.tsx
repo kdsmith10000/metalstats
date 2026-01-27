@@ -350,24 +350,28 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
                           { 
                             label: 'Total Supply', 
                             value: formatNumber(metalData.totals.total),
+                            currentValue: metalData.totals.total,
                             dayChange: metalData.changes?.day.total,
                             monthChange: metalData.changes?.month.total
                           },
                           { 
                             label: 'Registered', 
                             value: formatNumber(metalData.totals.registered),
+                            currentValue: metalData.totals.registered,
                             dayChange: metalData.changes?.day.registered,
                             monthChange: metalData.changes?.month.registered
                           },
                           { 
                             label: 'Eligible', 
                             value: formatNumber(metalData.totals.eligible),
+                            currentValue: metalData.totals.eligible,
                             dayChange: metalData.changes?.day.eligible,
                             monthChange: metalData.changes?.month.eligible
                           },
                           { 
                             label: 'Demand', 
                             value: formatNumber(config.monthlyDemand),
+                            currentValue: undefined,
                             dayChange: null,
                             monthChange: null
                           }
@@ -375,16 +379,29 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
                           <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
                             <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
                             <p className="text-base sm:text-lg md:text-xl font-bold">{stat.value}</p>
-                            {(stat.dayChange !== null || stat.monthChange !== null) && (
+                            {(stat.dayChange != null || stat.monthChange != null) && (
                               <div className="mt-1.5 sm:mt-2 flex flex-col sm:flex-row justify-center gap-1 sm:gap-3 text-[8px] sm:text-[9px] font-bold">
-                                {stat.dayChange !== null && (
+                                {stat.dayChange != null && stat.currentValue != null && (
                                   <span className={getPercentChangeColor(stat.dayChange)}>
-                                    24h: {formatPercentChange(stat.dayChange)}
+                                    24h: {(() => {
+                                      // Calculate absolute change from percent change
+                                      // current = previous * (1 + pct/100), so previous = current / (1 + pct/100)
+                                      // change = current - previous
+                                      const previous = stat.currentValue / (1 + stat.dayChange / 100);
+                                      const absoluteChange = stat.currentValue - previous;
+                                      const sign = absoluteChange >= 0 ? '+' : '';
+                                      return `${sign}${formatNumber(Math.round(absoluteChange))}`;
+                                    })()}
                                   </span>
                                 )}
-                                {stat.monthChange !== null && (
+                                {stat.monthChange != null && stat.currentValue != null && (
                                   <span className={getPercentChangeColor(stat.monthChange)}>
-                                    30d: {formatPercentChange(stat.monthChange)}
+                                    30d: {(() => {
+                                      const previous = stat.currentValue / (1 + stat.monthChange / 100);
+                                      const absoluteChange = stat.currentValue - previous;
+                                      const sign = absoluteChange >= 0 ? '+' : '';
+                                      return `${sign}${formatNumber(Math.round(absoluteChange))}`;
+                                    })()}
                                   </span>
                                 )}
                               </div>

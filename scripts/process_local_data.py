@@ -395,6 +395,9 @@ def main():
     print("  Summary")
     print("=" * 70)
     for metal, info in data.items():
+        # Skip metadata entries
+        if metal.startswith('_') or 'totals' not in info:
+            continue
         print(f"\n{metal}:")
         if info.get('report_date'):
             print(f"  Report Date: {info['report_date']}")

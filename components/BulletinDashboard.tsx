@@ -197,7 +197,7 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                       {/* Contract Details Table - Scrollable on mobile */}
                       {product.contracts.length > 0 && (
                         <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-                          <div className="overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 min-w-[500px] sm:min-w-0">
+                          <div className="overflow-visible rounded-lg border border-slate-200 dark:border-slate-800 min-w-[500px] sm:min-w-0">
                             <table className="w-full text-xs sm:text-sm">
                               <thead className="bg-slate-50 dark:bg-slate-900/50">
                                 <tr>
