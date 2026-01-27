@@ -124,12 +124,17 @@ export default async function RootLayout({
   try {
     const metadata = (dataJson as { _metadata?: { last_updated?: string } })._metadata;
     if (metadata?.last_updated) {
-      const date = new Date(metadata.last_updated);
-      lastUpdatedText = date.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-      });
+      // Use the date string directly if it's already formatted, otherwise parse it
+      if (metadata.last_updated.includes(',')) {
+        lastUpdatedText = metadata.last_updated;
+      } else {
+        const date = new Date(metadata.last_updated + 'T12:00:00');
+        lastUpdatedText = date.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
     }
   } catch (error) {
     console.error('Failed to parse last updated date:', error);
