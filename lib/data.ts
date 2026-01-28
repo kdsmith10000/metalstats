@@ -56,6 +56,9 @@ export interface MetalConfig {
   pricePerUnit: number;
 }
 
+// Monthly demand figures based on actual COMEX delivery data (Jan 2026)
+// Coverage ratio = registered inventory / monthly delivery demand
+// This shows how many months of deliveries the registered inventory can cover
 export const metalConfigs: MetalConfig[] = [
   {
     key: 'Gold',
@@ -64,8 +67,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fcd34d',
     unit: 'oz',
     contractSize: 100,
-    monthlyDemand: 775000, // ~7,750 contracts * 100 oz
-    pricePerUnit: 2650,
+    // Jan 2026: 11,851 contracts MTD = 1,185,100 oz actual delivery demand
+    monthlyDemand: 1200000, // ~12,000 contracts * 100 oz per month
+    pricePerUnit: 5080,
   },
   {
     key: 'Silver',
@@ -74,8 +78,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#cbd5e1',
     unit: 'oz',
     contractSize: 5000,
-    monthlyDemand: 66000000,
-    pricePerUnit: 30,
+    // Jan 2026: 9,608 contracts MTD = 48,040,000 oz actual delivery demand
+    monthlyDemand: 50000000, // ~10,000 contracts * 5,000 oz per month
+    pricePerUnit: 31,
   },
   {
     key: 'Aluminum',
@@ -84,8 +89,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#94a3b8',
     unit: 'metric tons',
     contractSize: 44,
-    monthlyDemand: 10648,
-    pricePerUnit: 2500,
+    // Jan 2026: 156 contracts MTD = ~6,864 MT
+    monthlyDemand: 200, // ~200 contracts * 44 MT per month (low liquidity market)
+    pricePerUnit: 3164,
   },
   {
     key: 'Platinum_Palladium',
@@ -94,18 +100,20 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#c4b5fd',
     unit: 'oz',
     contractSize: 50,
-    monthlyDemand: 50000,
-    pricePerUnit: 1000,
+    // Jan 2026: Platinum 2,813 + Palladium 255 = ~3,068 contracts = 153,400 oz
+    monthlyDemand: 160000, // ~3,200 contracts * 50 oz per month
+    pricePerUnit: 2500,
   },
   {
     key: 'Copper',
     name: 'Copper',
-    color: '#f97316',      // Orange color for copper
+    color: '#f97316',
     colorDark: '#fb923c',
     unit: 'lbs',
-    contractSize: 25000,   // Standard COMEX copper contract
-    monthlyDemand: 15000000, // Estimated monthly delivery demand
-    pricePerUnit: 4.50,    // Current copper price per lb
+    contractSize: 25000,
+    // Jan 2026: 13,867 contracts MTD = 346,675,000 lbs actual delivery demand
+    monthlyDemand: 350000000, // ~14,000 contracts * 25,000 lbs per month
+    pricePerUnit: 5.83,
   },
 ];
 

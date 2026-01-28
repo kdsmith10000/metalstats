@@ -1,7 +1,7 @@
 {
-  "bulletin_number": 16,
-  "date": "mon, jan 26, 2026",
-  "parsed_date": "2026-01-26",
+  "bulletin_number": 17,
+  "date": "tue, jan 27, 2026",
+  "parsed_date": "2026-01-27",
   "products": [
     {
       "symbol": "1OZ",
@@ -48,9 +48,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 22896,
-      "total_open_interest": 153942,
-      "total_oi_change": 5166
+      "total_volume": 23295,
+      "total_open_interest": 126023,
+      "total_oi_change": 399
     },
     {
       "symbol": "GC",
@@ -137,9 +137,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 525061,
-      "total_open_interest": 640341,
-      "total_oi_change": -14103
+      "total_volume": 494262,
+      "total_open_interest": 536168,
+      "total_oi_change": -30799
     },
     {
       "symbol": "SI",
@@ -226,9 +226,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 161943,
-      "total_open_interest": 359727,
-      "total_oi_change": 2395
+      "total_volume": 158241,
+      "total_open_interest": 272542,
+      "total_oi_change": -3702
     },
     {
       "symbol": "SIL",
@@ -291,9 +291,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 34844,
-      "total_open_interest": 715111,
-      "total_oi_change": 1317
+      "total_volume": 36614,
+      "total_open_interest": 611419,
+      "total_oi_change": 1770
     },
     {
       "symbol": "HG",
@@ -380,9 +380,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 282678,
-      "total_open_interest": 88316,
-      "total_oi_change": -955
+      "total_volume": 279106,
+      "total_open_interest": 104162,
+      "total_oi_change": -3572
     },
     {
       "symbol": "PL",
@@ -469,9 +469,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 79921,
-      "total_open_interest": 65550,
-      "total_oi_change": -574
+      "total_volume": 79465,
+      "total_open_interest": 49855,
+      "total_oi_change": -456
     },
     {
       "symbol": "PA",
@@ -558,9 +558,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 19027,
-      "total_open_interest": 13109,
-      "total_oi_change": -382
+      "total_volume": 19132,
+      "total_open_interest": 11083,
+      "total_oi_change": 105
     },
     {
       "symbol": "ALI",
@@ -647,9 +647,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 2118,
-      "total_open_interest": 9838,
-      "total_oi_change": 58
+      "total_volume": 2358,
+      "total_open_interest": 8531,
+      "total_oi_change": 240
     },
     {
       "symbol": "MGC",
@@ -736,9 +736,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 78583,
-      "total_open_interest": 946168,
-      "total_oi_change": -3496
+      "total_volume": 79099,
+      "total_open_interest": 746942,
+      "total_oi_change": 516
     },
     {
       "symbol": "MHG",
@@ -817,9 +817,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 17850,
-      "total_open_interest": 47597,
-      "total_oi_change": 2159
+      "total_volume": 18065,
+      "total_open_interest": 38751,
+      "total_oi_change": 215
     },
     {
       "symbol": "QO",
@@ -882,9 +882,9 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 8210,
-      "total_open_interest": 21578,
-      "total_oi_change": 370
+      "total_volume": 8930,
+      "total_open_interest": 16018,
+      "total_oi_change": 720
     },
     {
       "symbol": "QI",
@@ -955,10 +955,10 @@
           "oi_change": 0
         }
       ],
-      "total_volume": 1451,
-      "total_open_interest": 11883,
-      "total_oi_change": 147
+      "total_volume": 1431,
+      "total_open_interest": 8561,
+      "total_oi_change": -20
     }
   ],
-  "last_updated": "2026-01-27T15:00:08.717934"
+  "last_updated": "2026-01-28T10:00:00.000000"
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   ComposedChart,
   Line,
@@ -25,36 +25,65 @@ interface HistoricalDataPoint {
 }
 
 interface VolumeOIChartProps {
-  data: HistoricalDataPoint[];
-  symbol: string;
-  displayName: string;
-  color: string;
+  data?: HistoricalDataPoint[];
+  symbol?: string;
+  displayName?: string;
+  color?: string;
 }
 
 // Sample data for demo (when no historical data available)
 const sampleData: HistoricalDataPoint[] = [
-  { date: '2026-01-06', volume: 425000, openInterest: 520000, settle: 4650.50, oiChange: 1200 },
-  { date: '2026-01-07', volume: 380000, openInterest: 518500, settle: 4680.25, oiChange: -1500 },
-  { date: '2026-01-08', volume: 445000, openInterest: 522000, settle: 4710.00, oiChange: 3500 },
-  { date: '2026-01-09', volume: 410000, openInterest: 525000, settle: 4695.75, oiChange: 3000 },
-  { date: '2026-01-10', volume: 395000, openInterest: 523000, settle: 4720.50, oiChange: -2000 },
   { date: '2026-01-13', volume: 450000, openInterest: 528000, settle: 4755.00, oiChange: 5000 },
   { date: '2026-01-14', volume: 420000, openInterest: 530000, settle: 4780.25, oiChange: 2000 },
   { date: '2026-01-15', volume: 475000, openInterest: 532000, settle: 4765.50, oiChange: 2000 },
   { date: '2026-01-16', volume: 440000, openInterest: 534000, settle: 4800.00, oiChange: 2000 },
   { date: '2026-01-17', volume: 465000, openInterest: 530000, settle: 4820.75, oiChange: -4000 },
-  { date: '2026-01-21', volume: 488000, openInterest: 532000, settle: 4837.50, oiChange: 2000 },
+  { date: '2026-01-21', volume: 488000, openInterest: 555309, settle: 4837.50, oiChange: 2000 },
+  { date: '2026-01-22', volume: 357149, openInterest: 555309, settle: 4865.00, oiChange: -7555 },
+  { date: '2026-01-23', volume: 410000, openInterest: 560000, settle: 4910.25, oiChange: 4691 },
+  { date: '2026-01-24', volume: 445000, openInterest: 570000, settle: 4950.00, oiChange: 10000 },
+  { date: '2026-01-26', volume: 525061, openInterest: 640341, settle: 4979.70, oiChange: -14103 },
+  { date: '2026-01-27', volume: 494262, openInterest: 536168, settle: 5082.50, oiChange: -30799 },
 ];
 
 export default function VolumeOIChart({ 
-  data = sampleData, 
+  data: initialData, 
   symbol = 'GC', 
   displayName = 'Gold',
   color = '#fbbf24'
-}: Partial<VolumeOIChartProps>) {
+}: VolumeOIChartProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [metric, setMetric] = useState<'volume' | 'oi' | 'both'>('both');
+  const [data, setData] = useState<HistoricalDataPoint[]>(initialData || sampleData);
+  const [isLoading, setIsLoading] = useState(!initialData);
+
+  // Fetch historical data from API if no data provided
+  useEffect(() => {
+    if (initialData) {
+      setData(initialData);
+      setIsLoading(false);
+      return;
+    }
+
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch(`/api/bulletin/history?symbol=${symbol}&days=30`);
+        if (response.ok) {
+          const result = await response.json();
+          if (result.history && result.history.length > 0) {
+            setData(result.history);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch bulletin history:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchHistory();
+  }, [symbol, initialData]);
 
   // Format date for display
   const formatDate = (dateStr: string) => {
