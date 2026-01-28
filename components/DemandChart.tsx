@@ -17,7 +17,7 @@ import { useTheme } from 'next-themes';
 // Monthly delivery data (by month, comparing years)
 const monthlyDeliveryData = {
   gold: [
-    { month: 'Jan', y2025: 2370, y2026: 7750 },
+    { month: 'Jan', y2025: 2370, y2026: 11826 },
     { month: 'Feb', y2025: 3300, y2026: null },
     { month: 'Mar', y2025: 2400, y2026: null },
     { month: 'Apr', y2025: 6200, y2026: null },
@@ -31,7 +31,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 52532, y2026: null },
   ],
   silver: [
-    { month: 'Jan', y2025: 3083, y2026: 13200 },
+    { month: 'Jan', y2025: 3083, y2026: 9529 },
     { month: 'Feb', y2025: 2800, y2026: null },
     { month: 'Mar', y2025: 5100, y2026: null },
     { month: 'Apr', y2025: 3200, y2026: null },
@@ -59,7 +59,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 317, y2026: null },
   ],
   copper: [
-    { month: 'Jan', y2025: 4200, y2026: 5800 },
+    { month: 'Jan', y2025: 4200, y2026: 13630 },
     { month: 'Feb', y2025: 3800, y2026: null },
     { month: 'Mar', y2025: 4500, y2026: null },
     { month: 'Apr', y2025: 5100, y2026: null },
