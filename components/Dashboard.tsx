@@ -185,7 +185,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
           <div className="mt-6 sm:mt-8 text-center animate-fadeIn">
             <Link 
               href="/learn" 
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors group"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
             >
               <span>What is coverage ratio? Learn about supply and demand here</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
