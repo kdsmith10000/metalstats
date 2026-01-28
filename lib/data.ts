@@ -109,11 +109,11 @@ export const metalConfigs: MetalConfig[] = [
     name: 'Copper',
     color: '#f97316',
     colorDark: '#fb923c',
-    unit: 'lbs',
-    contractSize: 25000,
-    // Jan 2026: 13,867 contracts MTD = 346,675,000 lbs actual delivery demand
-    monthlyDemand: 350000000, // ~14,000 contracts * 25,000 lbs per month
-    pricePerUnit: 5.83,
+    unit: 'short tons', // COMEX warehouse stocks are in short tons
+    contractSize: 12.5, // 25,000 lbs = 12.5 short tons per contract
+    // Jan 2026: 13,867 contracts MTD = 173,337.5 short tons actual delivery demand
+    monthlyDemand: 175000, // ~14,000 contracts * 12.5 short tons per month
+    pricePerUnit: 11660, // ~$5.83/lb * 2000 lbs/short ton
   },
 ];
 
