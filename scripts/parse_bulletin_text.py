@@ -178,20 +178,47 @@ def extract_product_section(text: str, product_code: str, product_name: str) -> 
                 'oi_change': oi_change,
             })
     
-    # Parse TOTAL line
-    total_line_match = re.search(
-        rf'TOTAL\s+{product_code}\s+FUT\s+([\d,]+)\s+([\d,]+)?\s*([\d,]+)\s*([+-]?\s*[\d,]+)?',
+    # Parse TOTAL line - handle variable formats
+    # Format 1 (with PNT): TOTAL GC FUT  559285  7135  468067  - 20396
+    # Format 2 (no PNT):   TOTAL SIL FUT  485896  36370  +  166
+    
+    # First try format with PNT volume (4 number groups)
+    total_with_pnt = re.search(
+        rf'TOTAL\s+{product_code}\s+FUT\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s*([+-]?\s*[\d,]+)',
         section, re.IGNORECASE
     )
     
-    if total_line_match:
-        product['total_volume'] = parse_int(total_line_match.group(1))
-        # Group 2 might be PNT volume or OI depending on format
-        if total_line_match.group(2):
-            pnt_or_oi = parse_int(total_line_match.group(2))
-        product['total_open_interest'] = parse_int(total_line_match.group(3))
-        if total_line_match.group(4):
-            product['total_oi_change'] = parse_int(total_line_match.group(4).replace(' ', ''))
+    # Also try format without PNT volume (3 number groups)  
+    total_no_pnt = re.search(
+        rf'TOTAL\s+{product_code}\s+FUT\s+([\d,]+)\s+([\d,]+)\s*([+-]?\s*[\d,]+)',
+        section, re.IGNORECASE
+    )
+    
+    if total_with_pnt:
+        # Check if this is really 4 numbers or just 3 with change
+        vol = parse_int(total_with_pnt.group(1))
+        second = parse_int(total_with_pnt.group(2))
+        third = parse_int(total_with_pnt.group(3))
+        fourth_str = total_with_pnt.group(4).replace(' ', '')
+        fourth = parse_int(fourth_str)
+        
+        # If third number is much larger than second, it's probably: vol, pnt, oi, change
+        # GC: 559285, 7135, 468067, -20396 -> vol, pnt, oi, change
+        # If second is comparable to third, check the change pattern
+        if third > second * 10:  # OI is typically much larger than PNT
+            product['total_volume'] = vol
+            product['total_open_interest'] = third
+            product['total_oi_change'] = fourth
+        else:
+            # Might be: vol, oi, change1, change2 - use the no_pnt match
+            if total_no_pnt:
+                product['total_volume'] = parse_int(total_no_pnt.group(1))
+                product['total_open_interest'] = parse_int(total_no_pnt.group(2))
+                product['total_oi_change'] = parse_int(total_no_pnt.group(3).replace(' ', ''))
+    elif total_no_pnt:
+        product['total_volume'] = parse_int(total_no_pnt.group(1))
+        product['total_open_interest'] = parse_int(total_no_pnt.group(2))
+        product['total_oi_change'] = parse_int(total_no_pnt.group(3).replace(' ', ''))
     
     # Sort contracts by volume (most active first)
     product['contracts'].sort(key=lambda x: x['globex_volume'] + x['pnt_volume'], reverse=True)

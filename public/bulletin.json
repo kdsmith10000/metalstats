@@ -63,7 +63,7 @@
         }
       ],
       "total_volume": 153324,
-      "total_open_interest": 7,
+      "total_open_interest": 26707,
       "total_oi_change": 3412
     },
     {
@@ -603,7 +603,7 @@
         }
       ],
       "total_volume": 485896,
-      "total_open_interest": 0,
+      "total_open_interest": 36370,
       "total_oi_change": 166
     },
     {
@@ -1080,7 +1080,7 @@
         }
       ],
       "total_volume": 10618,
-      "total_open_interest": 0,
+      "total_open_interest": 18910,
       "total_oi_change": -213
     },
     {
@@ -1206,9 +1206,9 @@
         }
       ],
       "total_volume": 2211,
-      "total_open_interest": 4,
+      "total_open_interest": 2564,
       "total_oi_change": 206
     }
   ],
-  "last_updated": "2026-01-29T07:08:44.477719"
+  "last_updated": "2026-01-29T07:11:12.322919"
 }
