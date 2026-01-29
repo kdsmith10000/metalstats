@@ -56,7 +56,7 @@ export interface MetalConfig {
   pricePerUnit: number;
 }
 
-// Monthly demand figures based on actual COMEX delivery data (Jan 2026)
+// Monthly demand figures based on actual COMEX delivery data (Jan 28, 2026)
 // Coverage ratio = registered inventory / monthly delivery demand
 // This shows how many months of deliveries the registered inventory can cover
 export const metalConfigs: MetalConfig[] = [
@@ -67,9 +67,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fcd34d',
     unit: 'oz',
     contractSize: 100,
-    // Jan 2026: 11,851 contracts MTD = 1,185,100 oz actual delivery demand
-    monthlyDemand: 1200000, // ~12,000 contracts * 100 oz per month
-    pricePerUnit: 5080,
+    // Jan 2026 MTD: 11,851 contracts = 1,185,100 oz actual delivery demand
+    monthlyDemand: 1185100, // 11,851 contracts * 100 oz (Jan 28 MTD)
+    pricePerUnit: 5303,  // Updated to Jan 28 settle price
   },
   {
     key: 'Silver',
@@ -78,8 +78,8 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#cbd5e1',
     unit: 'oz',
     contractSize: 5000,
-    // Jan 2026: 9,608 contracts MTD = 48,040,000 oz actual delivery demand
-    monthlyDemand: 50000000, // ~10,000 contracts * 5,000 oz per month
+    // Jan 2026 MTD: 9,854 contracts = 49,270,000 oz actual delivery demand
+    monthlyDemand: 49270000, // 9,854 contracts * 5,000 oz (Jan 28 MTD)
     pricePerUnit: 31,
   },
   {
@@ -89,9 +89,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#94a3b8',
     unit: 'metric tons',
     contractSize: 44,
-    // Jan 2026: 156 contracts MTD = ~6,864 MT
-    monthlyDemand: 200, // ~200 contracts * 44 MT per month (low liquidity market)
-    pricePerUnit: 3164,
+    // Jan 2026 MTD: 156 contracts = ~6,864 MT
+    monthlyDemand: 6864, // 156 contracts * 44 MT (Jan 28 MTD)
+    pricePerUnit: 3202,  // Updated to Jan 28 settle price
   },
   {
     key: 'Platinum_Palladium',
@@ -101,7 +101,7 @@ export const metalConfigs: MetalConfig[] = [
     unit: 'oz',
     contractSize: 50,
     // Jan 2026: Platinum 2,813 + Palladium 255 = ~3,068 contracts = 153,400 oz
-    monthlyDemand: 160000, // ~3,200 contracts * 50 oz per month
+    monthlyDemand: 153400, // 3,068 contracts * 50 oz
     pricePerUnit: 2500,
   },
   {
@@ -111,9 +111,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fb923c',
     unit: 'short tons', // COMEX warehouse stocks are in short tons
     contractSize: 12.5, // 25,000 lbs = 12.5 short tons per contract
-    // Jan 2026: 13,867 contracts MTD = 173,337.5 short tons actual delivery demand
-    monthlyDemand: 175000, // ~14,000 contracts * 12.5 short tons per month
-    pricePerUnit: 11660, // ~$5.83/lb * 2000 lbs/short ton
+    // Jan 2026 MTD: 15,999 contracts = 199,987.5 short tons actual delivery demand
+    monthlyDemand: 199988, // 15,999 contracts * 12.5 short tons (Jan 28 MTD)
+    pricePerUnit: 11780, // ~$5.89/lb * 2000 lbs/short ton (Jan 28 settle)
   },
 ];
 
