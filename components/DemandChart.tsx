@@ -31,7 +31,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 52532, y2026: null },
   ],
   silver: [
-    { month: 'Jan', y2025: 3083, y2026: 9608 },
+    { month: 'Jan', y2025: 3083, y2026: 9854 },
     { month: 'Feb', y2025: 2800, y2026: null },
     { month: 'Mar', y2025: 5100, y2026: null },
     { month: 'Apr', y2025: 3200, y2026: null },
@@ -59,7 +59,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 317, y2026: null },
   ],
   copper: [
-    { month: 'Jan', y2025: 4200, y2026: 13867 },
+    { month: 'Jan', y2025: 4200, y2026: 15999 },
     { month: 'Feb', y2025: 3800, y2026: null },
     { month: 'Mar', y2025: 4500, y2026: null },
     { month: 'Apr', y2025: 5100, y2026: null },
@@ -94,6 +94,7 @@ const dailyDeliveryData = {
     { day: 'Jan 23', contracts: 1090 },
     { day: 'Jan 26', contracts: 159 },
     { day: 'Jan 27', contracts: 25 },
+    { day: 'Jan 28', contracts: 0 },  // No Gold deliveries on Jan 28
   ],
   silver: [
     { day: 'Jan 2', contracts: 845 },
@@ -113,6 +114,7 @@ const dailyDeliveryData = {
     { day: 'Jan 23', contracts: 265 },
     { day: 'Jan 26', contracts: 348 },
     { day: 'Jan 27', contracts: 79 },
+    { day: 'Jan 28', contracts: 246 },  // From Jan 28 delivery report
   ],
   aluminum: [
     { day: 'Jan 2', contracts: 12 },
@@ -148,6 +150,7 @@ const dailyDeliveryData = {
     { day: 'Jan 23', contracts: 600 },
     { day: 'Jan 26', contracts: 458 },
     { day: 'Jan 27', contracts: 237 },
+    { day: 'Jan 28', contracts: 2132 },  // From Jan 28 delivery report
   ],
 };
 
@@ -162,7 +165,7 @@ const monthlyStats = {
   },
   silver: {
     total2025: 50150,
-    current2026: 9608,  // MTD from Jan 27 delivery report
+    current2026: 9854,  // MTD from Jan 28 delivery report
     previous2025: 3083,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
@@ -176,40 +179,40 @@ const monthlyStats = {
   },
   copper: {
     total2025: 53600,
-    current2026: 13867,  // MTD from Jan 27 delivery report
+    current2026: 15999,  // MTD from Jan 28 delivery report
     previous2025: 4200,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
 };
 
-// Stats for each metal - Daily view
+// Stats for each metal - Daily view (Updated Jan 28, 2026)
 const dailyStats = {
   gold: {
-    todayContracts: 25,
-    weekTotal: 3715,
-    avgDaily: 531,
+    todayContracts: 0,  // No Gold deliveries on Jan 28
+    weekTotal: 1924,    // Jan 22-28 total
+    avgDaily: 275,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
   silver: {
-    todayContracts: 79,
-    weekTotal: 5521,
-    avgDaily: 789,
+    todayContracts: 246,  // Jan 28 delivery report
+    weekTotal: 1977,      // Jan 22-28 total
+    avgDaily: 282,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
   aluminum: {
-    todayContracts: 20,
-    weekTotal: 101,
-    avgDaily: 19,
+    todayContracts: 0,
+    weekTotal: 41,
+    avgDaily: 20,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
   copper: {
-    todayContracts: 237,
-    weekTotal: 3017,
-    avgDaily: 431,
+    todayContracts: 2132,  // Jan 28 delivery report
+    weekTotal: 3883,       // Jan 22-28 total
+    avgDaily: 555,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
