@@ -5,6 +5,10 @@ import data from '../public/data.json';
 import bulletinJson from '../public/bulletin.json';
 import deliveryJson from '../public/delivery.json';
 
+// Force dynamic rendering to ensure fresh data on each request
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
