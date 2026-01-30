@@ -1,10 +1,13 @@
 'use client';
 
 import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor, calculatePaperPhysicalRatio, getPaperPhysicalRiskColor, getPaperPhysicalBgColor, PaperPhysicalData } from '@/lib/data';
+import { calculateCompositeRiskScore, RiskScore, RiskFactors } from '@/lib/riskScore';
 import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import DeliverySection from './DeliverySection';
 import PaperPhysicalCard from './PaperPhysicalCard';
+import RiskScoreTooltip from './RiskScoreTooltip';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { ChevronRight, FileText, BarChart3, FileStack } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -188,6 +191,36 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
     }
   });
 
+  // Calculate risk scores for each metal
+  const riskScores: Record<string, RiskScore> = {};
+  activeMetals.forEach(config => {
+    const metalData = data[config.key];
+    if (!metalData) return;
+    
+    const coverageRatio = calculateCoverageRatio(metalData.totals.registered, config.monthlyDemand);
+    const ppRatio = paperPhysicalRatios[config.key];
+    
+    // Get OI change percentage if available
+    let oiChangePercent: number | null = null;
+    if (volumeSummaryData?.products && config.futuresSymbol) {
+      const symbol = config.futuresSymbol === 'PL+PA' ? 'PL' : config.futuresSymbol;
+      const product = volumeSummaryData.products.find(p => p.symbol === symbol);
+      if (product && product.yoy_open_interest > 0) {
+        oiChangePercent = ((product.open_interest - product.yoy_open_interest) / product.yoy_open_interest) * 100;
+      }
+    }
+    
+    const riskFactors: RiskFactors = {
+      coverageRatio,
+      paperPhysicalRatio: ppRatio?.ratio ?? 1,
+      inventoryChange30d: metalData.changes?.month.registered ?? null,
+      deliveryVelocity: null, // Could be calculated from delivery data if needed
+      oiChange: oiChangePercent,
+    };
+    
+    riskScores[config.key] = calculateCompositeRiskScore(riskFactors);
+  });
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
       {/* Hero Section */}
@@ -245,64 +278,79 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 }
               }
               
+              const riskScore = riskScores[config.key];
+              
               return (
-                <div 
-                  key={config.key} 
-                  className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 py-6 sm:px-8 sm:py-10 md:px-10 md:py-12 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
-                >
-                  {/* Subtle Background Accent Gradient */}
-                  <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  
-                  {/* Status Indicator - Top Right */}
-                  <div className="absolute top-3 right-3 sm:top-5 sm:right-5 md:top-6 md:right-6 flex items-center gap-2">
-                    <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${isStress ? 'bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.6)]' : 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]'}`} />
-                  </div>
+                <HoverCard key={config.key} openDelay={200} closeDelay={100}>
+                  <HoverCardTrigger asChild>
+                    <div 
+                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 py-6 sm:px-8 sm:py-10 md:px-10 md:py-12 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer"
+                    >
+                      {/* Subtle Background Accent Gradient */}
+                      <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      
+                      {/* Status Indicator - Top Right */}
+                      <div className="absolute top-3 right-3 sm:top-5 sm:right-5 md:top-6 md:right-6 flex items-center gap-2">
+                        <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${isStress ? 'bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.6)]' : 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]'}`} />
+                      </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 flex flex-col items-center text-center">
-                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 sm:mb-2 md:mb-3 truncate max-w-full">
-                      {config.name}
-                    </p>
-                    <p className={`text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
-                      {ratio.toFixed(2)}<span className="text-sm sm:text-base md:text-lg ml-0.5">x</span>
-                    </p>
-                    <div className="mt-2 sm:mt-3 md:mt-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-full border border-slate-200/50 dark:border-slate-700/50">
-                      <p className="text-[8px] sm:text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
-                        Coverage
-                      </p>
-                    </div>
-                    
-                    {/* Ratio Change - Shows absolute change and percent change */}
-                    {ratioChange !== null && (
-                      <div className="mt-2 sm:mt-4 text-[10px] sm:text-[11px] font-bold">
-                        <span className={ratioChange > 0 ? 'text-emerald-500' : ratioChange < 0 ? 'text-red-500' : 'text-slate-400'}>
-                          {ratioChange > 0 ? '+' : ''}{ratioChange.toFixed(2)}x
-                        </span>
-                        {ratioPercentChange !== null && (
-                          <span className={`ml-1 ${ratioPercentChange > 0 ? 'text-emerald-500' : ratioPercentChange < 0 ? 'text-red-500' : 'text-slate-400'}`}>
-                            ({ratioPercentChange > 0 ? '+' : ''}{ratioPercentChange.toFixed(2)}%)
-                          </span>
-                        )}
-                        <span className="text-slate-400 ml-1 hidden sm:inline">24h</span>
-                      </div>
-                    )}
-                    
-                    {/* Paper/Physical Ratio - Compact display */}
-                    {paperPhysicalRatios[config.key] && (
-                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <FileStack className="w-3 h-3 text-slate-400" />
-                          <span className="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                            Paper/Physical
-                          </span>
-                        </div>
-                        <p className={`text-base sm:text-lg font-black tabular-nums ${getPaperPhysicalRiskColor(paperPhysicalRatios[config.key]!.riskLevel)}`}>
-                          {paperPhysicalRatios[config.key]!.ratio.toFixed(1)}:1
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col items-center text-center">
+                        <p className="text-[9px] sm:text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 sm:mb-2 md:mb-3 truncate max-w-full">
+                          {config.name}
                         </p>
+                        <p className={`text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
+                          {ratio.toFixed(2)}<span className="text-sm sm:text-base md:text-lg ml-0.5">x</span>
+                        </p>
+                        <div className="mt-2 sm:mt-3 md:mt-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                          <p className="text-[8px] sm:text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
+                            Coverage
+                          </p>
+                        </div>
+                        
+                        {/* Ratio Change - Shows absolute change and percent change */}
+                        {ratioChange !== null && (
+                          <div className="mt-2 sm:mt-4 text-[10px] sm:text-[11px] font-bold">
+                            <span className={ratioChange > 0 ? 'text-emerald-500' : ratioChange < 0 ? 'text-red-500' : 'text-slate-400'}>
+                              {ratioChange > 0 ? '+' : ''}{ratioChange.toFixed(2)}x
+                            </span>
+                            {ratioPercentChange !== null && (
+                              <span className={`ml-1 ${ratioPercentChange > 0 ? 'text-emerald-500' : ratioPercentChange < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                                ({ratioPercentChange > 0 ? '+' : ''}{ratioPercentChange.toFixed(2)}%)
+                              </span>
+                            )}
+                            <span className="text-slate-400 ml-1 hidden sm:inline">24h</span>
+                          </div>
+                        )}
+                        
+                        {/* Paper/Physical Ratio - Compact display */}
+                        {paperPhysicalRatios[config.key] && (
+                          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
+                            <div className="flex items-center justify-center gap-1.5 mb-1">
+                              <FileStack className="w-3 h-3 text-slate-400" />
+                              <span className="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                Paper/Physical
+                              </span>
+                            </div>
+                            <p className={`text-base sm:text-lg font-black tabular-nums ${getPaperPhysicalRiskColor(paperPhysicalRatios[config.key]!.riskLevel)}`}>
+                              {paperPhysicalRatios[config.key]!.ratio.toFixed(1)}:1
+                            </p>
+                          </div>
+                        )}
                       </div>
+                    </div>
+                  </HoverCardTrigger>
+                  <HoverCardContent 
+                    className="w-auto p-0 border-0 bg-transparent shadow-none"
+                    side="bottom"
+                    align="center"
+                    sideOffset={8}
+                  >
+                    {riskScore && (
+                      <RiskScoreTooltip score={riskScore} metalName={config.name} />
                     )}
-                  </div>
-                </div>
+                  </HoverCardContent>
+                </HoverCard>
               );
             })}
           </div>

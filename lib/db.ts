@@ -617,3 +617,151 @@ export async function getOpenInterestHistory(symbol: string, days: number = 90):
     throw error;
   }
 }
+
+// ============================================
+// RISK SCORE DATA
+// ============================================
+
+export interface RiskScoreSnapshot {
+  id: number;
+  metal: string;
+  report_date: string;
+  composite_score: number;
+  risk_level: string;
+  coverage_risk: number;
+  paper_physical_risk: number;
+  inventory_trend_risk: number;
+  delivery_velocity_risk: number;
+  market_activity_risk: number;
+  dominant_factor: string;
+  commentary: string;
+  created_at: Date;
+}
+
+// Initialize risk score tables
+export async function initializeRiskScoreTables() {
+  try {
+    // Create risk_score_snapshots table for daily computed risk scores
+    await sql`
+      CREATE TABLE IF NOT EXISTS risk_score_snapshots (
+        id SERIAL PRIMARY KEY,
+        metal VARCHAR(50) NOT NULL,
+        report_date DATE NOT NULL,
+        composite_score INTEGER NOT NULL DEFAULT 0,
+        risk_level VARCHAR(20) NOT NULL DEFAULT 'LOW',
+        coverage_risk INTEGER NOT NULL DEFAULT 0,
+        paper_physical_risk INTEGER NOT NULL DEFAULT 0,
+        inventory_trend_risk INTEGER NOT NULL DEFAULT 0,
+        delivery_velocity_risk INTEGER NOT NULL DEFAULT 0,
+        market_activity_risk INTEGER NOT NULL DEFAULT 0,
+        dominant_factor VARCHAR(100) NOT NULL DEFAULT '',
+        commentary TEXT NOT NULL DEFAULT '',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(metal, report_date)
+      )
+    `;
+
+    // Create index for faster queries
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_risk_score_metal_date 
+      ON risk_score_snapshots(metal, report_date DESC)
+    `;
+
+    console.log('Risk score tables initialized successfully');
+    return true;
+  } catch (error) {
+    console.error('Error initializing risk score tables:', error);
+    throw error;
+  }
+}
+
+// Upsert risk score data
+export async function upsertRiskScore(
+  metal: string,
+  reportDate: string,
+  compositeScore: number,
+  riskLevel: string,
+  coverageRisk: number,
+  paperPhysicalRisk: number,
+  inventoryTrendRisk: number,
+  deliveryVelocityRisk: number,
+  marketActivityRisk: number,
+  dominantFactor: string,
+  commentary: string
+): Promise<number> {
+  try {
+    const parsedDate = parseDate(reportDate);
+    
+    const result = await sql`
+      INSERT INTO risk_score_snapshots (
+        metal, report_date, composite_score, risk_level,
+        coverage_risk, paper_physical_risk, inventory_trend_risk,
+        delivery_velocity_risk, market_activity_risk,
+        dominant_factor, commentary
+      )
+      VALUES (
+        ${metal}, ${parsedDate}, ${compositeScore}, ${riskLevel},
+        ${coverageRisk}, ${paperPhysicalRisk}, ${inventoryTrendRisk},
+        ${deliveryVelocityRisk}, ${marketActivityRisk},
+        ${dominantFactor}, ${commentary}
+      )
+      ON CONFLICT (metal, report_date) 
+      DO UPDATE SET 
+        composite_score = EXCLUDED.composite_score,
+        risk_level = EXCLUDED.risk_level,
+        coverage_risk = EXCLUDED.coverage_risk,
+        paper_physical_risk = EXCLUDED.paper_physical_risk,
+        inventory_trend_risk = EXCLUDED.inventory_trend_risk,
+        delivery_velocity_risk = EXCLUDED.delivery_velocity_risk,
+        market_activity_risk = EXCLUDED.market_activity_risk,
+        dominant_factor = EXCLUDED.dominant_factor,
+        commentary = EXCLUDED.commentary,
+        created_at = CURRENT_TIMESTAMP
+      RETURNING id
+    `;
+    
+    return result[0].id;
+  } catch (error) {
+    console.error(`Error upserting risk score for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get latest risk scores for all metals
+export async function getLatestRiskScores(): Promise<RiskScoreSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT DISTINCT ON (metal) 
+        id, metal, report_date, composite_score, risk_level,
+        coverage_risk, paper_physical_risk, inventory_trend_risk,
+        delivery_velocity_risk, market_activity_risk,
+        dominant_factor, commentary, created_at
+      FROM risk_score_snapshots
+      ORDER BY metal, report_date DESC
+    `;
+    return result as RiskScoreSnapshot[];
+  } catch (error) {
+    console.error('Error fetching latest risk scores:', error);
+    throw error;
+  }
+}
+
+// Get risk score history for a metal (for charts)
+export async function getRiskScoreHistory(metal: string, days: number = 90): Promise<RiskScoreSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, metal, report_date, composite_score, risk_level,
+             coverage_risk, paper_physical_risk, inventory_trend_risk,
+             delivery_velocity_risk, market_activity_risk,
+             dominant_factor, commentary, created_at
+      FROM risk_score_snapshots
+      WHERE metal = ${metal}
+        AND report_date >= CURRENT_DATE - ${days}::integer
+      ORDER BY report_date ASC
+    `;
+    return result as RiskScoreSnapshot[];
+  } catch (error) {
+    console.error(`Error fetching risk score history for ${metal}:`, error);
+    throw error;
+  }
+}

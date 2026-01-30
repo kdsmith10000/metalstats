@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { ArrowLeft, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Info, FileStack, Coins, Scale } from 'lucide-react';
+import { ArrowLeft, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Info, FileStack, Coins, Scale, Calculator, Activity, BarChart3 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Coverage Ratio & Paper vs Physical | COMEX Metals',
-  description: 'Learn how coverage ratio and paper vs physical ratio measure supply, demand, and leverage in COMEX precious metals markets.',
+  title: 'Coverage Ratio, Paper vs Physical & Risk Score | COMEX Metals',
+  description: 'Learn how coverage ratio, paper vs physical ratio, and composite risk score measure supply, demand, and leverage in COMEX precious metals markets.',
 };
 
 export default function LearnPage() {
@@ -460,6 +460,355 @@ export default function LearnPage() {
             </li>
             <li className="px-5 py-3 text-slate-600 dark:text-slate-300">
               <strong className="text-slate-900 dark:text-white">Not investment advice:</strong> This is one metric among many. High ratios can persist for years without a squeeze occurring.
+            </li>
+          </ul>
+        </div>
+
+        {/* Divider */}
+        <div id="risk-score" className="w-full max-w-3xl my-16 border-t border-slate-300 dark:border-slate-700" />
+
+        {/* Risk Score Section */}
+        <div className="flex items-center gap-3 mb-3">
+          <Calculator className="w-8 h-8 text-purple-500" />
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white text-center">
+            Risk Score
+          </h1>
+        </div>
+        <p className="text-lg text-slate-500 dark:text-slate-400 mb-10 text-center max-w-2xl">
+          A composite score (0-100) that blends multiple market factors to assess overall supply/demand risk for each metal.
+        </p>
+
+        {/* Risk Score Formula Table */}
+        <div className="overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-10 w-full max-w-3xl">
+          <table className="w-full text-left">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr>
+                <td className="px-5 py-4 font-semibold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800/50 w-40">
+                  Method
+                </td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
+                  <span className="font-mono bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg text-sm">
+                    Composite = Σ (<span className="text-purple-600 dark:text-purple-400">Factor Score</span> × <span className="text-blue-600 dark:text-blue-400">Weight</span>)
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4 font-semibold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800/50">
+                  Approach
+                </td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
+                  <strong>Weighted Linear Combination</strong> with <strong>Piecewise Linear Normalization</strong>. Each factor is scored 0-100 based on predefined thresholds, then combined using assigned weights.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Factor Weights Table */}
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 w-full max-w-3xl">Factor Weights</h2>
+        <div className="overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-10 w-full max-w-3xl">
+          <table className="w-full text-left table-fixed">
+            <thead className="bg-slate-100 dark:bg-slate-800">
+              <tr>
+                <th className="px-5 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 w-[180px]">Factor</th>
+                <th className="px-5 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 w-[80px]">Weight</th>
+                <th className="px-5 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">What It Measures</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <Coins className="w-5 h-5" />
+                    Coverage Ratio
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">25%</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">How many months of demand can current inventory satisfy? Lower coverage = higher risk.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold">
+                    <FileStack className="w-5 h-5" />
+                    Paper/Physical
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">25%</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Ratio of paper claims to physical metal. Higher leverage = higher risk.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold">
+                    <TrendingDown className="w-5 h-5" />
+                    Inventory Trend
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">20%</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">30-day change in registered inventory. Declining inventory = higher risk.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-orange-600 dark:text-orange-400 font-semibold">
+                    <TrendingUp className="w-5 h-5" />
+                    Delivery Velocity
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">15%</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Rate of physical deliveries relative to inventory. Higher velocity = higher risk.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 font-semibold">
+                    <Activity className="w-5 h-5" />
+                    Market Activity
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">15%</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Changes in open interest. Rising OI with tight supply = higher squeeze risk.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Scoring Thresholds */}
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 w-full max-w-3xl">How Each Factor is Scored</h2>
+        <div className="overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-10 w-full max-w-3xl">
+          <div className="p-5 space-y-6">
+            {/* Coverage Scoring */}
+            <div className="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold mb-3">
+                <Coins className="w-4 h-4" />
+                Coverage Ratio Scoring
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-emerald-600">12x+</div>
+                  <div className="text-slate-500 text-xs">Score: 0</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-amber-600">5-12x</div>
+                  <div className="text-slate-500 text-xs">Score: 25-50</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-orange-600">2-5x</div>
+                  <div className="text-slate-500 text-xs">Score: 50-75</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-red-600">&lt;2x</div>
+                  <div className="text-slate-500 text-xs">Score: 75-100</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Paper/Physical Scoring */}
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold mb-3">
+                <FileStack className="w-4 h-4" />
+                Paper/Physical Scoring
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-emerald-600">≤2:1</div>
+                  <div className="text-slate-500 text-xs">Score: 0-25</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-amber-600">2-5:1</div>
+                  <div className="text-slate-500 text-xs">Score: 25-50</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-orange-600">5-10:1</div>
+                  <div className="text-slate-500 text-xs">Score: 50-75</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-red-600">&gt;10:1</div>
+                  <div className="text-slate-500 text-xs">Score: 75-100</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Inventory Trend Scoring */}
+            <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+              <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold mb-3">
+                <TrendingDown className="w-4 h-4" />
+                Inventory Trend Scoring (30-day change)
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-emerald-600">+10%+</div>
+                  <div className="text-slate-500 text-xs">Score: 0</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-amber-600">0% to +10%</div>
+                  <div className="text-slate-500 text-xs">Score: 15-30</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-orange-600">-15% to 0%</div>
+                  <div className="text-slate-500 text-xs">Score: 30-70</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-red-600">&lt;-15%</div>
+                  <div className="text-slate-500 text-xs">Score: 70-100</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Market Activity Scoring */}
+            <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-semibold mb-3">
+                <Activity className="w-4 h-4" />
+                Market Activity Scoring (OI Change)
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-emerald-600">-20%+</div>
+                  <div className="text-slate-500 text-xs">Score: 10</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-amber-600">-10% to 0%</div>
+                  <div className="text-slate-500 text-xs">Score: 25-40</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-orange-600">0% to +25%</div>
+                  <div className="text-slate-500 text-xs">Score: 40-70</div>
+                </div>
+                <div className="text-center p-2 bg-white/50 dark:bg-slate-800/50 rounded">
+                  <div className="font-bold text-red-600">&gt;+25%</div>
+                  <div className="text-slate-500 text-xs">Score: 70-100</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Risk Levels */}
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 w-full max-w-3xl">Composite Score Interpretation</h2>
+        <div className="overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-10 w-full max-w-3xl">
+          <table className="w-full text-left table-fixed">
+            <thead className="bg-slate-100 dark:bg-slate-800">
+              <tr>
+                <th className="px-5 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 w-[140px]">Level</th>
+                <th className="px-5 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 w-[100px]">Score</th>
+                <th className="px-5 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">Meaning</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <CheckCircle className="w-5 h-5" />
+                    Low
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">0-25</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Market fundamentals appear stable with adequate physical backing.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold">
+                    <Info className="w-5 h-5" />
+                    Moderate
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">26-50</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Some factors warrant monitoring but no immediate concerns.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-orange-600 dark:text-orange-400 font-semibold">
+                    <AlertTriangle className="w-5 h-5" />
+                    High
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">51-75</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Multiple risk factors elevated. Increased volatility possible.</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-4">
+                  <span className="inline-flex items-center gap-2 text-red-600 dark:text-red-400 font-semibold">
+                    <AlertTriangle className="w-5 h-5" />
+                    Extreme
+                  </span>
+                </td>
+                <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">76-100</td>
+                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">Critical risk levels detected. Multiple factors signaling stress.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Example Calculation */}
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 w-full max-w-3xl">Example Calculation</h2>
+        <div className="overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-10 w-full max-w-3xl">
+          <div className="p-5 space-y-4">
+            <p className="text-slate-600 dark:text-slate-300 text-sm mb-4">
+              Suppose a metal has the following characteristics:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex justify-between p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">Coverage Ratio:</span>
+                  <span className="font-bold">6.5x</span>
+                </div>
+                <div className="flex justify-between p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">Paper/Physical:</span>
+                  <span className="font-bold">7.2:1</span>
+                </div>
+                <div className="flex justify-between p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">30-day Inv Change:</span>
+                  <span className="font-bold text-red-500">-8%</span>
+                </div>
+                <div className="flex justify-between p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">OI Change:</span>
+                  <span className="font-bold text-emerald-500">+5%</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">Coverage Score:</span>
+                  <span className="font-bold">38 × 0.25 = 9.5</span>
+                </div>
+                <div className="flex justify-between p-2 bg-blue-50 dark:bg-blue-900/20 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">Paper/Physical Score:</span>
+                  <span className="font-bold">61 × 0.25 = 15.3</span>
+                </div>
+                <div className="flex justify-between p-2 bg-amber-50 dark:bg-amber-900/20 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">Inventory Score:</span>
+                  <span className="font-bold">54 × 0.20 = 10.8</span>
+                </div>
+                <div className="flex justify-between p-2 bg-purple-50 dark:bg-purple-900/20 rounded">
+                  <span className="text-slate-600 dark:text-slate-400">Market Activity:</span>
+                  <span className="font-bold">48 × 0.15 = 7.2</span>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-lg text-center">
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Composite Risk Score</p>
+              <p className="text-3xl font-black text-amber-500">50</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                (9.5 + 15.3 + 10.8 + 7.5 + 7.2 = 50.3 → <strong>MODERATE</strong>)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Limitations */}
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 w-full max-w-3xl">Limitations &amp; Caveats</h2>
+        <div className="overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-10 w-full max-w-3xl">
+          <ul className="divide-y divide-slate-200 dark:divide-slate-800">
+            <li className="px-5 py-3 text-slate-600 dark:text-slate-300">
+              <strong className="text-slate-900 dark:text-white">Heuristic-based:</strong> Thresholds are based on industry norms and expert judgment, not backtested against historical price data.
+            </li>
+            <li className="px-5 py-3 text-slate-600 dark:text-slate-300">
+              <strong className="text-slate-900 dark:text-white">Missing data:</strong> When historical data is unavailable (e.g., no 30-day inventory history), that factor defaults to neutral (50).
+            </li>
+            <li className="px-5 py-3 text-slate-600 dark:text-slate-300">
+              <strong className="text-slate-900 dark:text-white">No price prediction:</strong> High risk doesn&apos;t mean prices will rise. Low risk doesn&apos;t mean prices are stable. Market timing is not implied.
+            </li>
+            <li className="px-5 py-3 text-slate-600 dark:text-slate-300">
+              <strong className="text-slate-900 dark:text-white">Equal treatment:</strong> All metals use the same scoring thresholds, though different metals may have different &quot;normal&quot; ranges historically.
+            </li>
+            <li className="px-5 py-3 text-slate-600 dark:text-slate-300">
+              <strong className="text-slate-900 dark:text-white">Not investment advice:</strong> This is an informational tool. Always do your own research and consult qualified advisors.
             </li>
           </ul>
         </div>
