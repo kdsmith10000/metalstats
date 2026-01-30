@@ -21,7 +21,7 @@ except ImportError:
 
 # Local file mappings
 LOCAL_FILES = {
-    'Gold': 'Gold_Stocks (1).xls',
+    'Gold': 'Gold_Stocks.xls',
     'Silver': 'Silver_stocks.xls',
     'Copper': 'Copper_Stocks.xls',
     'Platinum_Palladium': 'PA-PL_Stck_Rprt.xls',
@@ -563,7 +563,7 @@ def main():
     
     # Add metadata with last updated timestamp
     all_data['_metadata'] = {
-        'last_updated': 'January 26, 2026',
+        'last_updated': datetime.now().strftime('%B %d, %Y'),
         'source': 'CME Group'
     }
     
