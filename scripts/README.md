@@ -4,9 +4,31 @@
 
 This script fetches the latest warehouse and depository stocks data from CME Group Excel files and updates the `public/data.json` file used by the Next.js dashboard. It also saves historical data to Neon database for percent change calculations.
 
-## parse_bulletin.py
+## parse_bulletin.py / parse_bulletin_text.py
 
-This script parses CME Group Daily Bulletin Section 62 (Metal Futures Products) PDFs using OCR to extract volume, open interest, and settlement prices for all metals.
+These scripts parse CME Group Daily Bulletin Section 62 (Metal Futures Products) PDFs to extract volume, open interest, and settlement prices for all metals. `parse_bulletin_text.py` uses direct text extraction (recommended), while `parse_bulletin.py` uses OCR.
+
+## parse_volume_summary.py
+
+This script parses CME Group Daily Bulletin Section 02B (Summary Volume and Open Interest) PDFs to extract:
+- Overall metals market volume and open interest totals
+- Year-over-year (52-week) comparisons
+- Individual product breakdown with YoY data
+
+### Usage
+
+```bash
+# Parse the default PDF in data/ folder
+python scripts/parse_volume_summary.py
+
+# Or specify a PDF file
+python scripts/parse_volume_summary.py /path/to/Section02B.pdf
+```
+
+### Output
+
+The script generates:
+- `public/volume_summary.json` - YoY comparison data for the dashboard
 
 ### Usage
 

@@ -61,14 +61,59 @@ interface DeliveryData {
   last_updated: string;
 }
 
+interface VolumeSummaryProduct {
+  symbol: string;
+  name: string;
+  globex_volume: number;
+  total_volume: number;
+  open_interest: number;
+  oi_change: number;
+  yoy_volume: number;
+  yoy_open_interest: number;
+}
+
+interface VolumeSummaryData {
+  bulletin_number: number;
+  date: string;
+  parsed_date: string;
+  products: VolumeSummaryProduct[];
+  totals: {
+    futures_options: {
+      globex_volume: number;
+      pnt_volume: number;
+      volume: number;
+      open_interest: number;
+      oi_change: number;
+      yoy_volume: number;
+      yoy_open_interest: number;
+    };
+    futures_only: {
+      volume: number;
+      open_interest: number;
+      oi_change: number;
+      yoy_volume: number;
+      yoy_open_interest: number;
+    };
+    options_only: {
+      volume: number;
+      open_interest: number;
+      oi_change: number;
+      yoy_volume: number;
+      yoy_open_interest: number;
+    };
+  };
+  last_updated: string;
+}
+
 interface DashboardProps {
   data: WarehouseStocksData;
   bulletinData?: BulletinData | null;
   deliveryData?: DeliveryData | null;
+  volumeSummaryData?: VolumeSummaryData | null;
   lastUpdatedText?: string;
 }
 
-export default function Dashboard({ data, bulletinData, deliveryData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
@@ -237,7 +282,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, lastUpdate
       {/* Bulletin Section */}
       {activeTab === 'bulletin' && bulletinData && (
         <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-32 md:pb-48">
-          <BulletinDashboard data={bulletinData} />
+          <BulletinDashboard data={bulletinData} volumeSummary={volumeSummaryData} />
           
           {/* Spacer between bulletin dashboard and volume chart */}
           <div className="h-8 sm:h-12 md:h-20 lg:h-24" />

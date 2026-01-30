@@ -4,6 +4,7 @@ import { getWarehouseDataWithChanges, getLatestSnapshots, isDatabaseAvailable } 
 import data from '../public/data.json';
 import bulletinJson from '../public/bulletin.json';
 import deliveryJson from '../public/delivery.json';
+import volumeSummaryJson from '../public/volume_summary.json';
 
 // Force dynamic rendering to ensure fresh data on each request
 export const dynamic = 'force-dynamic';
@@ -54,5 +55,8 @@ export default async function Home() {
   // Load delivery data
   const deliveryData = deliveryJson || null;
   
-  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} lastUpdatedText={lastUpdatedText} />;
+  // Load volume summary data (YoY comparisons)
+  const volumeSummaryData = volumeSummaryJson || null;
+  
+  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} volumeSummaryData={volumeSummaryData} lastUpdatedText={lastUpdatedText} />;
 }

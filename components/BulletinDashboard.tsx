@@ -43,8 +43,39 @@ interface BulletinData {
   last_updated: string;
 }
 
+interface VolumeSummaryProduct {
+  symbol: string;
+  name: string;
+  globex_volume: number;
+  total_volume: number;
+  open_interest: number;
+  oi_change: number;
+  yoy_volume: number;
+  yoy_open_interest: number;
+}
+
+interface VolumeSummaryData {
+  bulletin_number: number;
+  date: string;
+  parsed_date: string;
+  products: VolumeSummaryProduct[];
+  totals: {
+    futures_options: {
+      globex_volume: number;
+      pnt_volume: number;
+      volume: number;
+      open_interest: number;
+      oi_change: number;
+      yoy_volume: number;
+      yoy_open_interest: number;
+    };
+  };
+  last_updated: string;
+}
+
 interface BulletinDashboardProps {
   data: BulletinData;
+  volumeSummary?: VolumeSummaryData | null;
 }
 
 // Product display configuration
@@ -85,7 +116,7 @@ const parseMonth = (month: string): number => {
   return year * 100 + monthNum;
 };
 
-export default function BulletinDashboard({ data }: BulletinDashboardProps) {
+export default function BulletinDashboard({ data, volumeSummary }: BulletinDashboardProps) {
   const [expandedProduct, setExpandedProduct] = useState<string | null>(null);
   const [sortConfigs, setSortConfigs] = useState<Record<string, SortConfig>>({});
   const [previousDayData, setPreviousDayData] = useState<PreviousDayData | null>(null);
@@ -768,6 +799,129 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
           </div>
         </div>
       </div>
+
+      {/* Year-over-Year Comparison Section */}
+      {volumeSummary && volumeSummary.products.length > 0 && (
+        <div className="mt-16 sm:mt-24 md:mt-40 lg:mt-48">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16">
+            <div className="max-w-xl space-y-3 sm:space-y-8">
+              <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
+                Year-over-Year
+              </h2>
+              <p className="text-sm sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase">
+                52-WEEK VOLUME & OPEN INTEREST COMPARISON
+              </p>
+            </div>
+          </div>
+
+          {/* Market Totals */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12">
+            {(() => {
+              const totals = volumeSummary.totals.futures_options;
+              const volChange = totals.yoy_volume > 0 
+                ? ((totals.volume - totals.yoy_volume) / totals.yoy_volume * 100) 
+                : 0;
+              const oiChange = totals.yoy_open_interest > 0 
+                ? ((totals.open_interest - totals.yoy_open_interest) / totals.yoy_open_interest * 100) 
+                : 0;
+              
+              return [
+                { 
+                  label: 'Today Volume', 
+                  value: formatVolume(totals.volume),
+                  subtext: 'All Metals Futures'
+                },
+                { 
+                  label: '52-Week Ago Volume', 
+                  value: formatVolume(totals.yoy_volume),
+                  subtext: `${volChange >= 0 ? '+' : ''}${volChange.toFixed(0)}% YoY`,
+                  color: volChange > 0 ? 'text-emerald-500' : volChange < 0 ? 'text-red-500' : ''
+                },
+                { 
+                  label: 'Today Open Interest', 
+                  value: formatNumber(totals.open_interest),
+                  subtext: 'All Metals'
+                },
+                { 
+                  label: '52-Week Ago OI', 
+                  value: formatNumber(totals.yoy_open_interest),
+                  subtext: `${oiChange >= 0 ? '+' : ''}${oiChange.toFixed(0)}% YoY`,
+                  color: oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : ''
+                },
+              ].map((stat, i) => (
+                <div key={i} className="p-4 sm:p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
+                  <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</p>
+                  {'subtext' in stat && stat.subtext && (
+                    <p className={`text-[9px] sm:text-xs mt-1 ${stat.color || 'text-slate-400'}`}>{stat.subtext}</p>
+                  )}
+                </div>
+              ));
+            })()}
+          </div>
+
+          {/* Product Comparison Table */}
+          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl">
+            <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl mb-4 sm:mb-6">
+              Product Breakdown
+            </h4>
+            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              <table className="w-full text-xs sm:text-sm min-w-[600px]">
+                <thead className="bg-slate-50 dark:bg-slate-900/50">
+                  <tr>
+                    <th className="text-left px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">Product</th>
+                    <th className="text-right px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">Volume</th>
+                    <th className="text-right px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">52W Ago</th>
+                    <th className="text-right px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">Vol Chg %</th>
+                    <th className="text-right px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">Open Int</th>
+                    <th className="text-right px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">52W Ago OI</th>
+                    <th className="text-right px-3 sm:px-6 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500">OI Chg %</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {volumeSummary.products
+                    .filter(p => ['GC', 'SI', 'HG', 'PL', 'PA', 'ALI'].includes(p.symbol))
+                    .sort((a, b) => b.total_volume - a.total_volume)
+                    .map((product) => {
+                      const volChange = product.yoy_volume > 0 
+                        ? ((product.total_volume - product.yoy_volume) / product.yoy_volume * 100) 
+                        : 0;
+                      const oiChange = product.yoy_open_interest > 0 
+                        ? ((product.open_interest - product.yoy_open_interest) / product.yoy_open_interest * 100) 
+                        : 0;
+                      const config = productConfig[product.symbol];
+                      
+                      return (
+                        <tr key={product.symbol} className="hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
+                          <td className="px-3 sm:px-6 py-2 sm:py-3">
+                            <div className="flex items-center gap-2">
+                              <div 
+                                className="w-2 h-2 rounded-full"
+                                style={{ backgroundColor: config?.color || '#64748b' }}
+                              />
+                              <span className="font-bold text-slate-900 dark:text-white">{product.symbol}</span>
+                              <span className="text-slate-400 hidden sm:inline">{config?.displayName || product.name}</span>
+                            </div>
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-3 text-right font-medium tabular-nums">{formatVolume(product.total_volume)}</td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-3 text-right text-slate-400 tabular-nums">{formatVolume(product.yoy_volume)}</td>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-3 text-right font-bold tabular-nums ${volChange > 0 ? 'text-emerald-500' : volChange < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                            {volChange > 0 ? '+' : ''}{volChange.toFixed(0)}%
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-3 text-right font-medium tabular-nums">{formatNumber(product.open_interest)}</td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-3 text-right text-slate-400 tabular-nums">{formatNumber(product.yoy_open_interest)}</td>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-3 text-right font-bold tabular-nums ${oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                            {oiChange > 0 ? '+' : ''}{oiChange.toFixed(0)}%
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Key Takeaways Section */}
       <div className="mt-16 sm:mt-24 md:mt-40 lg:mt-64 pt-12 sm:pt-16 md:pt-20 lg:pt-32 border-t border-slate-200 dark:border-slate-800">
