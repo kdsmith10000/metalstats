@@ -1,6 +1,10 @@
 import { neon } from '@neondatabase/serverless';
 import { NextResponse } from 'next/server';
 
+// Force dynamic rendering - no caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface SummaryRow {
   date: string;
   symbol: string;

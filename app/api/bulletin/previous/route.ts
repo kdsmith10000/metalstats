@@ -35,11 +35,15 @@ function getDb() {
   return neon(process.env.DATABASE_URL);
 }
 
+// Force dynamic rendering - no caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // GET: Retrieve previous day's bulletin data (for comparison with current)
 export async function GET() {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
-      { error: 'Database not configured', message: 'Set DATABASE_URL environment variable' },
+      { error: 'Database not configured', message: 'Set DATABASE_URL environment variable', dbUrl: process.env.DATABASE_URL ? 'set' : 'not set' },
       { status: 503 }
     );
   }
