@@ -475,7 +475,7 @@ export default function BulletinDashboard({ data }: BulletinDashboardProps) {
                             const changeColor = displayChange > 0 ? 'text-emerald-500' : displayChange < 0 ? 'text-red-500' : '';
                             const stats = [
                               { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
-                              { label: 'Prev Snapshot', value: prevOI ? formatNumber(prevOI) : '—', subtext: previousDate ? `(${new Date(previousDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : '' },
+                              { label: 'Prev Snapshot', value: prevOI ? formatNumber(prevOI) : '—', subtext: previousDate ? `(${new Date(previousDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : '' },
                               { label: 'Change', value: (displayChange > 0 ? '+' : '') + formatNumber(displayChange), color: changeColor, subtext: prevOI ? 'from prev snapshot' : 'CME daily' },
                               { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
                               { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
