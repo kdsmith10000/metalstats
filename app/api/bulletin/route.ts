@@ -69,7 +69,7 @@ export async function GET() {
       ORDER BY symbol
     `;
 
-    const products = dataResult.map((row: BulletinRow) => ({
+    const products = (dataResult as BulletinRow[]).map((row) => ({
       symbol: row.symbol,
       name: row.product_name,
       totalVolume: parseInt(String(row.total_volume)) || 0,

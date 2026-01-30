@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
       LIMIT ${maxDays}
     `;
 
-    const history = result.map((row: HistoryRow) => ({
+    const history = (result as HistoryRow[]).map((row) => ({
       date: row.date,
       symbol: row.symbol,
       settle: parseFloat(String(row.front_month_settle)) || 0,

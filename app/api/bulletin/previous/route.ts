@@ -99,7 +99,7 @@ export async function GET() {
       ORDER BY symbol
     `;
 
-    const previousProducts = previousResult.reduce((acc: Record<string, ProductData>, row: BulletinRow) => {
+    const previousProducts = (previousResult as BulletinRow[]).reduce((acc: Record<string, ProductData>, row) => {
       acc[row.symbol] = {
         symbol: row.symbol,
         name: row.product_name,
@@ -113,7 +113,7 @@ export async function GET() {
       return acc;
     }, {});
 
-    const currentProducts = currentResult.reduce((acc: Record<string, ProductData>, row: BulletinRow) => {
+    const currentProducts = (currentResult as BulletinRow[]).reduce((acc: Record<string, ProductData>, row) => {
       acc[row.symbol] = {
         symbol: row.symbol,
         name: row.product_name,
