@@ -39,6 +39,8 @@ export interface WarehouseStocksData {
   Silver: MetalData;
   Copper: MetalData;
   Platinum_Palladium: MetalData;
+  Platinum?: MetalData;
+  Palladium?: MetalData;
   Aluminum: MetalData;
   Zinc: MetalData;
   Lead: MetalData;
@@ -54,6 +56,66 @@ export interface MetalConfig {
   contractSize: number;
   monthlyDemand: number; // Projected Jan 2026 demand in units
   pricePerUnit: number;
+  futuresSymbol?: string; // Symbol in bulletin data (e.g., 'GC', 'SI')
+}
+
+// Paper vs Physical ratio calculation
+// Paper = Open Interest (total contracts * contract size) = total paper claims on metal
+// Physical = Registered inventory = metal actually available for delivery
+// Ratio > 1 means more paper claims than physical metal available
+export interface PaperPhysicalData {
+  openInterest: number; // Total open interest in contracts
+  openInterestOz: number; // Open interest converted to ounces/units
+  registeredInventory: number; // Registered inventory in same units
+  ratio: number; // Paper claims / Physical metal
+  riskLevel: 'LOW' | 'MODERATE' | 'HIGH' | 'EXTREME';
+}
+
+export function calculatePaperPhysicalRatio(
+  openInterest: number,
+  contractSize: number,
+  registeredInventory: number
+): PaperPhysicalData {
+  const openInterestOz = openInterest * contractSize;
+  const ratio = registeredInventory > 0 ? openInterestOz / registeredInventory : 0;
+  
+  // Risk levels based on how many paper claims exist per unit of physical
+  let riskLevel: PaperPhysicalData['riskLevel'];
+  if (ratio <= 2) {
+    riskLevel = 'LOW';
+  } else if (ratio <= 5) {
+    riskLevel = 'MODERATE';
+  } else if (ratio <= 10) {
+    riskLevel = 'HIGH';
+  } else {
+    riskLevel = 'EXTREME';
+  }
+  
+  return {
+    openInterest,
+    openInterestOz,
+    registeredInventory,
+    ratio,
+    riskLevel,
+  };
+}
+
+export function getPaperPhysicalRiskColor(riskLevel: PaperPhysicalData['riskLevel']): string {
+  switch (riskLevel) {
+    case 'LOW': return 'text-emerald-500';
+    case 'MODERATE': return 'text-amber-500';
+    case 'HIGH': return 'text-orange-500';
+    case 'EXTREME': return 'text-red-500';
+  }
+}
+
+export function getPaperPhysicalBgColor(riskLevel: PaperPhysicalData['riskLevel']): string {
+  switch (riskLevel) {
+    case 'LOW': return 'bg-emerald-500';
+    case 'MODERATE': return 'bg-amber-500';
+    case 'HIGH': return 'bg-orange-500';
+    case 'EXTREME': return 'bg-red-500';
+  }
 }
 
 // Monthly demand figures based on actual COMEX delivery data (Jan 29, 2026)
@@ -70,6 +132,7 @@ export const metalConfigs: MetalConfig[] = [
     // Jan 2026 MTD: 11,862 contracts = 1,186,200 oz actual delivery demand
     monthlyDemand: 1186200, // 11,862 contracts * 100 oz (Jan 29 MTD)
     pricePerUnit: 5302,  // Updated to Jan 29 settle price
+    futuresSymbol: 'GC', // COMEX Gold Futures
   },
   {
     key: 'Silver',
@@ -81,6 +144,7 @@ export const metalConfigs: MetalConfig[] = [
     // Jan 2026 MTD: 9,889 contracts = 49,445,000 oz actual delivery demand
     monthlyDemand: 49445000, // 9,889 contracts * 5,000 oz (Jan 29 MTD)
     pricePerUnit: 31,
+    futuresSymbol: 'SI', // COMEX Silver Futures
   },
   {
     key: 'Aluminum',
@@ -92,6 +156,7 @@ export const metalConfigs: MetalConfig[] = [
     // Jan 2026 MTD: 156 contracts = ~6,864 MT
     monthlyDemand: 6864, // 156 contracts * 44 MT (Jan 28 MTD)
     pricePerUnit: 3202,  // Updated to Jan 28 settle price
+    futuresSymbol: 'ALI', // COMEX Aluminum Futures
   },
   {
     key: 'Platinum_Palladium',
@@ -99,10 +164,11 @@ export const metalConfigs: MetalConfig[] = [
     color: '#a78bfa',
     colorDark: '#c4b5fd',
     unit: 'oz',
-    contractSize: 50,
+    contractSize: 50, // Both PL and PA are 50 oz contracts
     // Jan 2026: Platinum 2,813 + Palladium 255 = ~3,068 contracts = 153,400 oz
     monthlyDemand: 153400, // 3,068 contracts * 50 oz
     pricePerUnit: 2500,
+    futuresSymbol: 'PL+PA', // Combined - requires special handling
   },
   {
     key: 'Copper',
@@ -114,6 +180,7 @@ export const metalConfigs: MetalConfig[] = [
     // Jan 2026 MTD: 15,999 contracts = 199,987.5 short tons actual delivery demand
     monthlyDemand: 199988, // 15,999 contracts * 12.5 short tons (Jan 28 MTD)
     pricePerUnit: 11780, // ~$5.89/lb * 2000 lbs/short ton (Jan 28 settle)
+    futuresSymbol: 'HG', // COMEX Copper Futures
   },
 ];
 

@@ -397,3 +397,223 @@ export async function getMetalHistory(metal: string, days: number = 90): Promise
     throw error;
   }
 }
+
+// ============================================
+// OPEN INTEREST / PAPER DATA
+// ============================================
+
+export interface OpenInterestSnapshot {
+  id: number;
+  symbol: string;
+  report_date: string;
+  open_interest: number;
+  oi_change: number;
+  total_volume: number;
+  created_at: Date;
+}
+
+export interface PaperPhysicalSnapshot {
+  id: number;
+  metal: string;
+  report_date: string;
+  futures_symbol: string;
+  open_interest: number;
+  open_interest_units: number;
+  registered_inventory: number;
+  paper_physical_ratio: number;
+  risk_level: string;
+  created_at: Date;
+}
+
+// Initialize open interest tables
+export async function initializeOpenInterestTables() {
+  try {
+    // Create open_interest_snapshots table for daily futures data
+    await sql`
+      CREATE TABLE IF NOT EXISTS open_interest_snapshots (
+        id SERIAL PRIMARY KEY,
+        symbol VARCHAR(20) NOT NULL,
+        report_date DATE NOT NULL,
+        open_interest BIGINT NOT NULL DEFAULT 0,
+        oi_change INTEGER NOT NULL DEFAULT 0,
+        total_volume BIGINT NOT NULL DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(symbol, report_date)
+      )
+    `;
+
+    // Create paper_physical_snapshots table for computed ratios
+    await sql`
+      CREATE TABLE IF NOT EXISTS paper_physical_snapshots (
+        id SERIAL PRIMARY KEY,
+        metal VARCHAR(50) NOT NULL,
+        report_date DATE NOT NULL,
+        futures_symbol VARCHAR(20) NOT NULL,
+        open_interest BIGINT NOT NULL DEFAULT 0,
+        open_interest_units DECIMAL(20, 3) NOT NULL DEFAULT 0,
+        registered_inventory DECIMAL(20, 3) NOT NULL DEFAULT 0,
+        paper_physical_ratio DECIMAL(10, 4) NOT NULL DEFAULT 0,
+        risk_level VARCHAR(20) NOT NULL DEFAULT 'LOW',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(metal, report_date)
+      )
+    `;
+
+    // Create indexes for faster queries
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_oi_snapshots_symbol_date 
+      ON open_interest_snapshots(symbol, report_date DESC)
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_paper_physical_metal_date 
+      ON paper_physical_snapshots(metal, report_date DESC)
+    `;
+
+    console.log('Open interest tables initialized successfully');
+    return true;
+  } catch (error) {
+    console.error('Error initializing open interest tables:', error);
+    throw error;
+  }
+}
+
+// Upsert open interest data for a symbol
+export async function upsertOpenInterest(
+  symbol: string,
+  reportDate: string,
+  openInterest: number,
+  oiChange: number,
+  totalVolume: number
+): Promise<number> {
+  try {
+    const parsedDate = parseDate(reportDate);
+    
+    const result = await sql`
+      INSERT INTO open_interest_snapshots (symbol, report_date, open_interest, oi_change, total_volume)
+      VALUES (${symbol}, ${parsedDate}, ${openInterest}, ${oiChange}, ${totalVolume})
+      ON CONFLICT (symbol, report_date) 
+      DO UPDATE SET 
+        open_interest = EXCLUDED.open_interest,
+        oi_change = EXCLUDED.oi_change,
+        total_volume = EXCLUDED.total_volume,
+        created_at = CURRENT_TIMESTAMP
+      RETURNING id
+    `;
+    
+    return result[0].id;
+  } catch (error) {
+    console.error(`Error upserting open interest for ${symbol}:`, error);
+    throw error;
+  }
+}
+
+// Upsert paper/physical ratio data
+export async function upsertPaperPhysicalRatio(
+  metal: string,
+  reportDate: string,
+  futuresSymbol: string,
+  openInterest: number,
+  openInterestUnits: number,
+  registeredInventory: number,
+  paperPhysicalRatio: number,
+  riskLevel: string
+): Promise<number> {
+  try {
+    const parsedDate = parseDate(reportDate);
+    
+    const result = await sql`
+      INSERT INTO paper_physical_snapshots (
+        metal, report_date, futures_symbol, open_interest, 
+        open_interest_units, registered_inventory, paper_physical_ratio, risk_level
+      )
+      VALUES (
+        ${metal}, ${parsedDate}, ${futuresSymbol}, ${openInterest},
+        ${openInterestUnits}, ${registeredInventory}, ${paperPhysicalRatio}, ${riskLevel}
+      )
+      ON CONFLICT (metal, report_date) 
+      DO UPDATE SET 
+        futures_symbol = EXCLUDED.futures_symbol,
+        open_interest = EXCLUDED.open_interest,
+        open_interest_units = EXCLUDED.open_interest_units,
+        registered_inventory = EXCLUDED.registered_inventory,
+        paper_physical_ratio = EXCLUDED.paper_physical_ratio,
+        risk_level = EXCLUDED.risk_level,
+        created_at = CURRENT_TIMESTAMP
+      RETURNING id
+    `;
+    
+    return result[0].id;
+  } catch (error) {
+    console.error(`Error upserting paper/physical ratio for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get latest open interest for all symbols
+export async function getLatestOpenInterest(): Promise<OpenInterestSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT DISTINCT ON (symbol) 
+        id, symbol, report_date, open_interest, oi_change, total_volume, created_at
+      FROM open_interest_snapshots
+      ORDER BY symbol, report_date DESC
+    `;
+    return result as OpenInterestSnapshot[];
+  } catch (error) {
+    console.error('Error fetching latest open interest:', error);
+    throw error;
+  }
+}
+
+// Get latest paper/physical ratios for all metals
+export async function getLatestPaperPhysicalRatios(): Promise<PaperPhysicalSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT DISTINCT ON (metal) 
+        id, metal, report_date, futures_symbol, open_interest, 
+        open_interest_units, registered_inventory, paper_physical_ratio, risk_level, created_at
+      FROM paper_physical_snapshots
+      ORDER BY metal, report_date DESC
+    `;
+    return result as PaperPhysicalSnapshot[];
+  } catch (error) {
+    console.error('Error fetching latest paper/physical ratios:', error);
+    throw error;
+  }
+}
+
+// Get paper/physical history for a metal (for charts)
+export async function getPaperPhysicalHistory(metal: string, days: number = 90): Promise<PaperPhysicalSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, metal, report_date, futures_symbol, open_interest, 
+             open_interest_units, registered_inventory, paper_physical_ratio, risk_level, created_at
+      FROM paper_physical_snapshots
+      WHERE metal = ${metal}
+        AND report_date >= CURRENT_DATE - ${days}::integer
+      ORDER BY report_date ASC
+    `;
+    return result as PaperPhysicalSnapshot[];
+  } catch (error) {
+    console.error(`Error fetching paper/physical history for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get open interest history for a symbol (for charts)
+export async function getOpenInterestHistory(symbol: string, days: number = 90): Promise<OpenInterestSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, symbol, report_date, open_interest, oi_change, total_volume, created_at
+      FROM open_interest_snapshots
+      WHERE symbol = ${symbol}
+        AND report_date >= CURRENT_DATE - ${days}::integer
+      ORDER BY report_date ASC
+    `;
+    return result as OpenInterestSnapshot[];
+  } catch (error) {
+    console.error(`Error fetching open interest history for ${symbol}:`, error);
+    throw error;
+  }
+}

@@ -1,10 +1,11 @@
 'use client';
 
-import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor } from '@/lib/data';
+import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor, calculatePaperPhysicalRatio, getPaperPhysicalRiskColor, getPaperPhysicalBgColor, PaperPhysicalData } from '@/lib/data';
 import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import DeliverySection from './DeliverySection';
-import { ChevronRight, FileText, BarChart3 } from 'lucide-react';
+import PaperPhysicalCard from './PaperPhysicalCard';
+import { ChevronRight, FileText, BarChart3, FileStack } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -113,6 +114,53 @@ interface DashboardProps {
   lastUpdatedText?: string;
 }
 
+// Helper function to get open interest for a metal from bulletin or volume summary
+function getOpenInterestForMetal(
+  futuresSymbol: string | undefined,
+  bulletinData: BulletinData | null | undefined,
+  volumeSummaryData: VolumeSummaryData | null | undefined
+): number {
+  if (!futuresSymbol) return 0;
+  
+  // Handle combined PL+PA for Platinum & Palladium
+  if (futuresSymbol === 'PL+PA') {
+    let totalOI = 0;
+    
+    // Try volume summary first
+    if (volumeSummaryData?.products) {
+      const plProduct = volumeSummaryData.products.find(p => p.symbol === 'PL');
+      const paProduct = volumeSummaryData.products.find(p => p.symbol === 'PA');
+      if (plProduct) totalOI += plProduct.open_interest;
+      if (paProduct) totalOI += paProduct.open_interest;
+      if (totalOI > 0) return totalOI;
+    }
+    
+    // Fallback to bulletin data
+    if (bulletinData?.products) {
+      const plProduct = bulletinData.products.find(p => p.symbol === 'PL');
+      const paProduct = bulletinData.products.find(p => p.symbol === 'PA');
+      if (plProduct) totalOI += plProduct.total_open_interest;
+      if (paProduct) totalOI += paProduct.total_open_interest;
+    }
+    
+    return totalOI;
+  }
+  
+  // First try volume summary (more reliable for total OI)
+  if (volumeSummaryData?.products) {
+    const product = volumeSummaryData.products.find(p => p.symbol === futuresSymbol);
+    if (product) return product.open_interest;
+  }
+  
+  // Fallback to bulletin data
+  if (bulletinData?.products) {
+    const product = bulletinData.products.find(p => p.symbol === futuresSymbol);
+    if (product) return product.total_open_interest;
+  }
+  
+  return 0;
+}
+
 export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
@@ -121,6 +169,24 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
   const [expandedMetal, setExpandedMetal] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'inventory' | 'bulletin'>('inventory');
+  
+  // Calculate paper/physical ratios for each metal
+  const paperPhysicalRatios: Record<string, PaperPhysicalData | null> = {};
+  activeMetals.forEach(config => {
+    const metalData = data[config.key];
+    if (!metalData) return;
+    
+    const openInterest = getOpenInterestForMetal(config.futuresSymbol, bulletinData, volumeSummaryData);
+    if (openInterest > 0) {
+      paperPhysicalRatios[config.key] = calculatePaperPhysicalRatio(
+        openInterest,
+        config.contractSize,
+        metalData.totals.registered
+      );
+    } else {
+      paperPhysicalRatios[config.key] = null;
+    }
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
@@ -220,6 +286,21 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                         <span className="text-slate-400 ml-1 hidden sm:inline">24h</span>
                       </div>
                     )}
+                    
+                    {/* Paper/Physical Ratio - Compact display */}
+                    {paperPhysicalRatios[config.key] && (
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
+                        <div className="flex items-center justify-center gap-1.5 mb-1">
+                          <FileStack className="w-3 h-3 text-slate-400" />
+                          <span className="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                            Paper/Physical
+                          </span>
+                        </div>
+                        <p className={`text-base sm:text-lg font-black tabular-nums ${getPaperPhysicalRiskColor(paperPhysicalRatios[config.key]!.riskLevel)}`}>
+                          {paperPhysicalRatios[config.key]!.ratio.toFixed(1)}:1
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -232,7 +313,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               href="/learn" 
               className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
             >
-              <span>What is coverage ratio? Learn about supply and demand here</span>
+              <span>What is coverage ratio &amp; paper vs physical? Learn about supply and demand here</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
@@ -473,6 +554,17 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                           </div>
                         ))}
                       </div>
+                      
+                      {/* Paper vs Physical Section */}
+                      {paperPhysicalRatios[config.key] && (
+                        <div className="mt-4 sm:mt-6">
+                          <PaperPhysicalCard 
+                            metalName={config.name}
+                            data={paperPhysicalRatios[config.key]!}
+                            unit={config.unit}
+                          />
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
