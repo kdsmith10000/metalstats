@@ -66,8 +66,13 @@ export async function GET() {
       );
     }
 
-    const latestDate = datesResult[0].date;
-    const previousDate = datesResult[1].date;
+    // Convert dates to ISO string format for consistent handling
+    const latestDate = datesResult[0].date instanceof Date 
+      ? datesResult[0].date.toISOString().split('T')[0]
+      : String(datesResult[0].date);
+    const previousDate = datesResult[1].date instanceof Date
+      ? datesResult[1].date.toISOString().split('T')[0]
+      : String(datesResult[1].date);
 
     // Fetch all products for the previous date
     const previousResult = await sql`
