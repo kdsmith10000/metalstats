@@ -56,7 +56,7 @@ export interface MetalConfig {
   pricePerUnit: number;
 }
 
-// Monthly demand figures based on actual COMEX delivery data (Jan 28, 2026)
+// Monthly demand figures based on actual COMEX delivery data (Jan 29, 2026)
 // Coverage ratio = registered inventory / monthly delivery demand
 // This shows how many months of deliveries the registered inventory can cover
 export const metalConfigs: MetalConfig[] = [
@@ -67,9 +67,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fcd34d',
     unit: 'oz',
     contractSize: 100,
-    // Jan 2026 MTD: 11,851 contracts = 1,185,100 oz actual delivery demand
-    monthlyDemand: 1185100, // 11,851 contracts * 100 oz (Jan 28 MTD)
-    pricePerUnit: 5303,  // Updated to Jan 28 settle price
+    // Jan 2026 MTD: 11,862 contracts = 1,186,200 oz actual delivery demand
+    monthlyDemand: 1186200, // 11,862 contracts * 100 oz (Jan 29 MTD)
+    pricePerUnit: 5302,  // Updated to Jan 29 settle price
   },
   {
     key: 'Silver',
@@ -78,8 +78,8 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#cbd5e1',
     unit: 'oz',
     contractSize: 5000,
-    // Jan 2026 MTD: 9,854 contracts = 49,270,000 oz actual delivery demand
-    monthlyDemand: 49270000, // 9,854 contracts * 5,000 oz (Jan 28 MTD)
+    // Jan 2026 MTD: 9,889 contracts = 49,445,000 oz actual delivery demand
+    monthlyDemand: 49445000, // 9,889 contracts * 5,000 oz (Jan 29 MTD)
     pricePerUnit: 31,
   },
   {
