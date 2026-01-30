@@ -1,20 +1,37 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 import { NextResponse, NextRequest } from 'next/server';
 
+interface HistoryRow {
+  date: string;
+  symbol: string;
+  front_month_settle: number | string;
+  total_volume: number | string;
+  total_open_interest: number | string;
+  total_oi_change: number | string;
+}
+
 function isDatabaseConfigured(): boolean {
-  return !!(process.env.POSTGRES_URL || process.env.DATABASE_URL);
+  return !!process.env.DATABASE_URL;
+}
+
+function getDb() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL not configured');
+  }
+  return neon(process.env.DATABASE_URL);
 }
 
 // GET: Retrieve historical bulletin data for a specific symbol
 export async function GET(request: NextRequest) {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
-      { error: 'Database not configured', message: 'Set POSTGRES_URL environment variable' },
+      { error: 'Database not configured', message: 'Set DATABASE_URL environment variable' },
       { status: 503 }
     );
   }
 
   try {
+    const sql = getDb();
     const searchParams = request.nextUrl.searchParams;
     const symbol = searchParams.get('symbol') || 'GC';
     const days = parseInt(searchParams.get('days') || '30');
@@ -44,13 +61,13 @@ export async function GET(request: NextRequest) {
       LIMIT ${maxDays}
     `;
 
-    const history = result.rows.map(row => ({
+    const history = result.map((row: HistoryRow) => ({
       date: row.date,
       symbol: row.symbol,
-      settle: parseFloat(row.front_month_settle) || 0,
-      volume: parseInt(row.total_volume) || 0,
-      openInterest: parseInt(row.total_open_interest) || 0,
-      oiChange: parseInt(row.total_oi_change) || 0,
+      settle: parseFloat(String(row.front_month_settle)) || 0,
+      volume: parseInt(String(row.total_volume)) || 0,
+      openInterest: parseInt(String(row.total_open_interest)) || 0,
+      oiChange: parseInt(String(row.total_oi_change)) || 0,
     })).reverse(); // Return in chronological order
 
     return NextResponse.json({

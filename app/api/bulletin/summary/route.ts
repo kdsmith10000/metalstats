@@ -1,20 +1,38 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 import { NextResponse } from 'next/server';
 
+interface SummaryRow {
+  date: string;
+  symbol: string;
+  front_month_settle: number | string;
+  front_month_change: number | string;
+  total_volume: number | string;
+  total_open_interest: number | string;
+}
+
 function isDatabaseConfigured(): boolean {
-  return !!(process.env.POSTGRES_URL || process.env.DATABASE_URL);
+  return !!process.env.DATABASE_URL;
+}
+
+function getDb() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL not configured');
+  }
+  return neon(process.env.DATABASE_URL);
 }
 
 // GET: Retrieve bulletin summary for dashboard cards
 export async function GET() {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
-      { error: 'Database not configured', message: 'Set POSTGRES_URL environment variable' },
+      { error: 'Database not configured', message: 'Set DATABASE_URL environment variable' },
       { status: 503 }
     );
   }
 
   try {
+    const sql = getDb();
+
     // Get the most recent bulletin date
     const result = await sql`
       SELECT 
@@ -29,7 +47,7 @@ export async function GET() {
       ORDER BY symbol
     `;
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return NextResponse.json(
         { error: 'No bulletin data available' },
         { status: 404 }
@@ -38,7 +56,7 @@ export async function GET() {
 
     // Build summary object
     const summary = {
-      date: result.rows[0].date,
+      date: result[0].date,
       gold: { settle: 0, change: 0, volume: 0, oi: 0 },
       silver: { settle: 0, change: 0, volume: 0, oi: 0 },
       copper: { settle: 0, change: 0, volume: 0, oi: 0 },
@@ -47,12 +65,12 @@ export async function GET() {
       aluminum: { settle: 0, change: 0, volume: 0, oi: 0 },
     };
 
-    for (const row of result.rows) {
+    for (const row of result as SummaryRow[]) {
       const data = {
-        settle: parseFloat(row.front_month_settle) || 0,
-        change: parseFloat(row.front_month_change) || 0,
-        volume: parseInt(row.total_volume) || 0,
-        oi: parseInt(row.total_open_interest) || 0,
+        settle: parseFloat(String(row.front_month_settle)) || 0,
+        change: parseFloat(String(row.front_month_change)) || 0,
+        volume: parseInt(String(row.total_volume)) || 0,
+        oi: parseInt(String(row.total_open_interest)) || 0,
       };
 
       switch (row.symbol) {
