@@ -2,7 +2,6 @@
 
 import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor, calculatePaperPhysicalRatio, getPaperPhysicalRiskColor, getPaperPhysicalBgColor, PaperPhysicalData } from '@/lib/data';
 import { calculateCompositeRiskScore, RiskScore, RiskFactors } from '@/lib/riskScore';
-import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import DeliverySection from './DeliverySection';
 import PaperPhysicalCard from './PaperPhysicalCard';
@@ -15,17 +14,17 @@ import Link from 'next/link';
 // Lazy load heavy chart components
 const DemandChart = dynamic(() => import('./DemandChart'), {
   ssr: false,
-  loading: () => <div className="h-64 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
 });
 
 const BulletinDashboard = dynamic(() => import('./BulletinDashboard'), {
   ssr: false,
-  loading: () => <div className="h-96 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
 });
 
 const VolumeOIChart = dynamic(() => import('./VolumeOIChart'), {
   ssr: false,
-  loading: () => <div className="h-64 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
 });
 
 interface BulletinData {
@@ -240,7 +239,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
         {/* Hero Title & Subtitle */}
         <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 md:pt-32 md:pb-16 text-left">
-          <div className="animate-fadeIn">
+          <div>
             <h1 className="leading-[1.1] tracking-tighter mb-3 sm:mb-4 md:mb-6 text-3xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
               COMEX Metals
               <span className="text-muted-foreground font-medium block sm:inline"> — Inventory</span>
@@ -257,7 +256,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
         {/* Stats Cards */}
         <div className="relative w-full px-4 sm:px-8 lg:px-24 pb-16 sm:pb-24 md:pb-32 text-center mx-auto">
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center animate-fadeIn">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center">
             {activeMetals.map(config => {
               const metalData = data[config.key];
               if (!metalData) return null;
@@ -281,13 +280,13 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               const riskScore = riskScores[config.key];
               
               return (
-                <HoverCard key={config.key} openDelay={200} closeDelay={100}>
+                <HoverCard key={config.key} openDelay={0} closeDelay={0}>
                   <HoverCardTrigger asChild>
                     <div 
-                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 py-6 sm:px-8 sm:py-10 md:px-10 md:py-12 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer"
+                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 py-6 sm:px-8 sm:py-10 md:px-10 md:py-12 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer"
                     >
                       {/* Subtle Background Accent Gradient */}
-                      <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100`} />
                       
                       {/* Status Indicator - Top Right */}
                       <div className="absolute top-3 right-3 sm:top-5 sm:right-5 md:top-6 md:right-6 flex items-center gap-2">
@@ -356,13 +355,13 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </div>
           
           {/* Learn Link */}
-          <div className="mt-6 sm:mt-8 text-center animate-fadeIn">
+          <div className="mt-6 sm:mt-8 text-center">
             <Link 
               href="/learn" 
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 transition-colors group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
             >
               <span>What is coverage ratio &amp; paper vs physical? Learn about supply and demand here</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -373,7 +372,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         <div className="flex items-center gap-2 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-3xl w-full sm:w-fit mx-auto shadow-inner">
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl transition-all duration-300 min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl min-w-[140px] ${
               activeTab === 'inventory'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
@@ -384,7 +383,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </button>
           <button
             onClick={() => setActiveTab('bulletin')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl transition-all duration-300 min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl min-w-[140px] ${
               activeTab === 'bulletin'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
@@ -479,7 +478,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               >
                 <button
                   onClick={() => setExpandedMetal(isExpanded ? null : config.key)}
-                  className={`relative w-full text-left p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300`}
+                  className={`relative w-full text-left p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                     {/* Metal Info */}
@@ -507,7 +506,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                         <div className="h-2 sm:h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
                           <div 
                             style={{ width: `${registeredPercent}%` }}
-                            className={`h-full rounded-full bg-gradient-to-r transition-all duration-500 ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'}`}
+                            className={`h-full rounded-full bg-gradient-to-r ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'}`}
                           />
                         </div>
                       </div>
@@ -522,7 +521,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                         
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 rotate-90 align-top">
                           <ChevronRight 
-                            className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 transition-transform duration-300" 
+                            className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" 
                             style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
                           />
                         </div>
@@ -530,12 +529,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                     </div>
                   </div>
                 </button>
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
+                {isExpanded && (
+                    <div
                       className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
                     >
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8">
@@ -613,9 +608,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                           />
                         </div>
                       )}
-                    </motion.div>
+                    </div>
                   )}
-                </AnimatePresence>
               </div>
             );
           })}

@@ -39,7 +39,7 @@ function FactorBar({ label, value, icon }: FactorBarProps) {
         </div>
         <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
           <div
-            className={`h-full rounded-full transition-all duration-300 ${getBarColor(value)}`}
+            className={`h-full rounded-full ${getBarColor(value)}`}
             style={{ width: `${value}%` }}
           />
         </div>
@@ -79,7 +79,7 @@ export default function RiskScoreTooltip({ score, metalName }: RiskScoreTooltipP
         {/* Score Bar */}
         <div className="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
           <div
-            className={`h-full rounded-full transition-all duration-500 ${levelBgColor}`}
+            className={`h-full rounded-full ${levelBgColor}`}
             style={{ width: `${score.composite}%` }}
           />
         </div>
@@ -126,7 +126,7 @@ export default function RiskScoreTooltip({ score, metalName }: RiskScoreTooltipP
         {/* Link to methodology */}
         <Link 
           href="/learn#risk-score"
-          className="mt-3 flex items-center gap-1 text-[10px] font-semibold text-purple-500 hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
+          className="mt-3 flex items-center gap-1 text-[10px] font-semibold text-purple-500 hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300"
         >
           <span>How is this calculated?</span>
           <ExternalLink className="w-3 h-3" />
