@@ -238,16 +238,18 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         </div>
 
         {/* Hero Title & Subtitle */}
-        <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 md:pt-32 md:pb-16 text-left">
-          <div>
-            <h1 className="leading-[1.1] tracking-tighter mb-3 sm:mb-4 md:mb-6 text-3xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
-              COMEX Metals
-              <span className="text-muted-foreground font-medium block sm:inline"> — Inventory</span>
-            </h1>
+        <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-12 sm:pt-24 pb-6 sm:pb-12 md:pt-32 md:pb-16">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center">
+            <div className="col-span-2 w-full text-left">
+              <h1 className="leading-[1.1] tracking-tighter mb-2 sm:mb-4 md:mb-6 text-2xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
+                COMEX Metals
+                <span className="text-muted-foreground font-medium block sm:inline"> — Inventory</span>
+              </h1>
 
-            <p className="leading-relaxed text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium">
-              Advanced analytics for global warehouse inventory levels and supply-demand coverage metrics.
-            </p>
+              <p className="leading-relaxed text-xs sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium">
+                Advanced analytics for global warehouse inventory levels and supply-demand coverage metrics.
+              </p>
+            </div>
           </div>
         </div>
 

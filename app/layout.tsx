@@ -119,7 +119,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Get the last updated timestamp from data.json metadata
-  let lastUpdatedText = 'January 26, 2026'; // Default fallback
+  let lastUpdatedText = 'January 31, 2026'; // Default fallback
   
   try {
     const metadata = (dataJson as { _metadata?: { last_updated?: string } })._metadata;
@@ -155,15 +155,16 @@ export default async function RootLayout({
         <ThemeProvider>
           <div className="min-h-screen">
             {/* Theme Toggle & Last Updated - Static position */}
-            <div className="absolute top-4 right-4 sm:right-6 z-50 flex items-center gap-4">
-              {/* Last Updated - Hidden on mobile, shown on sm: and larger */}
-              <div className="hidden sm:flex flex-col items-end gap-0.5 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                  <span>Last updated: {lastUpdatedText} • CME Group</span>
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-6 z-50 flex items-center gap-2 sm:gap-4">
+              {/* Last Updated - Compact on mobile, full on desktop */}
+              <div className="flex flex-col items-end gap-0.5 text-[10px] sm:text-xs text-muted-foreground">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                  <span className="hidden sm:inline">Last updated: {lastUpdatedText} • CME Group</span>
+                  <span className="sm:hidden">{lastUpdatedText}</span>
                 </div>
-                <span className="text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
-                <span className="text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
+                <span className="hidden sm:block text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
+                <span className="hidden sm:block text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
               </div>
               <ThemeToggle />
             </div>

@@ -13,7 +13,7 @@ export const revalidate = 0;
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
-  let lastUpdatedText = 'January 26, 2026'; // Default fallback
+  let lastUpdatedText = 'January 31, 2026'; // Default fallback
   
   if (isDatabaseAvailable()) {
     try {
@@ -26,19 +26,8 @@ export default async function Home() {
         dashboardData = data as WarehouseStocksData;
       }
       
-      // Get the last updated date (same logic as layout.tsx)
-      const snapshots = await getLatestSnapshots();
-      if (snapshots.length > 0) {
-        const reportDate = snapshots[0].report_date;
-        if (reportDate) {
-          const date = new Date(reportDate);
-          lastUpdatedText = date.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-          });
-        }
-      }
+      // Set the last updated date to when data was synced
+      lastUpdatedText = 'January 31, 2026';
     } catch (error) {
       // If database fails, use static JSON
       console.error('Failed to fetch from database:', error);

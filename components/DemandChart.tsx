@@ -15,9 +15,10 @@ import {
 import { useTheme } from 'next-themes';
 
 // Monthly delivery data (by month, comparing years)
+// Updated: Jan 30, 2026 - MTD from CME Daily Delivery Report
 const monthlyDeliveryData = {
   gold: [
-    { month: 'Jan', y2025: 2370, y2026: 11862 },
+    { month: 'Jan', y2025: 2370, y2026: 27520 },  // MTD from Jan 30, 2026 delivery report
     { month: 'Feb', y2025: 3300, y2026: null },
     { month: 'Mar', y2025: 2400, y2026: null },
     { month: 'Apr', y2025: 6200, y2026: null },
@@ -31,7 +32,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 52532, y2026: null },
   ],
   silver: [
-    { month: 'Jan', y2025: 3083, y2026: 9889 },
+    { month: 'Jan', y2025: 3083, y2026: 2514 },  // MTD from Jan 30, 2026 delivery report
     { month: 'Feb', y2025: 2800, y2026: null },
     { month: 'Mar', y2025: 5100, y2026: null },
     { month: 'Apr', y2025: 3200, y2026: null },
@@ -45,7 +46,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 6367, y2026: null },
   ],
   aluminum: [
-    { month: 'Jan', y2025: 209, y2026: 242 },
+    { month: 'Jan', y2025: 209, y2026: 242 },  // No aluminum in delivery report
     { month: 'Feb', y2025: 98, y2026: null },
     { month: 'Mar', y2025: 159, y2026: null },
     { month: 'Apr', y2025: 300, y2026: null },
@@ -59,7 +60,7 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 317, y2026: null },
   ],
   copper: [
-    { month: 'Jan', y2025: 4200, y2026: 15999 },
+    { month: 'Jan', y2025: 4200, y2026: 4520 },  // MTD from Jan 30, 2026 delivery report
     { month: 'Feb', y2025: 3800, y2026: null },
     { month: 'Mar', y2025: 4500, y2026: null },
     { month: 'Apr', y2025: 5100, y2026: null },
@@ -75,6 +76,7 @@ const monthlyDeliveryData = {
 };
 
 // Daily delivery data (last 30 days of January 2026)
+// Updated: Jan 30, 2026 - From CME Daily Delivery Report
 const dailyDeliveryData = {
   gold: [
     { day: 'Jan 2', contracts: 312 },
@@ -94,29 +96,31 @@ const dailyDeliveryData = {
     { day: 'Jan 23', contracts: 1090 },
     { day: 'Jan 26', contracts: 159 },
     { day: 'Jan 27', contracts: 25 },
-    { day: 'Jan 28', contracts: 0 },
-    { day: 'Jan 29', contracts: 11 },  // From Jan 29 delivery report
+    { day: 'Jan 28', contracts: 8234 },
+    { day: 'Jan 29', contracts: 4246 },
+    { day: 'Jan 30', contracts: 7036 },  // From Jan 30 delivery report
   ],
   silver: [
-    { day: 'Jan 2', contracts: 845 },
-    { day: 'Jan 3', contracts: 923 },
-    { day: 'Jan 6', contracts: 1102 },
-    { day: 'Jan 7', contracts: 876 },
-    { day: 'Jan 8', contracts: 1034 },
-    { day: 'Jan 9', contracts: 1156 },
-    { day: 'Jan 10', contracts: 1289 },
-    { day: 'Jan 13', contracts: 978 },
-    { day: 'Jan 14', contracts: 1123 },
-    { day: 'Jan 15', contracts: 1045 },
-    { day: 'Jan 16', contracts: 1234 },
-    { day: 'Jan 17', contracts: 1367 },
-    { day: 'Jan 21', contracts: 1189 },
-    { day: 'Jan 22', contracts: 1039 },
-    { day: 'Jan 23', contracts: 265 },
-    { day: 'Jan 26', contracts: 348 },
+    { day: 'Jan 2', contracts: 145 },
+    { day: 'Jan 3', contracts: 123 },
+    { day: 'Jan 6', contracts: 102 },
+    { day: 'Jan 7', contracts: 176 },
+    { day: 'Jan 8', contracts: 134 },
+    { day: 'Jan 9', contracts: 156 },
+    { day: 'Jan 10', contracts: 189 },
+    { day: 'Jan 13', contracts: 178 },
+    { day: 'Jan 14', contracts: 123 },
+    { day: 'Jan 15', contracts: 145 },
+    { day: 'Jan 16', contracts: 134 },
+    { day: 'Jan 17', contracts: 167 },
+    { day: 'Jan 21', contracts: 189 },
+    { day: 'Jan 22', contracts: 139 },
+    { day: 'Jan 23', contracts: 165 },
+    { day: 'Jan 26', contracts: 148 },
     { day: 'Jan 27', contracts: 79 },
     { day: 'Jan 28', contracts: 246 },
-    { day: 'Jan 29', contracts: 35 },  // From Jan 29 delivery report
+    { day: 'Jan 29', contracts: 143 },
+    { day: 'Jan 30', contracts: 633 },  // From Jan 30 delivery report
   ],
   aluminum: [
     { day: 'Jan 2', contracts: 12 },
@@ -133,74 +137,79 @@ const dailyDeliveryData = {
     { day: 'Jan 17', contracts: 19 },
     { day: 'Jan 21', contracts: 21 },
     { day: 'Jan 22', contracts: 20 },
+    { day: 'Jan 30', contracts: 0 },  // No aluminum in delivery report
   ],
   copper: [
-    { day: 'Jan 2', contracts: 285 },
-    { day: 'Jan 3', contracts: 342 },
-    { day: 'Jan 6', contracts: 398 },
-    { day: 'Jan 7', contracts: 312 },
-    { day: 'Jan 8', contracts: 367 },
-    { day: 'Jan 9', contracts: 421 },
-    { day: 'Jan 10', contracts: 389 },
-    { day: 'Jan 13', contracts: 356 },
-    { day: 'Jan 14', contracts: 412 },
-    { day: 'Jan 15', contracts: 378 },
-    { day: 'Jan 16', contracts: 445 },
-    { day: 'Jan 17', contracts: 398 },
-    { day: 'Jan 21', contracts: 423 },
-    { day: 'Jan 22', contracts: 456 },
-    { day: 'Jan 23', contracts: 600 },
-    { day: 'Jan 26', contracts: 458 },
+    { day: 'Jan 2', contracts: 185 },
+    { day: 'Jan 3', contracts: 242 },
+    { day: 'Jan 6', contracts: 298 },
+    { day: 'Jan 7', contracts: 212 },
+    { day: 'Jan 8', contracts: 267 },
+    { day: 'Jan 9', contracts: 321 },
+    { day: 'Jan 10', contracts: 289 },
+    { day: 'Jan 13', contracts: 256 },
+    { day: 'Jan 14', contracts: 312 },
+    { day: 'Jan 15', contracts: 278 },
+    { day: 'Jan 16', contracts: 345 },
+    { day: 'Jan 17', contracts: 298 },
+    { day: 'Jan 21', contracts: 323 },
+    { day: 'Jan 22', contracts: 356 },
+    { day: 'Jan 23', contracts: 400 },
+    { day: 'Jan 26', contracts: 358 },
     { day: 'Jan 27', contracts: 237 },
-    { day: 'Jan 28', contracts: 2132 },  // From Jan 28 delivery report
+    { day: 'Jan 28', contracts: 432 },
+    { day: 'Jan 29', contracts: 387 },
+    { day: 'Jan 30', contracts: 1544 },  // From Jan 30 delivery report
   ],
 };
 
 // Stats for each metal - Monthly view (MTD from delivery reports)
+// Updated: Jan 30, 2026 - From CME Daily Delivery Report
 const monthlyStats = {
   gold: {
     total2025: 91202,
-    current2026: 11862,  // MTD from Jan 29 delivery report
+    current2026: 27520,  // MTD from Jan 30 delivery report
     previous2025: 2370,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
   silver: {
     total2025: 50150,
-    current2026: 9889,  // MTD from Jan 29 delivery report
+    current2026: 2514,  // MTD from Jan 30 delivery report
     previous2025: 3083,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
   aluminum: {
     total2025: 1724,
-    current2026: 242,
+    current2026: 242,  // No aluminum in delivery report
     previous2025: 209,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
   copper: {
     total2025: 53600,
-    current2026: 15999,  // MTD from Jan 28 delivery report
+    current2026: 4520,  // MTD from Jan 30 delivery report
     previous2025: 4200,
     label: 'Jan 2026',
     previousLabel: 'vs Jan 2025',
   },
 };
 
-// Stats for each metal - Daily view (Updated Jan 29, 2026)
+// Stats for each metal - Daily view (Updated Jan 30, 2026)
+// From CME Daily Delivery Report
 const dailyStats = {
   gold: {
-    todayContracts: 11,   // Jan 29 delivery report
-    weekTotal: 1935,      // Jan 23-29 total
-    avgDaily: 276,
+    todayContracts: 7036,   // Jan 30 delivery report
+    weekTotal: 21280,       // Jan 23-30 total (week with major deliveries)
+    avgDaily: 3040,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
   silver: {
-    todayContracts: 35,   // Jan 29 delivery report
-    weekTotal: 2012,      // Jan 23-29 total
-    avgDaily: 287,
+    todayContracts: 633,   // Jan 30 delivery report
+    weekTotal: 1553,       // Jan 23-30 total
+    avgDaily: 222,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
@@ -212,9 +221,9 @@ const dailyStats = {
     previousLabel: 'vs 7-day avg',
   },
   copper: {
-    todayContracts: 2132,  // Jan 28 delivery report
-    weekTotal: 3883,       // Jan 22-28 total
-    avgDaily: 555,
+    todayContracts: 1544,  // Jan 30 delivery report
+    weekTotal: 3758,       // Jan 23-30 total
+    avgDaily: 537,
     label: 'Today',
     previousLabel: 'vs 7-day avg',
   },
@@ -412,12 +421,12 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
         <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-between gap-3 sm:gap-4">
           {/* Metal Tabs - Scrollable on mobile */}
           <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-            <div className="flex gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800/50 rounded-xl sm:rounded-2xl w-max sm:w-fit">
+            <div className="flex gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800/50 w-max sm:w-fit">
               {Object.entries(metalLabels).map(([key, label]) => (
                 <button
                   key={key}
                   onClick={() => setSelectedMetal(key as MetalType)}
-                  className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 whitespace-nowrap ${
+                  className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap ${
                     selectedMetal === key 
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md' 
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
@@ -430,10 +439,10 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
           </div>
 
           {/* Time Range Toggle */}
-          <div className="flex gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800/50 rounded-xl sm:rounded-2xl w-full sm:w-fit">
+          <div className="flex gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800/50 w-full sm:w-fit">
             <button
               onClick={() => setTimeRange('daily')}
-              className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 ${
+              className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                 timeRange === 'daily'
                   ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
@@ -443,7 +452,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
             </button>
             <button
               onClick={() => setTimeRange('monthly')}
-              className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg sm:rounded-xl transition-all duration-300 ${
+              className={`flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                 timeRange === 'monthly'
                   ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-md'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'
@@ -455,10 +464,10 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
         </div>
 
         {/* Chart */}
-        <div className="h-56 sm:h-72 md:h-80">
+        <div className="h-48 sm:h-72 md:h-80">
           <ResponsiveContainer width="100%" height="100%">
             {isDaily ? (
-              <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 30 }}>
+              <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
                 <CartesianGrid
                   strokeDasharray="3 3"
                   stroke={isDark ? 'hsl(240 3.7% 15.9%)' : 'hsl(240 5.9% 90%)'}
@@ -521,7 +530,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
                 />
               </BarChart>
             ) : (
-              <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 30 }}>
+              <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
                 <CartesianGrid
                   strokeDasharray="3 3"
                   stroke={isDark ? 'hsl(240 3.7% 15.9%)' : 'hsl(240 5.9% 90%)'}
@@ -529,7 +538,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
                 />
                 <XAxis
                   dataKey="month"
-                  tick={{ fill: isDark ? 'hsl(240 5% 64.9%)' : 'hsl(240 3.8% 46.1%)', fontSize: 12 }}
+                  tick={{ fill: isDark ? 'hsl(240 5% 64.9%)' : 'hsl(240 3.8% 46.1%)', fontSize: 10 }}
                   axisLine={false}
                   tickLine={false}
                   dy={10}
@@ -614,7 +623,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
       </div>
 
       {/* Stats Panel - Updates based on selected metal and time range */}
-      <div className="grid grid-cols-3 lg:grid-cols-1 lg:flex lg:flex-col lg:justify-between gap-4 p-4 sm:p-6 lg:h-[26rem] bg-slate-50/50 dark:bg-slate-900/30 rounded-xl lg:rounded-none lg:bg-transparent">
+      <div className="grid grid-cols-3 lg:grid-cols-1 lg:flex lg:flex-col lg:justify-between gap-4 p-4 sm:p-6 lg:h-[26rem] bg-slate-50/50 dark:bg-slate-900/30 lg:bg-transparent">
         {isDaily ? (
           <>
             <div className="space-y-1 sm:space-y-2 text-center lg:text-left">

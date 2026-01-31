@@ -1,7 +1,5 @@
 'use client';
 
-import { Package, TrendingUp, Calendar, ArrowRight } from 'lucide-react';
-
 interface DeliveryData {
   metal: string;
   symbol: string;
@@ -21,12 +19,12 @@ interface DeliverySectionProps {
   };
 }
 
-const metalColors: Record<string, { bg: string; text: string; accent: string }> = {
-  Gold: { bg: 'from-amber-500/10 to-yellow-500/5', text: 'text-amber-500', accent: 'bg-amber-500' },
-  Silver: { bg: 'from-slate-400/10 to-slate-300/5', text: 'text-slate-400', accent: 'bg-slate-400' },
-  Copper: { bg: 'from-orange-500/10 to-red-500/5', text: 'text-orange-500', accent: 'bg-orange-500' },
-  Platinum: { bg: 'from-cyan-500/10 to-teal-500/5', text: 'text-cyan-500', accent: 'bg-cyan-500' },
-  Palladium: { bg: 'from-violet-500/10 to-purple-500/5', text: 'text-violet-500', accent: 'bg-violet-500' },
+const metalColors: Record<string, { text: string; bg: string }> = {
+  Gold: { text: 'text-amber-500', bg: 'bg-amber-500' },
+  Silver: { text: 'text-slate-400', bg: 'bg-slate-400' },
+  Copper: { text: 'text-orange-500', bg: 'bg-orange-500' },
+  Platinum: { text: 'text-cyan-500', bg: 'bg-cyan-500' },
+  Palladium: { text: 'text-violet-500', bg: 'bg-violet-500' },
 };
 
 function formatNumber(num: number): string {
@@ -37,7 +35,7 @@ function formatCurrency(num: number): string {
   if (num >= 1000) {
     return `$${num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
-  return `$${num.toFixed(4)}`;
+  return `$${num.toFixed(2)}`;
 }
 
 export default function DeliverySection({ data }: DeliverySectionProps) {
@@ -45,7 +43,8 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
   const sortedDeliveries = [...data.deliveries].sort((a, b) => b.daily_issued - a.daily_issued);
 
   // Calculate totals
-  const totalDaily = sortedDeliveries.reduce((sum, d) => sum + d.daily_issued, 0);
+  const totalDailyIssued = sortedDeliveries.reduce((sum, d) => sum + d.daily_issued, 0);
+  const totalDailyStopped = sortedDeliveries.reduce((sum, d) => sum + d.daily_stopped, 0);
   const totalMTD = sortedDeliveries.reduce((sum, d) => sum + d.month_to_date, 0);
 
   return (
@@ -66,7 +65,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
           <div className="text-right">
             <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Today</p>
             <p className="text-xl sm:text-2xl md:text-3xl font-black tabular-nums text-slate-900 dark:text-white">
-              {formatNumber(totalDaily)}
+              {formatNumber(totalDailyIssued)}
             </p>
           </div>
           <div className="text-right">
@@ -78,85 +77,152 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
         </div>
       </div>
 
-      {/* Delivery Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-        {sortedDeliveries.map((delivery, index) => {
-          const colors = metalColors[delivery.metal] || metalColors.Gold;
-          const mtdProgress = delivery.month_to_date > 0 
-            ? Math.min((delivery.daily_issued / (delivery.month_to_date / 22)) * 100, 100) 
-            : 0;
+      {/* Delivery Table */}
+      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none sm:rounded-xl border-y sm:border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-slate-200 dark:border-slate-800">
+              <th className="px-4 sm:px-6 py-4 text-left text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                Metal
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-left text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                Contract
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-right text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                Settlement
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-right text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                Issued
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-right text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                Stopped
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-right text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                MTD
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-left text-[10px] sm:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hidden sm:table-cell">
+                % of MTD
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedDeliveries.map((delivery, index) => {
+              const colors = metalColors[delivery.metal] || metalColors.Gold;
+              // Calculate what % of the month's total deliveries happened today
+              const pctOfMTD = delivery.month_to_date > 0 
+                ? (delivery.daily_issued / delivery.month_to_date) * 100 
+                : 0;
+              // Highlight if today's deliveries are significant (> 10% of MTD)
+              const isSignificant = pctOfMTD > 10;
 
-          return (
-            <div
-              key={delivery.symbol}
-              className="relative overflow-hidden p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-lg shadow-sm hover:shadow-lg transition-all duration-300"
-            >
-              {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-50`} />
-              
-              {/* Content */}
-              <div className="relative z-10">
-                {/* Header */}
-                <div className="flex items-start justify-between mb-4 sm:mb-6">
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg ${colors.accent} bg-opacity-20 flex items-center justify-center`}>
-                      <Package className={`w-5 h-5 sm:w-6 sm:h-6 ${colors.text}`} />
+              return (
+                <tr 
+                  key={delivery.symbol}
+                  className={`border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors ${
+                    index === sortedDeliveries.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  {/* Metal */}
+                  <td className="px-4 sm:px-6 py-4">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className={`w-2 h-8 rounded-full ${colors.bg}`} />
+                      <div>
+                        <p className={`text-sm sm:text-base font-bold ${colors.text}`}>
+                          {delivery.metal}
+                        </p>
+                        <p className="text-[10px] sm:text-xs text-slate-400 font-semibold">
+                          {delivery.symbol}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg md:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                        {delivery.metal}
-                      </h3>
-                      <p className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">
-                        {delivery.contract_month} @ {formatCurrency(delivery.settlement)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded ${colors.accent} bg-opacity-10`}>
-                    <span className={`text-[10px] sm:text-xs font-black ${colors.text} uppercase tracking-wider`}>
-                      {delivery.symbol}
-                    </span>
-                  </div>
-                </div>
+                  </td>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="p-3 sm:p-4 bg-white/50 dark:bg-black/30 rounded-lg border border-white/30 dark:border-white/5">
-                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
-                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" />
-                      <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Issued</p>
-                    </div>
-                    <p className="text-lg sm:text-xl md:text-2xl font-black tabular-nums text-slate-900 dark:text-white">
+                  {/* Contract */}
+                  <td className="px-4 sm:px-6 py-4">
+                    <p className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
+                      {delivery.contract_month}
+                    </p>
+                  </td>
+
+                  {/* Settlement */}
+                  <td className="px-4 sm:px-6 py-4 text-right">
+                    <p className="text-sm sm:text-base font-bold tabular-nums text-slate-900 dark:text-white">
+                      {formatCurrency(delivery.settlement)}
+                    </p>
+                  </td>
+
+                  {/* Issued */}
+                  <td className="px-4 sm:px-6 py-4 text-right">
+                    <p className="text-sm sm:text-base font-black tabular-nums text-emerald-600 dark:text-emerald-400">
                       {formatNumber(delivery.daily_issued)}
                     </p>
-                  </div>
-                  <div className="p-3 sm:p-4 bg-white/50 dark:bg-black/30 rounded-lg border border-white/30 dark:border-white/5">
-                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
-                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
-                      <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">MTD</p>
-                    </div>
-                    <p className="text-lg sm:text-xl md:text-2xl font-black tabular-nums text-slate-900 dark:text-white">
+                  </td>
+
+                  {/* Stopped */}
+                  <td className="px-4 sm:px-6 py-4 text-right">
+                    <p className="text-sm sm:text-base font-bold tabular-nums text-slate-600 dark:text-slate-300">
+                      {formatNumber(delivery.daily_stopped)}
+                    </p>
+                  </td>
+
+                  {/* MTD */}
+                  <td className="px-4 sm:px-6 py-4 text-right">
+                    <p className="text-sm sm:text-base font-bold tabular-nums text-slate-900 dark:text-white">
                       {formatNumber(delivery.month_to_date)}
                     </p>
-                  </div>
-                </div>
+                  </td>
 
-                {/* Progress Bar */}
-                <div>
-                  <div className="flex justify-between text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2">
-                    <span>Daily vs Avg</span>
-                    <span>{mtdProgress.toFixed(0)}%</span>
-                  </div>
-                  <div className="h-1.5 sm:h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
-                    <div
-                      style={{ width: `${Math.min(mtdProgress, 100)}%` }}
-                      className={`h-full rounded transition-all duration-500 ${colors.accent}`}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+                  {/* % of MTD */}
+                  <td className="px-4 sm:px-6 py-4 hidden sm:table-cell">
+                    <div className="flex items-center gap-3 min-w-[120px]">
+                      <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div
+                          style={{ width: `${Math.min(pctOfMTD, 100)}%` }}
+                          className={`h-full rounded-full transition-all duration-500 ${
+                            isSignificant ? 'bg-emerald-500' : 'bg-slate-400'
+                          }`}
+                        />
+                      </div>
+                      <span className={`text-xs font-bold tabular-nums min-w-[45px] text-right ${
+                        isSignificant ? 'text-emerald-500' : 'text-slate-400'
+                      }`}>
+                        {pctOfMTD.toFixed(1)}%
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+          {/* Totals Footer */}
+          <tfoot>
+            <tr className="bg-slate-50 dark:bg-slate-800/50 border-t-2 border-slate-200 dark:border-slate-700">
+              <td className="px-4 sm:px-6 py-4">
+                <p className="text-sm sm:text-base font-black text-slate-900 dark:text-white uppercase">
+                  Total
+                </p>
+              </td>
+              <td className="px-4 sm:px-6 py-4"></td>
+              <td className="px-4 sm:px-6 py-4"></td>
+              <td className="px-4 sm:px-6 py-4 text-right">
+                <p className="text-sm sm:text-base font-black tabular-nums text-emerald-600 dark:text-emerald-400">
+                  {formatNumber(totalDailyIssued)}
+                </p>
+              </td>
+              <td className="px-4 sm:px-6 py-4 text-right">
+                <p className="text-sm sm:text-base font-black tabular-nums text-slate-600 dark:text-slate-300">
+                  {formatNumber(totalDailyStopped)}
+                </p>
+              </td>
+              <td className="px-4 sm:px-6 py-4 text-right">
+                <p className="text-sm sm:text-base font-black tabular-nums text-slate-900 dark:text-white">
+                  {formatNumber(totalMTD)}
+                </p>
+              </td>
+              <td className="px-4 sm:px-6 py-4 hidden sm:table-cell"></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
 
       {/* Footer Note */}
