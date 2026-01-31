@@ -314,7 +314,7 @@ export default function VolumeOIChart({
                 dataKey="volume"
                 fill={color}
                 name="volume"
-                radius={[4, 4, 0, 0]}
+                radius={0}
                 opacity={0.8}
                 background={false}
               />

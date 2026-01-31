@@ -371,7 +371,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
       {/* Navigation Tabs */}
       <div className="w-full px-3 sm:px-8 lg:px-24 py-4 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
-        <div className="flex items-center gap-2 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-3xl w-full sm:w-fit mx-auto shadow-inner">
+        <div className="flex items-center gap-2 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 w-full sm:w-fit mx-auto shadow-inner">
           <button
             onClick={() => setActiveTab('inventory')}
             className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl min-w-[140px] ${
@@ -650,7 +650,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             </div>
           </div>
           
-          <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[3rem] shadow-sm">
+          <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-sm">
             <DemandChart metal="gold" />
           </div>
         </div>
