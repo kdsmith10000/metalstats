@@ -418,7 +418,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
 
           {/* Volume & OI Chart */}
-          <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[3rem] shadow-sm">
+          <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-sm">
             <VolumeOIChart />
           </div>
         </section>
