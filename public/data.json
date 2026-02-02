@@ -1,8 +1,8 @@
 {
   "Gold": {
     "metal": "Gold",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "ASAHI DEPOSITORY LLC",
@@ -12,9 +12,9 @@
       },
       {
         "name": "BRINK'S, INC.",
-        "registered": 7785802.527,
-        "eligible": 2444079.76,
-        "total": 10229882.287
+        "registered": 7785995.433,
+        "eligible": 2449986.864,
+        "total": 10235982.297
       },
       {
         "name": "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
@@ -49,8 +49,8 @@
       {
         "name": "JP MORGAN CHASE BANK NA",
         "registered": 3024220.213,
-        "eligible": 3675287.689,
-        "total": 6699507.902
+        "eligible": 3546683.689,
+        "total": 6570903.902
       },
       {
         "name": "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
@@ -60,8 +60,8 @@
       },
       {
         "name": "LOOMIS INTERNATIONAL (US) LLC",
-        "registered": 872246.905,
-        "eligible": 229509.629,
+        "registered": 828553.696,
+        "eligible": 273202.838,
         "total": 1101756.534
       },
       {
@@ -73,8 +73,8 @@
       {
         "name": "MANFRA, TORDELLA & BROOKES, LLC",
         "registered": 1680188.99,
-        "eligible": 792404.607,
-        "total": 2472593.597
+        "eligible": 791666.277,
+        "total": 2471855.267
       },
       {
         "name": "STONEX PRECIOUS METALS LLC",
@@ -90,39 +90,39 @@
       }
     ],
     "totals": {
-      "registered": 19038541.229,
-      "eligible": 16710055.095,
-      "total": 35748596.324
+      "registered": 18995040.926000003,
+      "eligible": 16630313.077999998,
+      "total": 35625354.00399999
     }
   },
   "Silver": {
     "metal": "Silver",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "ASAHI DEPOSITORY LLC",
-        "registered": 26179537.652,
-        "eligible": 6995673.468,
-        "total": 33175211.119999997
+        "registered": 26084611.152,
+        "eligible": 6549660.718,
+        "total": 32634271.869999997
       },
       {
         "name": "BRINK'S, INC.",
-        "registered": 20465873.699,
-        "eligible": 35300103.564,
-        "total": 55765977.263000004
+        "registered": 20426973.409,
+        "eligible": 36548290.484,
+        "total": 56975263.893
       },
       {
         "name": "CNT DEPOSITORY, INC.",
-        "registered": 16344475.327,
-        "eligible": 16498212.555,
-        "total": 32842687.882
+        "registered": 16076246.271,
+        "eligible": 16161020.562,
+        "total": 32237266.833
       },
       {
         "name": "DELAWARE DEPOSITORY",
-        "registered": 2173977.259,
-        "eligible": 15614016.546,
-        "total": 17787993.805
+        "registered": 2094987.437,
+        "eligible": 15653197.389,
+        "total": 17748184.826
       },
       {
         "name": "HSBC BANK, USA",
@@ -138,9 +138,9 @@
       },
       {
         "name": "JP MORGAN CHASE BANK NA",
-        "registered": 13148586.22,
-        "eligible": 157445661.343,
-        "total": 170594247.563
+        "registered": 12807664.02,
+        "eligible": 157574253.843,
+        "total": 170381917.863
       },
       {
         "name": "LOOMIS INTERNATIONAL (US) LLC",
@@ -156,27 +156,27 @@
       },
       {
         "name": "MANFRA, TORDELLA & BROOKES, LLC",
-        "registered": 8089770.214,
-        "eligible": 13843758.079,
+        "registered": 8059280.452,
+        "eligible": 13874247.841,
         "total": 21933528.292999998
       },
       {
         "name": "STONEX PRECIOUS METALS LLC",
-        "registered": 7738628.9,
-        "eligible": 248295.68,
+        "registered": 7728679.08,
+        "eligible": 258245.5,
         "total": 7986924.58
       }
     ],
     "totals": {
-      "registered": 104879944.89400001,
-      "eligible": 301006861.846,
-      "total": 405886806.73999995
+      "registered": 104017537.44399999,
+      "eligible": 301680056.948,
+      "total": 405697594.3919999
     }
   },
   "Copper": {
     "metal": "Copper",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "BALTIMORE",
@@ -187,20 +187,20 @@
       {
         "name": "DETROIT",
         "registered": 16990.0,
-        "eligible": 474.0,
-        "total": 17464.0
+        "eligible": 579.0,
+        "total": 17569.0
       },
       {
         "name": "EL PASO",
         "registered": 9280.0,
-        "eligible": 709.0,
-        "total": 9989.0
+        "eligible": 859.0,
+        "total": 10139.0
       },
       {
         "name": "NEW ORLEANS",
-        "registered": 220834.0,
-        "eligible": 193061.0,
-        "total": 413895.0
+        "registered": 224659.0,
+        "eligible": 190722.0,
+        "total": 415381.0
       },
       {
         "name": "OWENSBORO",
@@ -211,31 +211,31 @@
       {
         "name": "SALT LAKE CITY",
         "registered": 42722.0,
-        "eligible": 2886.0,
-        "total": 45608.0
+        "eligible": 3173.0,
+        "total": 45895.0
       },
       {
         "name": "TUCSON",
-        "registered": 347014.0,
-        "eligible": 230710.0,
-        "total": 577724.0
+        "registered": 350839.0,
+        "eligible": 228935.0,
+        "total": 579774.0
       }
     ],
     "totals": {
-      "registered": 658105.0,
-      "eligible": 452127.0,
-      "total": 1110232.0
+      "registered": 665755.0,
+      "eligible": 448555.0,
+      "total": 1114310.0
     }
   },
   "Platinum": {
     "metal": "Platinum",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "BRINK'S, INC.",
-        "registered": 87949.747,
-        "eligible": 30578.352,
+        "registered": 76497.842,
+        "eligible": 42030.257,
         "total": 118528.099
       },
       {
@@ -265,8 +265,8 @@
       {
         "name": "JP MORGAN CHASE BANK NA",
         "registered": 114985.579,
-        "eligible": 125407.673,
-        "total": 240393.25199999998
+        "eligible": 75484.511,
+        "total": 190470.09
       },
       {
         "name": "LOOMIS INTERNATIONAL (US) LLC",
@@ -294,15 +294,15 @@
       }
     ],
     "totals": {
-      "registered": 338089.854,
-      "eligible": 317092.242,
-      "total": 655182.0959999999
+      "registered": 326637.949,
+      "eligible": 278620.98500000004,
+      "total": 605258.934
     }
   },
   "Palladium": {
     "metal": "Palladium",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "BRINK'S, INC.",
@@ -331,8 +331,8 @@
       {
         "name": "JP MORGAN CHASE BANK NA",
         "registered": 17669.229,
-        "eligible": 15667.93,
-        "total": 33337.159
+        "eligible": 102.648,
+        "total": 17771.877
       },
       {
         "name": "LOOMIS INTERNATIONAL (US) LLC",
@@ -355,14 +355,14 @@
     ],
     "totals": {
       "registered": 142716.91199999998,
-      "eligible": 81304.26199999999,
-      "total": 224021.174
+      "eligible": 65738.98,
+      "total": 208455.89200000002
     }
   },
   "Aluminum": {
     "metal": "Aluminum",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "GWANGYANG \"KWANGYANG\", REPUBLIC OF KOREA",
@@ -373,8 +373,8 @@
       {
         "name": "JOHOR, MALAYSIA",
         "registered": 1538.0,
-        "eligible": 248.0,
-        "total": 1786.0
+        "eligible": 0.0,
+        "total": 1538.0
       },
       {
         "name": "OWENSBORO",
@@ -403,20 +403,20 @@
       {
         "name": "TOLEDO.",
         "registered": 3352.0,
-        "eligible": 865.0,
-        "total": 4217.0
+        "eligible": 598.0,
+        "total": 3950.0
       }
     ],
     "totals": {
       "registered": 6704.0,
-      "eligible": 1639.0,
-      "total": 8343.0
+      "eligible": 1124.0,
+      "total": 7828.0
     }
   },
   "Zinc": {
     "metal": "Zinc",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "NEW ORLEANS",
@@ -439,8 +439,8 @@
   },
   "Lead": {
     "metal": "Lead",
-    "report_date": "1/30/2026",
-    "activity_date": "1/29/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "ANTWERP, BELGIUM",
@@ -463,43 +463,67 @@
   },
   "Platinum_Palladium": {
     "metal": "Platinum_Palladium",
-    "report_date": "1/28/2026",
-    "activity_date": "1/27/2026",
+    "report_date": "2/2/2026",
+    "activity_date": "1/30/2026",
     "depositories": [
       {
         "name": "BRINK'S, INC.",
-        "registered": 7448.018,
-        "eligible": 9785.668,
-        "total": 17233.686
+        "registered": 1633.941,
+        "eligible": 18459.584,
+        "total": 20093.524999999998
       },
       {
-        "name": "CNT DEPOSITORY, INC.",
-        "registered": 96.979,
+        "name": "HSBC BANK, USA",
+        "registered": 2395.448,
         "eligible": 0.0,
-        "total": 96.979
+        "total": 2395.448
       },
       {
-        "name": "DELAWARE DEPOSITORY",
+        "name": "JP MORGAN CHASE BANK NA",
+        "registered": 114985.579,
+        "eligible": 75484.511,
+        "total": 190470.09
+      },
+      {
+        "name": "LOOMIS INTERNATIONAL (US) LLC",
+        "registered": 63745.991,
+        "eligible": 132077.206,
+        "total": 195823.19700000001
+      },
+      {
+        "name": "MALCA-AMIT USA, LLC",
+        "registered": 395.145,
+        "eligible": 0.0,
+        "total": 395.145
+      },
+      {
+        "name": "MANFRA, TORDELLA & BROOKES, LLC",
+        "registered": 50220.42,
+        "eligible": 1271.373,
+        "total": 51491.793
+      },
+      {
+        "name": "STONEX PRECIOUS METALS LLC",
+        "registered": 14122.765,
+        "eligible": 16.075,
+        "total": 14138.84
+      },
+      {
+        "name": "BRINK'S, INC.",
         "registered": 788.244,
         "eligible": 3208.1,
         "total": 3996.344
       },
       {
-        "name": "HSBC BANK, USA",
-        "registered": 585.9,
-        "eligible": 2023.213,
-        "total": 2609.113
-      },
-      {
         "name": "JP MORGAN CHASE BANK NA",
         "registered": 17669.229,
-        "eligible": 15667.93,
-        "total": 33337.159
+        "eligible": 102.648,
+        "total": 17771.877
       },
       {
         "name": "LOOMIS INTERNATIONAL (US) LLC",
-        "registered": 45624.494,
-        "eligible": 3011.636,
+        "registered": 41614.091,
+        "eligible": 7022.039,
         "total": 48636.13
       },
       {
@@ -510,19 +534,19 @@
       },
       {
         "name": "STONEX PRECIOUS METALS LLC",
-        "registered": 146727.315,
-        "eligible": 77293.859,
-        "total": 224021.174
+        "registered": 5475.747,
+        "eligible": 0.0,
+        "total": 5475.747
       }
     ],
     "totals": {
-      "registered": 287978.88300000003,
-      "eligible": 154587.718,
-      "total": 442566.601
+      "registered": 142716.91199999998,
+      "eligible": 65738.98,
+      "total": 208455.892
     }
   },
   "_metadata": {
-    "last_updated": "January 31, 2026",
+    "last_updated": "February 02, 2026",
     "source": "CME Group"
   }
 }

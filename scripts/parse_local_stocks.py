@@ -388,7 +388,29 @@ def sync_to_database(data, database_url):
     
     print("[INFO] Connecting to database...")
     
-    conn = psycopg2.connect(database_url)
+    # Retry logic for Neon serverless cold start
+    import time
+    max_retries = 3
+    retry_delay = 5  # seconds
+    conn = None
+    
+    for attempt in range(max_retries):
+        try:
+            conn = psycopg2.connect(database_url, connect_timeout=30)
+            print(f"[OK] Connected to database on attempt {attempt + 1}")
+            break
+        except psycopg2.OperationalError as e:
+            if attempt < max_retries - 1:
+                print(f"[WARNING] Connection attempt {attempt + 1} failed, retrying in {retry_delay}s...")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # exponential backoff
+            else:
+                print(f"[ERROR] Failed to connect after {max_retries} attempts: {e}")
+                return
+    
+    if conn is None:
+        print("[ERROR] Could not establish database connection")
+        return
     cur = conn.cursor()
     
     try:
