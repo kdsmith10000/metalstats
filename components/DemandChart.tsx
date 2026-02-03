@@ -15,11 +15,11 @@ import {
 import { useTheme } from 'next-themes';
 
 // Monthly delivery data (by month, comparing years)
-// Updated: Jan 30, 2026 - MTD from CME Daily Delivery Report
+// Updated: Feb 2, 2026 - MTD from CME Daily Delivery Report
 const monthlyDeliveryData = {
   gold: [
-    { month: 'Jan', y2025: 2370, y2026: 27520 },  // MTD from Jan 30, 2026 delivery report
-    { month: 'Feb', y2025: 3300, y2026: null },
+    { month: 'Jan', y2025: 2370, y2026: 11862 },  // Jan 2026 final from YTD report
+    { month: 'Feb', y2025: 3300, y2026: 28159 },  // MTD from Feb 2, 2026 delivery report
     { month: 'Mar', y2025: 2400, y2026: null },
     { month: 'Apr', y2025: 6200, y2026: null },
     { month: 'May', y2025: 2100, y2026: null },
@@ -29,11 +29,11 @@ const monthlyDeliveryData = {
     { month: 'Sep', y2025: 2300, y2026: null },
     { month: 'Oct', y2025: 5100, y2026: null },
     { month: 'Nov', y2025: 2400, y2026: null },
-    { month: 'Dec', y2025: 52532, y2026: null },
+    { month: 'Dec', y2025: 37098, y2026: null },
   ],
   silver: [
-    { month: 'Jan', y2025: 3083, y2026: 2514 },  // MTD from Jan 30, 2026 delivery report
-    { month: 'Feb', y2025: 2800, y2026: null },
+    { month: 'Jan', y2025: 3083, y2026: 9889 },  // Jan 2026 final from YTD report
+    { month: 'Feb', y2025: 2800, y2026: 2765 },  // MTD from Feb 2, 2026 delivery report
     { month: 'Mar', y2025: 5100, y2026: null },
     { month: 'Apr', y2025: 3200, y2026: null },
     { month: 'May', y2025: 4500, y2026: null },
@@ -43,11 +43,11 @@ const monthlyDeliveryData = {
     { month: 'Sep', y2025: 4900, y2026: null },
     { month: 'Oct', y2025: 3400, y2026: null },
     { month: 'Nov', y2025: 4200, y2026: null },
-    { month: 'Dec', y2025: 6367, y2026: null },
+    { month: 'Dec', y2025: 12946, y2026: null },
   ],
   aluminum: [
-    { month: 'Jan', y2025: 209, y2026: 242 },  // No aluminum in delivery report
-    { month: 'Feb', y2025: 98, y2026: null },
+    { month: 'Jan', y2025: 209, y2026: 156 },  // Jan 2026 final from YTD report
+    { month: 'Feb', y2025: 98, y2026: 4 },  // MTD from Feb 2, 2026 delivery report
     { month: 'Mar', y2025: 159, y2026: null },
     { month: 'Apr', y2025: 300, y2026: null },
     { month: 'May', y2025: 169, y2026: null },
@@ -60,8 +60,8 @@ const monthlyDeliveryData = {
     { month: 'Dec', y2025: 317, y2026: null },
   ],
   copper: [
-    { month: 'Jan', y2025: 4200, y2026: 4520 },  // MTD from Jan 30, 2026 delivery report
-    { month: 'Feb', y2025: 3800, y2026: null },
+    { month: 'Jan', y2025: 4200, y2026: 15999 },  // Jan 2026 final from YTD report
+    { month: 'Feb', y2025: 3800, y2026: 5127 },  // MTD from Feb 2, 2026 delivery report
     { month: 'Mar', y2025: 4500, y2026: null },
     { month: 'Apr', y2025: 5100, y2026: null },
     { month: 'May', y2025: 4700, y2026: null },
@@ -71,161 +71,106 @@ const monthlyDeliveryData = {
     { month: 'Sep', y2025: 4600, y2026: null },
     { month: 'Oct', y2025: 5200, y2026: null },
     { month: 'Nov', y2025: 4400, y2026: null },
-    { month: 'Dec', y2025: 4800, y2026: null },
+    { month: 'Dec', y2025: 20871, y2026: null },
   ],
 };
 
-// Daily delivery data (last 30 days of January 2026)
-// Updated: Jan 30, 2026 - From CME Daily Delivery Report
+// Daily delivery data (recent trading days)
+// Updated: Feb 2, 2026 - From CME Daily Delivery Report
 const dailyDeliveryData = {
   gold: [
-    { day: 'Jan 2', contracts: 312 },
-    { day: 'Jan 3', contracts: 428 },
-    { day: 'Jan 6', contracts: 521 },
-    { day: 'Jan 7', contracts: 389 },
-    { day: 'Jan 8', contracts: 467 },
-    { day: 'Jan 9', contracts: 534 },
-    { day: 'Jan 10', contracts: 612 },
-    { day: 'Jan 13', contracts: 445 },
-    { day: 'Jan 14', contracts: 523 },
-    { day: 'Jan 15', contracts: 478 },
-    { day: 'Jan 16', contracts: 567 },
-    { day: 'Jan 17', contracts: 634 },
-    { day: 'Jan 21', contracts: 589 },
-    { day: 'Jan 22', contracts: 651 },
-    { day: 'Jan 23', contracts: 1090 },
-    { day: 'Jan 26', contracts: 159 },
     { day: 'Jan 27', contracts: 25 },
     { day: 'Jan 28', contracts: 8234 },
-    { day: 'Jan 29', contracts: 4246 },
-    { day: 'Jan 30', contracts: 7036 },  // From Jan 30 delivery report
+    { day: 'Jan 29', contracts: 20484 },  // From MTD report
+    { day: 'Jan 30', contracts: 7036 },
+    { day: 'Feb 2', contracts: 639 },  // From Feb 2 delivery report
   ],
   silver: [
-    { day: 'Jan 2', contracts: 145 },
-    { day: 'Jan 3', contracts: 123 },
-    { day: 'Jan 6', contracts: 102 },
-    { day: 'Jan 7', contracts: 176 },
-    { day: 'Jan 8', contracts: 134 },
-    { day: 'Jan 9', contracts: 156 },
-    { day: 'Jan 10', contracts: 189 },
-    { day: 'Jan 13', contracts: 178 },
-    { day: 'Jan 14', contracts: 123 },
-    { day: 'Jan 15', contracts: 145 },
-    { day: 'Jan 16', contracts: 134 },
-    { day: 'Jan 17', contracts: 167 },
-    { day: 'Jan 21', contracts: 189 },
-    { day: 'Jan 22', contracts: 139 },
-    { day: 'Jan 23', contracts: 165 },
-    { day: 'Jan 26', contracts: 148 },
     { day: 'Jan 27', contracts: 79 },
     { day: 'Jan 28', contracts: 246 },
-    { day: 'Jan 29', contracts: 143 },
-    { day: 'Jan 30', contracts: 633 },  // From Jan 30 delivery report
+    { day: 'Jan 29', contracts: 1881 },  // From MTD report
+    { day: 'Jan 30', contracts: 633 },
+    { day: 'Feb 2', contracts: 251 },  // From Feb 2 delivery report
   ],
   aluminum: [
-    { day: 'Jan 2', contracts: 12 },
-    { day: 'Jan 3', contracts: 18 },
-    { day: 'Jan 6', contracts: 21 },
-    { day: 'Jan 7', contracts: 15 },
-    { day: 'Jan 8', contracts: 19 },
-    { day: 'Jan 9', contracts: 23 },
-    { day: 'Jan 10', contracts: 17 },
-    { day: 'Jan 13', contracts: 14 },
-    { day: 'Jan 14', contracts: 22 },
-    { day: 'Jan 15', contracts: 16 },
-    { day: 'Jan 16', contracts: 25 },
-    { day: 'Jan 17', contracts: 19 },
-    { day: 'Jan 21', contracts: 21 },
-    { day: 'Jan 22', contracts: 20 },
-    { day: 'Jan 30', contracts: 0 },  // No aluminum in delivery report
+    { day: 'Jan 27', contracts: 12 },
+    { day: 'Jan 28', contracts: 18 },
+    { day: 'Jan 29', contracts: 0 },
+    { day: 'Jan 30', contracts: 0 },
+    { day: 'Feb 2', contracts: 4 },  // From Feb 2 delivery report
   ],
   copper: [
-    { day: 'Jan 2', contracts: 185 },
-    { day: 'Jan 3', contracts: 242 },
-    { day: 'Jan 6', contracts: 298 },
-    { day: 'Jan 7', contracts: 212 },
-    { day: 'Jan 8', contracts: 267 },
-    { day: 'Jan 9', contracts: 321 },
-    { day: 'Jan 10', contracts: 289 },
-    { day: 'Jan 13', contracts: 256 },
-    { day: 'Jan 14', contracts: 312 },
-    { day: 'Jan 15', contracts: 278 },
-    { day: 'Jan 16', contracts: 345 },
-    { day: 'Jan 17', contracts: 298 },
-    { day: 'Jan 21', contracts: 323 },
-    { day: 'Jan 22', contracts: 356 },
-    { day: 'Jan 23', contracts: 400 },
-    { day: 'Jan 26', contracts: 358 },
     { day: 'Jan 27', contracts: 237 },
     { day: 'Jan 28', contracts: 432 },
-    { day: 'Jan 29', contracts: 387 },
-    { day: 'Jan 30', contracts: 1544 },  // From Jan 30 delivery report
+    { day: 'Jan 29', contracts: 2976 },  // From MTD report
+    { day: 'Jan 30', contracts: 1544 },
+    { day: 'Feb 2', contracts: 607 },  // From Feb 2 delivery report
   ],
 };
 
 // Stats for each metal - Monthly view (MTD from delivery reports)
-// Updated: Jan 30, 2026 - From CME Daily Delivery Report
+// Updated: Feb 2, 2026 - From CME Daily Delivery Report
 const monthlyStats = {
   gold: {
     total2025: 91202,
-    current2026: 27520,  // MTD from Jan 30 delivery report
-    previous2025: 2370,
-    label: 'Jan 2026',
-    previousLabel: 'vs Jan 2025',
+    current2026: 28159,  // MTD from Feb 2 delivery report
+    previous2025: 3300,
+    label: 'Feb 2026',
+    previousLabel: 'vs Feb 2025',
   },
   silver: {
     total2025: 50150,
-    current2026: 2514,  // MTD from Jan 30 delivery report
-    previous2025: 3083,
-    label: 'Jan 2026',
-    previousLabel: 'vs Jan 2025',
+    current2026: 2765,  // MTD from Feb 2 delivery report
+    previous2025: 2800,
+    label: 'Feb 2026',
+    previousLabel: 'vs Feb 2025',
   },
   aluminum: {
     total2025: 1724,
-    current2026: 242,  // No aluminum in delivery report
-    previous2025: 209,
-    label: 'Jan 2026',
-    previousLabel: 'vs Jan 2025',
+    current2026: 4,  // MTD from Feb 2 delivery report
+    previous2025: 98,
+    label: 'Feb 2026',
+    previousLabel: 'vs Feb 2025',
   },
   copper: {
     total2025: 53600,
-    current2026: 4520,  // MTD from Jan 30 delivery report
-    previous2025: 4200,
-    label: 'Jan 2026',
-    previousLabel: 'vs Jan 2025',
+    current2026: 5127,  // MTD from Feb 2 delivery report
+    previous2025: 3800,
+    label: 'Feb 2026',
+    previousLabel: 'vs Feb 2025',
   },
 };
 
-// Stats for each metal - Daily view (Updated Jan 30, 2026)
+// Stats for each metal - Daily view (Updated Feb 2, 2026)
 // From CME Daily Delivery Report
 const dailyStats = {
   gold: {
-    todayContracts: 7036,   // Jan 30 delivery report
-    weekTotal: 21280,       // Jan 23-30 total (week with major deliveries)
-    avgDaily: 3040,
+    todayContracts: 639,   // Feb 2 delivery report
+    weekTotal: 36418,      // Jan 29 - Feb 2 total
+    avgDaily: 7284,
     label: 'Today',
-    previousLabel: 'vs 7-day avg',
+    previousLabel: 'vs 5-day avg',
   },
   silver: {
-    todayContracts: 633,   // Jan 30 delivery report
-    weekTotal: 1553,       // Jan 23-30 total
-    avgDaily: 222,
+    todayContracts: 251,   // Feb 2 delivery report
+    weekTotal: 3090,       // Jan 29 - Feb 2 total
+    avgDaily: 618,
     label: 'Today',
-    previousLabel: 'vs 7-day avg',
+    previousLabel: 'vs 5-day avg',
   },
   aluminum: {
-    todayContracts: 0,
-    weekTotal: 41,
-    avgDaily: 20,
+    todayContracts: 4,     // Feb 2 delivery report
+    weekTotal: 34,
+    avgDaily: 7,
     label: 'Today',
-    previousLabel: 'vs 7-day avg',
+    previousLabel: 'vs 5-day avg',
   },
   copper: {
-    todayContracts: 1544,  // Jan 30 delivery report
-    weekTotal: 3758,       // Jan 23-30 total
-    avgDaily: 537,
+    todayContracts: 607,   // Feb 2 delivery report
+    weekTotal: 5796,       // Jan 29 - Feb 2 total
+    avgDaily: 1159,
     label: 'Today',
-    previousLabel: 'vs 7-day avg',
+    previousLabel: 'vs 5-day avg',
   },
 };
 
