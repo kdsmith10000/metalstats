@@ -32,18 +32,18 @@ interface VolumeOIChartProps {
 }
 
 // Sample data for demo (when no historical data available)
+// Updated: Feb 2, 2026 (Bulletin #21)
 const sampleData: HistoricalDataPoint[] = [
-  { date: '2026-01-13', volume: 450000, openInterest: 528000, settle: 4755.00, oiChange: 5000 },
-  { date: '2026-01-14', volume: 420000, openInterest: 530000, settle: 4780.25, oiChange: 2000 },
-  { date: '2026-01-15', volume: 475000, openInterest: 532000, settle: 4765.50, oiChange: 2000 },
-  { date: '2026-01-16', volume: 440000, openInterest: 534000, settle: 4800.00, oiChange: 2000 },
   { date: '2026-01-17', volume: 465000, openInterest: 530000, settle: 4820.75, oiChange: -4000 },
   { date: '2026-01-21', volume: 488000, openInterest: 555309, settle: 4837.50, oiChange: 2000 },
   { date: '2026-01-22', volume: 357149, openInterest: 555309, settle: 4865.00, oiChange: -7555 },
   { date: '2026-01-23', volume: 410000, openInterest: 560000, settle: 4910.25, oiChange: 4691 },
   { date: '2026-01-24', volume: 445000, openInterest: 570000, settle: 4950.00, oiChange: 10000 },
-  { date: '2026-01-26', volume: 525061, openInterest: 640341, settle: 4979.70, oiChange: -14103 },
   { date: '2026-01-27', volume: 494262, openInterest: 536168, settle: 5082.50, oiChange: -30799 },
+  { date: '2026-01-28', volume: 520000, openInterest: 510000, settle: 4950.20, oiChange: -26168 },
+  { date: '2026-01-29', volume: 480000, openInterest: 490000, settle: 4875.50, oiChange: -20000 },
+  { date: '2026-01-30', volume: 585928, openInterest: 428864, settle: 4744.00, oiChange: -61136 },
+  { date: '2026-02-02', volume: 447704, openInterest: 415310, settle: 4652.60, oiChange: -10206 },
 ];
 
 export default function VolumeOIChart({ 

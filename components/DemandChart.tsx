@@ -570,7 +570,7 @@ export default function DemandChart({ metal = 'gold' }: DemandChartProps) {
           {isDaily ? (
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-emerald-500" />
-              <span className="text-muted-foreground">Jan 2026 Daily</span>
+              <span className="text-muted-foreground">Feb 2026 Daily</span>
             </div>
           ) : (
             <>
