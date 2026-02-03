@@ -79,20 +79,35 @@ const monthlyDeliveryData = {
 // Updated: Feb 2, 2026 - From CME Daily Delivery Report
 const dailyDeliveryData = {
   gold: [
+    { day: 'Jan 17', contracts: 634 },
+    { day: 'Jan 21', contracts: 589 },
+    { day: 'Jan 22', contracts: 651 },
+    { day: 'Jan 23', contracts: 1090 },
+    { day: 'Jan 24', contracts: 445 },
     { day: 'Jan 27', contracts: 25 },
     { day: 'Jan 28', contracts: 8234 },
-    { day: 'Jan 29', contracts: 20484 },  // From MTD report
+    { day: 'Jan 29', contracts: 20484 },
     { day: 'Jan 30', contracts: 7036 },
     { day: 'Feb 2', contracts: 639 },  // From Feb 2 delivery report
   ],
   silver: [
+    { day: 'Jan 17', contracts: 167 },
+    { day: 'Jan 21', contracts: 189 },
+    { day: 'Jan 22', contracts: 139 },
+    { day: 'Jan 23', contracts: 165 },
+    { day: 'Jan 24', contracts: 148 },
     { day: 'Jan 27', contracts: 79 },
     { day: 'Jan 28', contracts: 246 },
-    { day: 'Jan 29', contracts: 1881 },  // From MTD report
+    { day: 'Jan 29', contracts: 1881 },
     { day: 'Jan 30', contracts: 633 },
     { day: 'Feb 2', contracts: 251 },  // From Feb 2 delivery report
   ],
   aluminum: [
+    { day: 'Jan 17', contracts: 19 },
+    { day: 'Jan 21', contracts: 21 },
+    { day: 'Jan 22', contracts: 20 },
+    { day: 'Jan 23', contracts: 15 },
+    { day: 'Jan 24', contracts: 18 },
     { day: 'Jan 27', contracts: 12 },
     { day: 'Jan 28', contracts: 18 },
     { day: 'Jan 29', contracts: 0 },
@@ -100,9 +115,14 @@ const dailyDeliveryData = {
     { day: 'Feb 2', contracts: 4 },  // From Feb 2 delivery report
   ],
   copper: [
+    { day: 'Jan 17', contracts: 298 },
+    { day: 'Jan 21', contracts: 323 },
+    { day: 'Jan 22', contracts: 356 },
+    { day: 'Jan 23', contracts: 400 },
+    { day: 'Jan 24', contracts: 358 },
     { day: 'Jan 27', contracts: 237 },
     { day: 'Jan 28', contracts: 432 },
-    { day: 'Jan 29', contracts: 2976 },  // From MTD report
+    { day: 'Jan 29', contracts: 2976 },
     { day: 'Jan 30', contracts: 1544 },
     { day: 'Feb 2', contracts: 607 },  // From Feb 2 delivery report
   ],
