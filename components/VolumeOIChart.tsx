@@ -32,18 +32,21 @@ interface VolumeOIChartProps {
 }
 
 // Sample data for demo (when no historical data available)
-// Updated: Feb 2, 2026 (Bulletin #21)
+// Updated: Feb 2, 2026 (Bulletin #21) - Gold Futures (GC)
+// Settlement prices reflect April 2026 contract (most active)
 const sampleData: HistoricalDataPoint[] = [
-  { date: '2026-01-17', volume: 465000, openInterest: 530000, settle: 4820.75, oiChange: -4000 },
-  { date: '2026-01-21', volume: 488000, openInterest: 555309, settle: 4837.50, oiChange: 2000 },
-  { date: '2026-01-22', volume: 357149, openInterest: 555309, settle: 4865.00, oiChange: -7555 },
-  { date: '2026-01-23', volume: 410000, openInterest: 560000, settle: 4910.25, oiChange: 4691 },
-  { date: '2026-01-24', volume: 445000, openInterest: 570000, settle: 4950.00, oiChange: 10000 },
-  { date: '2026-01-27', volume: 494262, openInterest: 536168, settle: 5082.50, oiChange: -30799 },
-  { date: '2026-01-28', volume: 520000, openInterest: 510000, settle: 4950.20, oiChange: -26168 },
-  { date: '2026-01-29', volume: 480000, openInterest: 490000, settle: 4875.50, oiChange: -20000 },
-  { date: '2026-01-30', volume: 585928, openInterest: 428864, settle: 4744.00, oiChange: -61136 },
-  { date: '2026-02-02', volume: 447704, openInterest: 415310, settle: 4652.60, oiChange: -10206 },
+  { date: '2026-01-15', volume: 318542, openInterest: 502831, settle: 4892.40, oiChange: 5234 },
+  { date: '2026-01-16', volume: 425618, openInterest: 508942, settle: 4915.80, oiChange: 6111 },
+  { date: '2026-01-17', volume: 389127, openInterest: 515673, settle: 4932.50, oiChange: 6731 },
+  { date: '2026-01-21', volume: 456923, openInterest: 528415, settle: 4968.20, oiChange: 12742 },
+  { date: '2026-01-22', volume: 512847, openInterest: 535286, settle: 4995.90, oiChange: 6871 },
+  { date: '2026-01-23', volume: 478362, openInterest: 541827, settle: 5018.30, oiChange: 6541 },
+  { date: '2026-01-24', volume: 534219, openInterest: 548932, settle: 5042.70, oiChange: 7105 },
+  { date: '2026-01-27', volume: 621458, openInterest: 536168, settle: 4985.40, oiChange: -12764 },
+  { date: '2026-01-28', volume: 589732, openInterest: 518234, settle: 4912.80, oiChange: -17934 },
+  { date: '2026-01-29', volume: 547891, openInterest: 492867, settle: 4838.50, oiChange: -25367 },
+  { date: '2026-01-30', volume: 585928, openInterest: 428864, settle: 4745.10, oiChange: -64003 },
+  { date: '2026-02-02', volume: 447704, openInterest: 415310, settle: 4652.60, oiChange: -13554 },
 ];
 
 export default function VolumeOIChart({ 
