@@ -765,3 +765,209 @@ export async function getRiskScoreHistory(metal: string, days: number = 90): Pro
     throw error;
   }
 }
+
+// ============================================
+// DELIVERY DATA
+// ============================================
+
+export interface DeliverySnapshot {
+  id: number;
+  metal: string;
+  symbol: string;
+  report_date: string;
+  contract_month: string;
+  settlement_price: number;
+  daily_issued: number;
+  daily_stopped: number;
+  month_to_date: number;
+  created_at: Date;
+}
+
+export interface DeliveryFirmSnapshot {
+  id: number;
+  delivery_snapshot_id: number;
+  firm_code: string;
+  firm_org: string;
+  firm_name: string;
+  issued: number;
+  stopped: number;
+}
+
+// Initialize delivery tables
+export async function initializeDeliveryTables() {
+  try {
+    // Create delivery_snapshots table for daily delivery data
+    await sql`
+      CREATE TABLE IF NOT EXISTS delivery_snapshots (
+        id SERIAL PRIMARY KEY,
+        metal VARCHAR(50) NOT NULL,
+        symbol VARCHAR(20) NOT NULL,
+        report_date DATE NOT NULL,
+        contract_month VARCHAR(20) NOT NULL,
+        settlement_price DECIMAL(15, 6) NOT NULL DEFAULT 0,
+        daily_issued INTEGER NOT NULL DEFAULT 0,
+        daily_stopped INTEGER NOT NULL DEFAULT 0,
+        month_to_date INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(metal, report_date)
+      )
+    `;
+
+    // Create delivery_firm_snapshots table for firm-level breakdown
+    await sql`
+      CREATE TABLE IF NOT EXISTS delivery_firm_snapshots (
+        id SERIAL PRIMARY KEY,
+        delivery_snapshot_id INTEGER REFERENCES delivery_snapshots(id) ON DELETE CASCADE,
+        firm_code VARCHAR(10) NOT NULL,
+        firm_org VARCHAR(5) NOT NULL,
+        firm_name VARCHAR(255) NOT NULL,
+        issued INTEGER NOT NULL DEFAULT 0,
+        stopped INTEGER NOT NULL DEFAULT 0
+      )
+    `;
+
+    // Create indexes for faster queries
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_delivery_snapshots_metal_date 
+      ON delivery_snapshots(metal, report_date DESC)
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_delivery_firm_snapshots_delivery_id 
+      ON delivery_firm_snapshots(delivery_snapshot_id)
+    `;
+
+    console.log('Delivery tables initialized successfully');
+    return true;
+  } catch (error) {
+    console.error('Error initializing delivery tables:', error);
+    throw error;
+  }
+}
+
+// Upsert delivery snapshot
+export async function upsertDeliverySnapshot(
+  metal: string,
+  symbol: string,
+  reportDate: string,
+  contractMonth: string,
+  settlementPrice: number,
+  dailyIssued: number,
+  dailyStopped: number,
+  monthToDate: number,
+  firms: Array<{ code: string; org: string; name: string; issued: number; stopped: number }>
+): Promise<number> {
+  try {
+    const parsedDate = parseDate(reportDate);
+    
+    // Upsert the delivery snapshot
+    const result = await sql`
+      INSERT INTO delivery_snapshots (
+        metal, symbol, report_date, contract_month, settlement_price,
+        daily_issued, daily_stopped, month_to_date
+      )
+      VALUES (
+        ${metal}, ${symbol}, ${parsedDate}, ${contractMonth}, ${settlementPrice},
+        ${dailyIssued}, ${dailyStopped}, ${monthToDate}
+      )
+      ON CONFLICT (metal, report_date) 
+      DO UPDATE SET 
+        symbol = EXCLUDED.symbol,
+        contract_month = EXCLUDED.contract_month,
+        settlement_price = EXCLUDED.settlement_price,
+        daily_issued = EXCLUDED.daily_issued,
+        daily_stopped = EXCLUDED.daily_stopped,
+        month_to_date = EXCLUDED.month_to_date,
+        created_at = CURRENT_TIMESTAMP
+      RETURNING id
+    `;
+
+    const snapshotId = result[0].id;
+
+    // Delete existing firm data for this snapshot
+    await sql`
+      DELETE FROM delivery_firm_snapshots WHERE delivery_snapshot_id = ${snapshotId}
+    `;
+
+    // Insert new firm data
+    for (const firm of firms) {
+      await sql`
+        INSERT INTO delivery_firm_snapshots (delivery_snapshot_id, firm_code, firm_org, firm_name, issued, stopped)
+        VALUES (${snapshotId}, ${firm.code}, ${firm.org}, ${firm.name}, ${firm.issued}, ${firm.stopped})
+      `;
+    }
+
+    return snapshotId;
+  } catch (error) {
+    console.error(`Error upserting delivery snapshot for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get latest delivery snapshots for all metals
+export async function getLatestDeliverySnapshots(): Promise<DeliverySnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT DISTINCT ON (metal) 
+        id, metal, symbol, report_date, contract_month, settlement_price,
+        daily_issued, daily_stopped, month_to_date, created_at
+      FROM delivery_snapshots
+      ORDER BY metal, report_date DESC
+    `;
+    return result as DeliverySnapshot[];
+  } catch (error) {
+    console.error('Error fetching latest delivery snapshots:', error);
+    throw error;
+  }
+}
+
+// Get delivery firms for a snapshot
+export async function getDeliveryFirms(snapshotId: number): Promise<DeliveryFirmSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, delivery_snapshot_id, firm_code, firm_org, firm_name, issued, stopped
+      FROM delivery_firm_snapshots
+      WHERE delivery_snapshot_id = ${snapshotId}
+      ORDER BY issued DESC
+    `;
+    return result as DeliveryFirmSnapshot[];
+  } catch (error) {
+    console.error('Error fetching delivery firms:', error);
+    throw error;
+  }
+}
+
+// Get delivery history for a metal (for charts)
+export async function getDeliveryHistory(metal: string, days: number = 90): Promise<DeliverySnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, metal, symbol, report_date, contract_month, settlement_price,
+             daily_issued, daily_stopped, month_to_date, created_at
+      FROM delivery_snapshots
+      WHERE metal = ${metal}
+        AND report_date >= CURRENT_DATE - ${days}::integer
+      ORDER BY report_date ASC
+    `;
+    return result as DeliverySnapshot[];
+  } catch (error) {
+    console.error(`Error fetching delivery history for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get delivery history for all metals (for charts)
+export async function getAllDeliveryHistory(days: number = 30): Promise<DeliverySnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, metal, symbol, report_date, contract_month, settlement_price,
+             daily_issued, daily_stopped, month_to_date, created_at
+      FROM delivery_snapshots
+      WHERE report_date >= CURRENT_DATE - ${days}::integer
+      ORDER BY report_date ASC, metal
+    `;
+    return result as DeliverySnapshot[];
+  } catch (error) {
+    console.error('Error fetching all delivery history:', error);
+    throw error;
+  }
+}
