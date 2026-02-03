@@ -1,9 +1,31 @@
 import Link from 'next/link';
 import { ArrowLeft, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Info, FileStack, Coins, Scale, Calculator, Activity, BarChart3 } from 'lucide-react';
 
-export const metadata = {
-  title: 'Coverage Ratio, Paper vs Physical & Risk Score | COMEX Metals',
-  description: 'Learn how coverage ratio, paper vs physical ratio, and composite risk score measure supply, demand, and leverage in COMEX precious metals markets.',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'What is COMEX Coverage Ratio & Paper vs Physical? | Learn Metals',
+  description: 'Learn what COMEX registered vs eligible inventory means, how coverage ratio measures supply/demand, and why paper vs physical ratio matters for gold & silver futures markets.',
+  keywords: [
+    'what is comex registered inventory',
+    'comex registered vs eligible',
+    'coverage ratio explained',
+    'paper vs physical gold',
+    'paper vs physical silver',
+    'comex delivery explained',
+    'futures vs physical metal',
+    'gold silver leverage ratio',
+    'comex warehouse explained',
+  ],
+  alternates: {
+    canonical: 'https://heavymetalstats.com/learn',
+  },
+  openGraph: {
+    title: 'COMEX Coverage Ratio & Paper vs Physical Explained',
+    description: 'Understand what COMEX inventory data means: registered vs eligible, coverage ratios, and paper/physical leverage in precious metals markets.',
+    url: 'https://heavymetalstats.com/learn',
+    type: 'article',
+  },
 };
 
 export default function LearnPage() {

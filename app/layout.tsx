@@ -18,51 +18,57 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
+// Get current month/year for dynamic title
+const currentDate = new Date();
+const monthYear = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://heavymetalstats.com'),
   title: {
-    default: 'COMEX Metals Inventory Tracker | Real-Time Gold & Silver Supply Analysis',
-    template: '%s | COMEX Metals Tracker',
+    default: `COMEX Silver & Gold Registered Inventory - Live Data ${monthYear} | Daily Updates`,
+    template: '%s | COMEX Metals Inventory Tracker',
   },
-  description: 'Track real-time COMEX precious metals warehouse inventory levels. Monitor gold, silver, copper, and aluminum stocks with live supply coverage ratios, demand trends, and delivery data from CME Group.',
+  description: `Track COMEX registered silver inventory today: real-time warehouse stocks updated daily. See current gold, silver, copper inventory levels, coverage ratios & delivery data. Free CME Group data for ${monthYear}.`,
   keywords: [
-    'COMEX',
-    'COMEX inventory',
-    'COMEX warehouse stocks',
-    'precious metals',
-    'gold inventory',
-    'silver inventory',
-    'gold warehouse',
-    'silver warehouse',
-    'warehouse stocks',
-    'supply and demand',
-    'metals tracker',
-    'CME Group',
-    'CME Group data',
-    'registered inventory',
-    'eligible inventory',
-    'metals analysis',
-    'commodities tracking',
-    'silver squeeze',
-    'gold tracking',
-    'platinum inventory',
-    'palladium inventory',
-    'copper inventory',
-    'aluminum inventory',
-    'gold delivery',
-    'silver delivery',
+    // High-volume exact match keywords from Search Console
+    'comex silver registered inventory',
+    'comex silver registered inventory today',
+    'comex silver inventory',
+    'comex registered silver inventory',
+    'comex gold registered inventory',
+    'comex platinum inventory',
+    'comex inventory',
+    'comex inventory today',
+    'comex vault inventory',
+    'comex warehouse stocks',
+    // Current month keywords
+    `comex silver inventory ${monthYear.toLowerCase()}`,
+    `comex gold inventory ${monthYear.toLowerCase()}`,
+    `comex registered inventory ${monthYear.toLowerCase()}`,
+    // Long-tail keywords
+    'comex silver warehouse stocks registered eligible',
+    'cme silver inventory',
+    'cme comex silver warehouse stocks',
+    'comex silver inventory levels',
+    'comex silver inventory chart',
+    'total comex silver inventory',
+    'current comex silver registered inventory',
+    'latest comex silver registered inventory',
+    // Broader terms
+    'precious metals inventory',
+    'gold warehouse stocks',
+    'silver warehouse stocks',
+    'CME Group warehouse data',
+    'registered vs eligible inventory',
     'COMEX delivery notices',
-    'precious metals supply',
-    'gold supply shortage',
     'silver supply shortage',
-    'metals dashboard',
-    'commodity prices',
-    'gold market',
-    'silver market',
+    'gold supply analysis',
+    'metals market data',
+    'commodity inventory tracking',
   ],
-  authors: [{ name: 'Metal Stats' }],
-  creator: 'Metal Stats',
-  publisher: 'Metal Stats',
+  authors: [{ name: 'Heavy Metal Stats' }],
+  creator: 'Heavy Metal Stats',
+  publisher: 'Heavy Metal Stats',
   formatDetection: {
     email: false,
     address: false,
@@ -86,27 +92,18 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://heavymetalstats.com',
-    title: 'COMEX Metals Inventory Tracker | Real-Time Gold & Silver Supply Analysis',
-    description: 'Track real-time COMEX precious metals warehouse inventory levels. Monitor gold, silver, copper, and aluminum stocks with live supply coverage ratios and demand trends.',
-    siteName: 'Metal Stats - COMEX Metals Dashboard',
-    images: [
-      {
-        url: '/icon.svg',
-        width: 64,
-        height: 64,
-        alt: 'COMEX Metals Inventory Tracker',
-      },
-    ],
+    title: `COMEX Silver & Gold Inventory - Live Registered Stock Data ${monthYear}`,
+    description: `Free real-time COMEX warehouse inventory tracker. Check silver, gold, copper registered & eligible stocks updated daily. Coverage ratios, delivery trends & CME data for ${monthYear}.`,
+    siteName: 'Heavy Metal Stats - COMEX Inventory Tracker',
   },
   twitter: {
-    card: 'summary',
-    title: 'COMEX Metals Inventory Tracker | Real-Time Supply Analysis',
-    description: 'Track real-time COMEX precious metals warehouse inventory. Monitor gold, silver, copper & aluminum stocks with live supply coverage ratios.',
-    images: ['/icon.svg'],
+    card: 'summary_large_image',
+    title: `COMEX Silver & Gold Inventory Today - ${monthYear} Data`,
+    description: 'Free live COMEX warehouse stocks. Track registered silver, gold, copper inventory levels updated daily from CME Group.',
   },
   category: 'finance',
   verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification code
+    google: 'your-google-verification-code',
   },
   other: {
     'google-adsense-account': 'ca-pub-1319414449875714',
@@ -119,11 +116,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Get the last updated timestamp from data.json metadata
-  let lastUpdatedText = 'January 31, 2026'; // Default fallback
+  let lastUpdatedText = 'February 2, 2026'; // Updated fallback
+  let lastUpdatedISO = '2026-02-02';
   
   try {
     const metadata = (dataJson as { _metadata?: { last_updated?: string } })._metadata;
     if (metadata?.last_updated) {
+      lastUpdatedISO = metadata.last_updated;
       // Use the date string directly if it's already formatted, otherwise parse it
       if (metadata.last_updated.includes(',')) {
         lastUpdatedText = metadata.last_updated;
@@ -140,9 +139,140 @@ export default async function RootLayout({
     console.error('Failed to parse last updated date:', error);
   }
 
+  // Dynamic structured data with current date
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebApplication',
+        '@id': 'https://heavymetalstats.com/#webapp',
+        name: 'COMEX Metals Inventory Tracker',
+        description: 'Real-time COMEX precious metals warehouse inventory tracking including gold, silver, copper registered and eligible stocks.',
+        url: 'https://heavymetalstats.com',
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://heavymetalstats.com/#website',
+        url: 'https://heavymetalstats.com',
+        name: 'Heavy Metal Stats - COMEX Inventory Tracker',
+        description: 'Track real-time COMEX precious metals warehouse inventory levels with supply coverage ratios and demand trends.',
+        publisher: {
+          '@type': 'Organization',
+          name: 'Heavy Metal Stats',
+          url: 'https://heavymetalstats.com',
+        },
+      },
+      {
+        '@type': 'Dataset',
+        '@id': 'https://heavymetalstats.com/#dataset',
+        name: 'COMEX Precious Metals Warehouse Inventory Data',
+        description: 'Daily updated COMEX warehouse stocks including registered and eligible inventory for gold, silver, copper, platinum, palladium, and aluminum.',
+        url: 'https://heavymetalstats.com',
+        license: 'https://heavymetalstats.com/terms',
+        creator: {
+          '@type': 'Organization',
+          name: 'CME Group',
+          url: 'https://www.cmegroup.com',
+        },
+        temporalCoverage: `2025-01-01/${lastUpdatedISO}`,
+        dateModified: lastUpdatedISO,
+        keywords: [
+          'COMEX inventory',
+          'gold warehouse stocks',
+          'silver registered inventory',
+          'precious metals supply',
+          'CME Group data',
+        ],
+        variableMeasured: [
+          {
+            '@type': 'PropertyValue',
+            name: 'Registered Gold Inventory',
+            unitText: 'troy ounces',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Registered Silver Inventory',
+            unitText: 'troy ounces',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Eligible Gold Inventory',
+            unitText: 'troy ounces',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Eligible Silver Inventory',
+            unitText: 'troy ounces',
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://heavymetalstats.com/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What is COMEX registered inventory?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'COMEX registered inventory is metal that has been certified by an approved assayer and is available for delivery against futures contracts. It represents the immediately deliverable supply.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is the difference between registered and eligible inventory?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Registered inventory can be delivered against futures contracts immediately. Eligible inventory meets exchange standards but is not currently available for delivery - it would need to be converted to registered status first.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How often is COMEX inventory data updated?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'CME Group releases warehouse stock data daily after market close. Our site updates this data nightly at 9:30 PM EST, with a one-day delay due to the CME release schedule.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is coverage ratio?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Coverage ratio measures how many months of average demand can be met by current registered inventory. A ratio of 5x means there is enough registered metal to cover 5 months of typical delivery demand.',
+            },
+          },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://heavymetalstats.com/#breadcrumb',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://heavymetalstats.com',
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Canonical URL - consolidate www and non-www */}
+        <link rel="canonical" href="https://heavymetalstats.com" />
+        
         {/* Google AdSense */}
         <Script
           async
@@ -175,60 +305,7 @@ export default async function RootLayout({
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  '@context': 'https://schema.org',
-                  '@graph': [
-                    {
-                      '@type': 'WebApplication',
-                      '@id': 'https://heavymetalstats.com/#webapp',
-                      name: 'COMEX Metals Inventory Tracker',
-                      description: 'Real-time supply and demand tracking for COMEX precious metals warehouse inventory including gold, silver, copper, and aluminum.',
-                      url: 'https://heavymetalstats.com',
-                      applicationCategory: 'FinanceApplication',
-                      operatingSystem: 'All',
-                      browserRequirements: 'Requires JavaScript',
-                      offers: {
-                        '@type': 'Offer',
-                        price: '0',
-                        priceCurrency: 'USD',
-                      },
-                    },
-                    {
-                      '@type': 'WebSite',
-                      '@id': 'https://heavymetalstats.com/#website',
-                      url: 'https://heavymetalstats.com',
-                      name: 'Metal Stats - COMEX Metals Dashboard',
-                      description: 'Track real-time COMEX precious metals warehouse inventory levels with supply coverage ratios and demand trends.',
-                      publisher: {
-                        '@type': 'Organization',
-                        name: 'Metal Stats',
-                      },
-                    },
-                    {
-                      '@type': 'FinancialProduct',
-                      '@id': 'https://heavymetalstats.com/#service',
-                      name: 'COMEX Metals Data Tracker',
-                      description: 'Free real-time tracking of COMEX warehouse inventory for gold, silver, copper, and aluminum with CME Group data.',
-                      provider: {
-                        '@type': 'Organization',
-                        name: 'Metal Stats',
-                      },
-                      category: 'Financial Data Service',
-                    },
-                    {
-                      '@type': 'BreadcrumbList',
-                      '@id': 'https://heavymetalstats.com/#breadcrumb',
-                      itemListElement: [
-                        {
-                          '@type': 'ListItem',
-                          position: 1,
-                          name: 'Home',
-                          item: 'https://heavymetalstats.com',
-                        },
-                      ],
-                    },
-                  ],
-                }),
+                __html: JSON.stringify(structuredData),
               }}
             />
           </div>

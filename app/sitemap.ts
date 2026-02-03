@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next';
 
 const baseUrl = 'https://heavymetalstats.com';
 
-// Static page last modified dates (update these when you modify pages)
-const STATIC_PAGES_LAST_MODIFIED = '2026-01-22';
+// Get today's date for dynamic lastModified
+const today = new Date().toISOString().split('T')[0];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Main pages with dynamic data (updates daily via GitHub Actions)
@@ -16,13 +16,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Informational pages (semi-static)
+  // Educational/informational pages
   const infoPages: MetadataRoute.Sitemap = [
     {
+      url: `${baseUrl}/learn`,
+      lastModified: new Date('2026-01-25'),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/api-info`,
-      lastModified: new Date(STATIC_PAGES_LAST_MODIFIED),
+      lastModified: new Date('2026-01-22'),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
   ];
 
@@ -30,15 +36,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const legalPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/privacy`,
-      lastModified: new Date(STATIC_PAGES_LAST_MODIFIED),
+      lastModified: new Date('2026-01-22'),
       changeFrequency: 'yearly',
-      priority: 0.5,
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified: new Date(STATIC_PAGES_LAST_MODIFIED),
+      lastModified: new Date('2026-01-22'),
       changeFrequency: 'yearly',
-      priority: 0.5,
+      priority: 0.3,
     },
   ];
 
