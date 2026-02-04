@@ -22,11 +22,6 @@ const BulletinDashboard = dynamic(() => import('./BulletinDashboard'), {
   loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
 });
 
-const VolumeOIChart = dynamic(() => import('./VolumeOIChart'), {
-  ssr: false,
-  loading: () => <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
-});
-
 interface BulletinData {
   bulletin_number: number;
   date: string;
@@ -413,14 +408,6 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {activeTab === 'bulletin' && bulletinData && (
         <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-32 md:pb-48">
           <BulletinDashboard data={bulletinData} volumeSummary={volumeSummaryData} />
-          
-          {/* Spacer between bulletin dashboard and volume chart */}
-          <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
-
-          {/* Volume & OI Chart */}
-          <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-sm">
-            <VolumeOIChart />
-          </div>
         </section>
       )}
 

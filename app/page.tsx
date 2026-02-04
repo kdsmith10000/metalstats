@@ -13,7 +13,7 @@ export const revalidate = 0;
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
-  let lastUpdatedText = 'February 2, 2026'; // Default fallback
+  let lastUpdatedText = 'February 3, 2026'; // Default fallback
   
   if (isDatabaseAvailable()) {
     try {
@@ -27,7 +27,7 @@ export default async function Home() {
       }
       
       // Set the last updated date to when data was synced
-      lastUpdatedText = 'February 2, 2026';
+      lastUpdatedText = 'February 3, 2026';
     } catch (error) {
       // If database fails, use static JSON
       console.error('Failed to fetch from database:', error);

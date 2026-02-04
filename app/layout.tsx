@@ -116,8 +116,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Get the last updated timestamp from data.json metadata
-  let lastUpdatedText = 'February 2, 2026'; // Updated fallback
-  let lastUpdatedISO = '2026-02-02';
+  let lastUpdatedText = 'February 3, 2026'; // Updated fallback
+  let lastUpdatedISO = '2026-02-03';
   
   try {
     const metadata = (dataJson as { _metadata?: { last_updated?: string } })._metadata;

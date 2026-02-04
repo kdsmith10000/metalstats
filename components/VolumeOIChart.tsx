@@ -32,10 +32,9 @@ interface VolumeOIChartProps {
 }
 
 // Sample data for demo (when no historical data available)
-// Updated: Feb 2, 2026 (Bulletin #21) - Gold Futures (GC)
+// Updated: Feb 3, 2026 (Bulletin #22) - Gold Futures (GC)
 // Settlement prices reflect April 2026 contract (most active)
 const sampleData: HistoricalDataPoint[] = [
-  { date: '2026-01-15', volume: 318542, openInterest: 502831, settle: 4892.40, oiChange: 5234 },
   { date: '2026-01-16', volume: 425618, openInterest: 508942, settle: 4915.80, oiChange: 6111 },
   { date: '2026-01-17', volume: 389127, openInterest: 515673, settle: 4932.50, oiChange: 6731 },
   { date: '2026-01-21', volume: 456923, openInterest: 528415, settle: 4968.20, oiChange: 12742 },
@@ -47,6 +46,7 @@ const sampleData: HistoricalDataPoint[] = [
   { date: '2026-01-29', volume: 547891, openInterest: 492867, settle: 4838.50, oiChange: -25367 },
   { date: '2026-01-30', volume: 585928, openInterest: 428864, settle: 4745.10, oiChange: -64003 },
   { date: '2026-02-02', volume: 447704, openInterest: 415310, settle: 4652.60, oiChange: -13554 },
+  { date: '2026-02-03', volume: 287492, openInterest: 411011, settle: 4935.00, oiChange: -3765 },
 ];
 
 export default function VolumeOIChart({ 

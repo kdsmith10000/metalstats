@@ -785,10 +785,10 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
             </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {[
-                { label: 'Gold APR26', value: '3,747' },
-                { label: 'Gold FEB26', value: '2,715' },
-                { label: 'Silver MAR26', value: '3,455' },
-                { label: 'Copper MAR26', value: '3,226' }
+                { label: 'Gold FEB26', value: '5,818' },
+                { label: 'Gold APR26', value: '648' },
+                { label: 'Silver MAR26', value: '1,021' },
+                { label: 'Copper MAR26', value: '604' }
               ].map((item, i) => (
                 <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
                   <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{item.label}</p>
