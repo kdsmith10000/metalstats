@@ -1,16 +1,13 @@
 import { neon } from '@neondatabase/serverless';
 import { NextResponse } from 'next/server';
 
-interface BulletinRow {
-  date: string;
+interface OIRow {
+  report_date: string;
   symbol: string;
-  product_name: string;
+  open_interest: number | string;
+  oi_change: number | string;
   total_volume: number | string;
-  total_open_interest: number | string;
-  total_oi_change: number | string;
-  front_month: string;
-  front_month_settle: number | string;
-  front_month_change: number | string;
+  settlement_price: number | string | null;
 }
 
 interface ProductData {
@@ -23,6 +20,23 @@ interface ProductData {
   frontMonthSettle: number;
   frontMonthChange: number;
 }
+
+// Product name mapping
+const productNames: Record<string, string> = {
+  'GC': 'COMEX GOLD FUTURES',
+  'SI': 'COMEX SILVER FUTURES',
+  'HG': 'COMEX COPPER FUTURES',
+  'PL': 'NYMEX PLATINUM FUTURES',
+  'PA': 'NYMEX PALLADIUM FUTURES',
+  'MGC': 'MICRO GOLD FUTURES',
+  'SIL': 'MICRO SILVER FUTURES',
+  'MHG': 'COMEX MICRO COPPER FUTURES',
+  '1OZ': '1 OUNCE GOLD FUTURES',
+  'QO': 'E-MINI GOLD FUTURES',
+  'QI': 'E-MINI SILVER FUTURES',
+  'ALI': 'COMEX PHYSICAL ALUMINUM FUTURES',
+  'QC': 'COMEX E-MINI COPPER FUTURES',
+};
 
 function isDatabaseConfigured(): boolean {
   return !!process.env.DATABASE_URL;
@@ -39,7 +53,8 @@ function getDb() {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// GET: Retrieve previous day's bulletin data (for comparison with current)
+// GET: Retrieve previous day's OI data (for comparison with current)
+// Uses open_interest_snapshots table which has accurate data from volume_summary
 export async function GET() {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
@@ -51,11 +66,11 @@ export async function GET() {
   try {
     const sql = getDb();
 
-    // Get the two most recent bulletin dates
+    // Get the two most recent dates from open_interest_snapshots (more accurate data)
     const datesResult = await sql`
-      SELECT DISTINCT date
-      FROM bulletin_snapshots
-      ORDER BY date DESC
+      SELECT DISTINCT report_date
+      FROM open_interest_snapshots
+      ORDER BY report_date DESC
       LIMIT 2
     `;
 
@@ -67,71 +82,65 @@ export async function GET() {
     }
 
     // Convert dates to ISO string format for consistent handling
-    const latestDate = datesResult[0].date instanceof Date 
-      ? datesResult[0].date.toISOString().split('T')[0]
-      : String(datesResult[0].date);
-    const previousDate = datesResult[1].date instanceof Date
-      ? datesResult[1].date.toISOString().split('T')[0]
-      : String(datesResult[1].date);
+    const latestDate = datesResult[0].report_date instanceof Date 
+      ? datesResult[0].report_date.toISOString().split('T')[0]
+      : String(datesResult[0].report_date);
+    const previousDate = datesResult[1].report_date instanceof Date
+      ? datesResult[1].report_date.toISOString().split('T')[0]
+      : String(datesResult[1].report_date);
 
-    // Fetch all products for the previous date
+    // Fetch all products for the previous date from open_interest_snapshots
     const previousResult = await sql`
       SELECT 
-        date,
+        report_date,
         symbol,
-        product_name,
+        open_interest,
+        oi_change,
         total_volume,
-        total_open_interest,
-        total_oi_change,
-        front_month,
-        front_month_settle,
-        front_month_change
-      FROM bulletin_snapshots
-      WHERE date = ${previousDate}
+        settlement_price
+      FROM open_interest_snapshots
+      WHERE report_date = ${previousDate}
       ORDER BY symbol
     `;
 
     // Also fetch current data for comparison
     const currentResult = await sql`
       SELECT 
-        date,
+        report_date,
         symbol,
-        product_name,
+        open_interest,
+        oi_change,
         total_volume,
-        total_open_interest,
-        total_oi_change,
-        front_month,
-        front_month_settle,
-        front_month_change
-      FROM bulletin_snapshots
-      WHERE date = ${latestDate}
+        settlement_price
+      FROM open_interest_snapshots
+      WHERE report_date = ${latestDate}
       ORDER BY symbol
     `;
 
-    const previousProducts = (previousResult as BulletinRow[]).reduce((acc: Record<string, ProductData>, row) => {
+    const previousProducts = (previousResult as OIRow[]).reduce((acc: Record<string, ProductData>, row) => {
       acc[row.symbol] = {
         symbol: row.symbol,
-        name: row.product_name,
+        name: productNames[row.symbol] || row.symbol,
         totalVolume: parseInt(String(row.total_volume)) || 0,
-        totalOpenInterest: parseInt(String(row.total_open_interest)) || 0,
-        totalOiChange: parseInt(String(row.total_oi_change)) || 0,
-        frontMonth: row.front_month,
-        frontMonthSettle: parseFloat(String(row.front_month_settle)) || 0,
-        frontMonthChange: parseFloat(String(row.front_month_change)) || 0,
+        totalOpenInterest: parseInt(String(row.open_interest)) || 0,
+        totalOiChange: parseInt(String(row.oi_change)) || 0,
+        frontMonth: '',
+        frontMonthSettle: parseFloat(String(row.settlement_price)) || 0,
+        frontMonthChange: 0,
       };
       return acc;
     }, {});
 
-    const currentProducts = (currentResult as BulletinRow[]).reduce((acc: Record<string, ProductData>, row) => {
+    const currentProducts = (currentResult as OIRow[]).reduce((acc: Record<string, ProductData>, row) => {
       acc[row.symbol] = {
         symbol: row.symbol,
-        name: row.product_name,
+        name: productNames[row.symbol] || row.symbol,
         totalVolume: parseInt(String(row.total_volume)) || 0,
-        totalOpenInterest: parseInt(String(row.total_open_interest)) || 0,
-        totalOiChange: parseInt(String(row.total_oi_change)) || 0,
-        frontMonth: row.front_month,
-        frontMonthSettle: parseFloat(String(row.front_month_settle)) || 0,
-        frontMonthChange: parseFloat(String(row.front_month_change)) || 0,
+        totalOpenInterest: parseInt(String(row.open_interest)) || 0,
+        totalOiChange: parseInt(String(row.oi_change)) || 0,
+        frontMonth: '',
+        frontMonthSettle: parseFloat(String(row.settlement_price)) || 0,
+        frontMonthChange: 0,
       };
       return acc;
     }, {});
@@ -144,9 +153,9 @@ export async function GET() {
     });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('Error fetching previous bulletin data:', error);
+    console.error('Error fetching previous OI data:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch previous bulletin data', details: errorMessage },
+      { error: 'Failed to fetch previous OI data', details: errorMessage },
       { status: 500 }
     );
   }
