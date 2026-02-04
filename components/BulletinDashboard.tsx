@@ -599,29 +599,50 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
             </div>
             <div className="space-y-2 sm:space-y-4">
               {(() => {
-                const gc = data.products.find(p => p.symbol === 'GC');
-                const si = data.products.find(p => p.symbol === 'SI');
-                const hg = data.products.find(p => p.symbol === 'HG');
-                const pl = data.products.find(p => p.symbol === 'PL');
-                const pa = data.products.find(p => p.symbol === 'PA');
-                
                 const getIcon = (change: number) => change > 0 ? ArrowUpRight : change < 0 ? ArrowDownRight : Minus;
                 const getIconColor = (change: number) => change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
                 
-                const metals = [
-                  gc && { name: 'Gold', data: gc },
-                  si && { name: 'Silver', data: si },
-                  hg && { name: 'Copper', data: hg },
-                  pl && { name: 'Platinum', data: pl },
-                  pa && { name: 'Palladium', data: pa },
-                ].filter(Boolean) as Array<{ name: string; data: BulletinProduct }>;
+                // Use volumeSummary data when available (more reliable for OI)
+                // Fall back to bulletin data if volumeSummary is not available
+                const metalSymbols = ['GC', 'SI', 'HG', 'PL', 'PA'];
+                const metalNames: Record<string, string> = {
+                  'GC': 'Gold',
+                  'SI': 'Silver',
+                  'HG': 'Copper',
+                  'PL': 'Platinum',
+                  'PA': 'Palladium',
+                };
+                
+                const metals = metalSymbols.map(symbol => {
+                  // Prefer volumeSummary data for accurate OI values
+                  const vsProduct = volumeSummary?.products?.find(p => p.symbol === symbol);
+                  const bulletinProduct = data.products.find(p => p.symbol === symbol);
+                  
+                  if (vsProduct) {
+                    return {
+                      name: metalNames[symbol],
+                      openInterest: vsProduct.open_interest,
+                      oiChange: vsProduct.oi_change,
+                      volume: vsProduct.total_volume,
+                    };
+                  } else if (bulletinProduct) {
+                    return {
+                      name: metalNames[symbol],
+                      openInterest: bulletinProduct.total_open_interest,
+                      oiChange: bulletinProduct.total_oi_change,
+                      volume: bulletinProduct.total_volume,
+                    };
+                  }
+                  return null;
+                }).filter(Boolean) as Array<{ name: string; openInterest: number; oiChange: number; volume: number }>;
                 
                 return metals.map((metal, i) => {
-                  // Always use CME daily change for consistency with Key Takeaways
-                  const dailyChange = metal.data.total_oi_change;
+                  const dailyChange = metal.oiChange;
                   const Icon = getIcon(dailyChange);
-                  const changePercent = metal.data.total_open_interest > 0 
-                    ? ((dailyChange / metal.data.total_open_interest) * 100).toFixed(2)
+                  // Calculate percent change: change / (current OI - change) to get change relative to previous OI
+                  const previousOI = metal.openInterest - dailyChange;
+                  const changePercent = previousOI > 0 
+                    ? ((dailyChange / previousOI) * 100).toFixed(2)
                     : '0.00';
                   const isPositive = dailyChange > 0;
                   const isNegative = dailyChange < 0;
@@ -631,10 +652,10 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                           <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">{metal.name}</span>
-                          OI: {formatNumber(metal.data.total_open_interest)}
+                          OI: {formatNumber(metal.openInterest)}
                         </p>
                         <p className="text-xs text-slate-500 mt-0.5">
-                          OI chg: {isPositive ? '+' : ''}{formatNumber(dailyChange)} • Vol: {formatVolume(metal.data.total_volume)}
+                          OI chg: {isPositive ? '+' : ''}{formatNumber(dailyChange)} • Vol: {formatVolume(metal.volume)}
                         </p>
                       </div>
                       <div className={`flex-shrink-0 px-2 py-1 rounded-lg text-xs sm:text-sm font-bold tabular-nums ${
@@ -734,7 +755,7 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
             </div>
             <div className="space-y-2 sm:space-y-4">
               {(() => {
-                const getSignal = (change: number, volume: number) => {
+                const getSignal = (change: number) => {
                   if (change > 1000) return 'Strong accumulation';
                   if (change > 0) return 'New positions entering';
                   if (change < -1000) return 'Heavy liquidation';
@@ -751,17 +772,20 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
                 ];
                 
                 return metals.map((metal, i) => {
-                  const product = data.products.find(p => p.symbol === metal.symbol);
-                  if (!product) return null;
+                  // Prefer volumeSummary data for accurate OI change values
+                  const vsProduct = volumeSummary?.products?.find(p => p.symbol === metal.symbol);
+                  const bulletinProduct = data.products.find(p => p.symbol === metal.symbol);
                   
-                  const change = product.total_oi_change;
+                  const change = vsProduct?.oi_change ?? bulletinProduct?.total_oi_change;
+                  if (change === undefined) return null;
+                  
                   const color = change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
                   
                   return (
                     <div key={i} className="flex items-center justify-between p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
                       <div>
                         <p className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs mb-0.5 sm:mb-1">{metal.name}</p>
-                        <p className="text-xs sm:text-sm text-slate-500 font-medium">{getSignal(change, product.total_volume)}</p>
+                        <p className="text-xs sm:text-sm text-slate-500 font-medium">{getSignal(change)}</p>
                       </div>
                       <div className={`text-base sm:text-lg md:text-xl font-black tabular-nums ${color}`}>
                         {change > 0 ? '+' : ''}{formatNumber(change)}
@@ -955,45 +979,66 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               {(() => {
-                const gc = data.products.find(p => p.symbol === 'GC');
-                const si = data.products.find(p => p.symbol === 'SI');
-                const hg = data.products.find(p => p.symbol === 'HG');
-                const pl = data.products.find(p => p.symbol === 'PL');
-                const pa = data.products.find(p => p.symbol === 'PA');
+                // Helper to get data from volumeSummary (preferred) or bulletin (fallback)
+                const getMetalData = (symbol: string) => {
+                  const vsProduct = volumeSummary?.products?.find(p => p.symbol === symbol);
+                  const bulletinProduct = data.products.find(p => p.symbol === symbol);
+                  
+                  if (vsProduct) {
+                    return {
+                      volume: vsProduct.total_volume,
+                      openInterest: vsProduct.open_interest,
+                      oiChange: vsProduct.oi_change,
+                    };
+                  } else if (bulletinProduct) {
+                    return {
+                      volume: bulletinProduct.total_volume,
+                      openInterest: bulletinProduct.total_open_interest,
+                      oiChange: bulletinProduct.total_oi_change,
+                    };
+                  }
+                  return null;
+                };
+                
+                const gc = getMetalData('GC');
+                const si = getMetalData('SI');
+                const hg = getMetalData('HG');
+                const pl = getMetalData('PL');
+                const pa = getMetalData('PA');
                 
                 const takeaways = [];
                 
                 if (gc) {
-                  const signal = gc.total_oi_change > 0 ? 'bullish accumulation' : gc.total_oi_change < 0 ? 'profit taking' : 'consolidation';
+                  const signal = gc.oiChange > 0 ? 'bullish accumulation' : gc.oiChange < 0 ? 'profit taking' : 'consolidation';
                   takeaways.push({
                     title: "Gold Activity",
-                    text: `${formatVolume(gc.total_volume)} contracts traded with OI ${gc.total_oi_change > 0 ? 'up' : gc.total_oi_change < 0 ? 'down' : 'unchanged'} ${formatNumber(Math.abs(gc.total_oi_change))} indicating ${signal}.`,
-                    color: gc.total_oi_change > 0 ? "text-emerald-500" : gc.total_oi_change < 0 ? "text-red-500" : "text-amber-500"
+                    text: `${formatVolume(gc.volume)} contracts traded with OI ${gc.oiChange > 0 ? 'up' : gc.oiChange < 0 ? 'down' : 'unchanged'} ${formatNumber(Math.abs(gc.oiChange))} indicating ${signal}.`,
+                    color: gc.oiChange > 0 ? "text-emerald-500" : gc.oiChange < 0 ? "text-red-500" : "text-amber-500"
                   });
                 }
                 
                 if (si) {
                   takeaways.push({
                     title: "Silver Flow",
-                    text: `${formatVolume(si.total_volume)} volume with ${si.total_oi_change > 0 ? '+' : ''}${formatNumber(si.total_oi_change)} OI change suggests ${si.total_volume > 100000 ? 'significant institutional' : 'moderate'} activity.`,
+                    text: `${formatVolume(si.volume)} volume with ${si.oiChange > 0 ? '+' : ''}${formatNumber(si.oiChange)} OI change suggests ${si.volume > 100000 ? 'significant institutional' : 'moderate'} activity.`,
                     color: "text-slate-400"
                   });
                 }
                 
                 if (hg) {
-                  const copperSignal = hg.total_oi_change > 0 ? 'growing interest in industrial metals' : 'reduced industrial hedging';
+                  const copperSignal = hg.oiChange > 0 ? 'growing interest in industrial metals' : 'reduced industrial hedging';
                   takeaways.push({
                     title: "Copper Positioning",
-                    text: `OI at ${formatNumber(hg.total_open_interest)} with ${hg.total_oi_change > 0 ? '+' : ''}${formatNumber(hg.total_oi_change)} change signals ${copperSignal}.`,
+                    text: `OI at ${formatNumber(hg.openInterest)} with ${hg.oiChange > 0 ? '+' : ''}${formatNumber(hg.oiChange)} change signals ${copperSignal}.`,
                     color: "text-orange-500"
                   });
                 }
                 
                 if (pl && pa) {
-                  const pgmSignal = (pl.total_oi_change + pa.total_oi_change) > 0 ? 'net accumulation' : 'net liquidation';
+                  const pgmSignal = (pl.oiChange + pa.oiChange) > 0 ? 'net accumulation' : 'net liquidation';
                   takeaways.push({
                     title: "PGM Complex",
-                    text: `Platinum (${pl.total_oi_change > 0 ? '+' : ''}${formatNumber(pl.total_oi_change)}) and Palladium (${pa.total_oi_change > 0 ? '+' : ''}${formatNumber(pa.total_oi_change)}) show ${pgmSignal} in the auto-catalyst sector.`,
+                    text: `Platinum (${pl.oiChange > 0 ? '+' : ''}${formatNumber(pl.oiChange)}) and Palladium (${pa.oiChange > 0 ? '+' : ''}${formatNumber(pa.oiChange)}) show ${pgmSignal} in the auto-catalyst sector.`,
                     color: "text-violet-500"
                   });
                 }
