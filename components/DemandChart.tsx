@@ -47,7 +47,7 @@ const monthlyDeliveryData = {
   ],
   aluminum: [
     { month: 'Jan', y2025: 209, y2026: 156 },  // Jan 2026 final from YTD report
-    { month: 'Feb', y2025: 98, y2026: 4 },  // MTD from Feb 4, 2026 delivery report (no aluminum delivery)
+    { month: 'Feb', y2025: 98, y2026: 69 },  // MTD from YTD report (Feb 2: 4 + Feb 3: 65 = 69)
     { month: 'Mar', y2025: 159, y2026: null },
     { month: 'Apr', y2025: 300, y2026: null },
     { month: 'May', y2025: 169, y2026: null },
@@ -108,11 +108,11 @@ const dailyDeliveryData = {
     { day: 'Jan 24', contracts: 18 },
     { day: 'Jan 27', contracts: 12 },
     { day: 'Jan 28', contracts: 18 },
-    { day: 'Jan 29', contracts: 0 },
-    { day: 'Jan 30', contracts: 0 },
-    { day: 'Feb 2', contracts: 4 },
-    { day: 'Feb 3', contracts: 0 },
-    { day: 'Feb 4', contracts: 0 },  // No aluminum delivery on Feb 4
+    { day: 'Jan 29', contracts: 0 },   // No aluminum delivery (verified from MTD report)
+    { day: 'Jan 30', contracts: 0 },   // No aluminum delivery (verified from MTD report)
+    { day: 'Feb 2', contracts: 4 },    // From MTD report
+    { day: 'Feb 3', contracts: 65 },   // From MTD report (was incorrectly 0)
+    { day: 'Feb 4', contracts: 0 },    // No aluminum delivery on Feb 4 (MTD stayed at 69)
   ],
   copper: [
     { day: 'Jan 22', contracts: 356 },
@@ -147,7 +147,7 @@ const monthlyStats = {
   },
   aluminum: {
     total2025: 1724,
-    current2026: 4,  // MTD from Feb 4 delivery report (no new delivery)
+    current2026: 69,  // MTD from YTD report (Feb 2: 4 + Feb 3: 65 = 69)
     previous2025: 98,
     label: 'Feb 2026',
     previousLabel: 'vs Feb 2025',
@@ -180,8 +180,8 @@ const dailyStats = {
   },
   aluminum: {
     todayContracts: 0,     // Feb 4 delivery report (no aluminum)
-    weekTotal: 4,          // MTD from report
-    avgDaily: 1,
+    weekTotal: 69,         // MTD from YTD report (4+65=69)
+    avgDaily: 14,          // 69/5 days
     label: 'Today',
     previousLabel: 'vs 5-day avg',
   },
