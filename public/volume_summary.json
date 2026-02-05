@@ -134,6 +134,30 @@
       "yoy_open_interest": 594
     }
   ],
-  "totals": {},
+  "totals": {
+    "futures_options": {
+      "globex_volume": 1359335,
+      "pnt_volume": 0,
+      "volume": 1558203,
+      "open_interest": 696557,
+      "oi_change": 6347,
+      "yoy_volume": 468154,
+      "yoy_open_interest": 584268
+    },
+    "futures_only": {
+      "volume": 1558203,
+      "open_interest": 696557,
+      "oi_change": 6347,
+      "yoy_volume": 468154,
+      "yoy_open_interest": 584268
+    },
+    "options_only": {
+      "volume": 0,
+      "open_interest": 0,
+      "oi_change": 0,
+      "yoy_volume": 0,
+      "yoy_open_interest": 0
+    }
+  },
   "last_updated": "2026-02-05T09:48:51.693243"
 }
