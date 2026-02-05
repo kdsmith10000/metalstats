@@ -359,6 +359,17 @@
       "total": 208455.89200000002
     }
   },
+  "Platinum_Palladium": {
+    "metal": "Platinum & Palladium",
+    "report_date": "2/4/2026",
+    "activity_date": "2/3/2026",
+    "depositories": [],
+    "totals": {
+      "registered": 474955.586,
+      "eligible": 395585.728,
+      "total": 870541.314
+    }
+  },
   "Aluminum": {
     "metal": "Aluminum",
     "report_date": "2/4/2026",
