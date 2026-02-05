@@ -401,7 +401,7 @@ def parse_volume_summary_pdf(pdf_path: str) -> dict:
     return result
 
 
-def sync_to_database(bulletin_data: dict, delivery_data: dict, database_url: str):
+def sync_to_database(bulletin_data: dict, delivery_data: dict, volume_data: dict, database_url: str):
     """Sync data to database."""
     if not HAS_PSYCOPG2 or not database_url:
         print("[INFO] Database sync skipped")
@@ -445,6 +445,27 @@ def sync_to_database(bulletin_data: dict, delivery_data: dict, database_url: str
             )
         """)
         
+        # Create open_interest_snapshots table (used for previous day comparison in Market Activity)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS open_interest_snapshots (
+                id SERIAL PRIMARY KEY,
+                symbol VARCHAR(20) NOT NULL,
+                report_date DATE NOT NULL,
+                open_interest BIGINT NOT NULL DEFAULT 0,
+                oi_change INTEGER NOT NULL DEFAULT 0,
+                total_volume BIGINT NOT NULL DEFAULT 0,
+                settlement_price DECIMAL(15, 6),
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(symbol, report_date)
+            )
+        """)
+        
+        # Create index for faster queries on open_interest_snapshots
+        cur.execute("""
+            CREATE INDEX IF NOT EXISTS idx_oi_snapshots_symbol_date 
+            ON open_interest_snapshots(symbol, report_date DESC)
+        """)
+        
         conn.commit()
         
         # Sync bulletin
@@ -475,7 +496,7 @@ def sync_to_database(bulletin_data: dict, delivery_data: dict, database_url: str
                     front['change'] if front else None,
                 ))
                 saved += 1
-            print(f"[OK] Synced {saved} bulletin products")
+            print(f"[OK] Synced {saved} bulletin products to bulletin_snapshots")
         
         # Sync delivery
         if delivery_data and delivery_data.get('parsed_date'):
@@ -502,7 +523,29 @@ def sync_to_database(bulletin_data: dict, delivery_data: dict, database_url: str
                     delivery['month_to_date'],
                 ))
                 saved += 1
-            print(f"[OK] Synced {saved} delivery records")
+            print(f"[OK] Synced {saved} delivery records to delivery_snapshots")
+        
+        # Sync volume summary to open_interest_snapshots (critical for Market Activity comparison)
+        if volume_data and volume_data.get('parsed_date'):
+            parsed_date = volume_data['parsed_date']
+            saved = 0
+            for product in volume_data.get('products', []):
+                cur.execute("""
+                    INSERT INTO open_interest_snapshots (
+                        symbol, report_date, open_interest, oi_change, total_volume
+                    ) VALUES (%s, %s::date, %s, %s, %s)
+                    ON CONFLICT (symbol, report_date) DO UPDATE SET
+                        open_interest = EXCLUDED.open_interest,
+                        oi_change = EXCLUDED.oi_change,
+                        total_volume = EXCLUDED.total_volume,
+                        created_at = CURRENT_TIMESTAMP
+                """, (
+                    product['symbol'], parsed_date,
+                    product['open_interest'], product['oi_change'],
+                    product['total_volume'],
+                ))
+                saved += 1
+            print(f"[OK] Synced {saved} products to open_interest_snapshots")
         
         conn.commit()
         cur.close()
@@ -566,7 +609,7 @@ def main():
     # 4. Sync to database
     if database_url:
         print("[INFO] Syncing to database...")
-        sync_to_database(bulletin_data, delivery_data, database_url)
+        sync_to_database(bulletin_data, delivery_data, volume_data, database_url)
     
     print()
     print("=" * 70)

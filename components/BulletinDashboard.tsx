@@ -797,22 +797,22 @@ export default function BulletinDashboard({ data, volumeSummary }: BulletinDashb
             </div>
           </div>
 
-          {/* EFP Activity */}
+          {/* EFP Activity - Updated Feb 4, 2026 */}
           <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
-                Physical Delivery (EFP)
+                Physical Delivery (MTD)
               </h4>
             </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {[
-                { label: 'Gold FEB26', value: '5,818' },
-                { label: 'Gold APR26', value: '648' },
-                { label: 'Silver MAR26', value: '1,021' },
-                { label: 'Copper MAR26', value: '604' }
+                { label: 'Gold FEB26', value: '32,004' },
+                { label: 'Silver FEB26', value: '3,563' },
+                { label: 'Copper FEB26', value: '5,889' },
+                { label: 'Platinum FEB26', value: '427' }
               ].map((item, i) => (
                 <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
                   <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{item.label}</p>
