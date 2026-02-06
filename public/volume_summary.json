@@ -1,163 +1,163 @@
 {
-  "bulletin_number": 23,
-  "date": "wed, feb 04, 2026",
-  "parsed_date": "2026-02-04",
+  "bulletin_number": 24,
+  "date": "thu, feb 05, 2026",
+  "parsed_date": "2026-02-05",
   "products": [
     {
       "symbol": "MGC",
       "name": "MICRO GOLD FUTURES",
-      "globex_volume": 829198,
-      "total_volume": 829198,
-      "open_interest": 55407,
-      "oi_change": 1813,
-      "yoy_volume": 130490,
-      "yoy_open_interest": 32243
+      "globex_volume": 905204,
+      "total_volume": 905204,
+      "open_interest": 58590,
+      "oi_change": 3195,
+      "yoy_volume": 125021,
+      "yoy_open_interest": 31216
     },
     {
       "symbol": "SIL",
       "name": "MICRO SILVER FUTURES",
-      "globex_volume": 248445,
-      "total_volume": 248445,
-      "open_interest": 32944,
-      "oi_change": 940,
-      "yoy_volume": 23081,
-      "yoy_open_interest": 10534
+      "globex_volume": 380211,
+      "total_volume": 380211,
+      "open_interest": 34830,
+      "oi_change": 1921,
+      "yoy_volume": 18900,
+      "yoy_open_interest": 10395
     },
     {
       "symbol": "GC",
       "name": "COMEX GOLD FUTURES",
-      "globex_volume": 829198,
-      "total_volume": 829198,
-      "open_interest": 55407,
-      "oi_change": 1813,
-      "yoy_volume": 130490,
-      "yoy_open_interest": 32243
+      "globex_volume": 264397,
+      "total_volume": 267752,
+      "open_interest": 402728,
+      "oi_change": -4915,
+      "yoy_volume": 185240,
+      "yoy_open_interest": 534442
     },
     {
       "symbol": "1OZ",
       "name": "1 OUNCE GOLD FUTURES",
-      "globex_volume": 177963,
-      "total_volume": 177963,
-      "open_interest": 18613,
-      "oi_change": 1882,
-      "yoy_volume": 5195,
-      "yoy_open_interest": 650
+      "globex_volume": 203580,
+      "total_volume": 203580,
+      "open_interest": 19093,
+      "oi_change": 439,
+      "yoy_volume": 4282,
+      "yoy_open_interest": 905
     },
     {
       "symbol": "SI",
       "name": "COMEX SILVER FUTURES",
-      "globex_volume": 754,
-      "total_volume": 139548,
-      "open_interest": 143203,
-      "oi_change": 23,
-      "yoy_volume": 77712,
-      "yoy_open_interest": 169366
+      "globex_volume": 206780,
+      "total_volume": 208656,
+      "open_interest": 137327,
+      "oi_change": -5903,
+      "yoy_volume": 61971,
+      "yoy_open_interest": 169421
     },
     {
       "symbol": "HG",
       "name": "COMEX COPPER FUTURES",
-      "globex_volume": 1326,
-      "total_volume": 84106,
-      "open_interest": 280256,
-      "oi_change": 1411,
-      "yoy_volume": 77582,
-      "yoy_open_interest": 239098
+      "globex_volume": 84226,
+      "total_volume": 85349,
+      "open_interest": 278836,
+      "oi_change": -1347,
+      "yoy_volume": 95734,
+      "yoy_open_interest": 241250
     },
     {
       "symbol": "MHG",
       "name": "COMEX MICRO COPPER FUTURES",
-      "globex_volume": 51962,
-      "total_volume": 51962,
-      "open_interest": 16512,
-      "oi_change": 1092,
-      "yoy_volume": 9093,
-      "yoy_open_interest": 4443
+      "globex_volume": 53658,
+      "total_volume": 53658,
+      "open_interest": 16550,
+      "oi_change": 39,
+      "yoy_volume": 13716,
+      "yoy_open_interest": 4485
     },
     {
       "symbol": "PL",
       "name": "NYMEX PLATINUM FUTURES",
-      "globex_volume": 440,
-      "total_volume": 19711,
-      "open_interest": 72816,
-      "oi_change": -774,
-      "yoy_volume": 26832,
-      "yoy_open_interest": 74887
+      "globex_volume": 35388,
+      "total_volume": 35676,
+      "open_interest": 71142,
+      "oi_change": -1594,
+      "yoy_volume": 24591,
+      "yoy_open_interest": 76767
     },
     {
       "symbol": "QO",
       "name": "E-MINI GOLD FUTURES",
-      "globex_volume": 15114,
-      "total_volume": 15114,
-      "open_interest": 6867,
-      "oi_change": 168,
-      "yoy_volume": 1168,
-      "yoy_open_interest": 1044
+      "globex_volume": 21667,
+      "total_volume": 21667,
+      "open_interest": 6499,
+      "oi_change": -365,
+      "yoy_volume": 1134,
+      "yoy_open_interest": 1056
     },
     {
       "symbol": "QI",
       "name": "E-MINI SILVER FUTURES",
-      "globex_volume": 4169,
-      "total_volume": 4169,
-      "open_interest": 1329,
-      "oi_change": 96,
-      "yoy_volume": 767,
-      "yoy_open_interest": 753
+      "globex_volume": 6040,
+      "total_volume": 6040,
+      "open_interest": 1452,
+      "oi_change": 124,
+      "yoy_volume": 519,
+      "yoy_open_interest": 728
     },
     {
       "symbol": "PA",
       "name": "NYMEX PALLADIUM FUTURES",
-      "globex_volume": 65,
-      "total_volume": 5989,
-      "open_interest": 17087,
-      "oi_change": -217,
-      "yoy_volume": 5973,
-      "yoy_open_interest": 17586
+      "globex_volume": 6980,
+      "total_volume": 7093,
+      "open_interest": 16831,
+      "oi_change": -256,
+      "yoy_volume": 5673,
+      "yoy_open_interest": 18227
     },
     {
       "symbol": "ALI",
       "name": "COMEX PHYSICAL ALUMINUM FUTURES",
-      "globex_volume": 503,
-      "total_volume": 503,
-      "open_interest": 2414,
-      "oi_change": -106,
-      "yoy_volume": 9276,
-      "yoy_open_interest": 1374
+      "globex_volume": 372,
+      "total_volume": 374,
+      "open_interest": 2412,
+      "oi_change": -2,
+      "yoy_volume": 4714,
+      "yoy_open_interest": 1338
     },
     {
       "symbol": "QC",
       "name": "COMEX E-MINI COPPER FUTURES",
-      "globex_volume": 362,
-      "total_volume": 362,
-      "open_interest": 623,
-      "oi_change": 19,
-      "yoy_volume": 568,
-      "yoy_open_interest": 594
+      "globex_volume": 405,
+      "total_volume": 405,
+      "open_interest": 605,
+      "oi_change": -18,
+      "yoy_volume": 453,
+      "yoy_open_interest": 508
     }
   ],
   "totals": {
     "futures_options": {
-      "globex_volume": 1359335,
-      "pnt_volume": 0,
-      "volume": 1558203,
-      "open_interest": 696557,
-      "oi_change": 6347,
-      "yoy_volume": 468154,
-      "yoy_open_interest": 584268
+      "globex_volume": 2303623,
+      "pnt_volume": 18313,
+      "volume": 2321936,
+      "open_interest": 2478267,
+      "oi_change": 11789,
+      "yoy_volume": 592709,
+      "yoy_open_interest": 1584206
     },
     "futures_only": {
-      "volume": 1558203,
-      "open_interest": 696557,
-      "oi_change": 6347,
-      "yoy_volume": 468154,
-      "yoy_open_interest": 584268
+      "volume": 2178862,
+      "open_interest": 1203308,
+      "oi_change": -8228,
+      "yoy_volume": 546910,
+      "yoy_open_interest": 1241658
     },
     "options_only": {
-      "volume": 0,
-      "open_interest": 0,
-      "oi_change": 0,
-      "yoy_volume": 0,
-      "yoy_open_interest": 0
+      "volume": 143074,
+      "open_interest": 1274959,
+      "oi_change": 20017,
+      "yoy_volume": 45799,
+      "yoy_open_interest": 342548
     }
   },
-  "last_updated": "2026-02-05T09:48:51.693243"
+  "last_updated": "2026-02-06T10:30:00.000000"
 }

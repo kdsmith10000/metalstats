@@ -29,13 +29,13 @@ const sql = neon(DATABASE_URL);
 // ============================================
 
 const METAL_CONFIGS = [
-  { key: 'Gold', futuresSymbol: 'GC', contractSize: 100, monthlyDemand: 1186200, unit: 'oz' },
-  { key: 'Silver', futuresSymbol: 'SI', contractSize: 5000, monthlyDemand: 49445000, unit: 'oz' },
-  { key: 'Copper', futuresSymbol: 'HG', contractSize: 12.5, monthlyDemand: 199988, unit: 'short tons' },
-  { key: 'Platinum', futuresSymbol: 'PL', contractSize: 50, monthlyDemand: 153400, unit: 'oz' },
-  { key: 'Palladium', futuresSymbol: 'PA', contractSize: 50, monthlyDemand: 12750, unit: 'oz' },
-  { key: 'Platinum_Palladium', futuresSymbol: 'PL+PA', contractSize: 50, monthlyDemand: 153400, unit: 'oz' },
-  { key: 'Aluminum', futuresSymbol: 'ALI', contractSize: 44, monthlyDemand: 6864, unit: 'metric tons' },
+  { key: 'Gold', futuresSymbol: 'GC', contractSize: 100, monthlyDemand: 3250200, unit: 'oz' },        // 32,502 contracts * 100 oz (Feb 5 MTD)
+  { key: 'Silver', futuresSymbol: 'SI', contractSize: 5000, monthlyDemand: 18720000, unit: 'oz' },    // 3,744 contracts * 5,000 oz (Feb 5 MTD)
+  { key: 'Copper', futuresSymbol: 'HG', contractSize: 12.5, monthlyDemand: 81238, unit: 'short tons' }, // 6,499 contracts * 12.5 ST (Feb 5 MTD)
+  { key: 'Platinum', futuresSymbol: 'PL', contractSize: 50, monthlyDemand: 22750, unit: 'oz' },       // 455 contracts * 50 oz (Feb 5 MTD)
+  { key: 'Palladium', futuresSymbol: 'PA', contractSize: 50, monthlyDemand: 4350, unit: 'oz' },       // 87 contracts * 50 oz (Feb 5 MTD)
+  { key: 'Platinum_Palladium', futuresSymbol: 'PL+PA', contractSize: 50, monthlyDemand: 27100, unit: 'oz' }, // 455+87=542 contracts * 50 oz
+  { key: 'Aluminum', futuresSymbol: 'ALI', contractSize: 44, monthlyDemand: 3212, unit: 'metric tons' }, // 73 contracts * 44 MT (Feb 5 MTD)
 ];
 
 // ============================================
