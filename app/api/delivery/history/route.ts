@@ -7,7 +7,7 @@ export const revalidate = 0;
 
 interface DeliveryRow {
   metal: string;
-  report_date: string;
+  report_date: string | Date;
   daily_issued: number | string;
   daily_stopped: number | string;
   month_to_date: number | string;
@@ -19,6 +19,22 @@ interface MonthlyAggRow {
   year: number;
   month: number;
   month_total: number | string;
+}
+
+// Safely convert any date value (Date object, ISO string, etc.) to YYYY-MM-DD
+function toDateString(val: unknown): string {
+  if (!val) return '';
+  if (val instanceof Date) return val.toISOString().split('T')[0];
+  const s = String(val);
+  // Already YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  // ISO datetime like "2026-02-05T00:00:00.000Z"
+  const isoMatch = s.match(/^(\d{4}-\d{2}-\d{2})T/);
+  if (isoMatch) return isoMatch[1];
+  // Try parsing as Date (handles "Thu Feb 05 2026 ..." etc.)
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
+  return s;
 }
 
 function isDatabaseConfigured(): boolean {
@@ -111,7 +127,7 @@ export async function GET(request: NextRequest) {
 
       const history = (result as DeliveryRow[]).map((row) => ({
         metal: row.metal,
-        date: String(row.report_date).split('T')[0],
+        date: toDateString(row.report_date),
         dailyIssued: parseInt(String(row.daily_issued)) || 0,
         dailyStopped: parseInt(String(row.daily_stopped)) || 0,
         monthToDate: parseInt(String(row.month_to_date)) || 0,

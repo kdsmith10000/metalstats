@@ -214,13 +214,23 @@ const metalLabels: Record<MetalType, string> = {
 // ============================================
 
 function normalizeDate(dateStr: string): string {
-  // Normalize "2026-02-05T00:00:00.000Z" or "2026-02-05" → "2026-02-05"
-  return dateStr.split('T')[0];
+  if (!dateStr) return '';
+  // Already YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  // ISO datetime like "2026-02-05T00:00:00.000Z"
+  const isoMatch = dateStr.match(/^(\d{4}-\d{2}-\d{2})T/);
+  if (isoMatch) return isoMatch[1];
+  // Long date string like "Thu Feb 05 2026 00:00:00 GMT..." — parse it
+  const d = new Date(dateStr);
+  if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
+  return dateStr;
 }
 
 function formatDateLabel(dateStr: string): string {
   const clean = normalizeDate(dateStr);
+  if (!clean || !/^\d{4}-\d{2}-\d{2}$/.test(clean)) return clean || '';
   const d = new Date(clean + 'T12:00:00'); // noon to avoid TZ issues
+  if (isNaN(d.getTime())) return clean;
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
@@ -511,9 +521,11 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
 
       if (cancelled) return;
 
-      // Sort daily data by dateKey
+      // Filter out invalid entries, sort by dateKey, keep last 15 days
       for (const m of metals) {
-        mergedDaily[m].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
+        mergedDaily[m] = mergedDaily[m]
+          .filter(d => d.dateKey && /^\d{4}-\d{2}-\d{2}$/.test(d.dateKey) && d.day && !d.day.includes('Invalid'))
+          .sort((a, b) => a.dateKey.localeCompare(b.dateKey));
         // Keep only the last 15 trading days for a clean chart
         if (mergedDaily[m].length > 15) {
           mergedDaily[m] = mergedDaily[m].slice(-15);
