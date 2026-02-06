@@ -14,12 +14,27 @@ export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
   
-  // Derive last updated date dynamically from the data
-  const reportDate = data?.Gold?.report_date || data?.Silver?.report_date;
+  // Derive last updated date from the most recent data source
+  // Priority: bulletin last_updated > delivery last_updated > warehouse report_date
   let lastUpdatedText = 'Unknown';
-  if (reportDate) {
+  const bulletinLastUpdated = bulletinJson?.last_updated;
+  const deliveryLastUpdated = deliveryJson?.last_updated;
+  const reportDate = data?.Gold?.report_date || data?.Silver?.report_date;
+  
+  // Try bulletin/delivery last_updated first (reflects when data was synced)
+  const syncDate = bulletinLastUpdated || deliveryLastUpdated;
+  if (syncDate) {
     try {
-      // Handle MM/DD/YYYY format
+      const d = new Date(syncDate);
+      if (!isNaN(d.getTime())) {
+        lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+    } catch { /* fall through */ }
+  }
+  
+  // Fallback to warehouse report_date
+  if (lastUpdatedText === 'Unknown' && reportDate) {
+    try {
       const parts = reportDate.split('/');
       if (parts.length === 3) {
         const d = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
@@ -41,16 +56,7 @@ export default async function Home() {
       // Check if we got valid data from the database
       if (dbData && Object.keys(dbData).length > 0) {
         dashboardData = dbData as unknown as WarehouseStocksData;
-        // Update lastUpdatedText from DB data if available
-        const firstMetal = Object.values(dbData)[0];
-        if (firstMetal?.report_date) {
-          try {
-            const d = new Date(firstMetal.report_date);
-            if (!isNaN(d.getTime())) {
-              lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            }
-          } catch { /* keep existing */ }
-        }
+        // Keep lastUpdatedText from bulletin/delivery sync date (already set above)
       } else {
         // Fallback to static JSON
         dashboardData = data as WarehouseStocksData;
