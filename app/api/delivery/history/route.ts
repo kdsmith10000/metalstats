@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
 
       const history = (result as DeliveryRow[]).map((row) => ({
         metal: row.metal,
-        date: String(row.report_date),
+        date: String(row.report_date).split('T')[0],
         dailyIssued: parseInt(String(row.daily_issued)) || 0,
         dailyStopped: parseInt(String(row.daily_stopped)) || 0,
         monthToDate: parseInt(String(row.month_to_date)) || 0,

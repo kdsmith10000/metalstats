@@ -213,8 +213,14 @@ const metalLabels: Record<MetalType, string> = {
 // HELPERS
 // ============================================
 
+function normalizeDate(dateStr: string): string {
+  // Normalize "2026-02-05T00:00:00.000Z" or "2026-02-05" → "2026-02-05"
+  return dateStr.split('T')[0];
+}
+
 function formatDateLabel(dateStr: string): string {
-  const d = new Date(dateStr + 'T12:00:00');
+  const clean = normalizeDate(dateStr);
+  const d = new Date(clean + 'T12:00:00'); // noon to avoid TZ issues
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
@@ -422,7 +428,7 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
           const metalKey = delivery.metal.toLowerCase() as MetalType;
           if (!mergedDaily[metalKey]) continue;
 
-          const dateKey = deliveryData.parsed_date;
+          const dateKey = normalizeDate(deliveryData.parsed_date);
           const dayLabel = formatDateLabel(dateKey);
 
           // Merge into daily: update existing or append
@@ -467,7 +473,7 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
           // Merge API daily data
           if (dailyResult?.history?.length > 0) {
             for (const h of dailyResult.history) {
-              const dateKey = String(h.date);
+              const dateKey = normalizeDate(String(h.date));
               const dayLabel = formatDateLabel(dateKey);
               const existingIdx = mergedDaily[m].findIndex(d => d.dateKey === dateKey);
               if (existingIdx >= 0) {
