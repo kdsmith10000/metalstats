@@ -407,7 +407,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* Bulletin Section */}
       {activeTab === 'bulletin' && bulletinData && (
         <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-32 md:pb-48">
-          <BulletinDashboard data={bulletinData} volumeSummary={volumeSummaryData} />
+          <BulletinDashboard data={bulletinData} volumeSummary={volumeSummaryData} deliveryData={deliveryData} />
         </section>
       )}
 
@@ -638,7 +638,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </div>
           
           <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-sm">
-            <DemandChart metal="gold" />
+            <DemandChart metal="gold" deliveryData={deliveryData} />
           </div>
         </div>
       </section>

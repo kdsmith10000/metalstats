@@ -44,13 +44,9 @@ async function initializeDeliveryTables() {
   console.log('[INFO] Initializing delivery tables...');
   
   try {
-    // Drop existing tables if they exist (to handle schema changes)
-    await sql`DROP TABLE IF EXISTS delivery_firm_snapshots CASCADE`;
-    await sql`DROP TABLE IF EXISTS delivery_snapshots CASCADE`;
-    
-    // Create delivery_snapshots table
+    // Create tables if they don't exist (preserves historical data)
     await sql`
-      CREATE TABLE delivery_snapshots (
+      CREATE TABLE IF NOT EXISTS delivery_snapshots (
         id SERIAL PRIMARY KEY,
         metal VARCHAR(50) NOT NULL,
         symbol VARCHAR(20) NOT NULL,
@@ -65,9 +61,8 @@ async function initializeDeliveryTables() {
       )
     `;
 
-    // Create delivery_firm_snapshots table
     await sql`
-      CREATE TABLE delivery_firm_snapshots (
+      CREATE TABLE IF NOT EXISTS delivery_firm_snapshots (
         id SERIAL PRIMARY KEY,
         delivery_snapshot_id INTEGER REFERENCES delivery_snapshots(id) ON DELETE CASCADE,
         firm_code VARCHAR(10) NOT NULL,
@@ -78,18 +73,18 @@ async function initializeDeliveryTables() {
       )
     `;
 
-    // Create indexes
+    // Create indexes (IF NOT EXISTS handles idempotency)
     await sql`
-      CREATE INDEX idx_delivery_snapshots_metal_date 
+      CREATE INDEX IF NOT EXISTS idx_delivery_snapshots_metal_date 
       ON delivery_snapshots(metal, report_date DESC)
     `;
 
     await sql`
-      CREATE INDEX idx_delivery_firm_snapshots_delivery_id 
+      CREATE INDEX IF NOT EXISTS idx_delivery_firm_snapshots_delivery_id 
       ON delivery_firm_snapshots(delivery_snapshot_id)
     `;
 
-    console.log('[OK] Delivery tables initialized');
+    console.log('[OK] Delivery tables initialized (historical data preserved)');
   } catch (error) {
     console.error('[ERROR] Failed to initialize delivery tables:', error.message);
     throw error;
