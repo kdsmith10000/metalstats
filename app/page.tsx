@@ -13,7 +13,27 @@ export const revalidate = 0;
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
-  let lastUpdatedText = 'February 4, 2026'; // Default fallback
+  
+  // Derive last updated date dynamically from the data
+  const reportDate = data?.Gold?.report_date || data?.Silver?.report_date;
+  let lastUpdatedText = 'Unknown';
+  if (reportDate) {
+    try {
+      // Handle MM/DD/YYYY format
+      const parts = reportDate.split('/');
+      if (parts.length === 3) {
+        const d = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
+        lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      } else {
+        const d = new Date(reportDate);
+        if (!isNaN(d.getTime())) {
+          lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+      }
+    } catch {
+      lastUpdatedText = reportDate;
+    }
+  }
   
   if (isDatabaseAvailable()) {
     try {
@@ -21,13 +41,20 @@ export default async function Home() {
       // Check if we got valid data from the database
       if (dbData && Object.keys(dbData).length > 0) {
         dashboardData = dbData as unknown as WarehouseStocksData;
+        // Update lastUpdatedText from DB data if available
+        const firstMetal = Object.values(dbData)[0];
+        if (firstMetal?.report_date) {
+          try {
+            const d = new Date(firstMetal.report_date);
+            if (!isNaN(d.getTime())) {
+              lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+          } catch { /* keep existing */ }
+        }
       } else {
         // Fallback to static JSON
         dashboardData = data as WarehouseStocksData;
       }
-      
-      // Set the last updated date to when data was synced
-      lastUpdatedText = 'February 4, 2026';
     } catch (error) {
       // If database fails, use static JSON
       console.error('Failed to fetch from database:', error);
