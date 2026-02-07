@@ -5,7 +5,6 @@ import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
-import dataJson from '@/public/data.json';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -115,24 +114,23 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Get the last updated timestamp from data.json metadata
-  let lastUpdatedText = 'February 3, 2026'; // Updated fallback
-  let lastUpdatedISO = '2026-02-03';
-  
+  // Get the last updated timestamp from bulletin/delivery data (most reliable source)
+  let lastUpdatedText = 'February 7, 2026'; // Fallback
+  let lastUpdatedISO = '2026-02-07';
+
   try {
-    const metadata = (dataJson as { _metadata?: { last_updated?: string } })._metadata;
-    if (metadata?.last_updated) {
-      lastUpdatedISO = metadata.last_updated;
-      // Use the date string directly if it's already formatted, otherwise parse it
-      if (metadata.last_updated.includes(',')) {
-        lastUpdatedText = metadata.last_updated;
-      } else {
-        const date = new Date(metadata.last_updated + 'T12:00:00');
+    const bulletinData = (await import('../public/bulletin.json')).default as { last_updated?: string };
+    const deliveryData = (await import('../public/delivery.json')).default as { last_updated?: string };
+    const syncDate = bulletinData?.last_updated || deliveryData?.last_updated;
+    if (syncDate) {
+      const date = new Date(syncDate);
+      if (!isNaN(date.getTime())) {
         lastUpdatedText = date.toLocaleDateString('en-US', {
           month: 'long',
           day: 'numeric',
           year: 'numeric',
         });
+        lastUpdatedISO = date.toISOString().split('T')[0];
       }
     }
   } catch (error) {
