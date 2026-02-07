@@ -527,38 +527,39 @@ def parse_section62_contracts(text: str) -> dict:
         section = section_match.group(1)
         contracts = []
         
-        # Contract line pattern for Section 62:
-        # FEB26 + 422760	102.80	5082.50	5107.90 /4983.60 132930 - 56956	5013.40 10351
-        # MONTH SIGN VOLUME CHANGE SETTLE HIGH/LOW OI SIGN OI_CHANGE OPEN PNT
-        # Some have "----" for volume or "UNCH" for change
-        
-        # Pattern: MONTH SIGN? VOLUME CHANGE SETTLE ...
-        contract_pattern = r'([A-Z]{3})(\d{2})\s+([+-])?\s*([\d]+|----)\s+([\d.]+|UNCH)\s+([\d.]+)\s+'
-        
+        # Contract line pattern for Section 62 (pdftotext -layout format):
+        # MONTH   OPEN(or ----)   HIGH/LOW(or ----)   SETTLE [+-] CHANGE   VOLUME(or ----)   PNT(or ----)   OI   [+-] OI_CHANGE(or UNCH)
+        # Example: FEB26                        3007.25             3008.00 /3007.25        3004.00 +   78.75                        3           ----                 5    -       2
+        # Example: NOV26                        ----                ----                    3097.00 +   67.00                     ----           ----               282         UNCH
+
+        contract_pattern = r'([A-Z]{3}\d{2})\s+(?:[\d.]+[BA]?|----)\s+(?:[\d.]+[BA]?\s*/[\d.]+[BA]?|----)\s+([\d.]+)\s+([+-])\s+([\d.]+)\s+([\d]+|----)\s+([\d]+|----)\s+([\d]+)\s+(?:([+-])\s*(\d+)|UNCH)'
+
         for match in re.finditer(contract_pattern, section):
             try:
-                month = match.group(1) + match.group(2)
-                sign = match.group(3) or '+'
-                volume_str = match.group(4)
-                change_str = match.group(5)
-                settle = float(match.group(6))
-                
-                volume = 0 if volume_str == '----' else int(volume_str)
-                
-                if change_str == 'UNCH':
-                    change = 0.0
-                else:
-                    change = float(change_str)
-                    if sign == '-':
-                        change = -change
-                
+                month = match.group(1)
+                settle = float(match.group(2))
+                sign = match.group(3)
+                change = float(match.group(4))
+                if sign == '-':
+                    change = -change
+
+                volume = 0 if match.group(5) == '----' else int(match.group(5))
+                pnt_vol = 0 if match.group(6) == '----' else int(match.group(6))
+                oi = int(match.group(7))
+
+                oi_change = 0
+                if match.group(8) and match.group(9):
+                    oi_change = int(match.group(9))
+                    if match.group(8) == '-':
+                        oi_change = -oi_change
+
                 contracts.append({
                     'month': month,
                     'settle': settle,
                     'change': change,
                     'globex_volume': volume,
-                    'pnt_volume': 0,
-                    'oi_change': 0,
+                    'pnt_volume': pnt_vol,
+                    'oi_change': oi_change,
                 })
             except (ValueError, IndexError):
                 continue
@@ -567,25 +568,22 @@ def parse_section62_contracts(text: str) -> dict:
         contracts.sort(key=lambda x: x['globex_volume'], reverse=True)
         
         # Get totals from TOTAL line
-        # Format: OI TOTAL SYMBOL FUT VOLUME [PNT_VOL] OI_CHANGE+/-
-        # Example: 640341 TOTAL  GC FUT 525061  15421 14103-
-        # Example: 946168 TOTAL  MGC FUT 78583 3496-
-        # Note: sign comes AFTER the number (e.g., "14103-" means -14103)
+        # Format: TOTAL SYMBOL FUT   VOLUME   [PNT_VOL]   OI   [+-] OI_CHANGE
+        # Example: TOTAL GC FUT                 203692           4287            403239    +    2287
+        # Example: TOTAL     ALI FUT              1117                             2387    -      25
         total_oi = 0
         total_volume = 0
         total_oi_change = 0
-        
-        # Search line by line for the TOTAL line for this product
-        total_pattern = rf'(\d+)\s+TOTAL\s+{re.escape(section_header)}\s+(\d+).*?(\d+)([+-])\s*$'
+
+        total_pattern = rf'TOTAL\s+{re.escape(section_header)}\s+(\d+).*?(\d+)\s+([+-])\s*(\d+)'
         for line in text.split('\n'):
-            if f'TOTAL' in line and section_header in line:
+            if 'TOTAL' in line and section_header in line:
                 total_match = re.search(total_pattern, line, re.IGNORECASE)
                 if total_match:
-                    total_oi = int(total_match.group(1))
-                    total_volume = int(total_match.group(2))
-                    total_oi_change = int(total_match.group(3))
-                    # Sign comes AFTER the number in Section 62 format
-                    if total_match.group(4) == '-':
+                    total_volume = int(total_match.group(1))
+                    total_oi = int(total_match.group(2))
+                    total_oi_change = int(total_match.group(4))
+                    if total_match.group(3) == '-':
                         total_oi_change = -total_oi_change
                     break
         

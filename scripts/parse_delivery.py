@@ -106,6 +106,9 @@ def parse_contract_section(section: str) -> dict:
     elif 'PALLADIUM' in contract_name.upper():
         metal = 'Palladium'
         symbol = 'PA'
+    elif 'ALUMINUM' in contract_name.upper():
+        metal = 'Aluminum'
+        symbol = 'ALI'
     else:
         return None
     
@@ -199,51 +202,27 @@ def save_to_database(data: dict, database_url: str):
         conn = psycopg2.connect(database_url)
         cur = conn.cursor()
         
-        # Create tables if not exist
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS delivery_snapshots (
-                id SERIAL PRIMARY KEY,
-                date DATE NOT NULL,
-                metal VARCHAR(50) NOT NULL,
-                symbol VARCHAR(10) NOT NULL,
-                contract_month VARCHAR(10),
-                settlement DECIMAL(20, 6),
-                daily_issued INTEGER DEFAULT 0,
-                daily_stopped INTEGER DEFAULT 0,
-                month_to_date INTEGER DEFAULT 0,
-                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(date, symbol)
-            )
-        """)
-        
-        cur.execute("""
-            CREATE INDEX IF NOT EXISTS idx_delivery_date_symbol 
-            ON delivery_snapshots(date, symbol)
-        """)
-        
-        conn.commit()
-        
         parsed_date = data.get('parsed_date')
         if not parsed_date:
             print("[WARNING] No parsed date. Skipping database save.")
             return
-        
+
         saved_count = 0
-        
+
         for delivery in data.get('deliveries', []):
             try:
                 cur.execute("""
                     INSERT INTO delivery_snapshots (
-                        date, metal, symbol, contract_month,
-                        settlement, daily_issued, daily_stopped, month_to_date
+                        report_date, metal, symbol, contract_month,
+                        settlement_price, daily_issued, daily_stopped, month_to_date
                     ) VALUES (
                         %s::date, %s, %s, %s, %s, %s, %s, %s
                     )
-                    ON CONFLICT (date, symbol) 
+                    ON CONFLICT (metal, report_date)
                     DO UPDATE SET
-                        metal = EXCLUDED.metal,
+                        symbol = EXCLUDED.symbol,
                         contract_month = EXCLUDED.contract_month,
-                        settlement = EXCLUDED.settlement,
+                        settlement_price = EXCLUDED.settlement_price,
                         daily_issued = EXCLUDED.daily_issued,
                         daily_stopped = EXCLUDED.daily_stopped,
                         month_to_date = EXCLUDED.month_to_date,

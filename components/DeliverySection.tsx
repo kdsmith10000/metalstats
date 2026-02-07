@@ -25,6 +25,7 @@ const metalColors: Record<string, { text: string; bg: string }> = {
   Copper: { text: 'text-orange-500', bg: 'bg-orange-500' },
   Platinum: { text: 'text-cyan-500', bg: 'bg-cyan-500' },
   Palladium: { text: 'text-violet-500', bg: 'bg-violet-500' },
+  Aluminum: { text: 'text-slate-500', bg: 'bg-slate-500' },
 };
 
 function formatNumber(num: number): string {

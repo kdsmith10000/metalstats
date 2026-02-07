@@ -3,6 +3,33 @@
   "parsed_date": "2026-02-06",
   "deliveries": [
     {
+      "metal": "Aluminum",
+      "symbol": "ALI",
+      "contract_name": "FEBRUARY 2026 ALUMINUM FUTURES",
+      "contract_month": "FEB26",
+      "settlement": 3004.0,
+      "delivery_date": "02/10/2026",
+      "daily_issued": 1,
+      "daily_stopped": 1,
+      "month_to_date": 74,
+      "firms": [
+        {
+          "code": "104",
+          "org": "C",
+          "name": "MIZUHO SECURITIES US",
+          "issued": 1,
+          "stopped": 0
+        },
+        {
+          "code": "732",
+          "org": "C",
+          "name": "RBC CAP MARKETS",
+          "issued": 1,
+          "stopped": 0
+        }
+      ]
+    },
+    {
       "metal": "Gold",
       "symbol": "GC",
       "contract_name": "FEBRUARY 2026 COMEX 100 GOLD FUTURES",
@@ -376,5 +403,5 @@
       ]
     }
   ],
-  "last_updated": "2026-02-07T16:18:52.981236"
+  "last_updated": "2026-02-07T17:03:29.080538"
 }

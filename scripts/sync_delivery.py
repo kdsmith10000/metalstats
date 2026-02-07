@@ -32,16 +32,16 @@ print(f'Syncing delivery data for: {parsed_date}')
 for delivery in data.get('deliveries', []):
     cur.execute('''
         INSERT INTO delivery_snapshots (
-            date, metal, symbol, contract_month,
-            settlement, daily_issued, daily_stopped, month_to_date
+            report_date, metal, symbol, contract_month,
+            settlement_price, daily_issued, daily_stopped, month_to_date
         ) VALUES (
             %s::date, %s, %s, %s, %s, %s, %s, %s
         )
-        ON CONFLICT (date, symbol) 
+        ON CONFLICT (metal, report_date)
         DO UPDATE SET
-            metal = EXCLUDED.metal,
+            symbol = EXCLUDED.symbol,
             contract_month = EXCLUDED.contract_month,
-            settlement = EXCLUDED.settlement,
+            settlement_price = EXCLUDED.settlement_price,
             daily_issued = EXCLUDED.daily_issued,
             daily_stopped = EXCLUDED.daily_stopped,
             month_to_date = EXCLUDED.month_to_date,
