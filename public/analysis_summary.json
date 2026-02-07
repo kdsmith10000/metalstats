@@ -1,0 +1,618 @@
+{
+  "report_date": "2026-02-06",
+  "activity_date": "2026-02-05",
+  "generated_at": "2026-02-07T21:20:40.643Z",
+  "metals": {
+    "Gold": {
+      "warehouse": {
+        "registered": 18370216.368,
+        "eligible": 16999889.111,
+        "total": 35370105.479,
+        "registered_pct": "51.9",
+        "eligible_pct": "48.1",
+        "depositories": [
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 0,
+            "eligible": 3696328.027,
+            "total": 3696328.027,
+            "pct_of_registered": "0.0"
+          },
+          {
+            "name": "STONEX PRECIOUS METALS LLC",
+            "registered": 0,
+            "eligible": 3981,
+            "total": 3981,
+            "pct_of_registered": "0.0"
+          }
+        ],
+        "depository_count": 2
+      },
+      "paper_physical": {
+        "open_interest": 403239,
+        "contract_size": 100,
+        "open_interest_units": 40323900,
+        "registered_inventory": 18370216.368,
+        "ratio": 2.1951,
+        "ratio_display": "2.20:1",
+        "risk_level": "MODERATE",
+        "unit": "oz"
+      },
+      "delivery": {
+        "contract_month": "FEB26",
+        "settlement_price": 4951.2,
+        "daily_issued": 1114,
+        "daily_stopped": 1114,
+        "month_to_date_contracts": 33616,
+        "month_to_date_units": 3361600,
+        "top_issuers": [
+          {
+            "name": "BARCLAYS",
+            "issued": 636
+          },
+          {
+            "name": "DEUTSCHE BANK AG",
+            "issued": 397
+          },
+          {
+            "name": "BMO CAPITAL MARKETS",
+            "issued": 333
+          }
+        ],
+        "top_stoppers": [
+          {
+            "name": "JP MORGAN SECURITIES",
+            "stopped": 248
+          },
+          {
+            "name": "BARCLAYS",
+            "stopped": 3
+          }
+        ]
+      },
+      "market": {
+        "total_volume": 207979,
+        "oi_change": 2287,
+        "yoy_oi_change_pct": -24.3,
+        "front_month_settle": 5182.5,
+        "front_month_change": 100.1
+      },
+      "risk_score": {
+        "composite": 44,
+        "level": "MODERATE",
+        "dominant_factor": "Delivery Velocity",
+        "commentary": "Inventory trend is negative. High delivery activity relative to inventory.",
+        "breakdown": {
+          "coverage_risk": 45,
+          "paper_physical_risk": 27,
+          "inventory_trend_risk": 50,
+          "delivery_velocity_risk": 100,
+          "market_activity_risk": 10
+        },
+        "weights": {
+          "coverage": 0.25,
+          "paperPhysical": 0.25,
+          "inventoryTrend": 0.2,
+          "deliveryVelocity": 0.15,
+          "marketActivity": 0.15
+        }
+      }
+    },
+    "Silver": {
+      "warehouse": {
+        "registered": 102547548.50400001,
+        "eligible": 291963859.786,
+        "total": 394511408.29,
+        "registered_pct": "26.0",
+        "eligible_pct": "74.0",
+        "depositories": [
+          {
+            "name": "SILVER",
+            "registered": 24895753.652,
+            "eligible": 3285306.678,
+            "total": 28181060.33,
+            "pct_of_registered": "24.3"
+          },
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 12489589.32,
+            "eligible": 156374555.883,
+            "total": 168864145.20299998,
+            "pct_of_registered": "12.2"
+          },
+          {
+            "name": "MANFRA, TORDELLA & BROOKES, LLC",
+            "registered": 8330589.44,
+            "eligible": 11187617.723,
+            "total": 19518207.163,
+            "pct_of_registered": "8.1"
+          },
+          {
+            "name": "LOOMIS INTERNATIONAL (US) LLC",
+            "registered": 7647169.869,
+            "eligible": 25662762.834,
+            "total": 33309932.702999998,
+            "pct_of_registered": "7.5"
+          },
+          {
+            "name": "STONEX PRECIOUS METALS LLC",
+            "registered": 7571835.06,
+            "eligible": 191872.3,
+            "total": 7763707.359999999,
+            "pct_of_registered": "7.4"
+          }
+        ],
+        "depository_count": 8
+      },
+      "paper_physical": {
+        "open_interest": 135267,
+        "contract_size": 5000,
+        "open_interest_units": 676335000,
+        "registered_inventory": 102547548.50400001,
+        "ratio": 6.5953,
+        "ratio_display": "6.60:1",
+        "risk_level": "HIGH",
+        "unit": "oz"
+      },
+      "delivery": {
+        "contract_month": "FEB26",
+        "settlement_price": 76.735,
+        "daily_issued": 317,
+        "daily_stopped": 317,
+        "month_to_date_contracts": 4061,
+        "month_to_date_units": 20305000,
+        "top_issuers": [
+          {
+            "name": "DEUTSCHE BANK AG",
+            "issued": 175
+          },
+          {
+            "name": "STONEX FINANCIAL INC",
+            "issued": 100
+          },
+          {
+            "name": "JP MORGAN SECURITIES",
+            "issued": 86
+          }
+        ],
+        "top_stoppers": []
+      },
+      "market": {
+        "total_volume": 149902,
+        "oi_change": -2083,
+        "yoy_oi_change_pct": -18,
+        "front_month_settle": 76.895,
+        "front_month_change": 0.181
+      },
+      "risk_score": {
+        "composite": 53,
+        "level": "HIGH",
+        "dominant_factor": "Delivery Velocity",
+        "commentary": "Elevated paper leverage on physical metal. Inventory trend is negative. High delivery activity relative to inventory.",
+        "breakdown": {
+          "coverage_risk": 46,
+          "paper_physical_risk": 58,
+          "inventory_trend_risk": 50,
+          "delivery_velocity_risk": 100,
+          "market_activity_risk": 13
+        },
+        "weights": {
+          "coverage": 0.25,
+          "paperPhysical": 0.25,
+          "inventoryTrend": 0.2,
+          "deliveryVelocity": 0.15,
+          "marketActivity": 0.15
+        }
+      }
+    },
+    "Copper": {
+      "warehouse": {
+        "registered": 358812,
+        "eligible": 230269,
+        "total": 589081,
+        "registered_pct": "60.9",
+        "eligible_pct": "39.1",
+        "depositories": [
+          {
+            "name": "NEW ORLEANS",
+            "registered": 231800,
+            "eligible": 189842,
+            "total": 421642,
+            "pct_of_registered": "64.6"
+          },
+          {
+            "name": "SALT LAKE CITY",
+            "registered": 42722,
+            "eligible": 5061,
+            "total": 47783,
+            "pct_of_registered": "11.9"
+          },
+          {
+            "name": "TUCSON",
+            "registered": 35923,
+            "eligible": 9399,
+            "total": 45322,
+            "pct_of_registered": "10.0"
+          },
+          {
+            "name": "DETROIT",
+            "registered": 16990,
+            "eligible": 579,
+            "total": 17569,
+            "pct_of_registered": "4.7"
+          },
+          {
+            "name": "BALTIMORE",
+            "registered": 15760,
+            "eligible": 24826,
+            "total": 40586,
+            "pct_of_registered": "4.4"
+          }
+        ],
+        "depository_count": 7
+      },
+      "paper_physical": {
+        "open_interest": 273513,
+        "contract_size": 12.5,
+        "open_interest_units": 3418912.5,
+        "registered_inventory": 358812,
+        "ratio": 9.5284,
+        "ratio_display": "9.53:1",
+        "risk_level": "HIGH",
+        "unit": "short tons"
+      },
+      "delivery": {
+        "contract_month": "FEB26",
+        "settlement_price": 5.8635,
+        "daily_issued": 309,
+        "daily_stopped": 309,
+        "month_to_date_contracts": 6808,
+        "month_to_date_units": 85100,
+        "top_issuers": [
+          {
+            "name": "STONEX FINANCIAL INC",
+            "issued": 119
+          },
+          {
+            "name": "JP MORGAN SECURITIES",
+            "issued": 73
+          },
+          {
+            "name": "MAREX CAPITAL MARKET",
+            "issued": 71
+          }
+        ],
+        "top_stoppers": [
+          {
+            "name": "STONEX FINANCIAL INC",
+            "stopped": 74
+          },
+          {
+            "name": "MAREX CAPITAL MARKET",
+            "stopped": 39
+          },
+          {
+            "name": "ADVANTAGE FUTURES",
+            "stopped": 27
+          }
+        ]
+      },
+      "market": {
+        "total_volume": 104811,
+        "oi_change": -5387,
+        "yoy_oi_change_pct": 11.3,
+        "front_month_settle": 5.882,
+        "front_month_change": 0.061
+      },
+      "risk_score": {
+        "composite": 65,
+        "level": "HIGH",
+        "dominant_factor": "Delivery Velocity",
+        "commentary": "Supply coverage is below comfortable levels. Paper claims significantly exceed physical availability. Inventory trend is negative.",
+        "breakdown": {
+          "coverage_risk": 55,
+          "paper_physical_risk": 73,
+          "inventory_trend_risk": 50,
+          "delivery_velocity_risk": 100,
+          "market_activity_risk": 56
+        },
+        "weights": {
+          "coverage": 0.25,
+          "paperPhysical": 0.25,
+          "inventoryTrend": 0.2,
+          "deliveryVelocity": 0.15,
+          "marketActivity": 0.15
+        }
+      }
+    },
+    "Platinum_Palladium": {
+      "warehouse": {
+        "registered": 148317.63700000002,
+        "eligible": 42555.867,
+        "total": 190873.50400000002,
+        "registered_pct": "77.7",
+        "eligible_pct": "22.3",
+        "depositories": [
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 114985.579,
+            "eligible": 75484.511,
+            "total": 190470.09,
+            "pct_of_registered": "77.5"
+          },
+          {
+            "name": "MANFRA, TORDELLA & BROOKES, LLC",
+            "registered": 74639.429,
+            "eligible": 20414.199,
+            "total": 95053.628,
+            "pct_of_registered": "50.3"
+          },
+          {
+            "name": "LOOMIS INTERNATIONAL (US) LLC",
+            "registered": 63745.991,
+            "eligible": 132077.206,
+            "total": 195823.19700000001,
+            "pct_of_registered": "43.0"
+          },
+          {
+            "name": "MANFRA, TORDELLA & BROOKES, LLC",
+            "registered": 50220.42,
+            "eligible": 1804.683,
+            "total": 52025.102999999996,
+            "pct_of_registered": "33.9"
+          },
+          {
+            "name": "LOOMIS INTERNATIONAL (US) LLC",
+            "registered": 41614.091,
+            "eligible": 7022.039,
+            "total": 48636.13,
+            "pct_of_registered": "28.1"
+          }
+        ],
+        "depository_count": 12
+      },
+      "paper_physical": {
+        "open_interest": 87006,
+        "contract_size": 50,
+        "open_interest_units": 4350300,
+        "registered_inventory": 148317.63700000002,
+        "ratio": 29.331,
+        "ratio_display": "29.33:1",
+        "risk_level": "EXTREME",
+        "unit": "oz"
+      },
+      "delivery": {
+        "contract_month": "FEB26",
+        "settlement_price": 2093.3,
+        "daily_issued": 10,
+        "daily_stopped": 10,
+        "month_to_date_contracts": 465,
+        "month_to_date_units": 23250,
+        "top_issuers": [
+          {
+            "name": "HSBC",
+            "issued": 10
+          },
+          {
+            "name": "JP MORGAN SECURITIES",
+            "issued": 10
+          }
+        ],
+        "top_stoppers": []
+      },
+      "market": {
+        "total_volume": 30748,
+        "oi_change": -759,
+        "yoy_oi_change_pct": -10.7,
+        "front_month_settle": 2099.4,
+        "front_month_change": 28.8
+      },
+      "risk_score": {
+        "composite": 64,
+        "level": "HIGH",
+        "dominant_factor": "Delivery Velocity",
+        "commentary": "Paper claims significantly exceed physical availability. Inventory trend is negative. High delivery activity relative to inventory.",
+        "breakdown": {
+          "coverage_risk": 46,
+          "paper_physical_risk": 97,
+          "inventory_trend_risk": 50,
+          "delivery_velocity_risk": 100,
+          "market_activity_risk": 24
+        },
+        "weights": {
+          "coverage": 0.25,
+          "paperPhysical": 0.25,
+          "inventoryTrend": 0.2,
+          "deliveryVelocity": 0.15,
+          "marketActivity": 0.15
+        }
+      }
+    },
+    "Aluminum": {
+      "warehouse": {
+        "registered": 3352,
+        "eligible": 598,
+        "total": 3950,
+        "registered_pct": "84.9",
+        "eligible_pct": "15.1",
+        "depositories": [
+          {
+            "name": "JOHOR, MALAYSIA",
+            "registered": 1538,
+            "eligible": 0,
+            "total": 1538,
+            "pct_of_registered": "45.9"
+          },
+          {
+            "name": "PORT KLANG, MALAYSIA",
+            "registered": 1141,
+            "eligible": 199,
+            "total": 1340,
+            "pct_of_registered": "34.0"
+          },
+          {
+            "name": "SINGAPORE, REPUBLIC OF SINGAPORE",
+            "registered": 299,
+            "eligible": 0,
+            "total": 299,
+            "pct_of_registered": "8.9"
+          },
+          {
+            "name": "GWANGYANG \"KWANGYANG\", REPUBLIC OF KOREA",
+            "registered": 200,
+            "eligible": 300,
+            "total": 500,
+            "pct_of_registered": "6.0"
+          },
+          {
+            "name": "ROTTERDAM, THE NETHERLANDS",
+            "registered": 174,
+            "eligible": 0,
+            "total": 174,
+            "pct_of_registered": "5.2"
+          }
+        ],
+        "depository_count": 7
+      },
+      "paper_physical": {
+        "open_interest": 2387,
+        "contract_size": 44,
+        "open_interest_units": 105028,
+        "registered_inventory": 3352,
+        "ratio": 31.3329,
+        "ratio_display": "31.33:1",
+        "risk_level": "EXTREME",
+        "unit": "metric tons"
+      },
+      "delivery": null,
+      "market": {
+        "total_volume": 1117,
+        "oi_change": -25,
+        "yoy_oi_change_pct": 81,
+        "front_month_settle": null,
+        "front_month_change": null
+      },
+      "risk_score": {
+        "composite": 78,
+        "level": "EXTREME",
+        "dominant_factor": "Paper/Physical Leverage",
+        "commentary": "Physical supply is critically tight. Paper claims significantly exceed physical availability. Inventory trend is negative.",
+        "breakdown": {
+          "coverage_risk": 89,
+          "paper_physical_risk": 98,
+          "inventory_trend_risk": 50,
+          "delivery_velocity_risk": 50,
+          "market_activity_risk": 94
+        },
+        "weights": {
+          "coverage": 0.25,
+          "paperPhysical": 0.25,
+          "inventoryTrend": 0.2,
+          "deliveryVelocity": 0.15,
+          "marketActivity": 0.15
+        }
+      }
+    }
+  },
+  "key_findings": [
+    {
+      "severity": "EXTREME",
+      "metal": "Aluminum",
+      "score": 78,
+      "finding": "Physical supply is critically tight. Paper claims significantly exceed physical availability. Inventory trend is negative."
+    },
+    {
+      "severity": "HIGH",
+      "metal": "Copper",
+      "score": 65,
+      "finding": "Supply coverage is below comfortable levels. Paper claims significantly exceed physical availability. Inventory trend is negative."
+    },
+    {
+      "severity": "HIGH",
+      "metal": "Platinum_Palladium",
+      "score": 64,
+      "finding": "Paper claims significantly exceed physical availability. Inventory trend is negative. High delivery activity relative to inventory."
+    },
+    {
+      "severity": "HIGH",
+      "metal": "Silver",
+      "score": 53,
+      "finding": "Elevated paper leverage on physical metal. Inventory trend is negative. High delivery activity relative to inventory."
+    },
+    {
+      "severity": "WARNING",
+      "metal": "Aluminum",
+      "finding": "Paper/physical ratio at 31.33:1 - EXTREME risk. 105,028 metric tons in paper claims vs 3,352 metric tons registered."
+    },
+    {
+      "severity": "WARNING",
+      "metal": "Copper",
+      "finding": "Paper/physical ratio at 9.53:1 - HIGH risk. 3,418,912.5 short tons in paper claims vs 358,812 short tons registered."
+    },
+    {
+      "severity": "WARNING",
+      "metal": "Platinum_Palladium",
+      "finding": "Paper/physical ratio at 29.33:1 - EXTREME risk. 4,350,300 oz in paper claims vs 148,317.637 oz registered."
+    },
+    {
+      "severity": "WARNING",
+      "metal": "Silver",
+      "finding": "Paper/physical ratio at 6.60:1 - HIGH risk. 676,335,000 oz in paper claims vs 102,547,548.504 oz registered."
+    },
+    {
+      "severity": "INFO",
+      "metal": "Copper",
+      "finding": "Heavy delivery activity: 6,808 contracts MTD (85,100 short tons). Daily: 309 issued/309 stopped."
+    },
+    {
+      "severity": "INFO",
+      "metal": "Silver",
+      "finding": "Heavy delivery activity: 4,061 contracts MTD (20,305,000 oz). Daily: 317 issued/317 stopped."
+    },
+    {
+      "severity": "INFO",
+      "metal": "Gold",
+      "finding": "Heavy delivery activity: 33,616 contracts MTD (3,361,600 oz). Daily: 1114 issued/1114 stopped."
+    }
+  ],
+  "market_overview": {
+    "report_date": "2026-02-06",
+    "metals_analyzed": 5,
+    "average_risk_score": 61,
+    "average_risk_level": "HIGH",
+    "high_risk_metals": 4,
+    "total_open_interest_all": 901412,
+    "risk_ranking": [
+      {
+        "metal": "Aluminum",
+        "score": 78,
+        "level": "EXTREME",
+        "dominant_factor": "Paper/Physical Leverage"
+      },
+      {
+        "metal": "Copper",
+        "score": 65,
+        "level": "HIGH",
+        "dominant_factor": "Delivery Velocity"
+      },
+      {
+        "metal": "Platinum_Palladium",
+        "score": 64,
+        "level": "HIGH",
+        "dominant_factor": "Delivery Velocity"
+      },
+      {
+        "metal": "Silver",
+        "score": 53,
+        "level": "HIGH",
+        "dominant_factor": "Delivery Velocity"
+      },
+      {
+        "metal": "Gold",
+        "score": 44,
+        "level": "MODERATE",
+        "dominant_factor": "Delivery Velocity"
+      }
+    ]
+  }
+}

@@ -1,73 +1,80 @@
 {
-  "bulletin_number": 24,
-  "date": "thu, feb 05, 2026",
-  "parsed_date": "2026-02-05",
+  "bulletin_number": 25,
+  "date": "Fri, Feb 06, 2026",
+  "parsed_date": "2026-02-06",
   "products": [
     {
       "symbol": "GC",
       "name": "COMEX GOLD FUTURES",
       "contracts": [
         {
-          "month": "APR26",
-          "settle": 4889.50,
-          "change": -61.30,
-          "globex_volume": 231399,
-          "pnt_volume": 3193,
-          "oi_change": -3938
+          "month": "APR27",
+          "settle": 5182.5,
+          "change": 100.1,
+          "globex_volume": 50,
+          "pnt_volume": 156,
+          "oi_change": -2
         },
         {
-          "month": "JUN26",
-          "settle": 4925.00,
-          "change": -62.60,
-          "globex_volume": 20559,
-          "pnt_volume": 96,
-          "oi_change": 1347
+          "month": "DEC28",
+          "settle": 5466.3,
+          "change": 104.8,
+          "globex_volume": 1,
+          "pnt_volume": 81,
+          "oi_change": -1
         },
         {
-          "month": "AUG26",
-          "settle": 4960.20,
-          "change": -64.10,
-          "globex_volume": 3794,
-          "pnt_volume": 0,
-          "oi_change": 81
+          "month": "JUN29",
+          "settle": 5551.2,
+          "change": 104.8,
+          "globex_volume": 0,
+          "pnt_volume": 53,
+          "oi_change": 0
         },
         {
-          "month": "DEC26",
-          "settle": 5022.30,
-          "change": -66.70,
-          "globex_volume": 1295,
-          "pnt_volume": 19,
-          "oi_change": 68
+          "month": "JUN28",
+          "settle": 5383.4,
+          "change": 104.8,
+          "globex_volume": 1,
+          "pnt_volume": 40,
+          "oi_change": 0
+        },
+        {
+          "month": "MAY27",
+          "settle": 5197.7,
+          "change": 100.4,
+          "globex_volume": 0,
+          "pnt_volume": 3,
+          "oi_change": 0
+        },
+        {
+          "month": "SEP27",
+          "settle": 5256.0,
+          "change": 102.4,
+          "globex_volume": 0,
+          "pnt_volume": 3,
+          "oi_change": 0
+        },
+        {
+          "month": "JUL27",
+          "settle": 5228.2,
+          "change": 101.5,
+          "globex_volume": 0,
+          "pnt_volume": 2,
+          "oi_change": 0
+        },
+        {
+          "month": "MAR27",
+          "settle": 5167.7,
+          "change": 99.5,
+          "globex_volume": 0,
+          "pnt_volume": 1,
+          "oi_change": 0
         }
       ],
-      "total_volume": 267752,
-      "total_open_interest": 402728,
-      "total_oi_change": -4915
-    },
-    {
-      "symbol": "1OZ",
-      "name": "1 OUNCE GOLD FUTURES",
-      "contracts": [
-        {
-          "month": "APR26",
-          "settle": 4889.50,
-          "change": -61.25,
-          "globex_volume": 202591,
-          "pnt_volume": 0,
-          "oi_change": 339
-        },
-        {
-          "month": "JUN26",
-          "settle": 4925.00,
-          "change": -62.50,
-          "globex_volume": 963,
-          "pnt_volume": 0,
-          "oi_change": 103
-        }
-      ],
-      "total_volume": 203580,
-      "total_open_interest": 19093,
-      "total_oi_change": 439
+      "total_volume": 203692,
+      "total_open_interest": 403239,
+      "total_oi_change": 2287
     },
     {
       "symbol": "SI",
@@ -75,32 +82,40 @@
       "contracts": [
         {
           "month": "MAR26",
-          "settle": 76.714,
-          "change": -7.682,
-          "globex_volume": 163265,
-          "pnt_volume": 1822,
-          "oi_change": -5340
+          "settle": 76.895,
+          "change": 0.181,
+          "globex_volume": 110629,
+          "pnt_volume": 576,
+          "oi_change": -4411
         },
         {
-          "month": "MAY26",
-          "settle": 77.281,
-          "change": -7.773,
-          "globex_volume": 26782,
-          "pnt_volume": 20,
-          "oi_change": 292
+          "month": "SEP26",
+          "settle": 78.629,
+          "change": 0.27,
+          "globex_volume": 2347,
+          "pnt_volume": 4482,
+          "oi_change": 0
         },
         {
-          "month": "JUL26",
-          "settle": 77.849,
-          "change": -7.864,
-          "globex_volume": 7670,
-          "pnt_volume": 34,
-          "oi_change": -462
+          "month": "MAY27",
+          "settle": 80.366,
+          "change": 0.285,
+          "globex_volume": 27,
+          "pnt_volume": 97,
+          "oi_change": 7
+        },
+        {
+          "month": "AUG26",
+          "settle": 78.391,
+          "change": 0.247,
+          "globex_volume": 28,
+          "pnt_volume": 70,
+          "oi_change": 0
         }
       ],
-      "total_volume": 208656,
-      "total_open_interest": 137327,
-      "total_oi_change": -5903
+      "total_volume": 149186,
+      "total_open_interest": 716,
+      "total_oi_change": 135267
     },
     {
       "symbol": "SIL",
@@ -108,24 +123,24 @@
       "contracts": [
         {
           "month": "MAR26",
-          "settle": 76.714,
-          "change": -7.682,
-          "globex_volume": 361633,
-          "pnt_volume": 0,
-          "oi_change": 2098
+          "settle": 76.895,
+          "change": 0.181,
+          "globex_volume": 252448,
+          "pnt_volume": 28060,
+          "oi_change": 0
         },
         {
-          "month": "MAY26",
-          "settle": 77.281,
-          "change": -7.773,
-          "globex_volume": 17109,
-          "pnt_volume": 0,
-          "oi_change": -196
+          "month": "APR26",
+          "settle": 77.19,
+          "change": 0.197,
+          "globex_volume": 260,
+          "pnt_volume": 116,
+          "oi_change": 0
         }
       ],
-      "total_volume": 380211,
-      "total_open_interest": 34830,
-      "total_oi_change": 1921
+      "total_volume": 266875,
+      "total_open_interest": 32314,
+      "total_oi_change": -2509
     },
     {
       "symbol": "HG",
@@ -133,48 +148,80 @@
       "contracts": [
         {
           "month": "MAR26",
-          "settle": 5.8210,
-          "change": -0.0290,
-          "globex_volume": 61339,
-          "pnt_volume": 271,
-          "oi_change": -2414
-        },
-        {
-          "month": "MAY26",
-          "settle": 5.8780,
-          "change": -0.0305,
-          "globex_volume": 11512,
-          "pnt_volume": 168,
-          "oi_change": 150
+          "settle": 5.882,
+          "change": 0.061,
+          "globex_volume": 59708,
+          "pnt_volume": 4243,
+          "oi_change": -9277
         },
         {
           "month": "JUL26",
-          "settle": 5.9330,
-          "change": -0.0310,
-          "globex_volume": 4705,
-          "pnt_volume": 87,
-          "oi_change": 500
+          "settle": 5.9975,
+          "change": 0.0645,
+          "globex_volume": 7004,
+          "pnt_volume": 324,
+          "oi_change": 397
         },
         {
-          "month": "SEP26",
-          "settle": 5.9820,
-          "change": -0.0310,
-          "globex_volume": 2739,
-          "pnt_volume": 267,
-          "oi_change": -461
+          "month": "FEB26",
+          "settle": 5.8635,
+          "change": 0.0645,
+          "globex_volume": 385,
+          "pnt_volume": 36,
+          "oi_change": -313
         },
         {
-          "month": "DEC26",
-          "settle": 6.0565,
-          "change": -0.0300,
-          "globex_volume": 1411,
-          "pnt_volume": 198,
-          "oi_change": 357
+          "month": "SEP27",
+          "settle": 6.3125,
+          "change": 0.0725,
+          "globex_volume": 12,
+          "pnt_volume": 215,
+          "oi_change": -1
+        },
+        {
+          "month": "JUL27",
+          "settle": 6.2725,
+          "change": 0.0725,
+          "globex_volume": 18,
+          "pnt_volume": 184,
+          "oi_change": -4
+        },
+        {
+          "month": "JUL28",
+          "settle": 6.5085,
+          "change": 0.0735,
+          "globex_volume": 2,
+          "pnt_volume": 48,
+          "oi_change": -2
+        },
+        {
+          "month": "AUG27",
+          "settle": 6.2935,
+          "change": 0.0725,
+          "globex_volume": 0,
+          "pnt_volume": 6,
+          "oi_change": 0
+        },
+        {
+          "month": "SEP28",
+          "settle": 6.543,
+          "change": 0.079,
+          "globex_volume": 0,
+          "pnt_volume": 3,
+          "oi_change": 0
+        },
+        {
+          "month": "MAY28",
+          "settle": 6.471,
+          "change": 0.073,
+          "globex_volume": 0,
+          "pnt_volume": 2,
+          "oi_change": 0
         }
       ],
-      "total_volume": 85349,
-      "total_open_interest": 278836,
-      "total_oi_change": -1347
+      "total_volume": 96913,
+      "total_open_interest": 273513,
+      "total_oi_change": -5387
     },
     {
       "symbol": "PL",
@@ -182,216 +229,41 @@
       "contracts": [
         {
           "month": "APR26",
-          "settle": 2070.60,
-          "change": -106.10,
-          "globex_volume": 32277,
-          "pnt_volume": 254,
-          "oi_change": -1586
+          "settle": 2099.4,
+          "change": 28.8,
+          "globex_volume": 27758,
+          "pnt_volume": 437,
+          "oi_change": -793
         },
         {
           "month": "JUL26",
-          "settle": 2087.30,
-          "change": -108.20,
-          "globex_volume": 2211,
-          "pnt_volume": 34,
-          "oi_change": -33
-        },
-        {
-          "month": "OCT26",
-          "settle": 2091.40,
-          "change": -109.00,
-          "globex_volume": 256,
+          "settle": 2116.4,
+          "change": 29.1,
+          "globex_volume": 1743,
           "pnt_volume": 0,
-          "oi_change": 16
+          "oi_change": 41
         }
       ],
-      "total_volume": 35676,
-      "total_open_interest": 71142,
-      "total_oi_change": -1594
+      "total_volume": 30207,
+      "total_open_interest": 70386,
+      "total_oi_change": -759
     },
     {
       "symbol": "PA",
       "name": "NYMEX PALLADIUM FUTURES",
-      "contracts": [
-        {
-          "month": "MAR26",
-          "settle": 1699.20,
-          "change": -39.00,
-          "globex_volume": 6045,
-          "pnt_volume": 88,
-          "oi_change": -578
-        },
-        {
-          "month": "JUN26",
-          "settle": 1723.10,
-          "change": -39.90,
-          "globex_volume": 930,
-          "pnt_volume": 0,
-          "oi_change": 302
-        }
-      ],
-      "total_volume": 7093,
-      "total_open_interest": 16831,
-      "total_oi_change": -256
+      "contracts": [],
+      "total_volume": 6286,
+      "total_open_interest": 16620,
+      "total_oi_change": -211
     },
     {
       "symbol": "ALI",
       "name": "COMEX PHYSICAL ALUMINUM FUTURES",
-      "contracts": [
-        {
-          "month": "APR26",
-          "settle": 2955.50,
-          "change": -61.75,
-          "globex_volume": 225,
-          "pnt_volume": 0,
-          "oi_change": -29
-        },
-        {
-          "month": "MAY26",
-          "settle": 2976.75,
-          "change": -62.50,
-          "globex_volume": 44,
-          "pnt_volume": 0,
-          "oi_change": 7
-        },
-        {
-          "month": "MAR26",
-          "settle": 2937.75,
-          "change": -51.50,
-          "globex_volume": 33,
-          "pnt_volume": 0,
-          "oi_change": 7
-        }
-      ],
-      "total_volume": 374,
-      "total_open_interest": 2412,
-      "total_oi_change": -2
-    },
-    {
-      "symbol": "MGC",
-      "name": "MICRO GOLD FUTURES",
-      "contracts": [
-        {
-          "month": "APR26",
-          "settle": 4889.50,
-          "change": -61.30,
-          "globex_volume": 885153,
-          "pnt_volume": 0,
-          "oi_change": 3098
-        },
-        {
-          "month": "JUN26",
-          "settle": 4925.00,
-          "change": -62.60,
-          "globex_volume": 18086,
-          "pnt_volume": 0,
-          "oi_change": 12
-        }
-      ],
-      "total_volume": 905204,
-      "total_open_interest": 58590,
-      "total_oi_change": 3195
-    },
-    {
-      "symbol": "MHG",
-      "name": "COMEX MICRO COPPER FUTURES",
-      "contracts": [
-        {
-          "month": "MAR26",
-          "settle": 5.8210,
-          "change": -0.0290,
-          "globex_volume": 50352,
-          "pnt_volume": 0,
-          "oi_change": -175
-        },
-        {
-          "month": "MAY26",
-          "settle": 5.8780,
-          "change": -0.0305,
-          "globex_volume": 2655,
-          "pnt_volume": 0,
-          "oi_change": 100
-        }
-      ],
-      "total_volume": 53658,
-      "total_open_interest": 16550,
-      "total_oi_change": 39
-    },
-    {
-      "symbol": "QO",
-      "name": "E-MINI GOLD FUTURES",
-      "contracts": [
-        {
-          "month": "APR26",
-          "settle": 4889.50,
-          "change": -61.30,
-          "globex_volume": 21549,
-          "pnt_volume": 0,
-          "oi_change": -335
-        },
-        {
-          "month": "AUG26",
-          "settle": 4960.20,
-          "change": -64.10,
-          "globex_volume": 7,
-          "pnt_volume": 0,
-          "oi_change": 0
-        }
-      ],
-      "total_volume": 21667,
-      "total_open_interest": 6499,
-      "total_oi_change": -365
-    },
-    {
-      "symbol": "QI",
-      "name": "E-MINI SILVER FUTURES",
-      "contracts": [
-        {
-          "month": "MAR26",
-          "settle": 76.7140,
-          "change": -7.6820,
-          "globex_volume": 5188,
-          "pnt_volume": 0,
-          "oi_change": 135
-        },
-        {
-          "month": "MAY26",
-          "settle": 77.2810,
-          "change": -7.7730,
-          "globex_volume": 706,
-          "pnt_volume": 0,
-          "oi_change": -13
-        }
-      ],
-      "total_volume": 6040,
-      "total_open_interest": 1452,
-      "total_oi_change": 124
-    },
-    {
-      "symbol": "QC",
-      "name": "COMEX E-MINI COPPER FUTURES",
-      "contracts": [
-        {
-          "month": "MAR26",
-          "settle": 5.8210,
-          "change": -0.0290,
-          "globex_volume": 374,
-          "pnt_volume": 0,
-          "oi_change": -25
-        },
-        {
-          "month": "MAY26",
-          "settle": 5.8780,
-          "change": -0.0305,
-          "globex_volume": 18,
-          "pnt_volume": 0,
-          "oi_change": 4
-        }
-      ],
-      "total_volume": 405,
-      "total_open_interest": 605,
-      "total_oi_change": -18
+      "contracts": [],
+      "total_volume": 117,
+      "total_open_interest": 2387,
+      "total_oi_change": -25
     }
   ],
-  "last_updated": "2026-02-06T10:30:00.000000"
+  "last_updated": "2026-02-07T16:18:29.702334"
 }

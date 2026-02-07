@@ -284,8 +284,8 @@ def main():
     # Get paths
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
-    # PDF files are in the project root (not in a data subfolder)
-    pdf_path = project_root / 'MetalsIssuesAndStopsReport.pdf'
+    # PDF files are in the data subfolder
+    pdf_path = project_root / 'data' / 'MetalsIssuesAndStopsReport.pdf'
     output_file = project_root / 'public' / 'delivery.json'
     
     if not pdf_path.exists():
