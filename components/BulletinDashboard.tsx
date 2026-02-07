@@ -622,13 +622,14 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                 
                 // Use volumeSummary data when available (more reliable for OI)
                 // Fall back to bulletin data if volumeSummary is not available
-                const metalSymbols = ['GC', 'SI', 'HG', 'PL', 'PA'];
+                const metalSymbols = ['GC', 'SI', 'HG', 'PL', 'PA', 'ALI'];
                 const metalNames: Record<string, string> = {
                   'GC': 'Gold',
                   'SI': 'Silver',
                   'HG': 'Copper',
                   'PL': 'Platinum',
                   'PA': 'Palladium',
+                  'ALI': 'Aluminum',
                 };
                 
                 const metals = metalSymbols.map(symbol => {
@@ -787,6 +788,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   { symbol: 'HG', name: 'Copper' },
                   { symbol: 'PL', name: 'Platinum' },
                   { symbol: 'PA', name: 'Palladium' },
+                  { symbol: 'ALI', name: 'Aluminum' },
                 ];
                 
                 return metals.map((metal, i) => {
@@ -1062,7 +1064,8 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                 const hg = getMetalData('HG');
                 const pl = getMetalData('PL');
                 const pa = getMetalData('PA');
-                
+                const ali = getMetalData('ALI');
+
                 const goldDelivery = getDeliveryMTD('Gold');
                 const silverDelivery = getDeliveryMTD('Silver');
                 const copperDelivery = getDeliveryMTD('Copper');
@@ -1135,12 +1138,28 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   });
                 }
                 
+                if (ali) {
+                  const priceDir = ali.priceChange > 0 ? 'rose' : ali.priceChange < 0 ? 'fell' : 'was unchanged';
+                  const priceChgAbs = Math.abs(ali.priceChange).toFixed(2);
+                  const priceChgPct = ali.settle > 0 ? ((ali.priceChange / (ali.settle - ali.priceChange)) * 100).toFixed(2) : '0.00';
+                  const oiSignal = ali.oiChange > 0
+                    ? 'with fresh positioning entering'
+                    : ali.oiChange < 0
+                      ? 'with position unwinding'
+                      : 'with flat OI';
+                  takeaways.push({
+                    title: "Aluminum — Industrial Demand",
+                    text: `Aluminum ${priceDir} $${priceChgAbs} (${priceChgPct}%) to $${ali.settle.toFixed(2)}/mt on ${formatVolume(ali.volume)} contracts ${oiSignal}. OI at ${formatNumber(ali.openInterest)} (${ali.oiChange > 0 ? '+' : ''}${formatNumber(ali.oiChange)}).`,
+                    color: "text-slate-400"
+                  });
+                }
+
                 // Market-wide summary
                 if (volumeSummary?.totals?.futures_options) {
                   const totals = volumeSummary.totals.futures_options;
                   const volYoYChange = totals.yoy_volume > 0 ? ((totals.volume - totals.yoy_volume) / totals.yoy_volume * 100).toFixed(0) : '0';
                   const oiYoYChange = totals.yoy_open_interest > 0 ? ((totals.open_interest - totals.yoy_open_interest) / totals.yoy_open_interest * 100).toFixed(0) : '0';
-                  const allNeg = gc && si && hg && pl && pa && [gc, si, hg, pl, pa].every(m => m.priceChange < 0);
+                  const allNeg = gc && si && hg && pl && pa && [gc, si, hg, pl, pa, ali].filter(Boolean).every(m => m!.priceChange < 0);
                   const marketTone = allNeg 
                     ? 'Broad risk-off session with all major metals declining. Macro headwinds or USD strength likely driving the selloff.'
                     : 'Mixed session across the metals complex.';
