@@ -278,6 +278,12 @@ export default async function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+
+        {/* Adsterra */}
+        <Script
+          src="https://pl28684294.effectivegatecpm.com/d3/f5/01/d3f501bc298fe1e606aaf82856dd6b83.js"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
