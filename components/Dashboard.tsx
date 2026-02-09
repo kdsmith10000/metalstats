@@ -717,7 +717,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 API
               </Link>
               <a href="https://distractionwallaceenliven.com/pabasn0tk?key=8026b9312cc409fe18e11ee032e0d7f5" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
-                Resources
+                AdSpace
               </a>
             </div>
 
