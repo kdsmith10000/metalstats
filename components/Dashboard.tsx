@@ -8,7 +8,7 @@ import PaperPhysicalCard from './PaperPhysicalCard';
 import RiskScoreTooltip from './RiskScoreTooltip';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { ChevronRight, FileText, BarChart3, FileStack } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 // Lazy load heavy chart components
@@ -156,6 +156,30 @@ function getOpenInterestForMetal(
   }
   
   return 0;
+}
+
+function NativeBanner() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scriptLoaded = useRef(false);
+
+  useEffect(() => {
+    if (scriptLoaded.current || !containerRef.current) return;
+    scriptLoaded.current = true;
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = 'https://distractionwallaceenliven.com/363d95083785b29310b6b0b768b3cacb/invoke.js';
+    containerRef.current.appendChild(script);
+  }, []);
+
+  return (
+    <section className="w-full px-4 sm:px-8 lg:px-24 py-8 sm:py-12">
+      <div className="max-w-4xl mx-auto">
+        <div id="container-363d95083785b29310b6b0b768b3cacb" ref={containerRef} />
+      </div>
+    </section>
+  );
 }
 
 export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
@@ -664,6 +688,9 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       </section>
         </>
       )}
+
+      {/* Adsterra Native Banner */}
+      <NativeBanner />
 
       {/* Footer */}
       <footer className="py-8 sm:py-12 md:py-16 bg-white/30 dark:bg-black/20 border-t border-slate-200 dark:border-slate-800">
