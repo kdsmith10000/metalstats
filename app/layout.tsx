@@ -280,9 +280,9 @@ export default async function RootLayout({
         />
 
         {/* Adsterra */}
-        <Script
+        <script
           src="https://distractionwallaceenliven.com/d3/f5/01/d3f501bc298fe1e606aaf82856dd6b83.js"
-          strategy="afterInteractive"
+          async
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
