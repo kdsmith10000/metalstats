@@ -79,7 +79,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
       </div>
 
       {/* Delivery Table */}
-      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none sm:rounded-xl border-y sm:border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl">
+      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none border-y sm:border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl">
         <table className="w-full">
           <thead>
             <tr className="border-b border-slate-200 dark:border-slate-800">

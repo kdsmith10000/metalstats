@@ -200,7 +200,7 @@ export default function DeliveryYTDSection({ data }: DeliveryYTDSectionProps) {
       </div>
 
       {/* Firm-Level Table */}
-      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none sm:rounded-xl border-y sm:border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl">
+      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none border-y sm:border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl">
         <div className="px-4 sm:px-6 py-4 border-b border-slate-200 dark:border-slate-800">
           <h3 className="text-xs sm:text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
             Top Firms — {selectedMetal}
