@@ -43,7 +43,7 @@ export interface WarehouseStocksData {
   Palladium?: MetalData;
   Aluminum: MetalData;
   Zinc: MetalData;
-  Lead: MetalData;
+  Lead?: MetalData;
 }
 
 // Metal display configuration
