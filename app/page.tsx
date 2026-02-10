@@ -5,6 +5,8 @@ import data from '../public/data.json';
 import bulletinJson from '../public/bulletin.json';
 import deliveryJson from '../public/delivery.json';
 import volumeSummaryJson from '../public/volume_summary.json';
+import deliveryMtdJson from '../public/delivery_mtd.json';
+import deliveryYtdJson from '../public/delivery_ytd.json';
 
 // Force dynamic rendering to ensure fresh data on each request
 export const dynamic = 'force-dynamic';
@@ -80,5 +82,11 @@ export default async function Home() {
   // Load volume summary data (YoY comparisons)
   const volumeSummaryData = volumeSummaryJson || null;
   
-  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} volumeSummaryData={volumeSummaryData} lastUpdatedText={lastUpdatedText} />;
+  // Load MTD and YTD delivery data (cast to bypass strict JSON type inference)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deliveryMtdData = (deliveryMtdJson as any) || null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deliveryYtdData = (deliveryYtdJson as any) || null;
+  
+  return <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} volumeSummaryData={volumeSummaryData} deliveryMtdData={deliveryMtdData} deliveryYtdData={deliveryYtdData} lastUpdatedText={lastUpdatedText} />;
 }

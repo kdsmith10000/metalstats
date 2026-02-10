@@ -1,0 +1,2982 @@
+{
+  "business_date": "02/09/2026",
+  "parsed_date": "2026-02-09",
+  "products": [
+    {
+      "metal": "Aluminum",
+      "symbol": "ALI",
+      "product_name": "ALUMINUM FUTURES",
+      "monthly_totals": {
+        "prev_dec": 317,
+        "jan": 156,
+        "feb": 74
+      },
+      "firms": [
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 81,
+            "jan": 76,
+            "feb": 21
+          },
+          "stopped": {
+            "prev_dec": 174,
+            "jan": 0,
+            "feb": 11
+          },
+          "total_issued": 178,
+          "total_stopped": 185,
+          "total_activity": 363
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "H",
+          "issued": {
+            "prev_dec": 192,
+            "jan": 0,
+            "feb": 52
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 52,
+            "feb": 0
+          },
+          "total_issued": 244,
+          "total_stopped": 52,
+          "total_activity": 296
+        },
+        {
+          "code": "104",
+          "name": "MIZUHO SECURITIES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 66,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 95,
+            "jan": 60,
+            "feb": 46
+          },
+          "total_issued": 66,
+          "total_stopped": 201,
+          "total_activity": 267
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 41,
+            "jan": 0,
+            "feb": 1
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 42,
+            "feb": 16
+          },
+          "total_issued": 42,
+          "total_stopped": 58,
+          "total_activity": 100
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 12,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 46,
+            "jan": 0,
+            "feb": 1
+          },
+          "total_issued": 12,
+          "total_stopped": 47,
+          "total_activity": 59
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 3,
+            "jan": 2
+          },
+          "stopped": {
+            "prev_dec": 1,
+            "jan": 2
+          },
+          "total_issued": 5,
+          "total_stopped": 3,
+          "total_activity": 8
+        },
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 1
+          },
+          "total_issued": 0,
+          "total_stopped": 1,
+          "total_activity": 1
+        }
+      ]
+    },
+    {
+      "metal": "Gold",
+      "symbol": "GC",
+      "product_name": "COMEX 100 GOLD FUTURES",
+      "monthly_totals": {
+        "prev_dec": 37098,
+        "jan": 11862,
+        "feb": 33783
+      },
+      "firms": [
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 13084,
+            "jan": 1306,
+            "feb": 13122
+          },
+          "stopped": {
+            "prev_dec": 14321,
+            "jan": 3773,
+            "feb": 11508
+          },
+          "total_issued": 27512,
+          "total_stopped": 29602,
+          "total_activity": 57114
+        },
+        {
+          "code": "435",
+          "name": "SCOTIA CAPITAL (USA)",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 3951,
+            "feb": 733
+          },
+          "stopped": {
+            "prev_dec": 5311,
+            "jan": 208,
+            "feb": 2549
+          },
+          "total_issued": 4684,
+          "total_stopped": 8068,
+          "total_activity": 12752
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "H",
+          "issued": {
+            "prev_dec": 2031,
+            "jan": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 2838,
+            "jan": 811,
+            "feb": 5117
+          },
+          "total_issued": 2031,
+          "total_stopped": 8766,
+          "total_activity": 10797
+        },
+        {
+          "code": "709",
+          "name": "BARCLAYS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 884,
+            "jan": 1044,
+            "feb": 5346
+          },
+          "stopped": {
+            "prev_dec": 2279,
+            "jan": 379,
+            "feb": 371
+          },
+          "total_issued": 7274,
+          "total_stopped": 3029,
+          "total_activity": 10303
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "H",
+          "issued": {
+            "prev_dec": 2310,
+            "jan": 639,
+            "feb": 1569
+          },
+          "stopped": {
+            "prev_dec": 1799,
+            "jan": 1233,
+            "feb": 809
+          },
+          "total_issued": 4518,
+          "total_stopped": 3841,
+          "total_activity": 8359
+        },
+        {
+          "code": "624",
+          "name": "BOFA SECURITIES",
+          "org": "H",
+          "issued": {
+            "prev_dec": 1641,
+            "jan": 1477,
+            "feb": 2012
+          },
+          "stopped": {
+            "prev_dec": 219,
+            "jan": 2709,
+            "feb": 12
+          },
+          "total_issued": 5130,
+          "total_stopped": 2940,
+          "total_activity": 8070
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "H",
+          "issued": {
+            "prev_dec": 4200,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "feb": 2789
+          },
+          "total_issued": 4200,
+          "total_stopped": 2789,
+          "total_activity": 6989
+        },
+        {
+          "code": "099",
+          "name": "DEUTSCHE BANK AG",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 168,
+            "feb": 3779
+          },
+          "stopped": {
+            "prev_dec": 794,
+            "jan": 2123,
+            "feb": 16
+          },
+          "total_issued": 3947,
+          "total_stopped": 2933,
+          "total_activity": 6880
+        },
+        {
+          "code": "190",
+          "name": "BMO CAPITAL MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 924,
+            "jan": 422,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 1226,
+            "jan": 0,
+            "feb": 4279
+          },
+          "total_issued": 1346,
+          "total_stopped": 5505,
+          "total_activity": 6851
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "H",
+          "issued": {
+            "prev_dec": 1872,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 1327,
+            "feb": 737
+          },
+          "total_issued": 1872,
+          "total_stopped": 2064,
+          "total_activity": 3936
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "H",
+          "issued": {
+            "prev_dec": 774,
+            "jan": 2027,
+            "feb": 287
+          },
+          "stopped": {
+            "prev_dec": 753,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 3088,
+          "total_stopped": 753,
+          "total_activity": 3841
+        },
+        {
+          "code": "332",
+          "name": "STANDARD CHARTERED B",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 0,
+            "feb": 455
+          },
+          "stopped": {
+            "prev_dec": 2628,
+            "jan": 490,
+            "feb": 2
+          },
+          "total_issued": 455,
+          "total_stopped": 3120,
+          "total_activity": 3575
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2010,
+            "feb": 104
+          },
+          "stopped": {
+            "prev_dec": 60,
+            "feb": 1287
+          },
+          "total_issued": 2114,
+          "total_stopped": 1347,
+          "total_activity": 3461
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "H",
+          "issued": {
+            "prev_dec": 3333
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 3333,
+          "total_stopped": 0,
+          "total_activity": 3333
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 349,
+            "feb": 2288
+          },
+          "total_issued": 0,
+          "total_stopped": 2637,
+          "total_activity": 2637
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 936,
+            "jan": 466,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 500,
+            "jan": 0,
+            "feb": 721
+          },
+          "total_issued": 1402,
+          "total_stopped": 1221,
+          "total_activity": 2623
+        },
+        {
+          "code": "700",
+          "name": "UBS SECURITIES LLC",
+          "org": "C",
+          "issued": {
+            "feb": 2379
+          },
+          "stopped": {
+            "feb": 0
+          },
+          "total_issued": 2379,
+          "total_stopped": 0,
+          "total_activity": 2379
+        },
+        {
+          "code": "092",
+          "name": "DEUTSCHE BANK",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 1756,
+            "feb": 514
+          },
+          "total_issued": 0,
+          "total_stopped": 2270,
+          "total_activity": 2270
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "C",
+          "issued": {
+            "prev_dec": 150,
+            "jan": 12,
+            "feb": 1504
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 12,
+            "feb": 4
+          },
+          "total_issued": 1666,
+          "total_stopped": 16,
+          "total_activity": 1682
+        },
+        {
+          "code": "730",
+          "name": "PTG DIVISION OF SGAS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "feb": 1282
+          },
+          "stopped": {
+            "prev_dec": 11,
+            "feb": 12
+          },
+          "total_issued": 1282,
+          "total_stopped": 23,
+          "total_activity": 1305
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 517,
+            "jan": 140,
+            "feb": 47
+          },
+          "stopped": {
+            "prev_dec": 125,
+            "jan": 47,
+            "feb": 32
+          },
+          "total_issued": 704,
+          "total_stopped": 204,
+          "total_activity": 908
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "H",
+          "issued": {
+            "prev_dec": 305,
+            "feb": 500
+          },
+          "stopped": {
+            "prev_dec": 42,
+            "feb": 0
+          },
+          "total_issued": 805,
+          "total_stopped": 42,
+          "total_activity": 847
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "C",
+          "issued": {
+            "prev_dec": 185,
+            "feb": 100
+          },
+          "stopped": {
+            "prev_dec": 154,
+            "feb": 341
+          },
+          "total_issued": 285,
+          "total_stopped": 495,
+          "total_activity": 780
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 639,
+            "feb": 26
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "feb": 54
+          },
+          "total_issued": 665,
+          "total_stopped": 54,
+          "total_activity": 719
+        },
+        {
+          "code": "132",
+          "name": "SG AMERICAS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 52,
+            "jan": 84,
+            "feb": 185
+          },
+          "stopped": {
+            "prev_dec": 183,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 321,
+          "total_stopped": 183,
+          "total_activity": 504
+        },
+        {
+          "code": "365",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "prev_dec": 457,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "feb": 43
+          },
+          "total_issued": 457,
+          "total_stopped": 45,
+          "total_activity": 502
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 490
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 490,
+          "total_stopped": 0,
+          "total_activity": 490
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "feb": 164
+          },
+          "stopped": {
+            "prev_dec": 82,
+            "feb": 82
+          },
+          "total_issued": 164,
+          "total_stopped": 164,
+          "total_activity": 328
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "C",
+          "issued": {
+            "feb": 105
+          },
+          "stopped": {
+            "feb": 195
+          },
+          "total_issued": 105,
+          "total_stopped": 195,
+          "total_activity": 300
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 95,
+            "jan": 56
+          },
+          "stopped": {
+            "prev_dec": 1,
+            "jan": 55
+          },
+          "total_issued": 151,
+          "total_stopped": 56,
+          "total_activity": 207
+        },
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 65,
+            "jan": 3,
+            "feb": 14
+          },
+          "stopped": {
+            "prev_dec": 65,
+            "jan": 3,
+            "feb": 14
+          },
+          "total_issued": 82,
+          "total_stopped": 82,
+          "total_activity": 164
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 76,
+            "jan": 15,
+            "feb": 1
+          },
+          "stopped": {
+            "prev_dec": 52,
+            "jan": 15,
+            "feb": 0
+          },
+          "total_issued": 92,
+          "total_stopped": 67,
+          "total_activity": 159
+        },
+        {
+          "code": "991",
+          "name": "CME",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 123
+          },
+          "total_issued": 0,
+          "total_stopped": 123,
+          "total_activity": 123
+        },
+        {
+          "code": "104",
+          "name": "MIZUHO SECURITIES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "feb": 48
+          },
+          "stopped": {
+            "prev_dec": 62,
+            "feb": 0
+          },
+          "total_issued": 48,
+          "total_stopped": 62,
+          "total_activity": 110
+        },
+        {
+          "code": "685",
+          "name": "RJ OBRIEN",
+          "org": "C",
+          "issued": {
+            "prev_dec": 32,
+            "jan": 40,
+            "feb": 13
+          },
+          "stopped": {
+            "prev_dec": 1,
+            "jan": 0,
+            "feb": 3
+          },
+          "total_issued": 85,
+          "total_stopped": 4,
+          "total_activity": 89
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "C",
+          "issued": {
+            "prev_dec": 27,
+            "feb": 1
+          },
+          "stopped": {
+            "prev_dec": 27,
+            "feb": 1
+          },
+          "total_issued": 28,
+          "total_stopped": 28,
+          "total_activity": 56
+        },
+        {
+          "code": "624",
+          "name": "BOFA SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2,
+            "jan": 10
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "jan": 0
+          },
+          "total_issued": 12,
+          "total_stopped": 2,
+          "total_activity": 14
+        },
+        {
+          "code": "726",
+          "name": "PLUS500US FINANCIAL",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2,
+            "jan": 1,
+            "feb": 1
+          },
+          "stopped": {
+            "prev_dec": 1,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 4,
+          "total_stopped": 1,
+          "total_activity": 5
+        },
+        {
+          "code": "152",
+          "name": "DORMAN TRADING, LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2
+          },
+          "stopped": {
+            "prev_dec": 2
+          },
+          "total_issued": 2,
+          "total_stopped": 2,
+          "total_activity": 4
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "H",
+          "issued": {
+            "prev_dec": 2
+          },
+          "stopped": {
+            "prev_dec": 2
+          },
+          "total_issued": 2,
+          "total_stopped": 2,
+          "total_activity": 4
+        },
+        {
+          "code": "357",
+          "name": "WEDBUSH SECURITIES",
+          "org": "C",
+          "issued": {
+            "feb": 2
+          },
+          "stopped": {
+            "feb": 2
+          },
+          "total_issued": 2,
+          "total_stopped": 2,
+          "total_activity": 4
+        },
+        {
+          "code": "523",
+          "name": "INTERACTIVE BROKERS",
+          "org": "H",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 4
+          },
+          "total_issued": 0,
+          "total_stopped": 4,
+          "total_activity": 4
+        },
+        {
+          "code": "523",
+          "name": "INTERACTIVE BROKERS",
+          "org": "C",
+          "issued": {
+            "jan": 1,
+            "feb": 2
+          },
+          "stopped": {
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 3,
+          "total_stopped": 0,
+          "total_activity": 3
+        },
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "H",
+          "issued": {
+            "feb": 2
+          },
+          "stopped": {
+            "feb": 1
+          },
+          "total_issued": 2,
+          "total_stopped": 1,
+          "total_activity": 3
+        },
+        {
+          "code": "800",
+          "name": "MAREX SPEC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1
+          },
+          "stopped": {
+            "prev_dec": 1
+          },
+          "total_issued": 1,
+          "total_stopped": 1,
+          "total_activity": 2
+        }
+      ]
+    },
+    {
+      "metal": "Copper",
+      "symbol": "HG",
+      "product_name": "COMEX COPPER FUTURES",
+      "monthly_totals": {
+        "prev_dec": 20871,
+        "jan": 15999,
+        "feb": 7098
+      },
+      "firms": [
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 3473,
+            "jan": 3871,
+            "feb": 1390
+          },
+          "stopped": {
+            "prev_dec": 3484,
+            "jan": 4023,
+            "feb": 1133
+          },
+          "total_issued": 8734,
+          "total_stopped": 8640,
+          "total_activity": 17374
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2233,
+            "jan": 1686,
+            "feb": 1062
+          },
+          "stopped": {
+            "prev_dec": 2564,
+            "jan": 1661,
+            "feb": 498
+          },
+          "total_issued": 4981,
+          "total_stopped": 4723,
+          "total_activity": 9704
+        },
+        {
+          "code": "104",
+          "name": "MIZUHO SECURITIES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 4304,
+            "jan": 1679,
+            "feb": 443
+          },
+          "stopped": {
+            "prev_dec": 1072,
+            "jan": 1118,
+            "feb": 212
+          },
+          "total_issued": 6426,
+          "total_stopped": 2402,
+          "total_activity": 8828
+        },
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 90,
+            "jan": 1444,
+            "feb": 882
+          },
+          "stopped": {
+            "prev_dec": 2667,
+            "jan": 1849,
+            "feb": 1324
+          },
+          "total_issued": 2416,
+          "total_stopped": 5840,
+          "total_activity": 8256
+        },
+        {
+          "code": "132",
+          "name": "SG AMERICAS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 3038,
+            "jan": 2196,
+            "feb": 617
+          },
+          "stopped": {
+            "prev_dec": 563,
+            "jan": 347,
+            "feb": 9
+          },
+          "total_issued": 5851,
+          "total_stopped": 919,
+          "total_activity": 6770
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 857,
+            "jan": 1845,
+            "feb": 363
+          },
+          "stopped": {
+            "prev_dec": 926,
+            "jan": 1567,
+            "feb": 391
+          },
+          "total_issued": 3065,
+          "total_stopped": 2884,
+          "total_activity": 5949
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "C",
+          "issued": {
+            "prev_dec": 616,
+            "jan": 718,
+            "feb": 177
+          },
+          "stopped": {
+            "prev_dec": 1350,
+            "jan": 1708,
+            "feb": 909
+          },
+          "total_issued": 1511,
+          "total_stopped": 3967,
+          "total_activity": 5478
+        },
+        {
+          "code": "159",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1370,
+            "jan": 689,
+            "feb": 588
+          },
+          "stopped": {
+            "prev_dec": 1622,
+            "jan": 630,
+            "feb": 434
+          },
+          "total_issued": 2647,
+          "total_stopped": 2686,
+          "total_activity": 5333
+        },
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 677,
+            "jan": 111,
+            "feb": 307
+          },
+          "stopped": {
+            "prev_dec": 649,
+            "jan": 180,
+            "feb": 232
+          },
+          "total_issued": 1095,
+          "total_stopped": 1061,
+          "total_activity": 2156
+        },
+        {
+          "code": "152",
+          "name": "DORMAN TRADING, LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 352,
+            "jan": 449,
+            "feb": 202
+          },
+          "stopped": {
+            "prev_dec": 357,
+            "jan": 447,
+            "feb": 145
+          },
+          "total_issued": 1003,
+          "total_stopped": 949,
+          "total_activity": 1952
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 323,
+            "jan": 70,
+            "feb": 143
+          },
+          "stopped": {
+            "prev_dec": 530,
+            "jan": 587,
+            "feb": 273
+          },
+          "total_issued": 536,
+          "total_stopped": 1390,
+          "total_activity": 1926
+        },
+        {
+          "code": "190",
+          "name": "BMO CAPITAL MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 557,
+            "jan": 246,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 419,
+            "jan": 113,
+            "feb": 558
+          },
+          "total_issued": 803,
+          "total_stopped": 1090,
+          "total_activity": 1893
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "H",
+          "issued": {
+            "prev_dec": 61,
+            "jan": 416,
+            "feb": 327
+          },
+          "stopped": {
+            "prev_dec": 693,
+            "jan": 300,
+            "feb": 0
+          },
+          "total_issued": 804,
+          "total_stopped": 993,
+          "total_activity": 1797
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "H",
+          "issued": {
+            "prev_dec": 590,
+            "jan": 0,
+            "feb": 565
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 565,
+            "feb": 0
+          },
+          "total_issued": 1155,
+          "total_stopped": 565,
+          "total_activity": 1720
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 210
+          },
+          "stopped": {
+            "prev_dec": 946,
+            "jan": 422
+          },
+          "total_issued": 210,
+          "total_stopped": 1368,
+          "total_activity": 1578
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 405
+          },
+          "stopped": {
+            "prev_dec": 1005
+          },
+          "total_issued": 405,
+          "total_stopped": 1005,
+          "total_activity": 1410
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "C",
+          "issued": {
+            "prev_dec": 468,
+            "jan": 319,
+            "feb": 32
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 267,
+            "feb": 319
+          },
+          "total_issued": 819,
+          "total_stopped": 586,
+          "total_activity": 1405
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "H",
+          "issued": {
+            "prev_dec": 481
+          },
+          "stopped": {
+            "prev_dec": 787
+          },
+          "total_issued": 481,
+          "total_stopped": 787,
+          "total_activity": 1268
+        },
+        {
+          "code": "365",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "prev_dec": 437,
+            "jan": 50
+          },
+          "stopped": {
+            "prev_dec": 372,
+            "jan": 29
+          },
+          "total_issued": 487,
+          "total_stopped": 401,
+          "total_activity": 888
+        },
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "H",
+          "issued": {
+            "prev_dec": 283,
+            "jan": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 7,
+            "jan": 186,
+            "feb": 203
+          },
+          "total_issued": 283,
+          "total_stopped": 396,
+          "total_activity": 679
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 582
+          },
+          "total_issued": 0,
+          "total_stopped": 582,
+          "total_activity": 582
+        },
+        {
+          "code": "365",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "H",
+          "issued": {
+            "prev_dec": 232
+          },
+          "stopped": {
+            "prev_dec": 232
+          },
+          "total_issued": 232,
+          "total_stopped": 232,
+          "total_activity": 464
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "H",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 458
+          },
+          "total_issued": 0,
+          "total_stopped": 458,
+          "total_activity": 458
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "C",
+          "issued": {
+            "prev_dec": 21
+          },
+          "stopped": {
+            "prev_dec": 21
+          },
+          "total_issued": 21,
+          "total_stopped": 21,
+          "total_activity": 42
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 20
+          },
+          "total_issued": 0,
+          "total_stopped": 20,
+          "total_activity": 20
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "H",
+          "issued": {
+            "prev_dec": 3
+          },
+          "stopped": {
+            "prev_dec": 3
+          },
+          "total_issued": 3,
+          "total_stopped": 3,
+          "total_activity": 6
+        }
+      ]
+    },
+    {
+      "metal": "Micro Gold",
+      "symbol": "MGC",
+      "product_name": "MICRO GOLD FUTURES",
+      "monthly_totals": {
+        "prev_dec": 1237
+      },
+      "firms": [
+        {
+          "code": "991",
+          "name": "CME",
+          "org": "H",
+          "issued": {
+            "prev_dec": 1230
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 1230,
+          "total_stopped": 0,
+          "total_activity": 1230
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 4
+          },
+          "stopped": {
+            "prev_dec": 955
+          },
+          "total_issued": 4,
+          "total_stopped": 955,
+          "total_activity": 959
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 272
+          },
+          "total_issued": 0,
+          "total_stopped": 272,
+          "total_activity": 272
+        },
+        {
+          "code": "523",
+          "name": "INTERACTIVE BROKERS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 10
+          },
+          "total_issued": 0,
+          "total_stopped": 10,
+          "total_activity": 10
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 3
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 3,
+          "total_stopped": 0,
+          "total_activity": 3
+        }
+      ]
+    },
+    {
+      "metal": "Palladium",
+      "symbol": "PA",
+      "product_name": "PALLADIUM FUTURES NYMEX",
+      "monthly_totals": {
+        "prev_dec": 687,
+        "jan": 255,
+        "feb": 92
+      },
+      "firms": [
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 211,
+            "jan": 139,
+            "feb": 14
+          },
+          "total_issued": 0,
+          "total_stopped": 364,
+          "total_activity": 364
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 47,
+            "jan": 59,
+            "feb": 6
+          },
+          "stopped": {
+            "prev_dec": 120,
+            "jan": 66,
+            "feb": 37
+          },
+          "total_issued": 112,
+          "total_stopped": 223,
+          "total_activity": 335
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 171,
+            "jan": 90,
+            "feb": 38
+          },
+          "stopped": {
+            "prev_dec": 10,
+            "jan": 0,
+            "feb": 15
+          },
+          "total_issued": 299,
+          "total_stopped": 25,
+          "total_activity": 324
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "C",
+          "issued": {
+            "prev_dec": 251
+          },
+          "stopped": {
+            "prev_dec": 1
+          },
+          "total_issued": 251,
+          "total_stopped": 1,
+          "total_activity": 252
+        },
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 28,
+            "jan": 42,
+            "feb": 26
+          },
+          "stopped": {
+            "prev_dec": 79,
+            "jan": 43,
+            "feb": 4
+          },
+          "total_issued": 96,
+          "total_stopped": 126,
+          "total_activity": 222
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 6,
+            "jan": 33,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 33,
+            "jan": 0,
+            "feb": 7
+          },
+          "total_issued": 39,
+          "total_stopped": 40,
+          "total_activity": 79
+        },
+        {
+          "code": "152",
+          "name": "DORMAN TRADING, LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 48,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "feb": 12
+          },
+          "total_issued": 48,
+          "total_stopped": 14,
+          "total_activity": 62
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 23,
+            "jan": 11,
+            "feb": 2
+          },
+          "stopped": {
+            "prev_dec": 20,
+            "jan": 5,
+            "feb": 1
+          },
+          "total_issued": 36,
+          "total_stopped": 26,
+          "total_activity": 62
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 60
+          },
+          "total_issued": 0,
+          "total_stopped": 60,
+          "total_activity": 60
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "H",
+          "issued": {
+            "prev_dec": 56
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 56,
+          "total_stopped": 0,
+          "total_activity": 56
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 50
+          },
+          "total_issued": 0,
+          "total_stopped": 50,
+          "total_activity": 50
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "H",
+          "issued": {
+            "prev_dec": 50
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 50,
+          "total_stopped": 0,
+          "total_activity": 50
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 50
+          },
+          "total_issued": 0,
+          "total_stopped": 50,
+          "total_activity": 50
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 12
+          },
+          "stopped": {
+            "prev_dec": 23,
+            "jan": 0
+          },
+          "total_issued": 12,
+          "total_stopped": 23,
+          "total_activity": 35
+        },
+        {
+          "code": "365",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "jan": 8,
+            "feb": 20
+          },
+          "stopped": {
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 28,
+          "total_stopped": 0,
+          "total_activity": 28
+        },
+        {
+          "code": "435",
+          "name": "SCOTIA CAPITAL (USA)",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 16,
+            "feb": 2
+          },
+          "total_issued": 0,
+          "total_stopped": 18,
+          "total_activity": 18
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "H",
+          "issued": {
+            "prev_dec": 5
+          },
+          "stopped": {
+            "prev_dec": 5
+          },
+          "total_issued": 5,
+          "total_stopped": 5,
+          "total_activity": 10
+        },
+        {
+          "code": "190",
+          "name": "BMO CAPITAL MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 5
+          },
+          "total_issued": 0,
+          "total_stopped": 5,
+          "total_activity": 5
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1
+          },
+          "stopped": {
+            "prev_dec": 1
+          },
+          "total_issued": 1,
+          "total_stopped": 1,
+          "total_activity": 2
+        },
+        {
+          "code": "357",
+          "name": "WEDBUSH SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1
+          },
+          "stopped": {
+            "prev_dec": 1
+          },
+          "total_issued": 1,
+          "total_stopped": 1,
+          "total_activity": 2
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "H",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 2
+          },
+          "total_issued": 0,
+          "total_stopped": 2,
+          "total_activity": 2
+        }
+      ]
+    },
+    {
+      "metal": "Platinum",
+      "symbol": "PL",
+      "product_name": "PLATINUM FUTURES NYMEX",
+      "monthly_totals": {
+        "prev_dec": 18,
+        "jan": 2813,
+        "feb": 485
+      },
+      "firms": [
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 16,
+            "jan": 1436,
+            "feb": 195
+          },
+          "stopped": {
+            "prev_dec": 12,
+            "jan": 66,
+            "feb": 40
+          },
+          "total_issued": 1647,
+          "total_stopped": 118,
+          "total_activity": 1765
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "C",
+          "issued": {
+            "jan": 161,
+            "feb": 0
+          },
+          "stopped": {
+            "jan": 545,
+            "feb": 9
+          },
+          "total_issued": 161,
+          "total_stopped": 554,
+          "total_activity": 715
+        },
+        {
+          "code": "190",
+          "name": "BMO CAPITAL MARKETS",
+          "org": "H",
+          "issued": {
+            "jan": 9,
+            "feb": 0
+          },
+          "stopped": {
+            "jan": 580,
+            "feb": 6
+          },
+          "total_issued": 9,
+          "total_stopped": 586,
+          "total_activity": 595
+        },
+        {
+          "code": "624",
+          "name": "BOFA SECURITIES",
+          "org": "H",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 465
+          },
+          "total_issued": 0,
+          "total_stopped": 465,
+          "total_activity": 465
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "C",
+          "issued": {
+            "jan": 155,
+            "feb": 22
+          },
+          "stopped": {
+            "jan": 140,
+            "feb": 22
+          },
+          "total_issued": 177,
+          "total_stopped": 162,
+          "total_activity": 339
+        },
+        {
+          "code": "730",
+          "name": "PTG DIVISION OF SGAS",
+          "org": "C",
+          "issued": {
+            "jan": 23,
+            "feb": 60
+          },
+          "stopped": {
+            "jan": 250,
+            "feb": 3
+          },
+          "total_issued": 83,
+          "total_stopped": 253,
+          "total_activity": 336
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "H",
+          "issued": {
+            "jan": 282
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 282,
+          "total_stopped": 0,
+          "total_activity": 282
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2,
+            "jan": 24,
+            "feb": 105
+          },
+          "stopped": {
+            "prev_dec": 5,
+            "jan": 28,
+            "feb": 96
+          },
+          "total_issued": 131,
+          "total_stopped": 129,
+          "total_activity": 260
+        },
+        {
+          "code": "365",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "jan": 1,
+            "feb": 0
+          },
+          "stopped": {
+            "jan": 243,
+            "feb": 10
+          },
+          "total_issued": 1,
+          "total_stopped": 253,
+          "total_activity": 254
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "C",
+          "issued": {
+            "jan": 226
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 226,
+          "total_stopped": 0,
+          "total_activity": 226
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "C",
+          "issued": {
+            "jan": 2,
+            "feb": 0
+          },
+          "stopped": {
+            "jan": 25,
+            "feb": 197
+          },
+          "total_issued": 2,
+          "total_stopped": 222,
+          "total_activity": 224
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "C",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 205
+          },
+          "total_issued": 0,
+          "total_stopped": 205,
+          "total_activity": 205
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "H",
+          "issued": {
+            "jan": 203
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 203,
+          "total_stopped": 0,
+          "total_activity": 203
+        },
+        {
+          "code": "435",
+          "name": "SCOTIA CAPITAL (USA)",
+          "org": "H",
+          "issued": {
+            "jan": 82,
+            "feb": 45
+          },
+          "stopped": {
+            "jan": 17,
+            "feb": 56
+          },
+          "total_issued": 127,
+          "total_stopped": 73,
+          "total_activity": 200
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "H",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 165
+          },
+          "total_issued": 0,
+          "total_stopped": 165,
+          "total_activity": 165
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "C",
+          "issued": {
+            "jan": 0,
+            "feb": 16
+          },
+          "stopped": {
+            "jan": 49,
+            "feb": 0
+          },
+          "total_issued": 16,
+          "total_stopped": 49,
+          "total_activity": 65
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "H",
+          "issued": {
+            "jan": 62
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 62,
+          "total_stopped": 0,
+          "total_activity": 62
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "H",
+          "issued": {
+            "jan": 1,
+            "feb": 20
+          },
+          "stopped": {
+            "jan": 1,
+            "feb": 39
+          },
+          "total_issued": 21,
+          "total_stopped": 40,
+          "total_activity": 61
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "jan": 58
+          },
+          "stopped": {
+            "jan": 2
+          },
+          "total_issued": 58,
+          "total_stopped": 2,
+          "total_activity": 60
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "H",
+          "issued": {
+            "jan": 49
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 49,
+          "total_stopped": 0,
+          "total_activity": 49
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "C",
+          "issued": {
+            "jan": 8,
+            "feb": 15
+          },
+          "stopped": {
+            "jan": 8,
+            "feb": 0
+          },
+          "total_issued": 23,
+          "total_stopped": 8,
+          "total_activity": 31
+        },
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "H",
+          "issued": {
+            "jan": 27
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 27,
+          "total_stopped": 0,
+          "total_activity": 27
+        },
+        {
+          "code": "099",
+          "name": "DEUTSCHE BANK AG",
+          "org": "H",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 22
+          },
+          "total_issued": 0,
+          "total_stopped": 22,
+          "total_activity": 22
+        },
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 3,
+            "feb": 5
+          },
+          "stopped": {
+            "prev_dec": 1,
+            "jan": 2,
+            "feb": 5
+          },
+          "total_issued": 8,
+          "total_stopped": 8,
+          "total_activity": 16
+        },
+        {
+          "code": "152",
+          "name": "DORMAN TRADING, LLC",
+          "org": "C",
+          "issued": {
+            "feb": 1
+          },
+          "stopped": {
+            "feb": 1
+          },
+          "total_issued": 1,
+          "total_stopped": 1,
+          "total_activity": 2
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "feb": 1
+          },
+          "stopped": {
+            "feb": 1
+          },
+          "total_issued": 1,
+          "total_stopped": 1,
+          "total_activity": 2
+        },
+        {
+          "code": "800",
+          "name": "MAREX SPEC",
+          "org": "C",
+          "issued": {
+            "jan": 1
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 1,
+          "total_stopped": 0,
+          "total_activity": 1
+        }
+      ]
+    },
+    {
+      "metal": "Silver",
+      "symbol": "SI",
+      "product_name": "COMEX 5000 SILVER FUTURES",
+      "monthly_totals": {
+        "prev_dec": 12946,
+        "jan": 9889,
+        "feb": 4490
+      },
+      "firms": [
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 5863,
+            "jan": 4395,
+            "feb": 1802
+          },
+          "stopped": {
+            "prev_dec": 6331,
+            "jan": 2737,
+            "feb": 1269
+          },
+          "total_issued": 12060,
+          "total_stopped": 10337,
+          "total_activity": 22397
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "H",
+          "issued": {
+            "prev_dec": 1443,
+            "jan": 1162,
+            "feb": 938
+          },
+          "stopped": {
+            "prev_dec": 125,
+            "jan": 1165,
+            "feb": 502
+          },
+          "total_issued": 3543,
+          "total_stopped": 1792,
+          "total_activity": 5335
+        },
+        {
+          "code": "099",
+          "name": "DEUTSCHE BANK AG",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 1116,
+            "feb": 525
+          },
+          "stopped": {
+            "prev_dec": 1455,
+            "jan": 476,
+            "feb": 369
+          },
+          "total_issued": 1641,
+          "total_stopped": 2300,
+          "total_activity": 3941
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "H",
+          "issued": {
+            "prev_dec": 1171,
+            "jan": 127
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 1719
+          },
+          "total_issued": 1298,
+          "total_stopped": 1719,
+          "total_activity": 3017
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "H",
+          "issued": {
+            "prev_dec": 667,
+            "jan": 0,
+            "feb": 112
+          },
+          "stopped": {
+            "prev_dec": 188,
+            "jan": 966,
+            "feb": 648
+          },
+          "total_issued": 779,
+          "total_stopped": 1802,
+          "total_activity": 2581
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "H",
+          "issued": {
+            "prev_dec": 507,
+            "jan": 40,
+            "feb": 8
+          },
+          "stopped": {
+            "prev_dec": 393,
+            "jan": 510,
+            "feb": 455
+          },
+          "total_issued": 555,
+          "total_stopped": 1358,
+          "total_activity": 1913
+        },
+        {
+          "code": "624",
+          "name": "BOFA SECURITIES",
+          "org": "H",
+          "issued": {
+            "prev_dec": 401,
+            "jan": 543,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 213,
+            "jan": 267,
+            "feb": 85
+          },
+          "total_issued": 944,
+          "total_stopped": 565,
+          "total_activity": 1509
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 326,
+            "jan": 228,
+            "feb": 144
+          },
+          "stopped": {
+            "prev_dec": 335,
+            "jan": 275,
+            "feb": 137
+          },
+          "total_issued": 698,
+          "total_stopped": 747,
+          "total_activity": 1445
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 5
+          },
+          "stopped": {
+            "prev_dec": 1271
+          },
+          "total_issued": 5,
+          "total_stopped": 1271,
+          "total_activity": 1276
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 295,
+            "jan": 379,
+            "feb": 133
+          },
+          "stopped": {
+            "prev_dec": 164,
+            "jan": 244,
+            "feb": 0
+          },
+          "total_issued": 807,
+          "total_stopped": 408,
+          "total_activity": 1215
+        },
+        {
+          "code": "435",
+          "name": "SCOTIA CAPITAL (USA)",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 256,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 449,
+            "jan": 170,
+            "feb": 223
+          },
+          "total_issued": 256,
+          "total_stopped": 842,
+          "total_activity": 1098
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 233,
+            "jan": 290,
+            "feb": 5
+          },
+          "stopped": {
+            "prev_dec": 139,
+            "jan": 131,
+            "feb": 122
+          },
+          "total_issued": 528,
+          "total_stopped": 392,
+          "total_activity": 920
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "H",
+          "issued": {
+            "jan": 154,
+            "feb": 5
+          },
+          "stopped": {
+            "jan": 496,
+            "feb": 188
+          },
+          "total_issued": 159,
+          "total_stopped": 684,
+          "total_activity": 843
+        },
+        {
+          "code": "323",
+          "name": "HSBC",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 250,
+            "jan": 251,
+            "feb": 265
+          },
+          "total_issued": 0,
+          "total_stopped": 766,
+          "total_activity": 766
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 121,
+            "jan": 175,
+            "feb": 459
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 755,
+          "total_stopped": 0,
+          "total_activity": 755
+        },
+        {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 158,
+            "jan": 175,
+            "feb": 33
+          },
+          "stopped": {
+            "prev_dec": 158,
+            "jan": 63,
+            "feb": 0
+          },
+          "total_issued": 366,
+          "total_stopped": 221,
+          "total_activity": 587
+        },
+        {
+          "code": "800",
+          "name": "MAREX SPEC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 195,
+            "jan": 154,
+            "feb": 100
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 449,
+          "total_stopped": 2,
+          "total_activity": 451
+        },
+        {
+          "code": "730",
+          "name": "PTG DIVISION OF SGAS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 296,
+            "feb": 150
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 446,
+          "total_stopped": 2,
+          "total_activity": 448
+        },
+        {
+          "code": "991",
+          "name": "CME",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 0
+          },
+          "stopped": {
+            "prev_dec": 320,
+            "jan": 83
+          },
+          "total_issued": 0,
+          "total_stopped": 403,
+          "total_activity": 403
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 400
+          },
+          "total_issued": 0,
+          "total_stopped": 400,
+          "total_activity": 400
+        },
+        {
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0
+          },
+          "stopped": {
+            "prev_dec": 400
+          },
+          "total_issued": 0,
+          "total_stopped": 400,
+          "total_activity": 400
+        },
+        {
+          "code": "104",
+          "name": "MIZUHO SECURITIES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 134,
+            "jan": 3
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "jan": 255
+          },
+          "total_issued": 137,
+          "total_stopped": 257,
+          "total_activity": 394
+        },
+        {
+          "code": "132",
+          "name": "SG AMERICAS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 374
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 374,
+          "total_stopped": 0,
+          "total_activity": 374
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "C",
+          "issued": {
+            "prev_dec": 271,
+            "jan": 29,
+            "feb": 2
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 302,
+          "total_stopped": 0,
+          "total_activity": 302
+        },
+        {
+          "code": "657",
+          "name": "MORGAN STANLEY",
+          "org": "C",
+          "issued": {
+            "prev_dec": 2,
+            "jan": 200,
+            "feb": 66
+          },
+          "stopped": {
+            "prev_dec": 10,
+            "jan": 4,
+            "feb": 0
+          },
+          "total_issued": 268,
+          "total_stopped": 14,
+          "total_activity": 282
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 129,
+            "jan": 91,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 22,
+            "jan": 8,
+            "feb": 2
+          },
+          "total_issued": 220,
+          "total_stopped": 32,
+          "total_activity": 252
+        },
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 99,
+            "jan": 6,
+            "feb": 4
+          },
+          "stopped": {
+            "prev_dec": 105,
+            "jan": 5,
+            "feb": 0
+          },
+          "total_issued": 109,
+          "total_stopped": 110,
+          "total_activity": 219
+        },
+        {
+          "code": "167",
+          "name": "MAREX",
+          "org": "C",
+          "issued": {
+            "prev_dec": 171
+          },
+          "stopped": {
+            "prev_dec": 29
+          },
+          "total_issued": 171,
+          "total_stopped": 29,
+          "total_activity": 200
+        },
+        {
+          "code": "661",
+          "name": "JP MORGAN SECURITIES",
+          "org": "H",
+          "issued": {
+            "prev_dec": 44
+          },
+          "stopped": {
+            "prev_dec": 137
+          },
+          "total_issued": 44,
+          "total_stopped": 137,
+          "total_activity": 181
+        },
+        {
+          "code": "365",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "prev_dec": 76,
+            "jan": 0
+          },
+          "stopped": {
+            "prev_dec": 7,
+            "jan": 56
+          },
+          "total_issued": 76,
+          "total_stopped": 63,
+          "total_activity": 139
+        },
+        {
+          "code": "072",
+          "name": "GOLDMAN",
+          "org": "H",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 135
+          },
+          "total_issued": 0,
+          "total_stopped": 135,
+          "total_activity": 135
+        },
+        {
+          "code": "092",
+          "name": "DEUTSCHE BANK",
+          "org": "C",
+          "issued": {
+            "prev_dec": 116
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 116,
+          "total_stopped": 0,
+          "total_activity": 116
+        },
+        {
+          "code": "285",
+          "name": "NANHUA USA-HK",
+          "org": "C",
+          "issued": {
+            "prev_dec": 98
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 98,
+          "total_stopped": 0,
+          "total_activity": 98
+        },
+        {
+          "code": "685",
+          "name": "RJ OBRIEN",
+          "org": "C",
+          "issued": {
+            "prev_dec": 24,
+            "jan": 57
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 2
+          },
+          "total_issued": 81,
+          "total_stopped": 2,
+          "total_activity": 83
+        },
+        {
+          "code": "332",
+          "name": "STANDARD CHARTERED B",
+          "org": "H",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 79
+          },
+          "total_issued": 0,
+          "total_stopped": 79,
+          "total_activity": 79
+        },
+        {
+          "code": "845",
+          "name": "GOLDMAN SACHS CLEARI",
+          "org": "C",
+          "issued": {
+            "prev_dec": 12
+          },
+          "stopped": {
+            "prev_dec": 12
+          },
+          "total_issued": 12,
+          "total_stopped": 12,
+          "total_activity": 24
+        },
+        {
+          "code": "363",
+          "name": "WELLS FARGO SECURITI",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 6,
+            "feb": 4
+          },
+          "stopped": {
+            "prev_dec": 10,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 10,
+          "total_stopped": 10,
+          "total_activity": 20
+        },
+        {
+          "code": "700",
+          "name": "UBS SECURITIES LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 8
+          },
+          "stopped": {
+            "prev_dec": 8
+          },
+          "total_issued": 8,
+          "total_stopped": 8,
+          "total_activity": 16
+        },
+        {
+          "code": "190",
+          "name": "BMO CAPITAL MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 0
+          },
+          "stopped": {
+            "prev_dec": 9,
+            "jan": 3
+          },
+          "total_issued": 0,
+          "total_stopped": 12,
+          "total_activity": 12
+        },
+        {
+          "code": "880",
+          "name": "CITIGROUP",
+          "org": "C",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 9
+          },
+          "total_issued": 0,
+          "total_stopped": 9,
+          "total_activity": 9
+        },
+        {
+          "code": "357",
+          "name": "WEDBUSH SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 3,
+            "jan": 2
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 0
+          },
+          "total_issued": 5,
+          "total_stopped": 0,
+          "total_activity": 5
+        },
+        {
+          "code": "972",
+          "name": "IRONBEAM INC",
+          "org": "H",
+          "issued": {
+            "jan": 5
+          },
+          "stopped": {
+            "jan": 0
+          },
+          "total_issued": 5,
+          "total_stopped": 0,
+          "total_activity": 5
+        },
+        {
+          "code": "523",
+          "name": "INTERACTIVE BROKERS",
+          "org": "C",
+          "issued": {
+            "jan": 0,
+            "feb": 0
+          },
+          "stopped": {
+            "jan": 2,
+            "feb": 2
+          },
+          "total_issued": 0,
+          "total_stopped": 4,
+          "total_activity": 4
+        },
+        {
+          "code": "878",
+          "name": "PHILLIP CAPITAL INC",
+          "org": "C",
+          "issued": {
+            "jan": 0
+          },
+          "stopped": {
+            "jan": 1
+          },
+          "total_issued": 0,
+          "total_stopped": 1,
+          "total_activity": 1
+        }
+      ]
+    },
+    {
+      "metal": "Micro Silver",
+      "symbol": "MSI",
+      "product_name": "MICRO SILVER FUTURES",
+      "monthly_totals": {
+        "prev_dec": 1606,
+        "jan": 468
+      },
+      "firms": [
+        {
+          "code": "991",
+          "name": "CME",
+          "org": "H",
+          "issued": {
+            "prev_dec": 1600,
+            "jan": 415
+          },
+          "stopped": {
+            "prev_dec": 0,
+            "jan": 0
+          },
+          "total_issued": 2015,
+          "total_stopped": 0,
+          "total_activity": 2015
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 0,
+            "jan": 45
+          },
+          "stopped": {
+            "prev_dec": 1028,
+            "jan": 81
+          },
+          "total_issued": 45,
+          "total_stopped": 1109,
+          "total_activity": 1154
+        },
+        {
+          "code": "737",
+          "name": "ADVANTAGE FUTURES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 4,
+            "jan": 8
+          },
+          "stopped": {
+            "prev_dec": 574,
+            "jan": 387
+          },
+          "total_issued": 12,
+          "total_stopped": 961,
+          "total_activity": 973
+        },
+        {
+          "code": "686",
+          "name": "STONEX FINANCIAL INC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1
+          },
+          "stopped": {
+            "prev_dec": 4
+          },
+          "total_issued": 1,
+          "total_stopped": 4,
+          "total_activity": 5
+        },
+        {
+          "code": "357",
+          "name": "WEDBUSH SECURITIES",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1
+          },
+          "stopped": {
+            "prev_dec": 0
+          },
+          "total_issued": 1,
+          "total_stopped": 0,
+          "total_activity": 1
+        }
+      ]
+    }
+  ],
+  "last_updated": "2026-02-10T06:34:32.190023"
+}

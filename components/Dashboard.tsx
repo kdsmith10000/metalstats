@@ -11,6 +11,17 @@ import { ChevronRight, FileText, BarChart3, FileStack } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
+// Lazy load new delivery components
+const DeliveryMTDChart = dynamic(() => import('./DeliveryMTDChart'), {
+  ssr: false,
+  loading: () => <div className="h-80 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+});
+
+const DeliveryYTDSection = dynamic(() => import('./DeliveryYTDSection'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+});
+
 // Lazy load heavy chart components
 const DemandChart = dynamic(() => import('./DemandChart'), {
   ssr: false,
@@ -103,11 +114,54 @@ interface VolumeSummaryData {
   last_updated: string;
 }
 
+interface DeliveryMTDData {
+  business_date: string;
+  parsed_date: string;
+  contracts: Array<{
+    metal: string;
+    symbol: string;
+    contract_name: string;
+    contract_month: string;
+    daily_data: Array<{
+      date: string;
+      iso_date: string;
+      daily: number;
+      cumulative: number;
+    }>;
+    total_cumulative: number;
+  }>;
+  last_updated: string;
+}
+
+interface DeliveryYTDData {
+  business_date: string;
+  parsed_date: string;
+  products: Array<{
+    metal: string;
+    symbol: string;
+    product_name: string;
+    monthly_totals: Record<string, number>;
+    firms: Array<{
+      code: string;
+      name: string;
+      org: string;
+      issued: Record<string, number>;
+      stopped: Record<string, number>;
+      total_issued: number;
+      total_stopped: number;
+      total_activity: number;
+    }>;
+  }>;
+  last_updated: string;
+}
+
 interface DashboardProps {
   data: WarehouseStocksData;
   bulletinData?: BulletinData | null;
   deliveryData?: DeliveryData | null;
   volumeSummaryData?: VolumeSummaryData | null;
+  deliveryMtdData?: DeliveryMTDData | null;
+  deliveryYtdData?: DeliveryYTDData | null;
   lastUpdatedText?: string;
 }
 
@@ -182,7 +236,7 @@ function NativeBanner() {
   );
 }
 
-export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, deliveryMtdData, deliveryYtdData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
@@ -660,6 +714,40 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </section>
           
           {/* Spacer between sections */}
+          <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
+        </>
+      )}
+
+      {/* MTD Delivery Progression */}
+      {deliveryMtdData && deliveryMtdData.contracts && deliveryMtdData.contracts.length > 0 && (
+        <>
+          <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pb-12 sm:pb-16 md:pb-24">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16 gap-4">
+              <div className="max-w-xl space-y-3 sm:space-y-8">
+                <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
+                  MTD Progression
+                </h2>
+                <p className="text-sm sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase">
+                  DAILY DELIVERY BUILDUP — {deliveryMtdData.business_date}
+                </p>
+              </div>
+            </div>
+            <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm">
+              <DeliveryMTDChart data={deliveryMtdData} />
+            </div>
+          </section>
+          
+          <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
+        </>
+      )}
+
+      {/* YTD Delivery Section */}
+      {deliveryYtdData && deliveryYtdData.products && deliveryYtdData.products.length > 0 && (
+        <>
+          <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pb-12 sm:pb-16 md:pb-24">
+            <DeliveryYTDSection data={deliveryYtdData} />
+          </section>
+          
           <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
         </>
       )}
