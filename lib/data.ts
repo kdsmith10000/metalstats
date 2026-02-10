@@ -129,9 +129,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fcd34d',
     unit: 'oz',
     contractSize: 100,
-    // Feb 2026 MTD: 32,502 contracts = 3,250,200 oz actual delivery demand
-    monthlyDemand: 3250200, // 32,502 contracts * 100 oz (Feb 5 MTD)
-    pricePerUnit: 4889,  // Updated to Feb 5 settle price (GC APR26)
+    // Feb 2026 MTD: 33,783 contracts = 3,378,300 oz actual delivery demand
+    monthlyDemand: 3378300, // 33,783 contracts * 100 oz (Feb 9 MTD)
+    pricePerUnit: 5051,  // Updated to Feb 9 settle price (GC FEB26)
     futuresSymbol: 'GC', // COMEX Gold Futures
   },
   {
@@ -141,9 +141,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#cbd5e1',
     unit: 'oz',
     contractSize: 5000,
-    // Feb 2026 MTD: 3,744 contracts = 18,720,000 oz actual delivery demand
-    monthlyDemand: 18720000, // 3,744 contracts * 5,000 oz (Feb 5 MTD)
-    pricePerUnit: 77,  // Updated to Feb 5 settle price (~$76.714/oz)
+    // Feb 2026 MTD: 4,490 contracts = 22,450,000 oz actual delivery demand
+    monthlyDemand: 22450000, // 4,490 contracts * 5,000 oz (Feb 9 MTD)
+    pricePerUnit: 82,  // Updated to Feb 9 settle price (~$82.065/oz)
     futuresSymbol: 'SI', // COMEX Silver Futures
   },
   {
@@ -153,9 +153,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#94a3b8',
     unit: 'metric tons',
     contractSize: 44,
-    // Feb 2026 MTD: 73 contracts = 3,212 MT actual delivery demand
-    monthlyDemand: 3212, // 73 contracts * 44 MT (Feb 5 MTD)
-    pricePerUnit: 2956,  // Updated to Feb 5 settle price (ALI APR26)
+    // Feb 2026 MTD: no aluminum deliveries reported
+    monthlyDemand: 3212, // Using previous estimate (Feb 5 MTD)
+    pricePerUnit: 3058,  // Updated to Feb 9 settle price (ALI)
     futuresSymbol: 'ALI', // COMEX Aluminum Futures
   },
   {
@@ -165,9 +165,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#c4b5fd',
     unit: 'oz',
     contractSize: 50, // Both PL and PA are 50 oz contracts
-    // Feb 2026 MTD: Platinum 455 contracts = 22,750 oz
-    monthlyDemand: 22750, // 455 contracts * 50 oz (Feb 5 MTD)
-    pricePerUnit: 2071,  // Updated to Feb 5 PL settle price (PL APR26)
+    // Feb 2026 MTD: Platinum 485 + Palladium 92 = 577 contracts = 28,850 oz
+    monthlyDemand: 28850, // 577 contracts * 50 oz (Feb 9 MTD)
+    pricePerUnit: 2109,  // Updated to Feb 9 PL settle price
     futuresSymbol: 'PL+PA', // Combined - requires special handling
   },
   {
@@ -177,9 +177,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fb923c',
     unit: 'short tons', // COMEX warehouse stocks are in short tons
     contractSize: 12.5, // 25,000 lbs = 12.5 short tons per contract
-    // Feb 2026 MTD: 6,499 contracts = 81,237.5 short tons actual delivery demand
-    monthlyDemand: 81238, // 6,499 contracts * 12.5 short tons (Feb 5 MTD)
-    pricePerUnit: 11642, // ~$5.821/lb * 2000 lbs/short ton (Feb 5 settle)
+    // Feb 2026 MTD: 7,098 contracts = 88,725 short tons actual delivery demand
+    monthlyDemand: 88725, // 7,098 contracts * 12.5 short tons (Feb 9 MTD)
+    pricePerUnit: 11890, // ~$5.945/lb * 2000 lbs/short ton (Feb 9 settle)
     futuresSymbol: 'HG', // COMEX Copper Futures
   },
 ];
