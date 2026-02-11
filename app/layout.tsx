@@ -115,8 +115,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Get the last updated timestamp from bulletin/delivery data (most reliable source)
-  let lastUpdatedText = 'February 7, 2026'; // Fallback
-  let lastUpdatedISO = '2026-02-07';
+  let lastUpdatedText = 'February 11, 2026'; // Fallback
+  let lastUpdatedISO = '2026-02-11';
 
   try {
     const bulletinData = (await import('../public/bulletin.json')).default as { last_updated?: string };

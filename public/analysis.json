@@ -1,0 +1,669 @@
+{
+  "analysis_date": "2026-02-11 06:12:51",
+  "data_date": "February 11, 2026",
+  "warehouse_summary": {
+    "per_metal": {
+      "Gold": {
+        "registered": 17799159.77,
+        "eligible": 17430650.87,
+        "total": 35229810.64,
+        "registered_pct": 50.52,
+        "eligible_pct": 49.48,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "BRINK'S, INC.",
+            "registered": 7433840.837,
+            "eligible": 2795202.12,
+            "total": 10229042.957
+          },
+          {
+            "name": "HSBC BANK, USA",
+            "registered": 1938638.284,
+            "eligible": 4917175.963,
+            "total": 6855814.247
+          },
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 2856812.666,
+            "eligible": 3521185.236,
+            "total": 6377997.902000001
+          },
+          {
+            "name": "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+            "registered": 0.0,
+            "eligible": 3696328.027,
+            "total": 3696328.027
+          },
+          {
+            "name": "MANFRA, TORDELLA & BROOKES, LLC",
+            "registered": 1634369.429,
+            "eligible": 805147.576,
+            "total": 2439517.005
+          }
+        ]
+      },
+      "Silver": {
+        "registered": 101394888.43,
+        "eligible": 284878136.49,
+        "total": 386273024.93,
+        "registered_pct": 26.25,
+        "eligible_pct": 73.75,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 12117421.82,
+            "eligible": 153762189.683,
+            "total": 165879611.503
+          },
+          {
+            "name": "BRINK'S, INC.",
+            "registered": 17976740.579,
+            "eligible": 38785679.541,
+            "total": 56762420.120000005
+          },
+          {
+            "name": "LOOMIS INTERNATIONAL (US) LLC",
+            "registered": 7540301.607,
+            "eligible": 24268277.426,
+            "total": 31808579.033
+          },
+          {
+            "name": "CNT DEPOSITORY, INC.",
+            "registered": 15828675.829,
+            "eligible": 12820940.973,
+            "total": 28649616.802
+          },
+          {
+            "name": "ASAHI DEPOSITORY LLC",
+            "registered": 24895753.652,
+            "eligible": 2656602.278,
+            "total": 27552355.93
+          }
+        ]
+      },
+      "Copper": {
+        "registered": 683585.0,
+        "eligible": 453989.0,
+        "total": 1137574.0,
+        "registered_pct": 60.09,
+        "eligible_pct": 39.91,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "TUCSON",
+            "registered": 359754.0,
+            "eligible": 231705.0,
+            "total": 591459.0
+          },
+          {
+            "name": "NEW ORLEANS",
+            "registered": 231812.0,
+            "eligible": 191210.0,
+            "total": 423022.0
+          },
+          {
+            "name": "SALT LAKE CITY",
+            "registered": 43312.0,
+            "eligible": 5171.0,
+            "total": 48483.0
+          },
+          {
+            "name": "BALTIMORE",
+            "registered": 15760.0,
+            "eligible": 25102.0,
+            "total": 40862.0
+          },
+          {
+            "name": "DETROIT",
+            "registered": 16990.0,
+            "eligible": 579.0,
+            "total": 17569.0
+          }
+        ]
+      },
+      "Platinum": {
+        "registered": 319682.01,
+        "eligible": 263687.2,
+        "total": 583369.21,
+        "registered_pct": 54.8,
+        "eligible_pct": 45.2,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 114061.421,
+            "eligible": 76408.669,
+            "total": 190470.09
+          },
+          {
+            "name": "BRINK'S, INC.",
+            "registered": 73354.783,
+            "eligible": 85821.847,
+            "total": 159176.63
+          },
+          {
+            "name": "LOOMIS INTERNATIONAL (US) LLC",
+            "registered": 61157.444,
+            "eligible": 71594.187,
+            "total": 132751.631
+          },
+          {
+            "name": "MANFRA, TORDELLA & BROOKES, LLC",
+            "registered": 49920.248,
+            "eligible": 2104.855,
+            "total": 52025.103
+          },
+          {
+            "name": "DELAWARE DEPOSITORY",
+            "registered": 1633.941,
+            "eligible": 18459.584,
+            "total": 20093.524999999998
+          }
+        ]
+      },
+      "Palladium": {
+        "registered": 148317.64,
+        "eligible": 38545.46,
+        "total": 186863.1,
+        "registered_pct": 79.37,
+        "eligible_pct": 20.63,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "MANFRA, TORDELLA & BROOKES, LLC",
+            "registered": 74639.429,
+            "eligible": 20414.199,
+            "total": 95053.628
+          },
+          {
+            "name": "LOOMIS INTERNATIONAL (US) LLC",
+            "registered": 41614.091,
+            "eligible": 3011.636,
+            "total": 44625.727
+          },
+          {
+            "name": "JP MORGAN CHASE BANK NA",
+            "registered": 17669.229,
+            "eligible": 102.648,
+            "total": 17771.877
+          },
+          {
+            "name": "BRINK'S, INC.",
+            "registered": 7448.018,
+            "eligible": 9785.668,
+            "total": 17233.686
+          },
+          {
+            "name": "STONEX PRECIOUS METALS LLC",
+            "registered": 5475.747,
+            "eligible": 0.0,
+            "total": 5475.747
+          }
+        ]
+      },
+      "Aluminum": {
+        "registered": 4670.0,
+        "eligible": 3141.0,
+        "total": 7811.0,
+        "registered_pct": 59.79,
+        "eligible_pct": 40.21,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "TOLEDO.",
+            "registered": 2335.0,
+            "eligible": 1598.0,
+            "total": 3933.0
+          },
+          {
+            "name": "JOHOR, MALAYSIA",
+            "registered": 1439.0,
+            "eligible": 99.0,
+            "total": 1538.0
+          },
+          {
+            "name": "PORT KLANG, MALAYSIA",
+            "registered": 223.0,
+            "eligible": 1117.0,
+            "total": 1340.0
+          },
+          {
+            "name": "GWANGYANG \"KWANGYANG\", REPUBLIC OF KOREA",
+            "registered": 200.0,
+            "eligible": 300.0,
+            "total": 500.0
+          },
+          {
+            "name": "SINGAPORE, REPUBLIC OF SINGAPORE",
+            "registered": 299.0,
+            "eligible": 0.0,
+            "total": 299.0
+          }
+        ]
+      },
+      "Zinc": {
+        "registered": 0.0,
+        "eligible": 404.0,
+        "total": 404.0,
+        "registered_pct": 0.0,
+        "eligible_pct": 100.0,
+        "report_date": "2/10/2026",
+        "top_depositories": [
+          {
+            "name": "NEW ORLEANS",
+            "registered": 0.0,
+            "eligible": 202.0,
+            "total": 202.0
+          },
+          {
+            "name": "TOLEDO.",
+            "registered": 0.0,
+            "eligible": 202.0,
+            "total": 202.0
+          }
+        ]
+      }
+    },
+    "top_5_depositories_overall": [
+      {
+        "metal": "Silver",
+        "depository": "JP MORGAN CHASE BANK NA",
+        "total": 165879611.503
+      },
+      {
+        "metal": "Silver",
+        "depository": "BRINK'S, INC.",
+        "total": 56762420.120000005
+      },
+      {
+        "metal": "Silver",
+        "depository": "LOOMIS INTERNATIONAL (US) LLC",
+        "total": 31808579.033
+      },
+      {
+        "metal": "Silver",
+        "depository": "CNT DEPOSITORY, INC.",
+        "total": 28649616.802
+      },
+      {
+        "metal": "Silver",
+        "depository": "ASAHI DEPOSITORY LLC",
+        "total": 27552355.93
+      }
+    ]
+  },
+  "delivery_analysis": {
+    "mtd_totals_contracts": {
+      "Aluminum": 75,
+      "Gold": 33959,
+      "Copper": 7279,
+      "Silver": 4592,
+      "Palladium": 92,
+      "Platinum": 485
+    },
+    "daily_velocity": {
+      "Aluminum": {
+        "avg_daily_contracts": 15.0,
+        "last_daily_contracts": 1,
+        "delivery_days_counted": 5
+      },
+      "Gold": {
+        "avg_daily_contracts": 3773.2,
+        "last_daily_contracts": 167,
+        "delivery_days_counted": 9
+      },
+      "Copper": {
+        "avg_daily_contracts": 808.8,
+        "last_daily_contracts": 290,
+        "delivery_days_counted": 9
+      },
+      "Silver": {
+        "avg_daily_contracts": 510.2,
+        "last_daily_contracts": 429,
+        "delivery_days_counted": 9
+      },
+      "Palladium": {
+        "avg_daily_contracts": 18.4,
+        "last_daily_contracts": 1,
+        "delivery_days_counted": 5
+      },
+      "Platinum": {
+        "avg_daily_contracts": 60.6,
+        "last_daily_contracts": 20,
+        "delivery_days_counted": 8
+      }
+    },
+    "delivery_to_inventory": {
+      "Aluminum": {
+        "mtd_contracts": 75,
+        "mtd_physical_amount": 3300000,
+        "registered_inventory": 10295575.4,
+        "delivery_to_registered_pct": 32.05,
+        "unit": "lbs"
+      },
+      "Gold": {
+        "mtd_contracts": 33959,
+        "mtd_physical_amount": 3395900,
+        "registered_inventory": 17799159.77,
+        "delivery_to_registered_pct": 19.08,
+        "unit": "troy oz"
+      },
+      "Copper": {
+        "mtd_contracts": 7279,
+        "mtd_physical_amount": 181975000,
+        "registered_inventory": 1367170000.0,
+        "delivery_to_registered_pct": 13.31,
+        "unit": "lbs"
+      },
+      "Silver": {
+        "mtd_contracts": 4592,
+        "mtd_physical_amount": 22960000,
+        "registered_inventory": 101394888.43,
+        "delivery_to_registered_pct": 22.64,
+        "unit": "troy oz"
+      },
+      "Palladium": {
+        "mtd_contracts": 92,
+        "mtd_physical_amount": 9200,
+        "registered_inventory": 148317.64,
+        "delivery_to_registered_pct": 6.2,
+        "unit": "troy oz"
+      },
+      "Platinum": {
+        "mtd_contracts": 485,
+        "mtd_physical_amount": 24250,
+        "registered_inventory": 319682.01,
+        "delivery_to_registered_pct": 7.59,
+        "unit": "troy oz"
+      }
+    },
+    "heaviest_delivery_metals": [
+      {
+        "metal": "Aluminum",
+        "mtd_contracts": 75,
+        "mtd_physical_amount": 3300000,
+        "registered_inventory": 10295575.4,
+        "delivery_to_registered_pct": 32.05,
+        "unit": "lbs"
+      },
+      {
+        "metal": "Silver",
+        "mtd_contracts": 4592,
+        "mtd_physical_amount": 22960000,
+        "registered_inventory": 101394888.43,
+        "delivery_to_registered_pct": 22.64,
+        "unit": "troy oz"
+      },
+      {
+        "metal": "Gold",
+        "mtd_contracts": 33959,
+        "mtd_physical_amount": 3395900,
+        "registered_inventory": 17799159.77,
+        "delivery_to_registered_pct": 19.08,
+        "unit": "troy oz"
+      },
+      {
+        "metal": "Copper",
+        "mtd_contracts": 7279,
+        "mtd_physical_amount": 181975000,
+        "registered_inventory": 1367170000.0,
+        "delivery_to_registered_pct": 13.31,
+        "unit": "lbs"
+      },
+      {
+        "metal": "Platinum",
+        "mtd_contracts": 485,
+        "mtd_physical_amount": 24250,
+        "registered_inventory": 319682.01,
+        "delivery_to_registered_pct": 7.59,
+        "unit": "troy oz"
+      },
+      {
+        "metal": "Palladium",
+        "mtd_contracts": 92,
+        "mtd_physical_amount": 9200,
+        "registered_inventory": 148317.64,
+        "delivery_to_registered_pct": 6.2,
+        "unit": "troy oz"
+      }
+    ],
+    "top_firms_ytd": [
+      {
+        "firm": "JP MORGAN SECURITIES",
+        "total_issued": 43997,
+        "total_stopped": 46922,
+        "total_activity": 90919,
+        "metals_count": 6
+      },
+      {
+        "firm": "STONEX FINANCIAL INC",
+        "total_issued": 10501,
+        "total_stopped": 10725,
+        "total_activity": 21226,
+        "metals_count": 7
+      },
+      {
+        "firm": "CITIGROUP",
+        "total_issued": 6199,
+        "total_stopped": 11386,
+        "total_activity": 17585,
+        "metals_count": 5
+      },
+      {
+        "firm": "WELLS FARGO SECURITI",
+        "total_issued": 8995,
+        "total_stopped": 7339,
+        "total_activity": 16334,
+        "metals_count": 5
+      },
+      {
+        "firm": "RBC CAP MARKETS",
+        "total_issued": 5919,
+        "total_stopped": 9572,
+        "total_activity": 15491,
+        "metals_count": 6
+      },
+      {
+        "firm": "MACQUARIE FUTURES US",
+        "total_issued": 7776,
+        "total_stopped": 6378,
+        "total_activity": 14154,
+        "metals_count": 5
+      },
+      {
+        "firm": "SCOTIA CAPITAL (USA)",
+        "total_issued": 5067,
+        "total_stopped": 9001,
+        "total_activity": 14068,
+        "metals_count": 4
+      },
+      {
+        "firm": "DEUTSCHE BANK AG",
+        "total_issued": 5588,
+        "total_stopped": 5255,
+        "total_activity": 10843,
+        "metals_count": 3
+      },
+      {
+        "firm": "BARCLAYS",
+        "total_issued": 7274,
+        "total_stopped": 3029,
+        "total_activity": 10303,
+        "metals_count": 1
+      },
+      {
+        "firm": "BNP PARIBAS SEC CORP",
+        "total_issued": 5602,
+        "total_stopped": 4604,
+        "total_activity": 10206,
+        "metals_count": 5
+      }
+    ]
+  },
+  "market_structure": {
+    "Gold": {
+      "symbol": "GC",
+      "open_interest": 407181,
+      "oi_change": 2735,
+      "volume": 125161,
+      "volume_to_oi_ratio": 0.307,
+      "paper_claims_physical": 40718100,
+      "registered_inventory_converted": 17799159.77,
+      "paper_to_physical_ratio": 2.29,
+      "contract_unit": "troy oz",
+      "contract_size": 100
+    },
+    "Silver": {
+      "symbol": "SI",
+      "open_interest": 134078,
+      "oi_change": -2042,
+      "volume": 78296,
+      "volume_to_oi_ratio": 0.584,
+      "paper_claims_physical": 670390000,
+      "registered_inventory_converted": 101394888.43,
+      "paper_to_physical_ratio": 6.61,
+      "contract_unit": "troy oz",
+      "contract_size": 5000
+    },
+    "Copper": {
+      "symbol": "HG",
+      "open_interest": 270812,
+      "oi_change": -1064,
+      "volume": 74300,
+      "volume_to_oi_ratio": 0.274,
+      "paper_claims_physical": 6770300000,
+      "registered_inventory_converted": 1367170000.0,
+      "paper_to_physical_ratio": 4.95,
+      "contract_unit": "lbs",
+      "contract_size": 25000
+    },
+    "Platinum": {
+      "symbol": "PL",
+      "open_interest": 69061,
+      "oi_change": -503,
+      "volume": 13164,
+      "volume_to_oi_ratio": 0.191,
+      "paper_claims_physical": 3453050,
+      "registered_inventory_converted": 319682.01,
+      "paper_to_physical_ratio": 10.8,
+      "contract_unit": "troy oz",
+      "contract_size": 50
+    },
+    "Palladium": {
+      "symbol": "PA",
+      "open_interest": 16536,
+      "oi_change": -16,
+      "volume": 5259,
+      "volume_to_oi_ratio": 0.318,
+      "paper_claims_physical": 1653600,
+      "registered_inventory_converted": 148317.64,
+      "paper_to_physical_ratio": 11.15,
+      "contract_unit": "troy oz",
+      "contract_size": 100
+    },
+    "Aluminum": {
+      "symbol": "ALI",
+      "open_interest": 2313,
+      "oi_change": -50,
+      "volume": 584,
+      "volume_to_oi_ratio": 0.252,
+      "paper_claims_physical": 101772000,
+      "registered_inventory_converted": 10295575.4,
+      "paper_to_physical_ratio": 9.89,
+      "contract_unit": "lbs",
+      "contract_size": 44000
+    }
+  },
+  "risk_assessment": {
+    "per_metal": {
+      "Gold": {
+        "coverage_days": 47.2,
+        "paper_to_physical_ratio": 2.29,
+        "mtd_delivery_to_inventory_pct": 19.08,
+        "risk_factors": [
+          "High MTD delivery ratio: 19.08%"
+        ],
+        "risk_level": "MODERATE"
+      },
+      "Silver": {
+        "coverage_days": 39.7,
+        "paper_to_physical_ratio": 6.61,
+        "mtd_delivery_to_inventory_pct": 22.64,
+        "risk_factors": [
+          "High paper-to-physical ratio: 6.61:1",
+          "High MTD delivery ratio: 22.64%"
+        ],
+        "risk_level": "ELEVATED"
+      },
+      "Copper": {
+        "coverage_days": 67.6,
+        "paper_to_physical_ratio": 4.95,
+        "mtd_delivery_to_inventory_pct": 13.31,
+        "risk_factors": [
+          "High MTD delivery ratio: 13.31%"
+        ],
+        "risk_level": "MODERATE"
+      },
+      "Platinum": {
+        "coverage_days": 105.5,
+        "paper_to_physical_ratio": 10.8,
+        "mtd_delivery_to_inventory_pct": 7.59,
+        "risk_factors": [
+          "High paper-to-physical ratio: 10.8:1"
+        ],
+        "risk_level": "MODERATE"
+      },
+      "Palladium": {
+        "coverage_days": 80.6,
+        "paper_to_physical_ratio": 11.15,
+        "mtd_delivery_to_inventory_pct": 6.2,
+        "risk_factors": [
+          "High paper-to-physical ratio: 11.15:1"
+        ],
+        "risk_level": "MODERATE"
+      },
+      "Aluminum": {
+        "coverage_days": 15.6,
+        "paper_to_physical_ratio": 9.89,
+        "mtd_delivery_to_inventory_pct": 32.05,
+        "risk_factors": [
+          "High paper-to-physical ratio: 9.89:1",
+          "High MTD delivery ratio: 32.05%",
+          "Low coverage: 15.6 days"
+        ],
+        "risk_level": "HIGH"
+      }
+    },
+    "alerts": [
+      "ALERT: Gold MTD deliveries = 19.08% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Silver paper-to-physical ratio is 6.61:1 (exceeds 5:1 threshold)",
+      "ALERT: Silver MTD deliveries = 22.64% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Copper MTD deliveries = 13.31% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Platinum paper-to-physical ratio is 10.8:1 (exceeds 5:1 threshold)",
+      "ALERT: Palladium paper-to-physical ratio is 11.15:1 (exceeds 5:1 threshold)",
+      "ALERT: Aluminum paper-to-physical ratio is 9.89:1 (exceeds 5:1 threshold)",
+      "ALERT: Aluminum MTD deliveries = 32.05% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Aluminum registered inventory covers only 15.6 days at current delivery rate"
+    ],
+    "overall_risk_level": "ELEVATED",
+    "summary": "1 metals at HIGH risk, 1 at ELEVATED risk"
+  },
+  "key_findings": [
+    "Silver: Only 26.25% of warehouse stock is registered (available for delivery), indicating most metal is in eligible (private) storage.",
+    "Palladium: 79.37% of warehouse stock is registered, suggesting strong delivery availability.",
+    "Zinc: Only 0.0% of warehouse stock is registered (available for delivery), indicating most metal is in eligible (private) storage.",
+    "Zinc: ZERO registered inventory across all COMEX depositories. No physical zinc is available for futures delivery.",
+    "Aluminum has the highest delivery-to-inventory ratio at 32.05%, meaning MTD deliveries represent a significant portion of registered stock.",
+    "Palladium has the highest paper-to-physical ratio at 11.15:1, meaning there are 11.15 ounces/lbs of paper claims for every unit of registered physical metal. This indicates potential squeeze risk.",
+    "Metals with relatively low paper-to-physical exposure: Gold.",
+    "Gold open interest increased by 2,735 contracts to 407,181, suggesting new money entering the market.",
+    "Gold has exceptionally high MTD deliveries of 33,959 contracts (3,395,900 troy oz), indicating massive physical demand.",
+    "Top delivery firm YTD: JP MORGAN SECURITIES with 90,919 total contracts (43,997 issued, 46,922 stopped) across 6 metals.",
+    "Overall COMEX metals market stress: ELEVATED. 1 metals at HIGH risk, 1 at ELEVATED risk.",
+    "Gold: At current delivery pace, registered inventory would be exhausted in approximately 47.2 days.",
+    "Silver: At current delivery pace, registered inventory would be exhausted in approximately 39.7 days.",
+    "Aluminum: At current delivery pace, registered inventory would be exhausted in approximately 15.6 days."
+  ]
+}
