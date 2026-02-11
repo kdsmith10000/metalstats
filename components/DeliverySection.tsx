@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronDown, HelpCircle } from 'lucide-react';
 
 interface DeliveryData {
   metal: string;
@@ -42,6 +43,39 @@ function formatCurrency(num: number): string {
   return `$${num.toFixed(2)}`;
 }
 
+function DeliveryExplainer() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="max-w-lg">
+      <button
+        onClick={() => setOpen(!open)}
+        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+      >
+        <HelpCircle className="w-3.5 h-3.5" />
+        <span>What are issues, stops & settlement?</span>
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <div
+        className={`grid transition-all duration-300 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
+      >
+        <div className="overflow-hidden">
+          <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-500 leading-relaxed mb-3">
+            When a futures contract expires, holders can take physical delivery. An <strong className="text-slate-600 dark:text-slate-300">issue</strong> is a seller delivering metal, a <strong className="text-slate-600 dark:text-slate-300">stop</strong> is a buyer accepting it, and the <strong className="text-slate-600 dark:text-slate-300">settlement</strong> is the final price at which the contract was settled.
+          </p>
+          <Link
+            href="/learn/delivery"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
+          >
+            <span>Learn more about COMEX delivery</span>
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function DeliverySection({ data }: DeliverySectionProps) {
   // Sort deliveries by daily_issued descending
   const sortedDeliveries = [...data.deliveries].sort((a, b) => b.daily_issued - a.daily_issued);
@@ -62,16 +96,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
           <p className="text-sm sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase">
             DAILY ISSUES & STOPS — {data.business_date}
           </p>
-          <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-500 leading-relaxed max-w-lg">
-            When a futures contract expires, holders can take physical delivery. An <strong className="text-slate-600 dark:text-slate-300">issue</strong> is a seller delivering metal, a <strong className="text-slate-600 dark:text-slate-300">stop</strong> is a buyer accepting it, and the <strong className="text-slate-600 dark:text-slate-300">settlement</strong> is the final price at which the contract was settled.
-          </p>
-          <Link
-            href="/learn/delivery"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
-          >
-            <span>What are issues, stops & settlement? Learn about COMEX delivery here</span>
-            <ChevronRight className="w-4 h-4" />
-          </Link>
+          <DeliveryExplainer />
         </div>
         
         {/* Summary Stats */}
