@@ -18,8 +18,191 @@ except ImportError:
     HAS_PSYCOPG2 = False
 
 
+def _strip_page_headers(text: str) -> str:
+    """Remove repeated page headers/footers from concatenated PDF text.
+    
+    This strips the '62 METAL FUTURES PRODUCTS 62', 'Side XX', bulletin header,
+    disclaimer, and copyright lines that appear on every page, so product
+    sections that span page boundaries can be parsed as contiguous blocks.
+    """
+    lines = text.split('\n')
+    cleaned = []
+    skip_patterns = [
+        re.compile(r'^62\s+METAL\s+FUTURES\s+PRODUCTS\s+62'),
+        re.compile(r'^Side\s+\d+\s+Side\s+\d+'),
+        re.compile(r'^\d{4}\s+DAILY\s+INFORMATION\s+BULLETIN'),
+        re.compile(r'^CME\s+Group,\s+Inc\.'),
+        re.compile(r'^20\s+South\s+Wacker'),
+        re.compile(r'^Customer\s+Service:'),
+        re.compile(r'^PRELIMINARY$'),
+        re.compile(r'^PG62\s+BULLETIN'),
+        re.compile(r'^THE\s+CME\s+GROUP\s+DAILY\s+BULLETIN'),
+        re.compile(r'^PRIVATELY\s+NEGOTIATED'),
+        re.compile(r'^TRADING\)\s+MAY\s+BE\s+AFFECTED'),
+        re.compile(r'^EXERCISES\s+OR\s+ASSIGNMENTS'),
+        re.compile(r'^PRICE\s+INDICATOR\s+KEY'),
+        re.compile(r'^R=\s+RECORD\s+VOLUME'),
+        re.compile(r'^THE\s+RTH\s+SESSION'),
+        re.compile(r'^DAY\'S\s+SETTLEMENT'),
+        re.compile(r'^FUTURES\s+PRODUCTS$'),
+        re.compile(r'^GLOBEX$'),
+        re.compile(r'^GLOBEX\s+OPEN\s+HIGH/LOW'),
+        re.compile(r'^&\s+PT\.\s+CHGE'),
+        re.compile(r'^NYMEX\s+METAL\s+FUTURES\s+PRODUCTS$'),
+        re.compile(r'^THE\s+INFORMATION\s+CONTAINED'),
+        re.compile(r'^IS\s+ACCEPTED\s+BY\s+THE\s+USER'),
+        re.compile(r'^©\s+Copyright\s+CME'),
+        re.compile(r'^METALS\s+CONTRACTS\s+LAST\s+TRADE'),
+        re.compile(r'^EXPIRATION:'),
+        re.compile(r'^EX-PIT\s+&\s+OTHER'),
+        re.compile(r'^DELIVERY-------'),
+        re.compile(r'^CASH\s+OR\s+PHY'),
+        re.compile(r'^SETTLED\s+TOTALS'),
+        re.compile(r'^TO-DATE$'),
+    ]
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if any(p.match(stripped) for p in skip_patterns):
+            continue
+        cleaned.append(line)
+    return '\n'.join(cleaned)
+
+
+def _parse_contract_line(line: str) -> dict | None:
+    """Parse a single contract line using right-to-left token extraction.
+    
+    Handles all observed formats including:
+      - Full line: APR26 5084.30 5102.70/5011.00 5031.00 - 48.40 104137 1521 283581 + 399
+      - No open/HL: FEB26 ---- ---- 5003.80 - 47.10 281 ---- 3885 - 164
+      - UNCH change: OCT26 5161.25 5161.25/5161.25 5139.50 - 49.75 1 ---- 9 UNCH
+      - NEW change:  JAN28 5401.00 5401.00/5401.00 5368.50 NEW 1 ---- 1 + 1
+      - B/A suffix:  JUL26 3069.00 3085.50B/3069.00 3065.75 - 44.25 18 ---- 88 + 11
+    """
+    tokens = line.split()
+    if len(tokens) < 5:
+        return None
+    
+    # First token must be a month code: 3 uppercase letters + 2 digits
+    if not re.match(r'^[A-Z]{3}\d{2}$', tokens[0]):
+        return None
+    
+    month = tokens[0]
+    idx = len(tokens) - 1
+    
+    try:
+        # --- Parse from right to left ---
+        
+        # 1. OI change (rightmost): UNCH, or sign + number
+        oi_change = 0
+        if tokens[idx] == 'UNCH':
+            idx -= 1
+        elif idx >= 1 and tokens[idx - 1] in ('+', '-'):
+            sign = 1 if tokens[idx - 1] == '+' else -1
+            oi_change = sign * int(tokens[idx])
+            idx -= 2
+        
+        # 2. Open interest (integer)
+        open_interest = int(tokens[idx])
+        idx -= 1
+        
+        # 3. PNT volume (integer or ----)
+        pnt_volume = 0 if tokens[idx] == '----' else int(tokens[idx])
+        idx -= 1
+        
+        # 4. Globex volume (integer or ----)
+        globex_volume = 0 if tokens[idx] == '----' else int(tokens[idx])
+        idx -= 1
+        
+        # 5. Price change: UNCH, NEW, sign + number, or single signed token
+        change = 0.0
+        if tokens[idx] in ('UNCH', 'NEW'):
+            idx -= 1
+        elif idx >= 1 and tokens[idx - 1] in ('+', '-'):
+            sign = 1.0 if tokens[idx - 1] == '+' else -1.0
+            change = sign * float(tokens[idx])
+            idx -= 2
+        elif re.match(r'^[+-][\d.]+$', tokens[idx]):
+            # Single signed token (e.g. -0.00429)
+            change = float(tokens[idx])
+            idx -= 1
+        
+        # 6. Settle price (always present, decimal)
+        settle_str = tokens[idx].rstrip('BA')
+        settle = float(settle_str)
+        
+        return {
+            'month': month,
+            'settle': settle,
+            'change': change,
+            'globex_volume': globex_volume,
+            'pnt_volume': pnt_volume,
+            'open_interest': open_interest,
+            'oi_change': oi_change,
+        }
+    except (ValueError, IndexError):
+        return None
+
+
+def _parse_total_line(line: str, code: str) -> dict | None:
+    """Parse a TOTAL line for a product.
+    
+    Formats observed:
+      TOTAL 1OZ FUT 78383 18635 + 132          → vol, OI, oi_change
+      TOTAL GC FUT 122886 2275 407181 + 2735    → globex, pnt, OI, oi_change
+      TOTAL ALA FUT 1455                        → OI only (no volume)
+      TOTAL QI FUT 2382 1206 - 1                → vol, OI, oi_change
+    """
+    pattern = rf'TOTAL\s+{re.escape(code)}\s+FUT\s+(.*)'
+    match = re.search(pattern, line)
+    if not match:
+        return None
+    
+    remainder = match.group(1).strip()
+    tokens = remainder.split()
+    
+    if not tokens:
+        return None
+    
+    # Parse OI change from the right
+    oi_change = 0
+    if len(tokens) >= 2 and tokens[-2] in ('+', '-'):
+        sign = 1 if tokens[-2] == '+' else -1
+        oi_change = sign * int(tokens[-1])
+        tokens = tokens[:-2]
+    elif tokens[-1] == 'UNCH':
+        tokens = tokens[:-1]
+    
+    total_volume = 0
+    total_oi = 0
+    
+    if len(tokens) == 1:
+        # Just OI (no volume traded)
+        total_oi = int(tokens[0])
+    elif len(tokens) == 2:
+        # vol, OI (no PNT breakdown)
+        total_volume = int(tokens[0])
+        total_oi = int(tokens[1])
+    elif len(tokens) == 3:
+        # globex_vol, pnt_vol, OI
+        total_volume = int(tokens[0]) + int(tokens[1])
+        total_oi = int(tokens[2])
+    
+    return {
+        'total_volume': total_volume,
+        'total_open_interest': total_oi,
+        'total_oi_change': oi_change,
+    }
+
+
 def parse_bulletin_pdf(pdf_path: str) -> dict:
-    """Parse Section 62 bulletin for open interest data using pdfplumber."""
+    """Parse Section 62 bulletin for open interest data using pdfplumber.
+    
+    Extracts text from all pages, strips page headers, then finds each
+    product section between its header (SYMBOL FUT NAME) and TOTAL line.
+    Contract lines are parsed with a robust right-to-left token approach.
+    """
     print(f"[INFO] Parsing bulletin: {pdf_path}")
     
     result = {
@@ -30,18 +213,18 @@ def parse_bulletin_pdf(pdf_path: str) -> dict:
         'last_updated': datetime.now().isoformat(),
     }
     
+    # 1. Extract full text from all pages
     with pdfplumber.open(pdf_path) as pdf:
         full_text = ""
         for page in pdf.pages:
             text = page.extract_text() or ""
-            full_text += text + "\n\n"
+            full_text += text + "\n"
     
-    # Find bulletin number
+    # 2. Parse header metadata
     bulletin_match = re.search(r'BULLETIN\s*#\s*(\d+)', full_text, re.IGNORECASE)
     if bulletin_match:
         result['bulletin_number'] = int(bulletin_match.group(1))
     
-    # Find date
     date_match = re.search(
         r'(Mon|Tue|Wed|Thu|Fri|Sat|Sun)[,.]?\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2}),?\s+(\d{4})',
         full_text, re.IGNORECASE
@@ -59,29 +242,42 @@ def parse_bulletin_pdf(pdf_path: str) -> dict:
     
     print(f"[INFO] Bulletin #{result.get('bulletin_number')} - {result.get('date')}")
     
-    # Products to extract with their total patterns
+    # 3. Strip page headers/footers so multi-page products are contiguous
+    cleaned_text = _strip_page_headers(full_text)
+    
+    # 4. Extract each target product
     products_config = [
         ('1OZ', '1 OUNCE GOLD FUTURES'),
         ('GC', 'COMEX GOLD FUTURES'),
         ('SI', 'COMEX SILVER FUTURES'),
-        ('SIL', '5000 OZ SILVER FUTURES'),
+        ('SIL', 'MICRO SILVER FUTURES'),
         ('HG', 'COMEX COPPER FUTURES'),
         ('PL', 'NYMEX PLATINUM FUTURES'),
         ('PA', 'NYMEX PALLADIUM FUTURES'),
         ('ALI', 'COMEX PHYSICAL ALUMINUM FUTURES'),
+        ('MGC', 'MICRO GOLD FUTURES'),
+        ('MHG', 'COMEX MICRO COPPER FUTURES'),
+        ('QI', 'E-MINI SILVER FUTURES'),
     ]
     
     for code, name in products_config:
-        product = extract_product_data(full_text, code, name)
+        product = extract_product_data(cleaned_text, code, name)
         if product:
             result['products'].append(product)
-            print(f"  {code}: Vol={product['total_volume']:,}, OI={product['total_open_interest']:,}, OI_Chg={product['total_oi_change']:+,}")
+            n = len(product['contracts'])
+            front = product['contracts'][0] if product['contracts'] else None
+            front_info = f", Front={front['month']} @ {front['settle']}" if front else ""
+            print(f"  {code}: {n} contracts, Vol={product['total_volume']:,}, OI={product['total_open_interest']:,}, OI_Chg={product['total_oi_change']:+,}{front_info}")
     
     return result
 
 
-def extract_product_data(text: str, code: str, name: str) -> dict:
-    """Extract product data including contracts."""
+def extract_product_data(text: str, code: str, name: str) -> dict | None:
+    """Extract product data including all individual contracts.
+    
+    Finds the section between 'CODE FUT PRODUCT_NAME' and 'TOTAL CODE FUT',
+    then parses every contract line and the total line.
+    """
     product = {
         'symbol': code,
         'name': name,
@@ -91,102 +287,55 @@ def extract_product_data(text: str, code: str, name: str) -> dict:
         'total_oi_change': 0,
     }
     
-    # Find TOTAL line - format varies by product
-    # Pattern: TOTAL GC FUT 280352 7140 411011 - 3765
-    # Or: TOTAL SIL FUT 343957 32042 + 323
+    # Find product section start: "CODE FUT PRODUCT_NAME"
+    header_pattern = rf'{re.escape(code)}\s+FUT\s+{re.escape(name)}'
+    header_match = re.search(header_pattern, text)
+    if not header_match:
+        # Try a more flexible match (name might differ slightly)
+        header_pattern_flex = rf'{re.escape(code)}\s+FUT\s+'
+        header_match = re.search(header_pattern_flex, text)
     
-    # Try 4-number format first (with PNT volume)
-    pattern_4num = rf'TOTAL\s+{code}\s+FUT\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s*([+-]?\s*[\d,]+)'
-    match_4 = re.search(pattern_4num, text)
+    if not header_match:
+        return None
     
-    # Try 3-number format (no PNT volume)
-    pattern_3num = rf'TOTAL\s+{code}\s+FUT\s+([\d,]+)\s+([\d,]+)\s*([+-]?\s*[\d,]+)'
-    match_3 = re.search(pattern_3num, text)
+    start_idx = header_match.end()
     
-    if match_4:
-        nums = [int(match_4.group(i).replace(',', '').replace(' ', '')) for i in range(1, 5)]
-        # Determine format: if 3rd number >> 2nd, it's vol, pnt, oi, change
-        if nums[2] > nums[1] * 10:
-            product['total_volume'] = nums[0]
-            product['total_open_interest'] = nums[2]
-            product['total_oi_change'] = nums[3]
-        else:
-            # Check if 2nd is OI (should be large)
-            if nums[1] > 10000:
-                product['total_volume'] = nums[0]
-                product['total_open_interest'] = nums[1]
-                product['total_oi_change'] = nums[2]
-            else:
-                product['total_volume'] = nums[0]
-                product['total_open_interest'] = nums[2]
-                product['total_oi_change'] = nums[3]
-    elif match_3:
-        nums = [match_3.group(i).replace(',', '').replace(' ', '') for i in range(1, 4)]
-        product['total_volume'] = int(nums[0])
-        product['total_open_interest'] = int(nums[1])
-        change_str = nums[2]
-        product['total_oi_change'] = int(change_str) if change_str.lstrip('+-').isdigit() else 0
+    # Find TOTAL line for this product
+    total_pattern = rf'TOTAL\s+{re.escape(code)}\s+FUT\s+'
+    total_match = re.search(total_pattern, text[start_idx:])
     
-    # Extract individual contracts
-    # Format: MONTH SETTLE CHANGE GLOBEX_VOL PNT_VOL OI OI_CHANGE
-    # Example: APR26 2873.4 - 5.3 254296 5818 289088 - 4161
+    if not total_match:
+        return None
     
-    # Find the section for this product
-    product_start = text.find(f'{code} FUT')
-    if product_start == -1:
-        product_start = text.find(name)
+    # Extract the section between header and TOTAL
+    section_text = text[start_idx:start_idx + total_match.start()]
+    total_line_start = start_idx + total_match.start()
     
-    if product_start != -1:
-        # Find end (next TOTAL or end of relevant section)
-        product_end = text.find(f'TOTAL {code}', product_start)
-        if product_end == -1:
-            product_end = product_start + 5000
-        
-        section = text[product_start:product_end + 200]
-        
-        # Contract pattern - handle various formats
-        contract_pattern = re.compile(
-            r'([A-Z]{3}\d{2})\s+'  # Month (FEB26)
-            r'([\d,.]+)\s*'        # Settle price
-            r'([+-]?\s*[\d,.]+)\s+' # Change
-            r'([\d,]+)\s+'          # Globex vol
-            r'([\d,]+)\s+'          # PNT vol  
-            r'([\d,]+)\s*'          # Open Interest
-            r'([+-]?\s*[\d,]+)?'    # OI Change
-        )
-        
-        for match in contract_pattern.finditer(section):
-            try:
-                month = match.group(1)
-                settle = float(match.group(2).replace(',', ''))
-                change_str = match.group(3).replace(' ', '').replace(',', '')
-                change = float(change_str) if change_str.replace('.', '').replace('-', '').replace('+', '').isdigit() else 0.0
-                globex_vol = int(match.group(4).replace(',', ''))
-                pnt_vol = int(match.group(5).replace(',', ''))
-                oi = int(match.group(6).replace(',', ''))
-                oi_change = 0
-                if match.group(7):
-                    oi_str = match.group(7).replace(' ', '').replace(',', '')
-                    oi_change = int(oi_str) if oi_str.lstrip('+-').isdigit() else 0
-                
-                # Avoid duplicates and validate
-                if not any(c['month'] == month for c in product['contracts']) and oi > 0:
-                    product['contracts'].append({
-                        'month': month,
-                        'settle': settle,
-                        'change': change,
-                        'globex_volume': globex_vol,
-                        'pnt_volume': pnt_vol,
-                        'open_interest': oi,
-                        'oi_change': oi_change,
-                    })
-            except (ValueError, AttributeError):
-                continue
-        
-        # Sort by volume (most active first)
-        product['contracts'].sort(key=lambda x: x['globex_volume'] + x['pnt_volume'], reverse=True)
+    # Find end of TOTAL line
+    total_line_end = text.find('\n', total_line_start)
+    if total_line_end == -1:
+        total_line_end = len(text)
+    total_line = text[total_line_start:total_line_end].strip()
     
-    if product['total_volume'] > 0 or product['total_open_interest'] > 0:
+    # Parse individual contract lines
+    for line in section_text.split('\n'):
+        line = line.strip()
+        if not line:
+            continue
+        contract = _parse_contract_line(line)
+        if contract:
+            # Avoid duplicates (same month)
+            if not any(c['month'] == contract['month'] for c in product['contracts']):
+                product['contracts'].append(contract)
+    
+    # Parse TOTAL line
+    totals = _parse_total_line(total_line, code)
+    if totals:
+        product['total_volume'] = totals['total_volume']
+        product['total_open_interest'] = totals['total_open_interest']
+        product['total_oi_change'] = totals['total_oi_change']
+    
+    if product['total_volume'] > 0 or product['total_open_interest'] > 0 or product['contracts']:
         return product
     return None
 
