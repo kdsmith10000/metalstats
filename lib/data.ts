@@ -38,7 +38,7 @@ export interface WarehouseStocksData {
   Gold: MetalData;
   Silver: MetalData;
   Copper: MetalData;
-  Platinum_Palladium: MetalData;
+  Platinum_Palladium?: MetalData;
   Platinum?: MetalData;
   Palladium?: MetalData;
   Aluminum: MetalData;
@@ -159,16 +159,28 @@ export const metalConfigs: MetalConfig[] = [
     futuresSymbol: 'ALI', // COMEX Aluminum Futures
   },
   {
-    key: 'Platinum_Palladium',
-    name: 'Platinum & Palladium',
+    key: 'Platinum',
+    name: 'Platinum',
     color: '#a78bfa',
     colorDark: '#c4b5fd',
     unit: 'oz',
-    contractSize: 50, // Both PL and PA are 50 oz contracts
-    // Feb 2026 MTD: Platinum 485 + Palladium 92 = 577 contracts = 28,850 oz
-    monthlyDemand: 28850, // 577 contracts * 50 oz (Feb 9 MTD)
-    pricePerUnit: 2109,  // Updated to Feb 9 PL settle price
-    futuresSymbol: 'PL+PA', // Combined - requires special handling
+    contractSize: 50, // PL is 50 oz per contract
+    // Feb 2026 MTD: 485 contracts = 24,250 oz
+    monthlyDemand: 24250, // 485 contracts * 50 oz (Feb 10 MTD)
+    pricePerUnit: 2109,  // PL settle price
+    futuresSymbol: 'PL', // NYMEX Platinum Futures
+  },
+  {
+    key: 'Palladium',
+    name: 'Palladium',
+    color: '#818cf8',
+    colorDark: '#a5b4fc',
+    unit: 'oz',
+    contractSize: 100, // PA is 100 oz per contract
+    // Feb 2026 MTD: 92 contracts = 9,200 oz
+    monthlyDemand: 9200, // 92 contracts * 100 oz (Feb 10 MTD)
+    pricePerUnit: 1050,  // PA settle price
+    futuresSymbol: 'PA', // NYMEX Palladium Futures
   },
   {
     key: 'Copper',

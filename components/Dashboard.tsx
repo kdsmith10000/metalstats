@@ -275,7 +275,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
     // Get OI change percentage if available
     let oiChangePercent: number | null = null;
     if (volumeSummaryData?.products && config.futuresSymbol) {
-      const symbol = config.futuresSymbol === 'PL+PA' ? 'PL' : config.futuresSymbol;
+      const symbol = config.futuresSymbol;
       const product = volumeSummaryData.products.find(p => p.symbol === symbol);
       if (product && product.yoy_open_interest > 0) {
         oiChangePercent = ((product.open_interest - product.yoy_open_interest) / product.yoy_open_interest) * 100;
