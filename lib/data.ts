@@ -147,18 +147,6 @@ export const metalConfigs: MetalConfig[] = [
     futuresSymbol: 'SI', // COMEX Silver Futures
   },
   {
-    key: 'Aluminum',
-    name: 'Aluminum',
-    color: '#64748b',
-    colorDark: '#94a3b8',
-    unit: 'metric tons',
-    contractSize: 44,
-    // Feb 2026 MTD: no aluminum deliveries reported
-    monthlyDemand: 3212, // Using previous estimate (Feb 5 MTD)
-    pricePerUnit: 3058,  // Updated to Feb 9 settle price (ALI)
-    futuresSymbol: 'ALI', // COMEX Aluminum Futures
-  },
-  {
     key: 'Platinum',
     name: 'Platinum',
     color: '#a78bfa',
