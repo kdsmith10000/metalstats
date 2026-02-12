@@ -2,16 +2,9 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone();
-  const hostname = request.headers.get('host') || '';
-
-  // Canonical redirect: www -> non-www, http -> https
-  // This prevents authority dilution across www.heavymetalstats.com and heavymetalstats.com
-  if (hostname.startsWith('www.')) {
-    url.host = hostname.replace('www.', '');
-    url.protocol = 'https';
-    return NextResponse.redirect(url, 301);
-  }
+  // NOTE: www -> non-www redirect is handled by Vercel's domain configuration.
+  // Do NOT add a redirect here — it conflicts with Vercel's platform-level redirect
+  // and causes a "Redirect error" in Google Search Console.
 
   const response = NextResponse.next();
 

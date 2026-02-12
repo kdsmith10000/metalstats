@@ -7,7 +7,7 @@
 - `http://www.heavymetalstats.com/` (Last crawled: Jan 24, 2026)
 
 **Google docs say:**
-> "This is a non-canonical URL that redirects to another page. As such, this URL will not be indexed. The target URL of the redirect might or might not be indexed, depending on what Google thinks about that target URL."
+> "This is a non-canonical URL that redirects to another page. As such, this URL will not be indexed. The target URL of the redirect might or might not be indexed."
 
 **Diagnosis:** These are HTTP and/or www variants that correctly 301-redirect to the canonical `https://heavymetalstats.com/`. This is **expected and correct behavior** — Google is confirming the redirects work. The canonical homepage IS indexed. No action needed.
 
@@ -21,72 +21,79 @@
 **Google docs say:**
 > "This page is marked as an alternate of another page... This page correctly points to the canonical page, which is indexed, so there is nothing you need to do."
 
-**Diagnosis:** The www HTTPS variant has the correct canonical tag pointing to `https://heavymetalstats.com/`. Google recognizes the relationship and indexes only the canonical. The middleware 301 redirect + metadata canonical are both working correctly. No action needed.
+**Diagnosis:** The www HTTPS variant has the correct canonical tag pointing to `https://heavymetalstats.com/`. Google recognizes the relationship and indexes only the canonical. No action needed.
 
 ---
 
-## Issue 3: "Discovered - currently not indexed" (FIXED)
+## Issue 3: "Failed: Redirect error" on /privacy and other pages (FIXED Feb 11)
 
 **Affected URLs:**
-- `https://heavymetalstats.com/api-info` (Last crawled: N/A)
-- `https://heavymetalstats.com/privacy` (Last crawled: N/A)
-- `https://heavymetalstats.com/terms` (Last crawled: N/A)
+- `https://heavymetalstats.com/privacy` — Live test returned **Redirect error**
+- `https://heavymetalstats.com/api-info` — Discovered, never crawled
+- `https://heavymetalstats.com/terms` — Discovered, never crawled
+
+**Google Search Console live test result for /privacy (Feb 11, 10:05 PM):**
+- Crawl allowed? Yes
+- Page fetch: **error — Failed: Redirect error**
+- Indexing allowed? N/A
+- User-declared canonical: N/A
+- Google-selected canonical: Only determined after indexing
 
 **Google docs say:**
-> "The page was found by Google, but not crawled yet. Typically, Google wanted to crawl the URL but this was expected to overload the site; therefore Google rescheduled the crawl. This is why the last crawl date is empty on the report."
+> "Redirect error: Google experienced one of the following redirect errors: A redirect chain that was too long, A redirect loop, A redirect URL that eventually exceeded the max URL length, A bad or empty URL in the redirect chain."
 
-**Diagnosis:** "Last crawled: N/A" means Google has NEVER visited these pages — it only discovered they exist (from the sitemap or internal links) but chose not to crawl them.
+### Root cause: Redirect loop between middleware and Vercel
 
-### Root cause found: Conflicting canonical tag in layout.tsx
+The `middleware.ts` had a www→non-www 301 redirect. But Vercel's domain configuration ALSO handles this redirect at the platform level. When both fired, Google hit a **redirect loop**:
 
-`app/layout.tsx` had a **hardcoded** `<link rel="canonical" href="https://heavymetalstats.com" />` inside the `<head>` tag. This raw HTML element rendered on EVERY page of the site, regardless of what each page's Next.js metadata `alternates.canonical` was set to.
+1. Request to `heavymetalstats.com/privacy`
+2. Vercel platform redirect → `www.heavymetalstats.com/privacy` (if www is primary domain)
+3. Middleware redirect → `heavymetalstats.com/privacy` (strips www)
+4. → Back to step 2 (infinite loop)
 
-This meant:
-- `/api-info` told Google its canonical was `https://heavymetalstats.com` (the homepage)
-- `/privacy` told Google its canonical was `https://heavymetalstats.com` (the homepage)
-- `/terms` told Google its canonical was `https://heavymetalstats.com` (the homepage)
-- `/learn` told Google its canonical was `https://heavymetalstats.com` (the homepage)
+### Fix applied:
 
-Google interpreted these pages as duplicates of the homepage and deprioritized crawling them entirely.
+**Removed the www→non-www redirect from `middleware.ts`.** Vercel's platform-level domain config handles this on its own. The middleware now only sets security headers — no redirects.
 
-### Fixes applied:
+### Previous fix also applied: Hardcoded canonical removed
 
-1. **Removed the hardcoded `<link rel="canonical">` from `app/layout.tsx`** — Next.js now handles canonicals per-page via the `alternates.canonical` metadata export on each page (which was already set correctly on every page).
+`app/layout.tsx` previously had a hardcoded `<link rel="canonical" href="https://heavymetalstats.com" />` in the `<head>` that rendered on EVERY page, telling Google all pages were duplicates of the homepage. This was removed — Next.js metadata `alternates.canonical` now handles per-page canonicals correctly.
 
-2. **Added footer navigation to ALL pages** — Every page now links to every other page via a footer nav. This creates a strong internal link graph so Google can discover and crawl all pages from any entry point:
-   - `app/learn/page.tsx` — Added footer nav
-   - `app/learn/delivery/page.tsx` — Added footer nav
-   - `app/privacy/page.tsx` — Added footer nav
-   - `app/terms/page.tsx` — Added footer nav
-   - `app/api-info/page.tsx` — Added footer nav
-   - `app/page.tsx` — Already had footer nav (added previously)
-   - `app/precious-metals/page.tsx` — Already had footer nav
+### Also applied: Footer navigation on all pages
+
+Every page now links to every other page via a footer nav, creating a strong internal link graph for Google to crawl.
 
 ---
 
-## Action items (manual steps in Google Search Console)
+## IMPORTANT: Check Vercel domain settings
 
-After deploying these fixes:
+In **Vercel Dashboard → Settings → Domains**, make sure:
+- `heavymetalstats.com` is the **primary domain** (not a redirect)
+- `www.heavymetalstats.com` is listed with a **redirect to** `heavymetalstats.com`
 
-1. **Request indexing for each affected URL:**
-   - Go to Google Search Console → URL Inspection
-   - Enter each URL one at a time:
-     - `https://heavymetalstats.com/api-info`
-     - `https://heavymetalstats.com/privacy`
-     - `https://heavymetalstats.com/terms`
-     - `https://heavymetalstats.com/precious-metals` (new page)
-   - Click "Request Indexing" for each
+If it's the other way around (www is primary, non-www redirects TO www), **flip them**. This is what caused the redirect loop.
 
-2. **Resubmit the sitemap:**
+---
+
+## Action items (manual steps after deploying)
+
+1. **Verify Vercel domain config** (see above — non-www must be primary)
+
+2. **Test live URLs in Search Console:**
+   - Go to URL Inspection → enter `https://heavymetalstats.com/privacy`
+   - Click "Test Live URL" — confirm page fetch succeeds (no redirect error)
+   - Do the same for `/api-info`, `/terms`, `/precious-metals`
+
+3. **Request indexing** for each URL after confirming no redirect error
+
+4. **Resubmit the sitemap:**
    - Go to Search Console → Sitemaps
    - Submit `https://heavymetalstats.com/sitemap.xml`
 
-3. **Validate fix for "Discovered - currently not indexed":**
-   - In the Page Indexing report, click on the "Discovered - currently not indexed" row
-   - Click "Validate Fix" to tell Google you've addressed the issue
-   - Google will re-check the affected URLs over the next ~2 weeks
-
-4. **Monitor:** Check back in 1-2 weeks. The "Page with redirect" and "Alternate page with proper canonical tag" entries will remain — that's normal and expected. The "Discovered - currently not indexed" entries should transition to "Indexed" once Google recrawls.
+5. **Validate fix:**
+   - In the Page Indexing report, click "Discovered - currently not indexed"
+   - Click "Validate Fix"
+   - Google will re-check over the next ~2 weeks
 
 ---
 
@@ -98,6 +105,6 @@ After deploying these fixes:
 | `https://heavymetalstats.com/precious-metals` | Pending index | 0.95 |
 | `https://heavymetalstats.com/learn` | Indexed | 0.9 |
 | `https://heavymetalstats.com/learn/delivery` | Pending index | 0.85 |
-| `https://heavymetalstats.com/api-info` | Discovered, not indexed → Fix deployed | 0.7 |
-| `https://heavymetalstats.com/privacy` | Discovered, not indexed → Fix deployed | 0.3 |
-| `https://heavymetalstats.com/terms` | Discovered, not indexed → Fix deployed | 0.3 |
+| `https://heavymetalstats.com/api-info` | Redirect error → Fix deployed | 0.7 |
+| `https://heavymetalstats.com/privacy` | Redirect error → Fix deployed | 0.3 |
+| `https://heavymetalstats.com/terms` | Redirect error → Fix deployed | 0.3 |
