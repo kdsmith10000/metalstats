@@ -85,8 +85,8 @@
           "change": -48.4,
           "globex_volume": 104137,
           "pnt_volume": 1521,
-          "open_interest": 283581,
-          "oi_change": 399
+          "open_interest": 282217,
+          "oi_change": -965
         },
         {
           "month": "MAY26",
@@ -103,8 +103,8 @@
           "change": -48.8,
           "globex_volume": 10138,
           "pnt_volume": 351,
-          "open_interest": 56260,
-          "oi_change": 1306
+          "open_interest": 54834,
+          "oi_change": -120
         },
         {
           "month": "JUL26",
@@ -324,8 +324,8 @@
         }
       ],
       "total_volume": 125161,
-      "total_open_interest": 407181,
-      "total_oi_change": 2735
+"total_open_interest": 404391,
+    "total_oi_change": -55
     },
     {
       "symbol": "SI",
@@ -346,8 +346,8 @@
           "change": -1.85,
           "globex_volume": 55684,
           "pnt_volume": 486,
-          "open_interest": 68366,
-          "oi_change": -4762
+          "open_interest": 67946,
+          "oi_change": -5182
         },
         {
           "month": "APR26",
@@ -364,8 +364,8 @@
           "change": -1.864,
           "globex_volume": 18274,
           "pnt_volume": 82,
-          "open_interest": 35749,
-          "oi_change": 2898
+          "open_interest": 35734,
+          "oi_change": 2883
         },
         {
           "month": "JUN26",
@@ -531,8 +531,8 @@
         }
       ],
       "total_volume": 78296,
-      "total_open_interest": 134078,
-      "total_oi_change": -2042
+      "total_open_interest": 133641,
+      "total_oi_change": -2479
     },
     {
       "symbol": "SIL",
@@ -553,8 +553,8 @@
           "change": -1.85,
           "globex_volume": 155813,
           "pnt_volume": 0,
-          "open_interest": 28196,
-          "oi_change": 564
+          "open_interest": 27620,
+          "oi_change": -12
         },
         {
           "month": "APR26",
@@ -612,8 +612,8 @@
         }
       ],
       "total_volume": 160945,
-      "total_open_interest": 32810,
-      "total_oi_change": 778
+      "total_open_interest": 32234,
+      "total_oi_change": 202
     },
     {
       "symbol": "HG",
@@ -634,8 +634,8 @@
           "change": -0.049,
           "globex_volume": 39187,
           "pnt_volume": 2300,
-          "open_interest": 99014,
-          "oi_change": -5860
+          "open_interest": 98994,
+          "oi_change": -5880
         },
         {
           "month": "APR26",
@@ -873,8 +873,8 @@
         }
       ],
       "total_volume": 74300,
-      "total_open_interest": 270812,
-      "total_oi_change": -1064
+      "total_open_interest": 270792,
+      "total_oi_change": -1084
     },
     {
       "symbol": "PL",
@@ -1098,8 +1098,8 @@
         }
       ],
       "total_volume": 5259,
-      "total_open_interest": 16536,
-      "total_oi_change": -16
+      "total_open_interest": 16538,
+      "total_oi_change": -14
     },
     {
       "symbol": "ALI",
@@ -1255,8 +1255,8 @@
           "change": -48.4,
           "globex_volume": 480328,
           "pnt_volume": 0,
-          "open_interest": 49402,
-          "oi_change": -551
+          "open_interest": 48858,
+          "oi_change": -1095
         },
         {
           "month": "JUN26",
@@ -1350,8 +1350,8 @@
         }
       ],
       "total_volume": 487238,
-      "total_open_interest": 61136,
-      "total_oi_change": -479
+      "total_open_interest": 60592,
+      "total_oi_change": -1023
     },
     {
       "symbol": "MHG",
@@ -1440,8 +1440,8 @@
         }
       ],
       "total_volume": 28189,
-      "total_open_interest": 15768,
-      "total_oi_change": 373
+      "total_open_interest": 15730,
+      "total_oi_change": 335
     },
     {
       "symbol": "QI",
@@ -1534,5 +1534,5 @@
       "total_oi_change": -1
     }
   ],
-  "last_updated": "2026-02-11T06:38:49.005951"
+  "last_updated": "2026-02-12T03:00:00.000000"
 }
