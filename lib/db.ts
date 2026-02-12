@@ -100,9 +100,19 @@ export async function initializeDatabase() {
         email VARCHAR(255) UNIQUE NOT NULL,
         subscribed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         unsubscribe_token VARCHAR(64) UNIQUE NOT NULL,
-        active BOOLEAN DEFAULT TRUE
+        active BOOLEAN DEFAULT TRUE,
+        subscription_status VARCHAR(20) DEFAULT 'trial',
+        trial_ends_at TIMESTAMP WITH TIME ZONE,
+        stripe_customer_id VARCHAR(255),
+        stripe_subscription_id VARCHAR(255)
       )
     `;
+
+    // Add new columns to existing tables (safe to run multiple times)
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS subscription_status VARCHAR(20) DEFAULT 'trial'`;
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS trial_ends_at TIMESTAMP WITH TIME ZONE`;
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS stripe_customer_id VARCHAR(255)`;
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS stripe_subscription_id VARCHAR(255)`;
 
     await sql`
       CREATE INDEX IF NOT EXISTS idx_newsletter_email
@@ -986,6 +996,10 @@ export interface NewsletterSubscriber {
   subscribed_at: Date;
   unsubscribe_token: string;
   active: boolean;
+  subscription_status: 'trial' | 'paid' | 'expired' | 'cancelled';
+  trial_ends_at: Date | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
 }
 
 // Initialize newsletter subscribers table
@@ -997,9 +1011,19 @@ export async function initializeNewsletterTable() {
         email VARCHAR(255) UNIQUE NOT NULL,
         subscribed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         unsubscribe_token VARCHAR(64) UNIQUE NOT NULL,
-        active BOOLEAN DEFAULT TRUE
+        active BOOLEAN DEFAULT TRUE,
+        subscription_status VARCHAR(20) DEFAULT 'trial',
+        trial_ends_at TIMESTAMP WITH TIME ZONE,
+        stripe_customer_id VARCHAR(255),
+        stripe_subscription_id VARCHAR(255)
       )
     `;
+
+    // Add new columns to existing tables (safe to run multiple times)
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS subscription_status VARCHAR(20) DEFAULT 'trial'`;
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS trial_ends_at TIMESTAMP WITH TIME ZONE`;
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS stripe_customer_id VARCHAR(255)`;
+    await sql`ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS stripe_subscription_id VARCHAR(255)`;
 
     await sql`
       CREATE INDEX IF NOT EXISTS idx_newsletter_email
@@ -1019,18 +1043,27 @@ export async function initializeNewsletterTable() {
   }
 }
 
-// Add a new subscriber (or reactivate if previously unsubscribed)
+// Add a new subscriber with trial status (or reactivate if previously unsubscribed)
 export async function addSubscriber(email: string, unsubscribeToken: string): Promise<NewsletterSubscriber> {
   try {
+    // 7 calendar days = ~5 business days
     const result = await sql`
-      INSERT INTO newsletter_subscribers (email, unsubscribe_token, active)
-      VALUES (${email.toLowerCase().trim()}, ${unsubscribeToken}, TRUE)
+      INSERT INTO newsletter_subscribers (email, unsubscribe_token, active, subscription_status, trial_ends_at)
+      VALUES (${email.toLowerCase().trim()}, ${unsubscribeToken}, TRUE, 'trial', NOW() + INTERVAL '7 days')
       ON CONFLICT (email)
       DO UPDATE SET
         active = TRUE,
         unsubscribe_token = EXCLUDED.unsubscribe_token,
-        subscribed_at = CURRENT_TIMESTAMP
-      RETURNING id, email, subscribed_at, unsubscribe_token, active
+        subscribed_at = CURRENT_TIMESTAMP,
+        subscription_status = CASE
+          WHEN newsletter_subscribers.subscription_status = 'paid' THEN 'paid'
+          ELSE 'trial'
+        END,
+        trial_ends_at = CASE
+          WHEN newsletter_subscribers.subscription_status = 'paid' THEN newsletter_subscribers.trial_ends_at
+          ELSE NOW() + INTERVAL '7 days'
+        END
+      RETURNING id, email, subscribed_at, unsubscribe_token, active, subscription_status, trial_ends_at, stripe_customer_id, stripe_subscription_id
     `;
     return result[0] as NewsletterSubscriber;
   } catch (error) {
@@ -1055,18 +1088,83 @@ export async function removeSubscriber(token: string): Promise<boolean> {
   }
 }
 
-// Get all active subscribers
+// Get all eligible subscribers (paid OR active trial)
 export async function getActiveSubscribers(): Promise<NewsletterSubscriber[]> {
   try {
     const result = await sql`
-      SELECT id, email, subscribed_at, unsubscribe_token, active
+      SELECT id, email, subscribed_at, unsubscribe_token, active,
+             subscription_status, trial_ends_at, stripe_customer_id, stripe_subscription_id
       FROM newsletter_subscribers
       WHERE active = TRUE
+        AND (
+          subscription_status = 'paid'
+          OR (subscription_status = 'trial' AND trial_ends_at > NOW())
+        )
       ORDER BY subscribed_at ASC
     `;
     return result as NewsletterSubscriber[];
   } catch (error) {
     console.error('Error fetching active subscribers:', error);
+    throw error;
+  }
+}
+
+// Get subscribers whose trial has expired (for sending upgrade emails)
+export async function getExpiredTrials(): Promise<NewsletterSubscriber[]> {
+  try {
+    const result = await sql`
+      SELECT id, email, subscribed_at, unsubscribe_token, active,
+             subscription_status, trial_ends_at, stripe_customer_id, stripe_subscription_id
+      FROM newsletter_subscribers
+      WHERE active = TRUE
+        AND subscription_status = 'trial'
+        AND trial_ends_at <= NOW()
+      ORDER BY trial_ends_at ASC
+    `;
+    return result as NewsletterSubscriber[];
+  } catch (error) {
+    console.error('Error fetching expired trials:', error);
+    throw error;
+  }
+}
+
+// Update subscription status (used by Stripe webhook)
+export async function updateSubscriptionStatus(
+  email: string,
+  status: 'trial' | 'paid' | 'expired' | 'cancelled',
+  stripeCustomerId?: string,
+  stripeSubscriptionId?: string
+): Promise<boolean> {
+  try {
+    const result = await sql`
+      UPDATE newsletter_subscribers
+      SET subscription_status = ${status},
+          stripe_customer_id = COALESCE(${stripeCustomerId || null}, stripe_customer_id),
+          stripe_subscription_id = COALESCE(${stripeSubscriptionId || null}, stripe_subscription_id)
+      WHERE email = ${email.toLowerCase().trim()}
+      RETURNING id
+    `;
+    return result.length > 0;
+  } catch (error) {
+    console.error('Error updating subscription status:', error);
+    throw error;
+  }
+}
+
+// Mark expired trials
+export async function markExpiredTrials(): Promise<number> {
+  try {
+    const result = await sql`
+      UPDATE newsletter_subscribers
+      SET subscription_status = 'expired'
+      WHERE subscription_status = 'trial'
+        AND trial_ends_at <= NOW()
+        AND active = TRUE
+      RETURNING id
+    `;
+    return result.length;
+  } catch (error) {
+    console.error('Error marking expired trials:', error);
     throw error;
   }
 }
@@ -1081,6 +1179,22 @@ export async function isSubscribed(email: string): Promise<boolean> {
     return result.length > 0;
   } catch (error) {
     console.error('Error checking subscription:', error);
+    throw error;
+  }
+}
+
+// Get subscriber by email (for Stripe checkout)
+export async function getSubscriberByEmail(email: string): Promise<NewsletterSubscriber | null> {
+  try {
+    const result = await sql`
+      SELECT id, email, subscribed_at, unsubscribe_token, active,
+             subscription_status, trial_ends_at, stripe_customer_id, stripe_subscription_id
+      FROM newsletter_subscribers
+      WHERE email = ${email.toLowerCase().trim()}
+    `;
+    return result.length > 0 ? result[0] as NewsletterSubscriber : null;
+  } catch (error) {
+    console.error('Error fetching subscriber by email:', error);
     throw error;
   }
 }

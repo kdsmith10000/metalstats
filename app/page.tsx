@@ -1,5 +1,4 @@
 import Dashboard from '@/components/Dashboard';
-import NewsletterSignup from '@/components/NewsletterSignup';
 import { WarehouseStocksData } from '@/lib/data';
 import { getWarehouseDataWithChanges, getLatestSnapshots, isDatabaseAvailable } from '@/lib/db';
 import data from '../public/data.json';
@@ -160,11 +159,6 @@ export default async function Home() {
               how COMEX delivery notices work
             </a>.
           </p>
-        </div>
-
-        {/* Newsletter Signup */}
-        <div>
-          <NewsletterSignup />
         </div>
 
         {/* Footer */}

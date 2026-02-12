@@ -1,6 +1,6 @@
 {
-  "business_date": "02/10/2026",
-  "parsed_date": "2026-02-10",
+  "business_date": "02/11/2026",
+  "parsed_date": "2026-02-11",
   "products": [
     {
       "metal": "Aluminum",
@@ -9,7 +9,7 @@
       "monthly_totals": {
         "prev_dec": 317,
         "jan": 156,
-        "feb": 75
+        "feb": 76
       },
       "firms": [
         {
@@ -19,16 +19,16 @@
           "issued": {
             "prev_dec": 81,
             "jan": 76,
-            "feb": 22
+            "feb": 23
           },
           "stopped": {
             "prev_dec": 174,
             "jan": 0,
             "feb": 11
           },
-          "total_issued": 179,
+          "total_issued": 180,
           "total_stopped": 185,
-          "total_activity": 364
+          "total_activity": 365
         },
         {
           "code": "167",
@@ -60,11 +60,11 @@
           "stopped": {
             "prev_dec": 95,
             "jan": 60,
-            "feb": 47
+            "feb": 48
           },
           "total_issued": 66,
-          "total_stopped": 202,
-          "total_activity": 268
+          "total_stopped": 203,
+          "total_activity": 269
         },
         {
           "code": "732",
@@ -141,7 +141,7 @@
       "monthly_totals": {
         "prev_dec": 37098,
         "jan": 11862,
-        "feb": 33959
+        "feb": 35436
       },
       "firms": [
         {
@@ -156,11 +156,11 @@
           "stopped": {
             "prev_dec": 14321,
             "jan": 3773,
-            "feb": 11536
+            "feb": 11667
           },
           "total_issued": 27518,
-          "total_stopped": 29630,
-          "total_activity": 57148
+          "total_stopped": 29761,
+          "total_activity": 57279
         },
         {
           "code": "435",
@@ -169,16 +169,16 @@
           "issued": {
             "prev_dec": 0,
             "jan": 3951,
-            "feb": 733
+            "feb": 884
           },
           "stopped": {
             "prev_dec": 5311,
             "jan": 208,
             "feb": 2549
           },
-          "total_issued": 4684,
+          "total_issued": 4835,
           "total_stopped": 8068,
-          "total_activity": 12752
+          "total_activity": 12903
         },
         {
           "code": "880",
@@ -192,11 +192,11 @@
           "stopped": {
             "prev_dec": 2838,
             "jan": 811,
-            "feb": 5162
+            "feb": 5375
           },
           "total_issued": 2031,
-          "total_stopped": 8811,
-          "total_activity": 10842
+          "total_stopped": 9024,
+          "total_activity": 11055
         },
         {
           "code": "709",
@@ -205,16 +205,16 @@
           "issued": {
             "prev_dec": 884,
             "jan": 1044,
-            "feb": 5346
+            "feb": 5871
           },
           "stopped": {
             "prev_dec": 2279,
             "jan": 379,
-            "feb": 371
+            "feb": 374
           },
-          "total_issued": 7274,
-          "total_stopped": 3029,
-          "total_activity": 10303
+          "total_issued": 7799,
+          "total_stopped": 3032,
+          "total_activity": 10831
         },
         {
           "code": "363",
@@ -223,16 +223,16 @@
           "issued": {
             "prev_dec": 2310,
             "jan": 639,
-            "feb": 1739
+            "feb": 1801
           },
           "stopped": {
             "prev_dec": 1799,
             "jan": 1233,
             "feb": 809
           },
-          "total_issued": 4688,
+          "total_issued": 4750,
           "total_stopped": 3841,
-          "total_activity": 8529
+          "total_activity": 8591
         },
         {
           "code": "624",
@@ -262,11 +262,11 @@
           },
           "stopped": {
             "prev_dec": 0,
-            "feb": 2794
+            "feb": 2814
           },
           "total_issued": 4200,
-          "total_stopped": 2794,
-          "total_activity": 6994
+          "total_stopped": 2814,
+          "total_activity": 7014
         },
         {
           "code": "190",
@@ -280,11 +280,11 @@
           "stopped": {
             "prev_dec": 1226,
             "jan": 0,
-            "feb": 4332
+            "feb": 5056
           },
           "total_issued": 1346,
-          "total_stopped": 5558,
-          "total_activity": 6904
+          "total_stopped": 6282,
+          "total_activity": 7628
         },
         {
           "code": "099",
@@ -293,16 +293,16 @@
           "issued": {
             "prev_dec": 0,
             "jan": 168,
-            "feb": 3779
+            "feb": 4481
           },
           "stopped": {
             "prev_dec": 794,
             "jan": 2123,
             "feb": 16
           },
-          "total_issued": 3947,
+          "total_issued": 4649,
           "total_stopped": 2933,
-          "total_activity": 6880
+          "total_activity": 7582
         },
         {
           "code": "657",
@@ -332,11 +332,11 @@
           "stopped": {
             "prev_dec": 753,
             "jan": 0,
-            "feb": 0
+            "feb": 111
           },
           "total_issued": 3088,
-          "total_stopped": 753,
-          "total_activity": 3841
+          "total_stopped": 864,
+          "total_activity": 3952
         },
         {
           "code": "332",
@@ -350,11 +350,11 @@
           "stopped": {
             "prev_dec": 2628,
             "jan": 490,
-            "feb": 2
+            "feb": 4
           },
           "total_issued": 455,
-          "total_stopped": 3120,
-          "total_activity": 3575
+          "total_stopped": 3122,
+          "total_activity": 3577
         },
         {
           "code": "657",
@@ -366,11 +366,11 @@
           },
           "stopped": {
             "prev_dec": 60,
-            "feb": 1288
+            "feb": 1297
           },
           "total_issued": 2114,
-          "total_stopped": 1348,
-          "total_activity": 3462
+          "total_stopped": 1357,
+          "total_activity": 3471
         },
         {
           "code": "323",
@@ -414,11 +414,11 @@
           "stopped": {
             "prev_dec": 500,
             "jan": 0,
-            "feb": 721
+            "feb": 723
           },
           "total_issued": 1402,
-          "total_stopped": 1221,
-          "total_activity": 2623
+          "total_stopped": 1223,
+          "total_activity": 2625
         },
         {
           "code": "700",
@@ -496,11 +496,11 @@
           "stopped": {
             "prev_dec": 125,
             "jan": 47,
-            "feb": 33
+            "feb": 40
           },
           "total_issued": 704,
-          "total_stopped": 205,
-          "total_activity": 909
+          "total_stopped": 212,
+          "total_activity": 916
         },
         {
           "code": "072",
@@ -528,11 +528,11 @@
           },
           "stopped": {
             "prev_dec": 154,
-            "feb": 341
+            "feb": 343
           },
           "total_issued": 285,
-          "total_stopped": 495,
-          "total_activity": 780
+          "total_stopped": 497,
+          "total_activity": 782
         },
         {
           "code": "323",
@@ -544,11 +544,11 @@
           },
           "stopped": {
             "prev_dec": 0,
-            "feb": 56
+            "feb": 66
           },
           "total_issued": 665,
-          "total_stopped": 56,
-          "total_activity": 721
+          "total_stopped": 66,
+          "total_activity": 731
         },
         {
           "code": "132",
@@ -578,11 +578,11 @@
           },
           "stopped": {
             "prev_dec": 2,
-            "feb": 44
+            "feb": 50
           },
           "total_issued": 457,
-          "total_stopped": 46,
-          "total_activity": 503
+          "total_stopped": 52,
+          "total_activity": 509
         },
         {
           "code": "732",
@@ -606,11 +606,11 @@
             "feb": 105
           },
           "stopped": {
-            "feb": 235
+            "feb": 472
           },
           "total_issued": 105,
-          "total_stopped": 235,
-          "total_activity": 340
+          "total_stopped": 472,
+          "total_activity": 577
         },
         {
           "code": "363",
@@ -669,16 +669,16 @@
           "issued": {
             "prev_dec": 76,
             "jan": 15,
-            "feb": 1
+            "feb": 18
           },
           "stopped": {
             "prev_dec": 52,
             "jan": 15,
             "feb": 0
           },
-          "total_issued": 92,
+          "total_issued": 109,
           "total_stopped": 67,
-          "total_activity": 159
+          "total_activity": 176
         },
         {
           "code": "991",
@@ -717,16 +717,16 @@
           "issued": {
             "prev_dec": 32,
             "jan": 40,
-            "feb": 13
+            "feb": 33
           },
           "stopped": {
             "prev_dec": 1,
             "jan": 0,
             "feb": 3
           },
-          "total_issued": 85,
+          "total_issued": 105,
           "total_stopped": 4,
-          "total_activity": 89
+          "total_activity": 109
         },
         {
           "code": "167",
@@ -887,7 +887,7 @@
       "monthly_totals": {
         "prev_dec": 20871,
         "jan": 15999,
-        "feb": 7279
+        "feb": 7445
       },
       "firms": [
         {
@@ -897,16 +897,16 @@
           "issued": {
             "prev_dec": 3473,
             "jan": 3871,
-            "feb": 1470
+            "feb": 1523
           },
           "stopped": {
             "prev_dec": 3484,
             "jan": 4023,
-            "feb": 1183
+            "feb": 1227
           },
-          "total_issued": 8814,
-          "total_stopped": 8690,
-          "total_activity": 17504
+          "total_issued": 8867,
+          "total_stopped": 8734,
+          "total_activity": 17601
         },
         {
           "code": "732",
@@ -915,16 +915,16 @@
           "issued": {
             "prev_dec": 2233,
             "jan": 1686,
-            "feb": 1062
+            "feb": 1095
           },
           "stopped": {
             "prev_dec": 2564,
             "jan": 1661,
-            "feb": 502
+            "feb": 507
           },
-          "total_issued": 4981,
-          "total_stopped": 4727,
-          "total_activity": 9708
+          "total_issued": 5014,
+          "total_stopped": 4732,
+          "total_activity": 9746
         },
         {
           "code": "104",
@@ -938,11 +938,11 @@
           "stopped": {
             "prev_dec": 1072,
             "jan": 1118,
-            "feb": 217
+            "feb": 220
           },
           "total_issued": 6432,
-          "total_stopped": 2407,
-          "total_activity": 8839
+          "total_stopped": 2410,
+          "total_activity": 8842
         },
         {
           "code": "661",
@@ -956,11 +956,11 @@
           "stopped": {
             "prev_dec": 2667,
             "jan": 1849,
-            "feb": 1358
+            "feb": 1384
           },
           "total_issued": 2416,
-          "total_stopped": 5874,
-          "total_activity": 8290
+          "total_stopped": 5900,
+          "total_activity": 8316
         },
         {
           "code": "132",
@@ -987,16 +987,16 @@
           "issued": {
             "prev_dec": 857,
             "jan": 1845,
-            "feb": 398
+            "feb": 417
           },
           "stopped": {
             "prev_dec": 926,
             "jan": 1567,
-            "feb": 410
+            "feb": 426
           },
-          "total_issued": 3100,
-          "total_stopped": 2903,
-          "total_activity": 6003
+          "total_issued": 3119,
+          "total_stopped": 2919,
+          "total_activity": 6038
         },
         {
           "code": "167",
@@ -1010,11 +1010,11 @@
           "stopped": {
             "prev_dec": 1350,
             "jan": 1708,
-            "feb": 917
+            "feb": 923
           },
           "total_issued": 1511,
-          "total_stopped": 3975,
-          "total_activity": 5486
+          "total_stopped": 3981,
+          "total_activity": 5492
         },
         {
           "code": "159",
@@ -1023,16 +1023,16 @@
           "issued": {
             "prev_dec": 1370,
             "jan": 689,
-            "feb": 627
+            "feb": 656
           },
           "stopped": {
             "prev_dec": 1622,
             "jan": 630,
-            "feb": 463
+            "feb": 488
           },
-          "total_issued": 2686,
-          "total_stopped": 2715,
-          "total_activity": 5401
+          "total_issued": 2715,
+          "total_stopped": 2740,
+          "total_activity": 5455
         },
         {
           "code": "690",
@@ -1041,16 +1041,16 @@
           "issued": {
             "prev_dec": 677,
             "jan": 111,
-            "feb": 316
+            "feb": 335
           },
           "stopped": {
             "prev_dec": 649,
             "jan": 180,
-            "feb": 243
+            "feb": 253
           },
-          "total_issued": 1104,
-          "total_stopped": 1072,
-          "total_activity": 2176
+          "total_issued": 1123,
+          "total_stopped": 1082,
+          "total_activity": 2205
         },
         {
           "code": "152",
@@ -1059,16 +1059,16 @@
           "issued": {
             "prev_dec": 352,
             "jan": 449,
-            "feb": 213
+            "feb": 220
           },
           "stopped": {
             "prev_dec": 357,
             "jan": 447,
-            "feb": 152
+            "feb": 159
           },
-          "total_issued": 1014,
-          "total_stopped": 956,
-          "total_activity": 1970
+          "total_issued": 1021,
+          "total_stopped": 963,
+          "total_activity": 1984
         },
         {
           "code": "905",
@@ -1077,16 +1077,16 @@
           "issued": {
             "prev_dec": 323,
             "jan": 70,
-            "feb": 143
+            "feb": 148
           },
           "stopped": {
             "prev_dec": 530,
             "jan": 587,
-            "feb": 275
+            "feb": 288
           },
-          "total_issued": 536,
-          "total_stopped": 1392,
-          "total_activity": 1928
+          "total_issued": 541,
+          "total_stopped": 1405,
+          "total_activity": 1946
         },
         {
           "code": "190",
@@ -1100,11 +1100,11 @@
           "stopped": {
             "prev_dec": 419,
             "jan": 113,
-            "feb": 559
+            "feb": 560
           },
           "total_issued": 803,
-          "total_stopped": 1091,
-          "total_activity": 1894
+          "total_stopped": 1092,
+          "total_activity": 1895
         },
         {
           "code": "118",
@@ -1165,16 +1165,16 @@
           "issued": {
             "prev_dec": 468,
             "jan": 319,
-            "feb": 33
+            "feb": 34
           },
           "stopped": {
             "prev_dec": 0,
             "jan": 267,
-            "feb": 325
+            "feb": 329
           },
-          "total_issued": 820,
-          "total_stopped": 592,
-          "total_activity": 1412
+          "total_issued": 821,
+          "total_stopped": 596,
+          "total_activity": 1417
         },
         {
           "code": "118",
@@ -1232,11 +1232,11 @@
           "stopped": {
             "prev_dec": 7,
             "jan": 186,
-            "feb": 204
+            "feb": 205
           },
           "total_issued": 283,
-          "total_stopped": 397,
-          "total_activity": 680
+          "total_stopped": 398,
+          "total_activity": 681
         },
         {
           "code": "555",
@@ -1274,11 +1274,11 @@
             "feb": 0
           },
           "stopped": {
-            "feb": 462
+            "feb": 465
           },
           "total_issued": 0,
-          "total_stopped": 462,
-          "total_activity": 462
+          "total_stopped": 465,
+          "total_activity": 465
         },
         {
           "code": "072",
@@ -1329,7 +1329,8 @@
       "symbol": "MGC",
       "product_name": "MICRO GOLD FUTURES",
       "monthly_totals": {
-        "prev_dec": 1237
+        "prev_dec": 1237,
+        "feb": 10
       },
       "firms": [
         {
@@ -1351,42 +1352,48 @@
           "name": "ADVANTAGE FUTURES",
           "org": "C",
           "issued": {
-            "prev_dec": 4
+            "prev_dec": 4,
+            "feb": 0
           },
           "stopped": {
-            "prev_dec": 955
+            "prev_dec": 955,
+            "feb": 6
           },
           "total_issued": 4,
-          "total_stopped": 955,
-          "total_activity": 959
+          "total_stopped": 961,
+          "total_activity": 965
         },
         {
           "code": "905",
           "name": "ADM",
           "org": "C",
           "issued": {
-            "prev_dec": 0
+            "prev_dec": 0,
+            "feb": 0
           },
           "stopped": {
-            "prev_dec": 272
+            "prev_dec": 272,
+            "feb": 4
           },
           "total_issued": 0,
-          "total_stopped": 272,
-          "total_activity": 272
+          "total_stopped": 276,
+          "total_activity": 276
         },
         {
           "code": "523",
           "name": "INTERACTIVE BROKERS",
           "org": "C",
           "issued": {
-            "prev_dec": 0
+            "prev_dec": 0,
+            "feb": 10
           },
           "stopped": {
-            "prev_dec": 10
+            "prev_dec": 10,
+            "feb": 0
           },
-          "total_issued": 0,
+          "total_issued": 10,
           "total_stopped": 10,
-          "total_activity": 10
+          "total_activity": 20
         },
         {
           "code": "686",
@@ -2171,7 +2178,7 @@
       "monthly_totals": {
         "prev_dec": 12946,
         "jan": 9889,
-        "feb": 4592
+        "feb": 4595
       },
       "firms": [
         {
@@ -2992,5 +2999,5 @@
       ]
     }
   ],
-  "last_updated": "2026-02-11T06:07:42.471265"
+  "last_updated": "2026-02-12T01:00:00.000000"
 }

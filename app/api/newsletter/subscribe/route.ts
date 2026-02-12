@@ -56,7 +56,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: 'You\'re subscribed! Check your inbox for a welcome email.',
+      message: 'Free trial started! Check your inbox for a welcome email.',
     });
   } catch (error) {
     console.error('Newsletter subscribe error:', error);
@@ -95,10 +95,10 @@ function getWelcomeEmailHtml(unsubscribeUrl: string): string {
           <tr>
             <td style="padding:40px;">
               <h2 style="margin:0 0 16px;font-size:20px;color:#f8fafc;font-weight:700;">
-                Welcome aboard!
+                Your free trial has started!
               </h2>
-              <p style="margin:0 0 20px;font-size:15px;color:#94a3b8;line-height:1.6;">
-                You're now subscribed to the <strong style="color:#f59e0b;">Daily Bulletin Analysis</strong> from Heavy Metal Stats. Every trading day, you'll receive:
+              <p style="margin:0 0 12px;font-size:15px;color:#94a3b8;line-height:1.6;">
+                You now have <strong style="color:#f59e0b;">5 business days of free access</strong> to the Daily Bulletin Analysis from Heavy Metal Stats. Every trading day, you'll receive:
               </p>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
                 <tr>
@@ -114,8 +114,11 @@ function getWelcomeEmailHtml(unsubscribeUrl: string): string {
                   </td>
                 </tr>
               </table>
-              <p style="margin:0 0 24px;font-size:14px;color:#64748b;line-height:1.6;">
+              <p style="margin:0 0 12px;font-size:14px;color:#64748b;line-height:1.6;">
                 Your first bulletin will arrive after the next CME data update (nightly at 9:30 PM EST, data delayed one day per CME release schedule).
+              </p>
+              <p style="margin:0 0 24px;font-size:14px;color:#94a3b8;line-height:1.6;">
+                After your free trial, continue receiving the daily analysis for just <strong style="color:#f59e0b;">$5/month</strong>. We'll send you a reminder before your trial ends.
               </p>
               <table cellpadding="0" cellspacing="0">
                 <tr>

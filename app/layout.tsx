@@ -5,6 +5,7 @@ import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -410,6 +411,7 @@ export default async function RootLayout({
                 </div>
                 <span className="hidden sm:block text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
                 <span className="hidden sm:block text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
+                <NewsletterSignup />
               </div>
               <ThemeToggle />
             </div>
