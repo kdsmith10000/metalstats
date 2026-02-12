@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://distractionwallaceenliven.com", // 'unsafe-eval' needed for Next.js, 'unsafe-inline' for inline scripts, ad networks
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com", // 'unsafe-eval' needed for Next.js, 'unsafe-inline' for inline scripts
               "style-src 'self' 'unsafe-inline'", // 'unsafe-inline' needed for Tailwind CSS and Next.js
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https:",

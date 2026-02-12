@@ -8,7 +8,7 @@ import PaperPhysicalCard from './PaperPhysicalCard';
 import RiskScoreTooltip from './RiskScoreTooltip';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { ChevronRight, FileText, BarChart3, FileStack } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 // Lazy load new delivery components
@@ -210,30 +210,6 @@ function getOpenInterestForMetal(
   }
   
   return 0;
-}
-
-function NativeBanner() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scriptLoaded = useRef(false);
-
-  useEffect(() => {
-    if (scriptLoaded.current || !containerRef.current) return;
-    scriptLoaded.current = true;
-
-    const script = document.createElement('script');
-    script.async = true;
-    script.setAttribute('data-cfasync', 'false');
-    script.src = 'https://distractionwallaceenliven.com/363d95083785b29310b6b0b768b3cacb/invoke.js';
-    containerRef.current.appendChild(script);
-  }, []);
-
-  return (
-    <section className="w-full px-4 sm:px-8 lg:px-24 py-8 sm:py-12">
-      <div className="max-w-4xl mx-auto">
-        <div id="container-363d95083785b29310b6b0b768b3cacb" ref={containerRef} />
-      </div>
-    </section>
-  );
 }
 
 export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, deliveryMtdData, deliveryYtdData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
@@ -686,26 +662,6 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* Spacer between sections */}
       <div className="h-12 md:h-20 lg:h-24" />
 
-      {/* Promoted Resources */}
-      <section className="w-full px-4 sm:px-8 lg:px-24 pb-8 sm:pb-12">
-        <a
-          href="https://distractionwallaceenliven.com/pabasn0tk?key=8026b9312cc409fe18e11ee032e0d7f5"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full max-w-3xl mx-auto px-6 py-4 sm:px-8 sm:py-5 bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-900 dark:to-slate-800 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl hover:shadow-lg transition-all duration-300 group"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
-                Explore Premium Market Insights
-              </span>
-            </div>
-            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors group-hover:translate-x-0.5 transform duration-200" />
-          </div>
-        </a>
-      </section>
-
       {/* Delivery Notices Section */}
       {deliveryData && deliveryData.deliveries && deliveryData.deliveries.length > 0 && (
         <>
@@ -777,9 +733,6 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         </>
       )}
 
-      {/* Adsterra Native Banner */}
-      <NativeBanner />
-
       {/* Footer */}
       <footer className="py-8 sm:py-12 md:py-16 bg-white/30 dark:bg-black/20 border-t border-slate-200 dark:border-slate-800">
         <div className="w-full px-4 sm:px-8 lg:px-24">
@@ -804,9 +757,6 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               <Link href="/api-info" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
                 API
               </Link>
-              <a href="https://distractionwallaceenliven.com/pabasn0tk?key=8026b9312cc409fe18e11ee032e0d7f5" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
-                AdSpace
-              </a>
             </div>
 
           </div>

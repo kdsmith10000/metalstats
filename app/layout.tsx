@@ -391,11 +391,6 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Adsterra */}
-        <script
-          src="https://distractionwallaceenliven.com/d3/f5/01/d3f501bc298fe1e606aaf82856dd6b83.js"
-          async
-        />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
