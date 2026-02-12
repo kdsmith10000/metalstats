@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 // GET: Retrieve previous day's data (most recent before today)
@@ -18,14 +18,14 @@ export async function GET() {
       LIMIT 1
     `;
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return NextResponse.json(
         { error: 'No previous day data available' },
         { status: 404 }
       );
     }
 
-    const previousDate = result.rows[0].date;
+    const previousDate = (result as Record<string, unknown>[])[0].date;
 
     // Fetch all metals for that date
     const dataResult = await sql`
@@ -42,8 +42,8 @@ export async function GET() {
     `;
 
     // Transform to match WarehouseStocksData structure
-    const data: Record<string, any> = {};
-    for (const row of dataResult.rows) {
+    const data: Record<string, Record<string, unknown>> = {};
+    for (const row of dataResult as Record<string, string>[]) {
       data[row.metal] = {
         metal: row.metal,
         report_date: row.report_date,
@@ -60,10 +60,11 @@ export async function GET() {
       date: previousDate,
       data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errMsg = error instanceof Error ? error.message : String(error);
     console.error('Error fetching previous day data:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch previous day data', details: error.message },
+      { error: 'Failed to fetch previous day data', details: errMsg },
       { status: 500 }
     );
   }

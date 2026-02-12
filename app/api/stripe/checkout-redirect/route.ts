@@ -2,12 +2,15 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { getSubscriberByEmail, isDatabaseAvailable } from '@/lib/db';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-01-28.clover',
-});
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2026-01-28.clover',
+  });
+}
 
 // GET handler so email links can trigger checkout (emails can't POST)
 export async function GET(request: Request) {
+  const stripe = getStripe();
   const { searchParams } = new URL(request.url);
   const email = searchParams.get('email');
 

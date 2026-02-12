@@ -118,7 +118,7 @@ export function getPaperPhysicalBgColor(riskLevel: PaperPhysicalData['riskLevel'
   }
 }
 
-// Monthly demand figures based on actual COMEX delivery data (Feb 5, 2026)
+// Monthly demand figures based on actual COMEX delivery data (Feb 11, 2026)
 // Coverage ratio = registered inventory / monthly delivery demand
 // This shows how many months of deliveries the registered inventory can cover
 export const metalConfigs: MetalConfig[] = [
@@ -129,9 +129,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fcd34d',
     unit: 'oz',
     contractSize: 100,
-    // Feb 2026 MTD: 33,783 contracts = 3,378,300 oz actual delivery demand
-    monthlyDemand: 3378300, // 33,783 contracts * 100 oz (Feb 9 MTD)
-    pricePerUnit: 5051,  // Updated to Feb 9 settle price (GC FEB26)
+    // Feb 2026 MTD: 35,436 contracts = 3,543,600 oz actual delivery demand
+    monthlyDemand: 3543600, // 35,436 contracts * 100 oz (Feb 11 MTD)
+    pricePerUnit: 5072,  // Updated to Feb 11 settle price (GC FEB26: 5071.6)
     futuresSymbol: 'GC', // COMEX Gold Futures
   },
   {
@@ -141,9 +141,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#cbd5e1',
     unit: 'oz',
     contractSize: 5000,
-    // Feb 2026 MTD: 4,490 contracts = 22,450,000 oz actual delivery demand
-    monthlyDemand: 22450000, // 4,490 contracts * 5,000 oz (Feb 9 MTD)
-    pricePerUnit: 82,  // Updated to Feb 9 settle price (~$82.065/oz)
+    // Feb 2026 MTD: 4,595 contracts = 22,975,000 oz actual delivery demand
+    monthlyDemand: 22975000, // 4,595 contracts * 5,000 oz (Feb 11 MTD)
+    pricePerUnit: 82,  // SI settle price (~$82/oz)
     futuresSymbol: 'SI', // COMEX Silver Futures
   },
   {
@@ -177,9 +177,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fb923c',
     unit: 'short tons', // COMEX warehouse stocks are in short tons
     contractSize: 12.5, // 25,000 lbs = 12.5 short tons per contract
-    // Feb 2026 MTD: 7,098 contracts = 88,725 short tons actual delivery demand
-    monthlyDemand: 88725, // 7,098 contracts * 12.5 short tons (Feb 9 MTD)
-    pricePerUnit: 11890, // ~$5.945/lb * 2000 lbs/short ton (Feb 9 settle)
+    // Feb 2026 MTD: 7,445 contracts = 93,062.5 short tons actual delivery demand
+    monthlyDemand: 93062.5, // 7,445 contracts * 12.5 short tons (Feb 11 MTD)
+    pricePerUnit: 11898, // ~$5.949/lb * 2000 lbs/short ton (Feb 11 settle)
     futuresSymbol: 'HG', // COMEX Copper Futures
   },
 ];

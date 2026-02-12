@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 // POST: Store warehouse data for a specific date
@@ -66,14 +66,14 @@ export async function POST(request: NextRequest) {
           WHERE date = ${date}::date AND metal = ${metal}
         `;
         
-        if (checkResult.rows[0].count === '1') {
+        if ((checkResult as Record<string, unknown>[])[0].count === '1') {
           // Check if it was just created (within last second) or updated
           const existingResult = await sql`
             SELECT created_at
             FROM warehouse_snapshots
             WHERE date = ${date}::date AND metal = ${metal}
           `;
-          const createdAt = new Date(existingResult.rows[0].created_at);
+          const createdAt = new Date((existingResult as Record<string, unknown>[])[0].created_at as string);
           const now = new Date();
           if (now.getTime() - createdAt.getTime() < 2000) {
             inserted++;
@@ -81,8 +81,9 @@ export async function POST(request: NextRequest) {
             updated++;
           }
         }
-      } catch (error: any) {
-        console.error(`Error saving ${metal}:`, error);
+      } catch (error: unknown) {
+        const errMsg = error instanceof Error ? error.message : String(error);
+        console.error(`Error saving ${metal}:`, errMsg);
         // Continue with other metals
       }
     }
@@ -94,10 +95,11 @@ export async function POST(request: NextRequest) {
       updated,
       total: metals.length,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errMsg = error instanceof Error ? error.message : String(error);
     console.error('Error storing data:', error);
     return NextResponse.json(
-      { error: 'Failed to store data', details: error.message },
+      { error: 'Failed to store data', details: errMsg },
       { status: 500 }
     );
   }

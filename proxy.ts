@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // NOTE: www -> non-www redirect is handled by Vercel's domain configuration.
   // Do NOT add a redirect here — it conflicts with Vercel's platform-level redirect
   // and causes a "Redirect error" in Google Search Console.

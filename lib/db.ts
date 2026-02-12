@@ -3,7 +3,7 @@ import { neon, NeonQueryFunction } from '@neondatabase/serverless';
 // Lazy database connection - only connects when actually used
 let _sql: NeonQueryFunction<false, false> | null = null;
 
-function sql(strings: TemplateStringsArray, ...values: unknown[]) {
+export function sql(strings: TemplateStringsArray, ...values: unknown[]) {
   if (!_sql) {
     if (!process.env.DATABASE_URL) {
       throw new Error('DATABASE_URL environment variable is not set');
@@ -122,6 +122,24 @@ export async function initializeDatabase() {
     await sql`
       CREATE INDEX IF NOT EXISTS idx_newsletter_token
       ON newsletter_subscribers(unsubscribe_token)
+    `;
+
+    // Create newsletters archive table
+    await sql`
+      CREATE TABLE IF NOT EXISTS newsletters (
+        id SERIAL PRIMARY KEY,
+        report_date DATE UNIQUE NOT NULL,
+        subject VARCHAR(255) NOT NULL,
+        html_content TEXT NOT NULL,
+        metals_analyzed INTEGER DEFAULT 0,
+        avg_risk_score INTEGER DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_newsletters_date
+      ON newsletters(report_date DESC)
     `;
 
     console.log('Database tables initialized successfully');
@@ -1199,6 +1217,147 @@ export async function getSubscriberByEmail(email: string): Promise<NewsletterSub
   }
 }
 
+// ============================================
+// NEWSLETTER ARCHIVE
+// ============================================
+
+export interface Newsletter {
+  id: number;
+  report_date: string;
+  subject: string;
+  html_content: string;
+  metals_analyzed: number;
+  avg_risk_score: number;
+  created_at: Date;
+}
+
+// Save a generated newsletter (upsert by date)
+export async function saveNewsletter(
+  reportDate: string,
+  subject: string,
+  htmlContent: string,
+  metalsAnalyzed: number,
+  avgRiskScore: number
+): Promise<Newsletter> {
+  try {
+    const result = await sql`
+      INSERT INTO newsletters (report_date, subject, html_content, metals_analyzed, avg_risk_score)
+      VALUES (${reportDate}, ${subject}, ${htmlContent}, ${metalsAnalyzed}, ${avgRiskScore})
+      ON CONFLICT (report_date)
+      DO UPDATE SET
+        subject = EXCLUDED.subject,
+        html_content = EXCLUDED.html_content,
+        metals_analyzed = EXCLUDED.metals_analyzed,
+        avg_risk_score = EXCLUDED.avg_risk_score,
+        created_at = CURRENT_TIMESTAMP
+      RETURNING id, report_date, subject, html_content, metals_analyzed, avg_risk_score, created_at
+    `;
+    return result[0] as Newsletter;
+  } catch (error) {
+    console.error('Error saving newsletter:', error);
+    throw error;
+  }
+}
+
+// Get the most recent newsletter
+export async function getLatestNewsletter(): Promise<Newsletter | null> {
+  try {
+    const result = await sql`
+      SELECT id, report_date, subject, html_content, metals_analyzed, avg_risk_score, created_at
+      FROM newsletters
+      ORDER BY report_date DESC
+      LIMIT 1
+    `;
+    return result.length > 0 ? result[0] as Newsletter : null;
+  } catch (error) {
+    console.error('Error fetching latest newsletter:', error);
+    throw error;
+  }
+}
+
+// Get a newsletter by date
+export async function getNewsletterByDate(reportDate: string): Promise<Newsletter | null> {
+  try {
+    const result = await sql`
+      SELECT id, report_date, subject, html_content, metals_analyzed, avg_risk_score, created_at
+      FROM newsletters
+      WHERE report_date = ${reportDate}
+    `;
+    return result.length > 0 ? result[0] as Newsletter : null;
+  } catch (error) {
+    console.error('Error fetching newsletter by date:', error);
+    throw error;
+  }
+}
+
+// Get previous day's risk scores for comparison
+export async function getPreviousRiskScores(): Promise<RiskScoreSnapshot[]> {
+  try {
+    // Get the two most recent dates
+    const dates = await sql`
+      SELECT DISTINCT report_date FROM risk_score_snapshots
+      ORDER BY report_date DESC LIMIT 2
+    `;
+    if (dates.length < 2) return [];
+    const prevDate = dates[1].report_date;
+    const result = await sql`
+      SELECT id, metal, report_date, composite_score, risk_level,
+             coverage_risk, paper_physical_risk, inventory_trend_risk,
+             delivery_velocity_risk, market_activity_risk,
+             dominant_factor, commentary, created_at
+      FROM risk_score_snapshots
+      WHERE report_date = ${prevDate}
+    `;
+    return result as RiskScoreSnapshot[];
+  } catch (error) {
+    console.error('Error fetching previous risk scores:', error);
+    return [];
+  }
+}
+
+// Get previous day's open interest for comparison
+export async function getPreviousOpenInterest(): Promise<OpenInterestSnapshot[]> {
+  try {
+    const dates = await sql`
+      SELECT DISTINCT report_date FROM open_interest_snapshots
+      ORDER BY report_date DESC LIMIT 2
+    `;
+    if (dates.length < 2) return [];
+    const prevDate = dates[1].report_date;
+    const result = await sql`
+      SELECT id, symbol, report_date, open_interest, oi_change, total_volume, created_at
+      FROM open_interest_snapshots
+      WHERE report_date = ${prevDate}
+    `;
+    return result as OpenInterestSnapshot[];
+  } catch (error) {
+    console.error('Error fetching previous open interest:', error);
+    return [];
+  }
+}
+
+// Get previous day's paper/physical ratios for comparison
+export async function getPreviousPaperPhysical(): Promise<PaperPhysicalSnapshot[]> {
+  try {
+    const dates = await sql`
+      SELECT DISTINCT report_date FROM paper_physical_snapshots
+      ORDER BY report_date DESC LIMIT 2
+    `;
+    if (dates.length < 2) return [];
+    const prevDate = dates[1].report_date;
+    const result = await sql`
+      SELECT id, metal, report_date, futures_symbol, open_interest,
+             open_interest_units, registered_inventory, paper_physical_ratio, risk_level, created_at
+      FROM paper_physical_snapshots
+      WHERE report_date = ${prevDate}
+    `;
+    return result as PaperPhysicalSnapshot[];
+  } catch (error) {
+    console.error('Error fetching previous paper/physical:', error);
+    return [];
+  }
+}
+
 // Get delivery history for all metals (for charts)
 export async function getAllDeliveryHistory(days: number = 30): Promise<DeliverySnapshot[]> {
   try {
@@ -1213,5 +1372,203 @@ export async function getAllDeliveryHistory(days: number = 30): Promise<Delivery
   } catch (error) {
     console.error('Error fetching all delivery history:', error);
     throw error;
+  }
+}
+
+// ============================================
+// BUILD ANALYSIS FROM DB (for newsletter)
+// ============================================
+
+const SYMBOL_TO_METAL: Record<string, string> = {
+  GC: 'Gold', '1OZ': 'Gold', MGC: 'Gold',
+  SI: 'Silver', SIL: 'Silver',
+  HG: 'Copper',
+  PL: 'Platinum', PA: 'Palladium',
+  ALI: 'Aluminum',
+};
+
+/** Build the full analysis_summary structure from the most recent DB data */
+export async function buildLatestAnalysisFromDb(): Promise<Record<string, unknown> | null> {
+  try {
+    // 1. Get latest report_date from risk_score_snapshots
+    const dateResult = await sql`
+      SELECT report_date FROM risk_score_snapshots
+      ORDER BY report_date DESC LIMIT 1
+    `;
+    if (dateResult.length === 0) return null;
+
+    const reportDate = typeof dateResult[0].report_date === 'string'
+      ? dateResult[0].report_date
+      : (dateResult[0].report_date as Date).toISOString().split('T')[0];
+
+    // 2. Fetch all data for that date
+    const [riskScores, ppRatios, deliveries, metalSnaps, oiRows, bulletinRows] = await Promise.all([
+      sql`SELECT metal, composite_score, risk_level, dominant_factor, commentary
+         FROM risk_score_snapshots WHERE report_date = ${reportDate}`,
+      sql`SELECT metal, futures_symbol, open_interest, open_interest_units, registered_inventory,
+             paper_physical_ratio, risk_level FROM paper_physical_snapshots WHERE report_date = ${reportDate}`,
+      sql`SELECT d.id, d.metal, d.symbol, d.contract_month, d.settlement_price, d.daily_issued,
+             d.daily_stopped, d.month_to_date,
+             (SELECT COALESCE(json_agg(json_build_object('name', f.firm_name, 'issued', f.issued, 'stopped', f.stopped)), '[]'::json)
+              FROM delivery_firm_snapshots f WHERE f.delivery_snapshot_id = d.id) as firms
+         FROM delivery_snapshots d WHERE report_date = ${reportDate}`,
+      sql`SELECT metal, report_date, activity_date, registered, eligible, total
+         FROM metal_snapshots WHERE report_date = ${reportDate}`,
+      sql`SELECT symbol, open_interest, oi_change, total_volume
+         FROM open_interest_snapshots WHERE report_date = ${reportDate}`,
+      sql`SELECT symbol, front_month_settle, front_month_change, total_volume, total_open_interest, total_oi_change
+         FROM bulletin_snapshots WHERE date = ${reportDate}::date`,
+    ]);
+
+    const riskMap = Object.fromEntries((riskScores as { metal: string; composite_score: number; risk_level: string; dominant_factor: string; commentary: string }[])
+      .map(r => [r.metal, r]));
+    const ppMap = Object.fromEntries((ppRatios as { metal: string; futures_symbol: string; open_interest: number; open_interest_units: number; registered_inventory: number; paper_physical_ratio: number; risk_level: string }[])
+      .map(p => [p.metal, p]));
+    const delMap = Object.fromEntries((deliveries as { metal: string; symbol: string; contract_month: string; settlement_price: number; daily_issued: number; daily_stopped: number; month_to_date: number; firms: unknown }[])
+      .map(d => [d.metal, d]));
+    const metalMap = Object.fromEntries((metalSnaps as { metal: string; report_date: string; activity_date: string | null; registered: number; eligible: number; total: number }[])
+      .map(m => [m.metal, m]));
+
+    // Map symbol -> market data (bulletin + OI)
+    const bulletinBySym = Object.fromEntries((bulletinRows as { symbol: string; front_month_settle: number | null; front_month_change: number | null; total_volume: number; total_open_interest: number; total_oi_change: number }[])
+      .map(b => [b.symbol, b]));
+    const oiBySym = Object.fromEntries((oiRows as { symbol: string; open_interest: number; oi_change: number; total_volume: number }[])
+      .map(o => [o.symbol, o]));
+
+    const metalOrder = ['Gold', 'Silver', 'Copper', 'Platinum_Palladium', 'Aluminum'];
+    const symbolForMetal: Record<string, string[]> = {
+      Gold: ['GC', '1OZ', 'MGC'],
+      Silver: ['SI', 'SIL'],
+      Copper: ['HG'],
+      Platinum_Palladium: ['PL', 'PA'],
+      Aluminum: ['ALI'],
+    };
+
+    const metals: Record<string, unknown> = {};
+
+    for (const metal of metalOrder) {
+      const symbols = symbolForMetal[metal] || [];
+      let bulletinRow = null;
+      let oiRow = null;
+      for (const sym of symbols) {
+        bulletinRow = bulletinBySym[sym] || bulletinRow;
+        oiRow = oiBySym[sym] || oiRow;
+      }
+      if (!bulletinRow && symbols.length > 0) bulletinRow = bulletinBySym[symbols[0]];
+      if (!oiRow && symbols.length > 0) oiRow = oiBySym[symbols[0]];
+
+      const metalSnap = metalMap[metal];
+      const pp = ppMap[metal];
+      const del = delMap[metal];
+      const risk = riskMap[metal];
+
+      const total = metalSnap ? Number(metalSnap.total) : 0;
+      const reg = metalSnap ? Number(metalSnap.registered) : 0;
+      const regPct = total > 0 ? (reg / total * 100).toFixed(1) : '0';
+
+      const bs = bulletinRow as { front_month_settle?: number; front_month_change?: number; total_volume?: number; total_open_interest?: number; total_oi_change?: number } | null;
+      const oi = oiRow as { open_interest?: number; oi_change?: number; total_volume?: number } | null;
+
+      const frontSettle = bs?.front_month_settle ?? null;
+      const frontChange = bs?.front_month_change ?? null;
+      const totalVol = bs?.total_volume ?? oi?.total_volume ?? 0;
+      const oiChange = bs?.total_oi_change ?? oi?.oi_change ?? 0;
+
+      metals[metal] = {
+        warehouse: metalSnap ? {
+          registered: Number(metalSnap.registered),
+          eligible: Number(metalSnap.eligible),
+          total: Number(metalSnap.total),
+          registered_pct: regPct,
+          eligible_pct: (100 - parseFloat(regPct)).toFixed(1),
+          depositories: [],
+          depository_count: 0,
+        } : null,
+        paper_physical: pp ? {
+          open_interest: Number(pp.open_interest),
+          open_interest_units: Number(pp.open_interest_units),
+          registered_inventory: Number(pp.registered_inventory),
+          ratio: Number(pp.paper_physical_ratio),
+          ratio_display: `${Number(pp.paper_physical_ratio).toFixed(2)}:1`,
+          risk_level: pp.risk_level,
+          unit: metal === 'Copper' ? 'short tons' : metal === 'Aluminum' ? 'metric tons' : 'oz',
+        } : null,
+        delivery: del ? {
+          contract_month: del.contract_month,
+          settlement_price: Number(del.settlement_price),
+          daily_issued: del.daily_issued || 0,
+          daily_stopped: del.daily_stopped || 0,
+          month_to_date_contracts: del.month_to_date || 0,
+          month_to_date_units: 0,
+          top_issuers: (Array.isArray(del.firms) ? del.firms : [])
+            .filter((f: unknown): f is { name?: string; issued?: number } => f != null && typeof f === 'object' && ((f as { issued?: number }).issued ?? 0) > 0)
+            .sort((a, b) => (b.issued ?? 0) - (a.issued ?? 0))
+            .slice(0, 3)
+            .map((f) => ({ name: f.name || 'N/A', issued: f.issued ?? 0 })),
+          top_stoppers: [],
+        } : null,
+        market: {
+          total_volume: totalVol,
+          oi_change: oiChange,
+          front_month_settle: frontSettle,
+          front_month_change: frontChange,
+        },
+        risk_score: risk ? {
+          composite: Number(risk.composite_score),
+          level: risk.risk_level,
+          dominant_factor: risk.dominant_factor,
+          commentary: risk.commentary,
+        } : null,
+      };
+    }
+
+    // Build risk ranking (sorted by score desc)
+    const ranking = (riskScores as { metal: string; composite_score: number; risk_level: string; dominant_factor: string }[])
+      .map(r => ({ metal: r.metal, score: Number(r.composite_score), level: r.risk_level, dominant_factor: r.dominant_factor }))
+      .sort((a, b) => b.score - a.score);
+
+    const avgScore = ranking.length > 0
+      ? Math.round(ranking.reduce((s, r) => s + r.score, 0) / ranking.length)
+      : 0;
+    const highRisk = ranking.filter(r => ['EXTREME', 'HIGH'].includes(r.level)).length;
+    const avgLevel = avgScore >= 75 ? 'EXTREME' : avgScore >= 60 ? 'HIGH' : avgScore >= 45 ? 'WARNING' : avgScore >= 30 ? 'MODERATE' : 'LOW';
+
+    // Build key_findings from risk scores
+    const keyFindings: { severity: string; metal?: string; score?: number; finding: string }[] = [];
+    for (const r of ranking) {
+      const risk = riskMap[r.metal];
+      if (risk && ['EXTREME', 'HIGH'].includes(r.level)) {
+        keyFindings.push({ severity: r.level, metal: r.metal, score: r.score, finding: (risk as { commentary: string }).commentary });
+      }
+    }
+    for (const [metal, pp] of Object.entries(ppMap)) {
+      const p = pp as { paper_physical_ratio: number; open_interest_units: number; registered_inventory: number; risk_level: string };
+      if (['EXTREME', 'HIGH'].includes(p.risk_level)) {
+        keyFindings.push({
+          severity: 'WARNING',
+          metal,
+          finding: `Paper/physical ratio at ${Number(p.paper_physical_ratio).toFixed(2)}:1 - ${p.risk_level} risk. ${Number(p.open_interest_units).toLocaleString()} in paper claims vs ${Number(p.registered_inventory).toLocaleString()} registered.`,
+        });
+      }
+    }
+
+    return {
+      report_date: reportDate,
+      activity_date: reportDate,
+      generated_at: new Date().toISOString(),
+      metals,
+      key_findings: keyFindings,
+      market_overview: {
+        report_date: reportDate,
+        metals_analyzed: ranking.length,
+        average_risk_score: avgScore,
+        average_risk_level: avgLevel,
+        high_risk_metals: highRisk,
+        risk_ranking: ranking,
+      },
+    };
+  } catch (error) {
+    console.error('Error building analysis from DB:', error);
+    return null;
   }
 }
