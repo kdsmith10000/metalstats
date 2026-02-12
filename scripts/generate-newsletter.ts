@@ -25,7 +25,8 @@ async function main() {
   writeFileSync(outputPath, newsletter.html, 'utf-8');
   console.log(`[Newsletter] Wrote: ${outputPath}`);
   console.log(`[Newsletter] Subject: ${newsletter.subject}`);
-  console.log(`[Newsletter] Report date: ${newsletter.reportDate}`);
+  console.log(`[Newsletter] Release date: ${newsletter.releaseDate}`);
+  console.log(`[Newsletter] Report date (bulletin): ${newsletter.reportDate}`);
   console.log(`[Newsletter] Metals analyzed: ${newsletter.metalsAnalyzed}`);
   console.log(`[Newsletter] Avg risk score: ${newsletter.avgRiskScore}`);
 }

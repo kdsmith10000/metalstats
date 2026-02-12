@@ -323,6 +323,7 @@ export interface GeneratedNewsletter {
   subject: string;
   html: string;
   reportDate: string;
+  releaseDate: string;
   metalsAnalyzed: number;
   avgRiskScore: number;
 }
@@ -350,6 +351,17 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
   const bulletinNumber = bulletin?.bulletin_number ?? '';
   const overview = (analysis.market_overview || {}) as { metals_analyzed?: number; average_risk_score?: number };
 
+  // Release date = the day AFTER the report date (CME reports are published next business day)
+  const releaseDate = (() => {
+    try {
+      const d = new Date(reportDate + 'T12:00:00');
+      d.setDate(d.getDate() + 1);
+      return d.toISOString().split('T')[0];
+    } catch {
+      return reportDate;
+    }
+  })();
+
   // Load previous day data from DB for comparison
   const [prevRiskScores, prevOI, prevPP] = await Promise.all([
     getPreviousRiskScores(),
@@ -364,7 +376,7 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
   const keyAlerts = generateKeyAlerts(analysis);
   const ppRows = generatePaperPhysicalCheck(analysis, prevPP);
 
-  const subject = `COMEX Daily Analysis — ${formatDate(reportDate)}`;
+  const subject = `COMEX Daily Analysis — ${formatDate(releaseDate)}`;
 
   const html = `
 <!DOCTYPE html>
@@ -386,7 +398,10 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
                 HEAVY METAL STATS
               </h1>
               <p style="margin:6px 0 0;font-size:13px;color:#451a03;font-weight:600;">
-                Daily Bulletin Analysis &bull; ${formatDate(reportDate)}${bulletinNumber ? ` &bull; Bulletin #${bulletinNumber}` : ''}
+                ${formatDate(releaseDate)}
+              </p>
+              <p style="margin:4px 0 0;font-size:11px;color:#78350f;font-weight:500;">
+                Based on CME ${shortDate(reportDate)} settlement data${bulletinNumber ? ` &bull; Bulletin #${bulletinNumber}` : ''}
               </p>
             </td>
           </tr>
@@ -504,6 +519,7 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
     subject,
     html,
     reportDate,
+    releaseDate,
     metalsAnalyzed: overview.metals_analyzed || 0,
     avgRiskScore: overview.average_risk_score || 0,
   };
