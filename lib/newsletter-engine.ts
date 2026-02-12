@@ -351,16 +351,8 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
   const bulletinNumber = bulletin?.bulletin_number ?? '';
   const overview = (analysis.market_overview || {}) as { metals_analyzed?: number; average_risk_score?: number };
 
-  // Release date = the day AFTER the report date (CME reports are published next business day)
-  const releaseDate = (() => {
-    try {
-      const d = new Date(reportDate + 'T12:00:00');
-      d.setDate(d.getDate() + 1);
-      return d.toISOString().split('T')[0];
-    } catch {
-      return reportDate;
-    }
-  })();
+  // Release date = today (the date the newsletter is actually generated/sent)
+  const releaseDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
 
   // Load previous day data from DB for comparison
   const [prevRiskScores, prevOI, prevPP] = await Promise.all([
