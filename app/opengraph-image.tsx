@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'COMEX Metals Inventory Tracker - Live Gold & Silver Data';
+export const alt = 'Heavy Metal Stats - Free Precious Metal Statistics & COMEX Inventory Data';
 export const size = {
   width: 1200,
   height: 630,
@@ -73,15 +73,15 @@ export default async function Image() {
           {/* Title */}
           <div
             style={{
-              fontSize: '64px',
+              fontSize: '60px',
               fontWeight: 'bold',
               color: '#ffffff',
               textAlign: 'center',
-              marginBottom: '20px',
+              marginBottom: '14px',
               letterSpacing: '-2px',
             }}
           >
-            COMEX Metals Inventory
+            Heavy Metal Stats
           </div>
 
           {/* Subtitle */}
@@ -93,7 +93,7 @@ export default async function Image() {
               marginBottom: '40px',
             }}
           >
-            Live Gold & Silver Warehouse Stock Data
+            Free Precious Metal Statistics & COMEX Inventory Data
           </div>
 
           {/* Stats row */}

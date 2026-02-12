@@ -4,8 +4,8 @@ import { ArrowLeft, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Info, 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'What are COMEX Delivery Notices? Issues, Stops & Settlement Explained | Learn Metals',
-  description: 'Learn what COMEX delivery notices mean: what issues and stops are, how settlement prices work, and why physical delivery matters for gold, silver, and copper futures.',
+  title: 'COMEX Delivery Notices Explained — Issues, Stops & Physical Gold Silver Delivery',
+  description: 'Learn how physical delivery works on COMEX: what issues and stops mean for gold, silver, copper & platinum futures, how settlement prices are set, and why delivery data signals precious metals supply stress.',
   keywords: [
     'comex delivery notices explained',
     'what are issues and stops',
@@ -13,16 +13,27 @@ export const metadata: Metadata = {
     'futures physical delivery',
     'comex gold delivery',
     'comex silver delivery',
+    'comex copper delivery',
+    'comex platinum delivery',
     'first notice day',
     'last delivery day',
     'futures contract delivery process',
+    'physical gold delivery',
+    'physical silver delivery',
+    'precious metals delivery',
+    'comex delivery data',
+    'gold delivery volume',
+    'silver delivery volume',
+    'precious metals physical demand',
+    'comex mtd delivery',
+    'comex ytd delivery',
   ],
   alternates: {
     canonical: 'https://heavymetalstats.com/learn/delivery',
   },
   openGraph: {
-    title: 'COMEX Delivery Notices: Issues, Stops & Settlement Explained',
-    description: 'Understand how physical delivery works on COMEX: what issues and stops mean, how settlement prices are determined, and why delivery data matters.',
+    title: 'COMEX Delivery Notices: How Physical Gold & Silver Delivery Works',
+    description: 'Complete guide to COMEX delivery notices. Learn what issues and stops mean, how physical delivery works for gold, silver, and copper, and why delivery data matters for precious metals analysis.',
     url: 'https://heavymetalstats.com/learn/delivery',
     type: 'article',
   },
@@ -315,6 +326,14 @@ export default function DeliveryLearnPage() {
           <p className="text-sm text-slate-400">
             Data from CME Group. Informational only — not financial advice.
           </p>
+          <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+            <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
+            <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
+            <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Coverage &amp; Paper/Physical</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
+            <Link href="/terms" className="hover:text-slate-600 dark:hover:text-slate-300">Terms</Link>
+          </nav>
         </div>
       </footer>
     </div>

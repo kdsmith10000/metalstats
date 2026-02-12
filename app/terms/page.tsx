@@ -104,6 +104,18 @@ export default function TermsOfService() {
             </div>
           ))}
         </div>
+
+        {/* Footer nav for internal linking / crawlability */}
+        <footer className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+          <nav className="flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+            <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
+            <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
+            <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
+            <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
+          </nav>
+        </footer>
       </div>
     </div>
   );

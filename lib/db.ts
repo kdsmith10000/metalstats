@@ -93,6 +93,27 @@ export async function initializeDatabase() {
       ON depository_snapshots(metal_snapshot_id)
     `;
 
+    // Create newsletter_subscribers table
+    await sql`
+      CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        subscribed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        unsubscribe_token VARCHAR(64) UNIQUE NOT NULL,
+        active BOOLEAN DEFAULT TRUE
+      )
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_newsletter_email
+      ON newsletter_subscribers(email)
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_newsletter_token
+      ON newsletter_subscribers(unsubscribe_token)
+    `;
+
     console.log('Database tables initialized successfully');
     return true;
   } catch (error) {
@@ -951,6 +972,115 @@ export async function getDeliveryHistory(metal: string, days: number = 90): Prom
     return result as DeliverySnapshot[];
   } catch (error) {
     console.error(`Error fetching delivery history for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// ============================================
+// NEWSLETTER SUBSCRIBERS
+// ============================================
+
+export interface NewsletterSubscriber {
+  id: number;
+  email: string;
+  subscribed_at: Date;
+  unsubscribe_token: string;
+  active: boolean;
+}
+
+// Initialize newsletter subscribers table
+export async function initializeNewsletterTable() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        subscribed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        unsubscribe_token VARCHAR(64) UNIQUE NOT NULL,
+        active BOOLEAN DEFAULT TRUE
+      )
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_newsletter_email
+      ON newsletter_subscribers(email)
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_newsletter_token
+      ON newsletter_subscribers(unsubscribe_token)
+    `;
+
+    console.log('Newsletter subscribers table initialized successfully');
+    return true;
+  } catch (error) {
+    console.error('Error initializing newsletter table:', error);
+    throw error;
+  }
+}
+
+// Add a new subscriber (or reactivate if previously unsubscribed)
+export async function addSubscriber(email: string, unsubscribeToken: string): Promise<NewsletterSubscriber> {
+  try {
+    const result = await sql`
+      INSERT INTO newsletter_subscribers (email, unsubscribe_token, active)
+      VALUES (${email.toLowerCase().trim()}, ${unsubscribeToken}, TRUE)
+      ON CONFLICT (email)
+      DO UPDATE SET
+        active = TRUE,
+        unsubscribe_token = EXCLUDED.unsubscribe_token,
+        subscribed_at = CURRENT_TIMESTAMP
+      RETURNING id, email, subscribed_at, unsubscribe_token, active
+    `;
+    return result[0] as NewsletterSubscriber;
+  } catch (error) {
+    console.error('Error adding subscriber:', error);
+    throw error;
+  }
+}
+
+// Unsubscribe by token
+export async function removeSubscriber(token: string): Promise<boolean> {
+  try {
+    const result = await sql`
+      UPDATE newsletter_subscribers
+      SET active = FALSE
+      WHERE unsubscribe_token = ${token} AND active = TRUE
+      RETURNING id
+    `;
+    return result.length > 0;
+  } catch (error) {
+    console.error('Error removing subscriber:', error);
+    throw error;
+  }
+}
+
+// Get all active subscribers
+export async function getActiveSubscribers(): Promise<NewsletterSubscriber[]> {
+  try {
+    const result = await sql`
+      SELECT id, email, subscribed_at, unsubscribe_token, active
+      FROM newsletter_subscribers
+      WHERE active = TRUE
+      ORDER BY subscribed_at ASC
+    `;
+    return result as NewsletterSubscriber[];
+  } catch (error) {
+    console.error('Error fetching active subscribers:', error);
+    throw error;
+  }
+}
+
+// Check if an email is already subscribed (active)
+export async function isSubscribed(email: string): Promise<boolean> {
+  try {
+    const result = await sql`
+      SELECT id FROM newsletter_subscribers
+      WHERE email = ${email.toLowerCase().trim()} AND active = TRUE
+    `;
+    return result.length > 0;
+  } catch (error) {
+    console.error('Error checking subscription:', error);
     throw error;
   }
 }

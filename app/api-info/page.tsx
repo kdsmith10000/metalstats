@@ -2,8 +2,18 @@ import Link from 'next/link';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 
 export const metadata = {
-  title: 'API Endpoints & Data Sources',
-  description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker. Access gold, silver, copper, and aluminum warehouse stock data.',
+  title: 'CME Group Data Sources & API Endpoints for Precious Metals Inventory',
+  description: 'Explore the CME Group API endpoints and data sources behind Heavy Metal Stats. Access gold, silver, copper, platinum, palladium and aluminum COMEX warehouse stock data updated daily.',
+  keywords: [
+    'cme group api',
+    'comex data api',
+    'precious metals api',
+    'gold inventory data source',
+    'silver inventory data source',
+    'comex warehouse data download',
+    'cme delivery reports',
+    'precious metals data sources',
+  ],
   alternates: {
     canonical: 'https://heavymetalstats.com/api-info',
   },
@@ -16,12 +26,9 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: 'API Endpoints & Data Sources | COMEX Metals Tracker',
-    description: 'Explore the CME Group API endpoints and data sources powering the COMEX Metals Inventory Tracker.',
+    title: 'CME Group Data Sources & API Endpoints | Heavy Metal Stats',
+    description: 'Explore the CME Group API endpoints and data sources powering the precious metals inventory tracker. Gold, silver, copper, platinum data updated daily.',
     url: 'https://heavymetalstats.com/api-info',
-  },
-  other: {
-    'google-adsense-account': 'ca-pub-1319414449875714',
   },
 };
 
@@ -159,6 +166,18 @@ export default function ApiEndpoints() {
             </a>
           </div>
         </div>
+
+        {/* Footer nav for internal linking / crawlability */}
+        <footer className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+          <nav className="flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+            <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
+            <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
+            <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
+            <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
+            <Link href="/terms" className="hover:text-slate-600 dark:hover:text-slate-300">Terms</Link>
+          </nav>
+        </footer>
       </div>
     </div>
   );

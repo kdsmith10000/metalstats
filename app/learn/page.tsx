@@ -4,25 +4,36 @@ import { ArrowLeft, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Info, 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'What is COMEX Coverage Ratio & Paper vs Physical? | Learn Metals',
-  description: 'Learn what COMEX registered vs eligible inventory means, how coverage ratio measures supply/demand, and why paper vs physical ratio matters for gold & silver futures markets.',
+  title: 'COMEX Coverage Ratio & Paper vs Physical Ratio Explained | Precious Metal Stats Guide',
+  description: 'Understand precious metals supply & demand: what COMEX registered vs eligible inventory means, how coverage ratio measures months of supply, and why the paper vs physical gold & silver ratio signals market stress. Free educational guide.',
   keywords: [
     'what is comex registered inventory',
     'comex registered vs eligible',
     'coverage ratio explained',
     'paper vs physical gold',
     'paper vs physical silver',
+    'paper vs physical ratio explained',
     'comex delivery explained',
     'futures vs physical metal',
     'gold silver leverage ratio',
     'comex warehouse explained',
+    'precious metals supply demand',
+    'gold supply demand analysis',
+    'silver supply demand analysis',
+    'precious metals education',
+    'comex gold explained',
+    'comex silver explained',
+    'gold silver coverage ratio',
+    'precious metal market guide',
+    'precious metal stats explained',
+    'comex risk score methodology',
   ],
   alternates: {
     canonical: 'https://heavymetalstats.com/learn',
   },
   openGraph: {
-    title: 'COMEX Coverage Ratio & Paper vs Physical Explained',
-    description: 'Understand what COMEX inventory data means: registered vs eligible, coverage ratios, and paper/physical leverage in precious metals markets.',
+    title: 'Precious Metals Guide: COMEX Coverage Ratio & Paper vs Physical Explained',
+    description: 'Free guide to understanding precious metals supply and demand data. Learn what COMEX inventory, coverage ratios, and paper vs physical leverage mean for gold, silver, and copper markets.',
     url: 'https://heavymetalstats.com/learn',
     type: 'article',
   },
@@ -851,6 +862,14 @@ export default function LearnPage() {
           <p className="text-sm text-slate-400">
             Data from CME Group. Informational only — not financial advice.
           </p>
+          <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+            <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
+            <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
+            <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
+            <Link href="/terms" className="hover:text-slate-600 dark:hover:text-slate-300">Terms</Link>
+          </nav>
         </div>
       </footer>
     </div>

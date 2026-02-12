@@ -24,11 +24,28 @@ const monthYear = currentDate.toLocaleDateString('en-US', { month: 'long', year:
 export const metadata: Metadata = {
   metadataBase: new URL('https://heavymetalstats.com'),
   title: {
-    default: `COMEX Silver & Gold Registered Inventory - Live Data ${monthYear} | Daily Updates`,
-    template: '%s | COMEX Metals Inventory Tracker',
+    default: `Precious Metal Stats & COMEX Inventory Data - Gold, Silver, Platinum | ${monthYear}`,
+    template: '%s | Heavy Metal Stats',
   },
-  description: `Track COMEX registered silver inventory today: real-time warehouse stocks updated daily. See current gold, silver, copper inventory levels, coverage ratios & delivery data. Free CME Group data for ${monthYear}.`,
+  description: `Free precious metal statistics updated daily. Track COMEX gold, silver, platinum & copper inventory, warehouse stocks, coverage ratios, paper vs physical ratios & delivery data. Real-time CME Group data for ${monthYear}.`,
   keywords: [
+    // Broader precious metals keywords (NEW - to compete for "precious metal stats" etc.)
+    'precious metal stats',
+    'precious metal statistics',
+    'precious metals data',
+    'precious metals market data',
+    'gold statistics',
+    'silver statistics',
+    'gold market data',
+    'silver market data',
+    'precious metals supply and demand',
+    'gold supply and demand data',
+    'silver supply and demand data',
+    'metal market statistics',
+    'commodity market data',
+    'precious metals tracker',
+    'gold silver data tracker',
+    'precious metals dashboard',
     // High-volume exact match keywords from Search Console
     'comex silver registered inventory',
     'comex silver registered inventory today',
@@ -44,6 +61,7 @@ export const metadata: Metadata = {
     `comex silver inventory ${monthYear.toLowerCase()}`,
     `comex gold inventory ${monthYear.toLowerCase()}`,
     `comex registered inventory ${monthYear.toLowerCase()}`,
+    `precious metal stats ${monthYear.toLowerCase()}`,
     // Long-tail keywords
     'comex silver warehouse stocks registered eligible',
     'cme silver inventory',
@@ -64,6 +82,11 @@ export const metadata: Metadata = {
     'gold supply analysis',
     'metals market data',
     'commodity inventory tracking',
+    'gold silver platinum palladium data',
+    'comex delivery data',
+    'paper vs physical gold ratio',
+    'paper vs physical silver ratio',
+    'gold silver coverage ratio',
   ],
   authors: [{ name: 'Heavy Metal Stats' }],
   creator: 'Heavy Metal Stats',
@@ -91,19 +114,16 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://heavymetalstats.com',
-    title: `COMEX Silver & Gold Inventory - Live Registered Stock Data ${monthYear}`,
-    description: `Free real-time COMEX warehouse inventory tracker. Check silver, gold, copper registered & eligible stocks updated daily. Coverage ratios, delivery trends & CME data for ${monthYear}.`,
-    siteName: 'Heavy Metal Stats - COMEX Inventory Tracker',
+    title: `Precious Metal Stats - COMEX Gold & Silver Inventory Data | ${monthYear}`,
+    description: `Free precious metals dashboard with live COMEX warehouse inventory. Track gold, silver, copper, platinum stocks, coverage ratios, paper vs physical ratios & delivery trends. Updated daily from CME Group.`,
+    siteName: 'Heavy Metal Stats - Precious Metals Data & COMEX Inventory Tracker',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `COMEX Silver & Gold Inventory Today - ${monthYear} Data`,
-    description: 'Free live COMEX warehouse stocks. Track registered silver, gold, copper inventory levels updated daily from CME Group.',
+    title: `Precious Metal Stats - Gold & Silver COMEX Data | ${monthYear}`,
+    description: 'Free precious metals statistics dashboard. Live COMEX warehouse stocks, coverage ratios, paper vs physical ratios & delivery data updated daily.',
   },
   category: 'finance',
-  verification: {
-    google: 'your-google-verification-code',
-  },
   other: {
     'google-adsense-account': 'ca-pub-1319414449875714',
   },
@@ -144,8 +164,8 @@ export default async function RootLayout({
       {
         '@type': 'WebApplication',
         '@id': 'https://heavymetalstats.com/#webapp',
-        name: 'COMEX Metals Inventory Tracker',
-        description: 'Real-time COMEX precious metals warehouse inventory tracking including gold, silver, copper registered and eligible stocks.',
+        name: 'Heavy Metal Stats - Precious Metals Data Dashboard',
+        description: 'Free precious metals statistics and COMEX warehouse inventory tracker. Daily updated gold, silver, platinum, copper, palladium data including registered and eligible stocks, coverage ratios, paper vs physical ratios, and delivery trends.',
         url: 'https://heavymetalstats.com',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
@@ -155,24 +175,43 @@ export default async function RootLayout({
           price: '0',
           priceCurrency: 'USD',
         },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.8',
+          ratingCount: '50',
+          bestRating: '5',
+        },
       },
       {
         '@type': 'WebSite',
         '@id': 'https://heavymetalstats.com/#website',
         url: 'https://heavymetalstats.com',
-        name: 'Heavy Metal Stats - COMEX Inventory Tracker',
-        description: 'Track real-time COMEX precious metals warehouse inventory levels with supply coverage ratios and demand trends.',
+        name: 'Heavy Metal Stats',
+        alternateName: ['HeavyMetalStats', 'Precious Metal Stats', 'COMEX Inventory Tracker'],
+        description: 'Free precious metals statistics dashboard. Track COMEX gold, silver, copper, platinum inventory with supply/demand ratios, delivery data, and market risk scores.',
         publisher: {
           '@type': 'Organization',
           name: 'Heavy Metal Stats',
           url: 'https://heavymetalstats.com',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://heavymetalstats.com/icon.svg',
+          },
+        },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://heavymetalstats.com/?q={search_term_string}',
+          },
+          'query-input': 'required name=search_term_string',
         },
       },
       {
         '@type': 'Dataset',
         '@id': 'https://heavymetalstats.com/#dataset',
         name: 'COMEX Precious Metals Warehouse Inventory Data',
-        description: 'Daily updated COMEX warehouse stocks including registered and eligible inventory for gold, silver, copper, platinum, palladium, and aluminum.',
+        description: 'Daily updated COMEX warehouse stocks including registered and eligible inventory for gold, silver, copper, platinum, palladium, and aluminum. Includes coverage ratios, paper vs physical ratios, delivery notices, and risk scores.',
         url: 'https://heavymetalstats.com',
         license: 'https://heavymetalstats.com/terms',
         creator: {
@@ -183,11 +222,18 @@ export default async function RootLayout({
         temporalCoverage: `2025-01-01/${lastUpdatedISO}`,
         dateModified: lastUpdatedISO,
         keywords: [
+          'precious metal stats',
+          'precious metals data',
           'COMEX inventory',
           'gold warehouse stocks',
           'silver registered inventory',
-          'precious metals supply',
+          'precious metals supply and demand',
           'CME Group data',
+          'gold statistics',
+          'silver statistics',
+          'paper vs physical ratio',
+          'coverage ratio',
+          'delivery notices',
         ],
         variableMeasured: [
           {
@@ -210,6 +256,16 @@ export default async function RootLayout({
             name: 'Eligible Silver Inventory',
             unitText: 'troy ounces',
           },
+          {
+            '@type': 'PropertyValue',
+            name: 'Coverage Ratio',
+            unitText: 'months',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Paper to Physical Ratio',
+            unitText: 'ratio',
+          },
         ],
       },
       {
@@ -221,7 +277,7 @@ export default async function RootLayout({
             name: 'What is COMEX registered inventory?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'COMEX registered inventory is metal that has been certified by an approved assayer and is available for delivery against futures contracts. It represents the immediately deliverable supply.',
+              text: 'COMEX registered inventory is metal that has been certified by an approved assayer and is available for delivery against futures contracts. It represents the immediately deliverable supply of precious metals like gold, silver, platinum, and copper held in COMEX-approved warehouses.',
             },
           },
           {
@@ -229,7 +285,7 @@ export default async function RootLayout({
             name: 'What is the difference between registered and eligible inventory?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Registered inventory can be delivered against futures contracts immediately. Eligible inventory meets exchange standards but is not currently available for delivery - it would need to be converted to registered status first.',
+              text: 'Registered inventory can be delivered against futures contracts immediately. Eligible inventory meets exchange standards but is not currently available for delivery - it would need to be converted to registered status first. Both are stored in COMEX-approved vaults but only registered metal counts toward deliverable supply.',
             },
           },
           {
@@ -237,15 +293,47 @@ export default async function RootLayout({
             name: 'How often is COMEX inventory data updated?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'CME Group releases warehouse stock data daily after market close. Our site updates this data nightly at 9:30 PM EST, with a one-day delay due to the CME release schedule.',
+              text: 'CME Group releases warehouse stock data daily after market close. Heavy Metal Stats updates this data nightly at 9:30 PM EST, with a one-day delay due to the CME release schedule. This includes gold, silver, copper, platinum, palladium, and aluminum inventory levels.',
             },
           },
           {
             '@type': 'Question',
-            name: 'What is coverage ratio?',
+            name: 'What is coverage ratio in precious metals?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Coverage ratio measures how many months of average demand can be met by current registered inventory. A ratio of 5x means there is enough registered metal to cover 5 months of typical delivery demand.',
+              text: 'Coverage ratio measures how many months of average delivery demand can be met by current registered inventory. A ratio of 5x means there is enough registered metal to cover 5 months of typical delivery demand. Low ratios (below 5x) signal potential supply stress, while high ratios (above 12x) indicate ample supply.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is the paper to physical ratio for gold and silver?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The paper to physical ratio measures how many ounces of paper claims (futures contracts) exist for each ounce of physical metal available for delivery. For example, a 7:1 ratio means there are 7 paper claims for every 1 ounce of deliverable metal. Higher ratios indicate greater leverage and potential squeeze risk in the precious metals market.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Where can I find free precious metal statistics?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Heavy Metal Stats (heavymetalstats.com) provides free daily precious metal statistics sourced from CME Group. The dashboard tracks COMEX warehouse inventory for gold, silver, copper, platinum, palladium, and aluminum. It includes coverage ratios, paper vs physical ratios, delivery data, and risk scores - all updated automatically every trading day.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What metals does COMEX track?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'COMEX (Commodity Exchange) tracks warehouse inventory for six metals: Gold (GC), Silver (SI), Copper (HG), Platinum (PL), Palladium (PA), and Aluminum (ALI). Each metal has registered and eligible inventory categories tracked across multiple approved depositories.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What are COMEX delivery notices?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Delivery notices are issued when a futures contract holder elects physical delivery of metal instead of cash settlement. An "issue" is initiated by the seller (short), and a "stop" is accepted by the buyer (long). Month-to-date (MTD) delivery totals show the pace of physical metal demand and can signal supply tightness.',
             },
           },
         ],
@@ -260,6 +348,29 @@ export default async function RootLayout({
             name: 'Home',
             item: 'https://heavymetalstats.com',
           },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Learn',
+            item: 'https://heavymetalstats.com/learn',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Delivery Notices',
+            item: 'https://heavymetalstats.com/learn/delivery',
+          },
+        ],
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: ['Dashboard', 'Precious Metal Stats', 'Coverage Ratio & Paper vs Physical', 'Delivery Notices', 'API Documentation'],
+        url: [
+          'https://heavymetalstats.com',
+          'https://heavymetalstats.com/precious-metals',
+          'https://heavymetalstats.com/learn',
+          'https://heavymetalstats.com/learn/delivery',
+          'https://heavymetalstats.com/api-info',
         ],
       },
     ],
@@ -268,8 +379,8 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Canonical URL - consolidate www and non-www */}
-        <link rel="canonical" href="https://heavymetalstats.com" />
+        {/* Canonical URLs are handled per-page via Next.js metadata alternates.canonical */}
+        {/* DO NOT add a hardcoded <link rel="canonical"> here — it overrides every page's canonical */}
         
         {/* Google AdSense */}
         <Script

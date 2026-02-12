@@ -2,9 +2,6 @@ import { MetadataRoute } from 'next';
 
 const baseUrl = 'https://heavymetalstats.com';
 
-// Get today's date for dynamic lastModified
-const today = new Date().toISOString().split('T')[0];
-
 export default function sitemap(): MetadataRoute.Sitemap {
   // Main pages with dynamic data (updates daily via GitHub Actions)
   const mainPages: MetadataRoute.Sitemap = [
@@ -16,13 +13,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Educational/informational pages
+  // Educational/informational pages (high SEO value - keyword-rich content)
   const infoPages: MetadataRoute.Sitemap = [
     {
+      url: `${baseUrl}/precious-metals`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${baseUrl}/learn`,
-      lastModified: new Date('2026-01-25'),
+      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/delivery`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/api-info`,
