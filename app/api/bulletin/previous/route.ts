@@ -55,6 +55,8 @@ export const revalidate = 0;
 
 // GET: Retrieve previous day's OI data (for comparison with current)
 // Uses open_interest_snapshots table which has accurate data from volume_summary
+// Returns the LATEST snapshot as the comparison baseline (e.g., Feb 10 data when
+// comparing against the most recent report)
 export async function GET() {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
@@ -66,7 +68,7 @@ export async function GET() {
   try {
     const sql = getDb();
 
-    // Get the two most recent dates from open_interest_snapshots (more accurate data)
+    // Get the most recent date from open_interest_snapshots
     const datesResult = await sql`
       SELECT DISTINCT report_date
       FROM open_interest_snapshots
@@ -74,37 +76,27 @@ export async function GET() {
       LIMIT 2
     `;
 
-    if (datesResult.length < 2) {
+    if (datesResult.length < 1) {
       return NextResponse.json(
-        { error: 'Not enough historical data', message: 'Need at least 2 days of data for comparison' },
+        { error: 'No historical data', message: 'No snapshot data available for comparison' },
         { status: 404 }
       );
     }
 
-    // Convert dates to ISO string format for consistent handling
+    // The latest snapshot date is the comparison baseline (e.g., Feb 10)
     const latestDate = datesResult[0].report_date instanceof Date 
       ? datesResult[0].report_date.toISOString().split('T')[0]
-      : String(datesResult[0].report_date);
-    const previousDate = datesResult[1].report_date instanceof Date
-      ? datesResult[1].report_date.toISOString().split('T')[0]
-      : String(datesResult[1].report_date);
+      : String(datesResult[0].report_date).split('T')[0];
 
-    // Fetch all products for the previous date from open_interest_snapshots
-    const previousResult = await sql`
-      SELECT 
-        report_date,
-        symbol,
-        open_interest,
-        oi_change,
-        total_volume,
-        settlement_price
-      FROM open_interest_snapshots
-      WHERE report_date = ${previousDate}
-      ORDER BY symbol
-    `;
+    // If we have a second date, use it to calculate the day-over-day change
+    const priorDate = datesResult.length >= 2
+      ? (datesResult[1].report_date instanceof Date 
+          ? datesResult[1].report_date.toISOString().split('T')[0]
+          : String(datesResult[1].report_date).split('T')[0])
+      : null;
 
-    // Also fetch current data for comparison
-    const currentResult = await sql`
+    // Fetch the latest snapshot data (this is our comparison baseline)
+    const latestResult = await sql`
       SELECT 
         report_date,
         symbol,
@@ -117,7 +109,24 @@ export async function GET() {
       ORDER BY symbol
     `;
 
-    const previousProducts = (previousResult as OIRow[]).reduce((acc: Record<string, ProductData>, row) => {
+    // Fetch the prior date snapshot for day-over-day comparison
+    let priorResult: OIRow[] = [];
+    if (priorDate) {
+      priorResult = await sql`
+        SELECT 
+          report_date,
+          symbol,
+          open_interest,
+          oi_change,
+          total_volume,
+          settlement_price
+        FROM open_interest_snapshots
+        WHERE report_date = ${priorDate}
+        ORDER BY symbol
+      ` as OIRow[];
+    }
+
+    const latestProducts = (latestResult as OIRow[]).reduce((acc: Record<string, ProductData>, row) => {
       acc[row.symbol] = {
         symbol: row.symbol,
         name: productNames[row.symbol] || row.symbol,
@@ -131,7 +140,7 @@ export async function GET() {
       return acc;
     }, {});
 
-    const currentProducts = (currentResult as OIRow[]).reduce((acc: Record<string, ProductData>, row) => {
+    const priorProducts = priorResult.reduce((acc: Record<string, ProductData>, row) => {
       acc[row.symbol] = {
         symbol: row.symbol,
         name: productNames[row.symbol] || row.symbol,
@@ -147,9 +156,12 @@ export async function GET() {
 
     return NextResponse.json({
       currentDate: latestDate,
-      previousDate,
-      current: currentProducts,
-      previous: previousProducts,
+      previousDate: latestDate,
+      current: latestProducts,
+      previous: latestProducts,
+      // Also include prior date data for deeper comparison
+      priorDate: priorDate,
+      prior: priorProducts,
     });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

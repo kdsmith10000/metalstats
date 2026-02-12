@@ -517,15 +517,19 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                       >
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
                           {(() => {
-                            const prevOI = previousDayData?.[product.symbol]?.totalOpenInterest;
-                            // Calculate actual change from previous snapshot
-                            const actualChange = prevOI ? product.total_open_interest - prevOI : null;
-                            const displayChange = actualChange !== null ? actualChange : product.total_oi_change;
+                            const prevData = previousDayData?.[product.symbol];
+                            const prevOI = prevData?.totalOpenInterest;
+                            // Use the CME-reported daily OI change from the snapshot
+                            const displayChange = prevData?.totalOiChange ?? product.total_oi_change;
                             const changeColor = displayChange > 0 ? 'text-emerald-500' : displayChange < 0 ? 'text-red-500' : '';
+                            // Format previous date for display (e.g., "Feb 10")
+                            const prevDateLabel = previousDate 
+                              ? new Date(previousDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                              : null;
                             const stats = [
                               { label: 'Open Interest', value: formatNumber(product.total_open_interest) },
-                              { label: 'Prev Snapshot', value: prevOI ? formatNumber(prevOI) : '—', subtext: previousDate ? `(${new Date(previousDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : '' },
-                              { label: 'Change', value: (displayChange > 0 ? '+' : '') + formatNumber(displayChange), color: changeColor, subtext: prevOI ? 'from prev snapshot' : 'CME daily' },
+                              { label: prevDateLabel ? `${prevDateLabel} Snapshot` : 'Prev Snapshot', value: prevOI ? formatNumber(prevOI) : '—', subtext: prevDateLabel ? `Last report` : '' },
+                              { label: 'Daily Change', value: (displayChange > 0 ? '+' : '') + formatNumber(displayChange), color: changeColor, subtext: prevDateLabel ? `as of ${prevDateLabel}` : 'CME daily' },
                               { label: 'Globex Vol', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.globex_volume, 0)) },
                               { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
                             ];
