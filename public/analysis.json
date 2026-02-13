@@ -1,33 +1,33 @@
 {
-  "analysis_date": "2026-02-11 06:12:51",
-  "data_date": "February 11, 2026",
+  "analysis_date": "2026-02-13 01:02:04",
+  "data_date": "February 13, 2026",
   "warehouse_summary": {
     "per_metal": {
       "Gold": {
-        "registered": 17799159.77,
-        "eligible": 17430650.87,
-        "total": 35229810.64,
-        "registered_pct": 50.52,
-        "eligible_pct": 49.48,
-        "report_date": "2/10/2026",
+        "registered": 17588988.63,
+        "eligible": 16859023.79,
+        "total": 34448012.42,
+        "registered_pct": 51.06,
+        "eligible_pct": 48.94,
+        "report_date": "2/12/2026",
         "top_depositories": [
           {
             "name": "BRINK'S, INC.",
-            "registered": 7433840.837,
-            "eligible": 2795202.12,
-            "total": 10229042.957
+            "registered": 7353952.191,
+            "eligible": 2695084.021,
+            "total": 10049036.212
           },
           {
             "name": "HSBC BANK, USA",
-            "registered": 1938638.284,
-            "eligible": 4917175.963,
-            "total": 6855814.247
+            "registered": 1861141.0,
+            "eligible": 4721147.212,
+            "total": 6582288.212
           },
           {
             "name": "JP MORGAN CHASE BANK NA",
-            "registered": 2856812.666,
-            "eligible": 3521185.236,
-            "total": 6377997.902000001
+            "registered": 2804027.454,
+            "eligible": 3422427.196,
+            "total": 6226454.65
           },
           {
             "name": "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
@@ -84,36 +84,36 @@
         ]
       },
       "Copper": {
-        "registered": 683585.0,
-        "eligible": 453989.0,
-        "total": 1137574.0,
-        "registered_pct": 60.09,
-        "eligible_pct": 39.91,
-        "report_date": "2/10/2026",
+        "registered": 701385.0,
+        "eligible": 434211.0,
+        "total": 1135596.0,
+        "registered_pct": 61.76,
+        "eligible_pct": 38.24,
+        "report_date": "2/12/2026",
         "top_depositories": [
           {
             "name": "TUCSON",
-            "registered": 359754.0,
-            "eligible": 231705.0,
-            "total": 591459.0
+            "registered": 368654.0,
+            "eligible": 221871.0,
+            "total": 590525.0
           },
           {
             "name": "NEW ORLEANS",
-            "registered": 231812.0,
-            "eligible": 191210.0,
-            "total": 423022.0
+            "registered": 240359.0,
+            "eligible": 184151.0,
+            "total": 424510.0
           },
           {
             "name": "SALT LAKE CITY",
-            "registered": 43312.0,
-            "eligible": 5171.0,
-            "total": 48483.0
+            "registered": 43602.0,
+            "eligible": 5457.0,
+            "total": 49059.0
           },
           {
             "name": "BALTIMORE",
-            "registered": 15760.0,
-            "eligible": 25102.0,
-            "total": 40862.0
+            "registered": 15634.0,
+            "eligible": 22120.0,
+            "total": 37754.0
           },
           {
             "name": "DETROIT",
@@ -129,7 +129,7 @@
         "total": 583369.21,
         "registered_pct": 54.8,
         "eligible_pct": 45.2,
-        "report_date": "2/10/2026",
+        "report_date": "2/12/2026",
         "top_depositories": [
           {
             "name": "JP MORGAN CHASE BANK NA",
@@ -169,7 +169,7 @@
         "total": 186863.1,
         "registered_pct": 79.37,
         "eligible_pct": 20.63,
-        "report_date": "2/10/2026",
+        "report_date": "2/12/2026",
         "top_depositories": [
           {
             "name": "MANFRA, TORDELLA & BROOKES, LLC",
@@ -204,24 +204,24 @@
         ]
       },
       "Aluminum": {
-        "registered": 4670.0,
-        "eligible": 3141.0,
-        "total": 7811.0,
-        "registered_pct": 59.79,
-        "eligible_pct": 40.21,
-        "report_date": "2/10/2026",
+        "registered": 4620.0,
+        "eligible": 2993.0,
+        "total": 7613.0,
+        "registered_pct": 60.69,
+        "eligible_pct": 39.31,
+        "report_date": "2/12/2026",
         "top_depositories": [
           {
             "name": "TOLEDO.",
-            "registered": 2335.0,
-            "eligible": 1598.0,
-            "total": 3933.0
+            "registered": 2310.0,
+            "eligible": 1524.0,
+            "total": 3834.0
           },
           {
             "name": "JOHOR, MALAYSIA",
             "registered": 1439.0,
-            "eligible": 99.0,
-            "total": 1538.0
+            "eligible": 0.0,
+            "total": 1439.0
           },
           {
             "name": "PORT KLANG, MALAYSIA",
@@ -305,24 +305,24 @@
     },
     "daily_velocity": {
       "Aluminum": {
-        "avg_daily_contracts": 15.0,
+        "avg_daily_contracts": 12.7,
         "last_daily_contracts": 1,
-        "delivery_days_counted": 5
+        "delivery_days_counted": 6
       },
       "Gold": {
-        "avg_daily_contracts": 3773.2,
-        "last_daily_contracts": 167,
-        "delivery_days_counted": 9
+        "avg_daily_contracts": 3259.1,
+        "last_daily_contracts": 414,
+        "delivery_days_counted": 11
       },
       "Copper": {
-        "avg_daily_contracts": 808.8,
-        "last_daily_contracts": 290,
-        "delivery_days_counted": 9
+        "avg_daily_contracts": 707.5,
+        "last_daily_contracts": 338,
+        "delivery_days_counted": 11
       },
       "Silver": {
-        "avg_daily_contracts": 510.2,
-        "last_daily_contracts": 429,
-        "delivery_days_counted": 9
+        "avg_daily_contracts": 459.5,
+        "last_daily_contracts": 3,
+        "delivery_days_counted": 10
       },
       "Palladium": {
         "avg_daily_contracts": 18.4,
@@ -339,22 +339,22 @@
       "Aluminum": {
         "mtd_contracts": 75,
         "mtd_physical_amount": 3300000,
-        "registered_inventory": 10295575.4,
-        "delivery_to_registered_pct": 32.05,
+        "registered_inventory": 10185344.4,
+        "delivery_to_registered_pct": 32.4,
         "unit": "lbs"
       },
       "Gold": {
         "mtd_contracts": 33959,
         "mtd_physical_amount": 3395900,
-        "registered_inventory": 17799159.77,
-        "delivery_to_registered_pct": 19.08,
+        "registered_inventory": 17588988.63,
+        "delivery_to_registered_pct": 19.31,
         "unit": "troy oz"
       },
       "Copper": {
         "mtd_contracts": 7279,
         "mtd_physical_amount": 181975000,
-        "registered_inventory": 1367170000.0,
-        "delivery_to_registered_pct": 13.31,
+        "registered_inventory": 1402770000.0,
+        "delivery_to_registered_pct": 12.97,
         "unit": "lbs"
       },
       "Silver": {
@@ -384,8 +384,8 @@
         "metal": "Aluminum",
         "mtd_contracts": 75,
         "mtd_physical_amount": 3300000,
-        "registered_inventory": 10295575.4,
-        "delivery_to_registered_pct": 32.05,
+        "registered_inventory": 10185344.4,
+        "delivery_to_registered_pct": 32.4,
         "unit": "lbs"
       },
       {
@@ -400,16 +400,16 @@
         "metal": "Gold",
         "mtd_contracts": 33959,
         "mtd_physical_amount": 3395900,
-        "registered_inventory": 17799159.77,
-        "delivery_to_registered_pct": 19.08,
+        "registered_inventory": 17588988.63,
+        "delivery_to_registered_pct": 19.31,
         "unit": "troy oz"
       },
       {
         "metal": "Copper",
         "mtd_contracts": 7279,
         "mtd_physical_amount": 181975000,
-        "registered_inventory": 1367170000.0,
-        "delivery_to_registered_pct": 13.31,
+        "registered_inventory": 1402770000.0,
+        "delivery_to_registered_pct": 12.97,
         "unit": "lbs"
       },
       {
@@ -432,72 +432,72 @@
     "top_firms_ytd": [
       {
         "firm": "JP MORGAN SECURITIES",
-        "total_issued": 43997,
-        "total_stopped": 46922,
-        "total_activity": 90919,
+        "total_issued": 44142,
+        "total_stopped": 47159,
+        "total_activity": 91301,
         "metals_count": 6
       },
       {
         "firm": "STONEX FINANCIAL INC",
-        "total_issued": 10501,
-        "total_stopped": 10725,
-        "total_activity": 21226,
+        "total_issued": 10615,
+        "total_stopped": 10875,
+        "total_activity": 21490,
         "metals_count": 7
       },
       {
         "firm": "CITIGROUP",
         "total_issued": 6199,
-        "total_stopped": 11386,
-        "total_activity": 17585,
+        "total_stopped": 11656,
+        "total_activity": 17855,
         "metals_count": 5
       },
       {
         "firm": "WELLS FARGO SECURITI",
-        "total_issued": 8995,
-        "total_stopped": 7339,
-        "total_activity": 16334,
+        "total_issued": 9057,
+        "total_stopped": 7362,
+        "total_activity": 16419,
         "metals_count": 5
       },
       {
         "firm": "RBC CAP MARKETS",
-        "total_issued": 5919,
-        "total_stopped": 9572,
-        "total_activity": 15491,
+        "total_issued": 5966,
+        "total_stopped": 9593,
+        "total_activity": 15559,
         "metals_count": 6
       },
       {
         "firm": "MACQUARIE FUTURES US",
-        "total_issued": 7776,
-        "total_stopped": 6378,
-        "total_activity": 14154,
+        "total_issued": 7997,
+        "total_stopped": 6521,
+        "total_activity": 14518,
         "metals_count": 5
       },
       {
         "firm": "SCOTIA CAPITAL (USA)",
-        "total_issued": 5067,
-        "total_stopped": 9001,
-        "total_activity": 14068,
-        "metals_count": 4
+        "total_issued": 5218,
+        "total_stopped": 9006,
+        "total_activity": 14224,
+        "metals_count": 5
       },
       {
         "firm": "DEUTSCHE BANK AG",
-        "total_issued": 5588,
+        "total_issued": 6556,
         "total_stopped": 5255,
-        "total_activity": 10843,
+        "total_activity": 11811,
         "metals_count": 3
       },
       {
         "firm": "BARCLAYS",
-        "total_issued": 7274,
-        "total_stopped": 3029,
-        "total_activity": 10303,
+        "total_issued": 7799,
+        "total_stopped": 3032,
+        "total_activity": 10831,
         "metals_count": 1
       },
       {
         "firm": "BNP PARIBAS SEC CORP",
-        "total_issued": 5602,
-        "total_stopped": 4604,
-        "total_activity": 10206,
+        "total_issued": 5604,
+        "total_stopped": 4941,
+        "total_activity": 10545,
         "metals_count": 5
       }
     ]
@@ -510,8 +510,8 @@
       "volume": 125161,
       "volume_to_oi_ratio": 0.307,
       "paper_claims_physical": 40718100,
-      "registered_inventory_converted": 17799159.77,
-      "paper_to_physical_ratio": 2.29,
+      "registered_inventory_converted": 17588988.63,
+      "paper_to_physical_ratio": 2.31,
       "contract_unit": "troy oz",
       "contract_size": 100
     },
@@ -534,8 +534,8 @@
       "volume": 74300,
       "volume_to_oi_ratio": 0.274,
       "paper_claims_physical": 6770300000,
-      "registered_inventory_converted": 1367170000.0,
-      "paper_to_physical_ratio": 4.95,
+      "registered_inventory_converted": 1402770000.0,
+      "paper_to_physical_ratio": 4.83,
       "contract_unit": "lbs",
       "contract_size": 25000
     },
@@ -570,8 +570,8 @@
       "volume": 584,
       "volume_to_oi_ratio": 0.252,
       "paper_claims_physical": 101772000,
-      "registered_inventory_converted": 10295575.4,
-      "paper_to_physical_ratio": 9.89,
+      "registered_inventory_converted": 10185344.4,
+      "paper_to_physical_ratio": 9.99,
       "contract_unit": "lbs",
       "contract_size": 44000
     }
@@ -579,16 +579,16 @@
   "risk_assessment": {
     "per_metal": {
       "Gold": {
-        "coverage_days": 47.2,
-        "paper_to_physical_ratio": 2.29,
-        "mtd_delivery_to_inventory_pct": 19.08,
+        "coverage_days": 54.0,
+        "paper_to_physical_ratio": 2.31,
+        "mtd_delivery_to_inventory_pct": 19.31,
         "risk_factors": [
-          "High MTD delivery ratio: 19.08%"
+          "High MTD delivery ratio: 19.31%"
         ],
         "risk_level": "MODERATE"
       },
       "Silver": {
-        "coverage_days": 39.7,
+        "coverage_days": 44.1,
         "paper_to_physical_ratio": 6.61,
         "mtd_delivery_to_inventory_pct": 22.64,
         "risk_factors": [
@@ -598,11 +598,11 @@
         "risk_level": "ELEVATED"
       },
       "Copper": {
-        "coverage_days": 67.6,
-        "paper_to_physical_ratio": 4.95,
-        "mtd_delivery_to_inventory_pct": 13.31,
+        "coverage_days": 79.3,
+        "paper_to_physical_ratio": 4.83,
+        "mtd_delivery_to_inventory_pct": 12.97,
         "risk_factors": [
-          "High MTD delivery ratio: 13.31%"
+          "High MTD delivery ratio: 12.97%"
         ],
         "risk_level": "MODERATE"
       },
@@ -625,27 +625,27 @@
         "risk_level": "MODERATE"
       },
       "Aluminum": {
-        "coverage_days": 15.6,
-        "paper_to_physical_ratio": 9.89,
-        "mtd_delivery_to_inventory_pct": 32.05,
+        "coverage_days": 18.2,
+        "paper_to_physical_ratio": 9.99,
+        "mtd_delivery_to_inventory_pct": 32.4,
         "risk_factors": [
-          "High paper-to-physical ratio: 9.89:1",
-          "High MTD delivery ratio: 32.05%",
-          "Low coverage: 15.6 days"
+          "High paper-to-physical ratio: 9.99:1",
+          "High MTD delivery ratio: 32.4%",
+          "Low coverage: 18.2 days"
         ],
         "risk_level": "HIGH"
       }
     },
     "alerts": [
-      "ALERT: Gold MTD deliveries = 19.08% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Gold MTD deliveries = 19.31% of registered inventory (exceeds 10% threshold)",
       "ALERT: Silver paper-to-physical ratio is 6.61:1 (exceeds 5:1 threshold)",
       "ALERT: Silver MTD deliveries = 22.64% of registered inventory (exceeds 10% threshold)",
-      "ALERT: Copper MTD deliveries = 13.31% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Copper MTD deliveries = 12.97% of registered inventory (exceeds 10% threshold)",
       "ALERT: Platinum paper-to-physical ratio is 10.8:1 (exceeds 5:1 threshold)",
       "ALERT: Palladium paper-to-physical ratio is 11.15:1 (exceeds 5:1 threshold)",
-      "ALERT: Aluminum paper-to-physical ratio is 9.89:1 (exceeds 5:1 threshold)",
-      "ALERT: Aluminum MTD deliveries = 32.05% of registered inventory (exceeds 10% threshold)",
-      "ALERT: Aluminum registered inventory covers only 15.6 days at current delivery rate"
+      "ALERT: Aluminum paper-to-physical ratio is 9.99:1 (exceeds 5:1 threshold)",
+      "ALERT: Aluminum MTD deliveries = 32.4% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Aluminum registered inventory covers only 18.2 days at current delivery rate"
     ],
     "overall_risk_level": "ELEVATED",
     "summary": "1 metals at HIGH risk, 1 at ELEVATED risk"
@@ -655,15 +655,14 @@
     "Palladium: 79.37% of warehouse stock is registered, suggesting strong delivery availability.",
     "Zinc: Only 0.0% of warehouse stock is registered (available for delivery), indicating most metal is in eligible (private) storage.",
     "Zinc: ZERO registered inventory across all COMEX depositories. No physical zinc is available for futures delivery.",
-    "Aluminum has the highest delivery-to-inventory ratio at 32.05%, meaning MTD deliveries represent a significant portion of registered stock.",
+    "Aluminum has the highest delivery-to-inventory ratio at 32.4%, meaning MTD deliveries represent a significant portion of registered stock.",
     "Palladium has the highest paper-to-physical ratio at 11.15:1, meaning there are 11.15 ounces/lbs of paper claims for every unit of registered physical metal. This indicates potential squeeze risk.",
     "Metals with relatively low paper-to-physical exposure: Gold.",
     "Gold open interest increased by 2,735 contracts to 407,181, suggesting new money entering the market.",
     "Gold has exceptionally high MTD deliveries of 33,959 contracts (3,395,900 troy oz), indicating massive physical demand.",
-    "Top delivery firm YTD: JP MORGAN SECURITIES with 90,919 total contracts (43,997 issued, 46,922 stopped) across 6 metals.",
+    "Top delivery firm YTD: JP MORGAN SECURITIES with 91,301 total contracts (44,142 issued, 47,159 stopped) across 6 metals.",
     "Overall COMEX metals market stress: ELEVATED. 1 metals at HIGH risk, 1 at ELEVATED risk.",
-    "Gold: At current delivery pace, registered inventory would be exhausted in approximately 47.2 days.",
-    "Silver: At current delivery pace, registered inventory would be exhausted in approximately 39.7 days.",
-    "Aluminum: At current delivery pace, registered inventory would be exhausted in approximately 15.6 days."
+    "Silver: At current delivery pace, registered inventory would be exhausted in approximately 44.1 days.",
+    "Aluminum: At current delivery pace, registered inventory would be exhausted in approximately 18.2 days."
   ]
 }

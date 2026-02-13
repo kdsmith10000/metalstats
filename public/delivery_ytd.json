@@ -1,6 +1,6 @@
 {
-  "business_date": "02/11/2026",
-  "parsed_date": "2026-02-11",
+  "business_date": "02/12/2026",
+  "parsed_date": "2026-02-12",
   "products": [
     {
       "metal": "Aluminum",
@@ -141,7 +141,7 @@
       "monthly_totals": {
         "prev_dec": 37098,
         "jan": 11862,
-        "feb": 35436
+        "feb": 35850
       },
       "firms": [
         {
@@ -151,16 +151,16 @@
           "issued": {
             "prev_dec": 13084,
             "jan": 1306,
-            "feb": 13128
+            "feb": 13273
           },
           "stopped": {
             "prev_dec": 14321,
             "jan": 3773,
-            "feb": 11667
+            "feb": 11702
           },
-          "total_issued": 27518,
-          "total_stopped": 29761,
-          "total_activity": 57279
+          "total_issued": 27663,
+          "total_stopped": 29796,
+          "total_activity": 57459
         },
         {
           "code": "435",
@@ -192,11 +192,11 @@
           "stopped": {
             "prev_dec": 2838,
             "jan": 811,
-            "feb": 5375
+            "feb": 5432
           },
           "total_issued": 2031,
-          "total_stopped": 9024,
-          "total_activity": 11055
+          "total_stopped": 9081,
+          "total_activity": 11112
         },
         {
           "code": "709",
@@ -228,11 +228,11 @@
           "stopped": {
             "prev_dec": 1799,
             "jan": 1233,
-            "feb": 809
+            "feb": 832
           },
           "total_issued": 4750,
-          "total_stopped": 3841,
-          "total_activity": 8591
+          "total_stopped": 3864,
+          "total_activity": 8614
         },
         {
           "code": "624",
@@ -253,20 +253,22 @@
           "total_activity": 8070
         },
         {
-          "code": "555",
-          "name": "BNP PARIBAS SEC CORP",
+          "code": "099",
+          "name": "DEUTSCHE BANK AG",
           "org": "H",
           "issued": {
-            "prev_dec": 4200,
-            "feb": 0
+            "prev_dec": 0,
+            "jan": 168,
+            "feb": 4746
           },
           "stopped": {
-            "prev_dec": 0,
-            "feb": 2814
+            "prev_dec": 794,
+            "jan": 2123,
+            "feb": 16
           },
-          "total_issued": 4200,
-          "total_stopped": 2814,
-          "total_activity": 7014
+          "total_issued": 4914,
+          "total_stopped": 2933,
+          "total_activity": 7847
         },
         {
           "code": "190",
@@ -280,29 +282,45 @@
           "stopped": {
             "prev_dec": 1226,
             "jan": 0,
-            "feb": 5056
+            "feb": 5248
           },
           "total_issued": 1346,
-          "total_stopped": 6282,
-          "total_activity": 7628
+          "total_stopped": 6474,
+          "total_activity": 7820
         },
         {
-          "code": "099",
-          "name": "DEUTSCHE BANK AG",
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
           "org": "H",
           "issued": {
-            "prev_dec": 0,
-            "jan": 168,
-            "feb": 4481
+            "prev_dec": 4200,
+            "feb": 0
           },
           "stopped": {
-            "prev_dec": 794,
-            "jan": 2123,
-            "feb": 16
+            "prev_dec": 0,
+            "feb": 2820
           },
-          "total_issued": 4649,
-          "total_stopped": 2933,
-          "total_activity": 7582
+          "total_issued": 4200,
+          "total_stopped": 2820,
+          "total_activity": 7020
+        },
+        {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "H",
+          "issued": {
+            "prev_dec": 774,
+            "jan": 2027,
+            "feb": 287
+          },
+          "stopped": {
+            "prev_dec": 753,
+            "jan": 0,
+            "feb": 141
+          },
+          "total_issued": 3088,
+          "total_stopped": 894,
+          "total_activity": 3982
         },
         {
           "code": "657",
@@ -319,24 +337,6 @@
           "total_issued": 1872,
           "total_stopped": 2064,
           "total_activity": 3936
-        },
-        {
-          "code": "118",
-          "name": "MACQUARIE FUTURES US",
-          "org": "H",
-          "issued": {
-            "prev_dec": 774,
-            "jan": 2027,
-            "feb": 287
-          },
-          "stopped": {
-            "prev_dec": 753,
-            "jan": 0,
-            "feb": 111
-          },
-          "total_issued": 3088,
-          "total_stopped": 864,
-          "total_activity": 3952
         },
         {
           "code": "332",
@@ -366,11 +366,11 @@
           },
           "stopped": {
             "prev_dec": 60,
-            "feb": 1297
+            "feb": 1299
           },
           "total_issued": 2114,
-          "total_stopped": 1357,
-          "total_activity": 3471
+          "total_stopped": 1359,
+          "total_activity": 3473
         },
         {
           "code": "323",
@@ -496,11 +496,11 @@
           "stopped": {
             "prev_dec": 125,
             "jan": 47,
-            "feb": 40
+            "feb": 43
           },
           "total_issued": 704,
-          "total_stopped": 212,
-          "total_activity": 916
+          "total_stopped": 215,
+          "total_activity": 919
         },
         {
           "code": "072",
@@ -544,29 +544,25 @@
           },
           "stopped": {
             "prev_dec": 0,
-            "feb": 66
+            "feb": 68
           },
           "total_issued": 665,
-          "total_stopped": 66,
-          "total_activity": 731
+          "total_stopped": 68,
+          "total_activity": 733
         },
         {
-          "code": "132",
-          "name": "SG AMERICAS",
+          "code": "555",
+          "name": "BNP PARIBAS SEC CORP",
           "org": "C",
           "issued": {
-            "prev_dec": 52,
-            "jan": 84,
-            "feb": 185
+            "feb": 105
           },
           "stopped": {
-            "prev_dec": 183,
-            "jan": 0,
-            "feb": 0
+            "feb": 535
           },
-          "total_issued": 321,
-          "total_stopped": 183,
-          "total_activity": 504
+          "total_issued": 105,
+          "total_stopped": 535,
+          "total_activity": 640
         },
         {
           "code": "365",
@@ -578,11 +574,29 @@
           },
           "stopped": {
             "prev_dec": 2,
-            "feb": 50
+            "feb": 51
           },
           "total_issued": 457,
-          "total_stopped": 52,
-          "total_activity": 509
+          "total_stopped": 53,
+          "total_activity": 510
+        },
+        {
+          "code": "132",
+          "name": "SG AMERICAS",
+          "org": "C",
+          "issued": {
+            "prev_dec": 52,
+            "jan": 84,
+            "feb": 189
+          },
+          "stopped": {
+            "prev_dec": 183,
+            "jan": 0,
+            "feb": 0
+          },
+          "total_issued": 325,
+          "total_stopped": 183,
+          "total_activity": 508
         },
         {
           "code": "732",
@@ -597,20 +611,6 @@
           "total_issued": 490,
           "total_stopped": 0,
           "total_activity": 490
-        },
-        {
-          "code": "555",
-          "name": "BNP PARIBAS SEC CORP",
-          "org": "C",
-          "issued": {
-            "feb": 105
-          },
-          "stopped": {
-            "feb": 472
-          },
-          "total_issued": 105,
-          "total_stopped": 472,
-          "total_activity": 577
         },
         {
           "code": "363",
@@ -645,24 +645,6 @@
           "total_activity": 207
         },
         {
-          "code": "690",
-          "name": "ABN AMRO CLR USA LLC",
-          "org": "C",
-          "issued": {
-            "prev_dec": 65,
-            "jan": 3,
-            "feb": 14
-          },
-          "stopped": {
-            "prev_dec": 65,
-            "jan": 3,
-            "feb": 14
-          },
-          "total_issued": 82,
-          "total_stopped": 82,
-          "total_activity": 164
-        },
-        {
           "code": "686",
           "name": "STONEX FINANCIAL INC",
           "org": "C",
@@ -679,6 +661,24 @@
           "total_issued": 109,
           "total_stopped": 67,
           "total_activity": 176
+        },
+        {
+          "code": "690",
+          "name": "ABN AMRO CLR USA LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 65,
+            "jan": 3,
+            "feb": 14
+          },
+          "stopped": {
+            "prev_dec": 65,
+            "jan": 3,
+            "feb": 14
+          },
+          "total_issued": 82,
+          "total_stopped": 82,
+          "total_activity": 164
         },
         {
           "code": "991",
@@ -887,7 +887,7 @@
       "monthly_totals": {
         "prev_dec": 20871,
         "jan": 15999,
-        "feb": 7445
+        "feb": 7783
       },
       "firms": [
         {
@@ -897,16 +897,16 @@
           "issued": {
             "prev_dec": 3473,
             "jan": 3871,
-            "feb": 1523
+            "feb": 1567
           },
           "stopped": {
             "prev_dec": 3484,
             "jan": 4023,
-            "feb": 1227
+            "feb": 1332
           },
-          "total_issued": 8867,
-          "total_stopped": 8734,
-          "total_activity": 17601
+          "total_issued": 8911,
+          "total_stopped": 8839,
+          "total_activity": 17750
         },
         {
           "code": "732",
@@ -915,16 +915,16 @@
           "issued": {
             "prev_dec": 2233,
             "jan": 1686,
-            "feb": 1095
+            "feb": 1109
           },
           "stopped": {
             "prev_dec": 2564,
             "jan": 1661,
-            "feb": 507
+            "feb": 516
           },
-          "total_issued": 5014,
-          "total_stopped": 4732,
-          "total_activity": 9746
+          "total_issued": 5028,
+          "total_stopped": 4741,
+          "total_activity": 9769
         },
         {
           "code": "104",
@@ -938,11 +938,11 @@
           "stopped": {
             "prev_dec": 1072,
             "jan": 1118,
-            "feb": 220
+            "feb": 228
           },
           "total_issued": 6432,
-          "total_stopped": 2410,
-          "total_activity": 8842
+          "total_stopped": 2418,
+          "total_activity": 8850
         },
         {
           "code": "661",
@@ -956,11 +956,11 @@
           "stopped": {
             "prev_dec": 2667,
             "jan": 1849,
-            "feb": 1384
+            "feb": 1424
           },
           "total_issued": 2416,
-          "total_stopped": 5900,
-          "total_activity": 8316
+          "total_stopped": 5940,
+          "total_activity": 8356
         },
         {
           "code": "132",
@@ -987,16 +987,34 @@
           "issued": {
             "prev_dec": 857,
             "jan": 1845,
-            "feb": 417
+            "feb": 433
           },
           "stopped": {
             "prev_dec": 926,
             "jan": 1567,
-            "feb": 426
+            "feb": 453
           },
-          "total_issued": 3119,
-          "total_stopped": 2919,
-          "total_activity": 6038
+          "total_issued": 3135,
+          "total_stopped": 2946,
+          "total_activity": 6081
+        },
+        {
+          "code": "159",
+          "name": "MAREX CAPITAL MARKET",
+          "org": "C",
+          "issued": {
+            "prev_dec": 1370,
+            "jan": 689,
+            "feb": 681
+          },
+          "stopped": {
+            "prev_dec": 1622,
+            "jan": 630,
+            "feb": 531
+          },
+          "total_issued": 2740,
+          "total_stopped": 2783,
+          "total_activity": 5523
         },
         {
           "code": "167",
@@ -1017,40 +1035,22 @@
           "total_activity": 5492
         },
         {
-          "code": "159",
-          "name": "MAREX CAPITAL MARKET",
-          "org": "C",
-          "issued": {
-            "prev_dec": 1370,
-            "jan": 689,
-            "feb": 656
-          },
-          "stopped": {
-            "prev_dec": 1622,
-            "jan": 630,
-            "feb": 488
-          },
-          "total_issued": 2715,
-          "total_stopped": 2740,
-          "total_activity": 5455
-        },
-        {
           "code": "690",
           "name": "ABN AMRO CLR USA LLC",
           "org": "C",
           "issued": {
             "prev_dec": 677,
             "jan": 111,
-            "feb": 335
+            "feb": 345
           },
           "stopped": {
             "prev_dec": 649,
             "jan": 180,
-            "feb": 253
+            "feb": 269
           },
-          "total_issued": 1123,
-          "total_stopped": 1082,
-          "total_activity": 2205
+          "total_issued": 1133,
+          "total_stopped": 1098,
+          "total_activity": 2231
         },
         {
           "code": "152",
@@ -1059,16 +1059,16 @@
           "issued": {
             "prev_dec": 352,
             "jan": 449,
-            "feb": 220
+            "feb": 227
           },
           "stopped": {
             "prev_dec": 357,
             "jan": 447,
-            "feb": 159
+            "feb": 170
           },
-          "total_issued": 1021,
-          "total_stopped": 963,
-          "total_activity": 1984
+          "total_issued": 1028,
+          "total_stopped": 974,
+          "total_activity": 2002
         },
         {
           "code": "905",
@@ -1082,11 +1082,11 @@
           "stopped": {
             "prev_dec": 530,
             "jan": 587,
-            "feb": 288
+            "feb": 308
           },
           "total_issued": 541,
-          "total_stopped": 1405,
-          "total_activity": 1946
+          "total_stopped": 1425,
+          "total_activity": 1966
         },
         {
           "code": "190",
@@ -1100,11 +1100,11 @@
           "stopped": {
             "prev_dec": 419,
             "jan": 113,
-            "feb": 560
+            "feb": 603
           },
           "total_issued": 803,
-          "total_stopped": 1092,
-          "total_activity": 1895
+          "total_stopped": 1135,
+          "total_activity": 1938
         },
         {
           "code": "118",
@@ -1143,6 +1143,22 @@
           "total_activity": 1720
         },
         {
+          "code": "118",
+          "name": "MACQUARIE FUTURES US",
+          "org": "C",
+          "issued": {
+            "prev_dec": 405,
+            "feb": 221
+          },
+          "stopped": {
+            "prev_dec": 1005,
+            "feb": 0
+          },
+          "total_issued": 626,
+          "total_stopped": 1005,
+          "total_activity": 1631
+        },
+        {
           "code": "363",
           "name": "WELLS FARGO SECURITI",
           "org": "H",
@@ -1165,30 +1181,16 @@
           "issued": {
             "prev_dec": 468,
             "jan": 319,
-            "feb": 34
+            "feb": 35
           },
           "stopped": {
             "prev_dec": 0,
             "jan": 267,
-            "feb": 329
+            "feb": 336
           },
-          "total_issued": 821,
-          "total_stopped": 596,
-          "total_activity": 1417
-        },
-        {
-          "code": "118",
-          "name": "MACQUARIE FUTURES US",
-          "org": "C",
-          "issued": {
-            "prev_dec": 405
-          },
-          "stopped": {
-            "prev_dec": 1005
-          },
-          "total_issued": 405,
-          "total_stopped": 1005,
-          "total_activity": 1410
+          "total_issued": 822,
+          "total_stopped": 603,
+          "total_activity": 1425
         },
         {
           "code": "072",
@@ -1232,11 +1234,11 @@
           "stopped": {
             "prev_dec": 7,
             "jan": 186,
-            "feb": 205
+            "feb": 207
           },
           "total_issued": 283,
-          "total_stopped": 398,
-          "total_activity": 681
+          "total_stopped": 400,
+          "total_activity": 683
         },
         {
           "code": "555",
@@ -1253,6 +1255,20 @@
           "total_activity": 582
         },
         {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "H",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 469
+          },
+          "total_issued": 0,
+          "total_stopped": 469,
+          "total_activity": 469
+        },
+        {
           "code": "365",
           "name": "MAREX CAPITAL MARKET",
           "org": "H",
@@ -1265,20 +1281,6 @@
           "total_issued": 232,
           "total_stopped": 232,
           "total_activity": 464
-        },
-        {
-          "code": "732",
-          "name": "RBC CAP MARKETS",
-          "org": "H",
-          "issued": {
-            "feb": 0
-          },
-          "stopped": {
-            "feb": 465
-          },
-          "total_issued": 0,
-          "total_stopped": 465,
-          "total_activity": 465
         },
         {
           "code": "072",
@@ -1321,6 +1323,20 @@
           "total_issued": 3,
           "total_stopped": 3,
           "total_activity": 6
+        },
+        {
+          "code": "435",
+          "name": "SCOTIA CAPITAL (USA)",
+          "org": "H",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 5
+          },
+          "total_issued": 0,
+          "total_stopped": 5,
+          "total_activity": 5
         }
       ]
     },
@@ -2193,11 +2209,11 @@
           "stopped": {
             "prev_dec": 6331,
             "jan": 2737,
-            "feb": 1332
+            "feb": 1334
           },
           "total_issued": 12060,
-          "total_stopped": 10400,
-          "total_activity": 22460
+          "total_stopped": 10402,
+          "total_activity": 22462
         },
         {
           "code": "363",
@@ -2224,16 +2240,16 @@
           "issued": {
             "prev_dec": 0,
             "jan": 1116,
-            "feb": 525
+            "feb": 526
           },
           "stopped": {
             "prev_dec": 1455,
             "jan": 476,
             "feb": 369
           },
-          "total_issued": 1641,
+          "total_issued": 1642,
           "total_stopped": 2300,
-          "total_activity": 3941
+          "total_activity": 3942
         },
         {
           "code": "880",
@@ -2281,11 +2297,11 @@
           "stopped": {
             "prev_dec": 393,
             "jan": 510,
-            "feb": 481
+            "feb": 482
           },
           "total_issued": 555,
-          "total_stopped": 1384,
-          "total_activity": 1939
+          "total_stopped": 1385,
+          "total_activity": 1940
         },
         {
           "code": "624",
@@ -2866,6 +2882,20 @@
           "total_activity": 5
         },
         {
+          "code": "132",
+          "name": "SG AMERICAS",
+          "org": "H",
+          "issued": {
+            "feb": 2
+          },
+          "stopped": {
+            "feb": 2
+          },
+          "total_issued": 2,
+          "total_stopped": 2,
+          "total_activity": 4
+        },
+        {
           "code": "523",
           "name": "INTERACTIVE BROKERS",
           "org": "C",
@@ -2880,20 +2910,6 @@
           "total_issued": 0,
           "total_stopped": 4,
           "total_activity": 4
-        },
-        {
-          "code": "132",
-          "name": "SG AMERICAS",
-          "org": "H",
-          "issued": {
-            "feb": 0
-          },
-          "stopped": {
-            "feb": 2
-          },
-          "total_issued": 0,
-          "total_stopped": 2,
-          "total_activity": 2
         },
         {
           "code": "878",
@@ -2999,5 +3015,5 @@
       ]
     }
   ],
-  "last_updated": "2026-02-12T01:00:00.000000"
+  "last_updated": "2026-02-13T01:01:46.480318"
 }
