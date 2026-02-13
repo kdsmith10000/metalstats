@@ -530,9 +530,12 @@ export default function ForecastDashboard() {
           {Object.keys(livePrices).length > 0 && (
             <p className="text-[10px] font-medium text-emerald-500 uppercase tracking-wider flex items-center justify-end gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Live prices · refreshes every 60s
+              Live spot prices · refreshes every 60s
             </p>
           )}
+          <p className="text-[10px] font-medium text-slate-400/70 uppercase tracking-wider">
+            Prices reflect spot market via physical ETFs, not COMEX futures
+          </p>
           <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">
             Forecast generated {new Date(forecastData.generated_at).toLocaleString('en-US', {
               month: 'short', day: 'numeric', year: 'numeric',
@@ -582,7 +585,10 @@ export default function ForecastDashboard() {
                         ${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                       {isLive && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" title="Live price" />
+                        <>
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" title="Live spot price" />
+                          <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Spot</span>
+                        </>
                       )}
                     </div>
                     {live && (
@@ -773,9 +779,14 @@ export default function ForecastDashboard() {
           <div className="space-y-6">
             {/* Price Projection Chart */}
             <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
-              <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4">
-                Price Projection — {selectedMetal}
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
+                  Price Projection — {selectedMetal}
+                </h3>
+                <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800">
+                  Spot prices
+                </span>
+              </div>
               <PriceProjectionChart
                 currentPrice={livePrices[selectedMetal]?.price ?? detail.current_price}
                 forecast5d={detail.forecast_5d}
