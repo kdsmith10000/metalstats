@@ -1573,7 +1573,7 @@ def main():
 
     output = {
         "generated_at": datetime.now(tz=__import__('datetime').timezone.utc).isoformat(),
-        "model_version": "1.0.0",
+        "model_version": "1.1.0",
         "metals": {},
     }
 
