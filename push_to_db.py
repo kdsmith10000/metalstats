@@ -25,7 +25,7 @@ PUBLIC_DIR = BASE_DIR / "public"
 ENV_FILE = BASE_DIR / "app" / ".env"
 
 # Report date for this data push
-REPORT_DATE = "2026-02-10"
+REPORT_DATE = "2026-02-12"
 
 # Metal → futures symbol mapping
 METAL_SYMBOL_MAP = {
@@ -52,9 +52,14 @@ CONTRACT_SIZES = {
 # ============================================
 
 def load_env(env_path: Path) -> dict:
-    """Load .env file into a dict."""
+    """Load .env file into a dict. Tries project root .env if app/.env missing."""
     env = {}
-    with open(env_path) as f:
+    for path in [Path(env_path), BASE_DIR / ".env"]:
+        if path.exists():
+            break
+    else:
+        path = Path(env_path)
+    with open(path) as f:
         for line in f:
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
@@ -70,17 +75,20 @@ def load_json(filename: str) -> dict:
         return json.load(f)
 
 
-def get_connection(dsn: str, retries: int = 3, delay: float = 2.0):
-    """Connect to Neon DB with retries for cold-start."""
+def get_connection(dsn: str, retries: int = 5, delay: float = 5.0):
+    """Connect to Neon DB with retries for cold-start.
+    Neon recommends 10+ second timeout for cold start; we use 60s and longer delays."""
     for attempt in range(1, retries + 1):
         try:
-            conn = psycopg2.connect(dsn, connect_timeout=30)
+            conn = psycopg2.connect(dsn, connect_timeout=60)
             conn.autocommit = False
             return conn
         except psycopg2.OperationalError as e:
             print(f"  Connection attempt {attempt}/{retries} failed: {e}")
             if attempt < retries:
-                time.sleep(delay * attempt)
+                wait = delay * attempt
+                print(f"  Waiting {wait}s before retry...")
+                time.sleep(wait)
             else:
                 raise
 
@@ -678,18 +686,46 @@ def main():
 
     # Load environment
     env = load_env(ENV_FILE)
-    dsn = env.get("DATABASE_URL_UNPOOLED", "")
+    dsn_unpooled = env.get("DATABASE_URL_UNPOOLED", "")
+    dsn_pooled = env.get("DATABASE_URL", "")
+    dsn = dsn_unpooled or dsn_pooled
     if not dsn:
-        print("ERROR: DATABASE_URL_UNPOOLED not found in .env file!")
+        print("ERROR: No DATABASE_URL found in .env file!")
         sys.exit(1)
 
-    print(f"\n  Database: Neon PostgreSQL (unpooled connection)")
+    def add_neon_endpoint(url: str, is_pooled: bool = False) -> str:
+        """Neon SNI workaround: explicit endpoint for libpq routing. Skip for pooled (pgbouncer doesn't support options)."""
+        if not url or "neon.tech" not in url:
+            return url
+        if is_pooled or "pooler" in url:
+            return url  # PgBouncer rejects unsupported options
+        if "options=" in url:
+            return url
+        sep = "&" if "?" in url else "?"
+        return url + f"{sep}options=endpoint%3Dep-flat-dew-ahfe5qxc"
+
+    dsn_unpooled = add_neon_endpoint(env.get("DATABASE_URL_UNPOOLED", ""), is_pooled=False)
+    dsn_pooled = add_neon_endpoint(env.get("DATABASE_URL", ""), is_pooled=True)
+    dsn = dsn_unpooled or dsn_pooled
+
+    conn_type = "unpooled" if dsn == dsn_unpooled else "pooled"
+    print(f"\n  Database: Neon PostgreSQL ({conn_type} connection)")
     print(f"  Host: {dsn.split('@')[1].split('/')[0] if '@' in dsn else 'unknown'}")
 
-    # Connect
+    # Connect (try unpooled first, fall back to pooled)
     print("\n  Connecting to database...")
-    conn = get_connection(dsn)
-    print("  ✓ Connected successfully!")
+    try:
+        conn = get_connection(dsn)
+        print("  ✓ Connected successfully!")
+    except Exception as e:
+        if dsn == dsn_unpooled and dsn_pooled:
+            print(f"  Unpooled connection failed, trying pooled...")
+            dsn = dsn_pooled
+            print(f"  Host: {dsn.split('@')[1].split('/')[0] if '@' in dsn else 'unknown'}")
+            conn = get_connection(dsn)
+            print("  ✓ Connected via pooled connection!")
+        else:
+            raise e
 
     results = {}
     errors = []

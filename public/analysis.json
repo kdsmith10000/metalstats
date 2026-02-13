@@ -1,5 +1,5 @@
 {
-  "analysis_date": "2026-02-13 01:02:04",
+  "analysis_date": "2026-02-13 06:11:07",
   "data_date": "February 13, 2026",
   "warehouse_summary": {
     "per_metal": {
@@ -296,10 +296,11 @@
   },
   "delivery_analysis": {
     "mtd_totals_contracts": {
-      "Aluminum": 75,
-      "Gold": 33959,
-      "Copper": 7279,
-      "Silver": 4592,
+      "Aluminum": 76,
+      "Gold": 35436,
+      "Copper": 7445,
+      "Micro Gold": 10,
+      "Silver": 4595,
       "Palladium": 92,
       "Platinum": 485
     },
@@ -337,31 +338,31 @@
     },
     "delivery_to_inventory": {
       "Aluminum": {
-        "mtd_contracts": 75,
-        "mtd_physical_amount": 3300000,
+        "mtd_contracts": 76,
+        "mtd_physical_amount": 3344000,
         "registered_inventory": 10185344.4,
-        "delivery_to_registered_pct": 32.4,
+        "delivery_to_registered_pct": 32.83,
         "unit": "lbs"
       },
       "Gold": {
-        "mtd_contracts": 33959,
-        "mtd_physical_amount": 3395900,
+        "mtd_contracts": 35436,
+        "mtd_physical_amount": 3543600,
         "registered_inventory": 17588988.63,
-        "delivery_to_registered_pct": 19.31,
+        "delivery_to_registered_pct": 20.15,
         "unit": "troy oz"
       },
       "Copper": {
-        "mtd_contracts": 7279,
-        "mtd_physical_amount": 181975000,
+        "mtd_contracts": 7445,
+        "mtd_physical_amount": 186125000,
         "registered_inventory": 1402770000.0,
-        "delivery_to_registered_pct": 12.97,
+        "delivery_to_registered_pct": 13.27,
         "unit": "lbs"
       },
       "Silver": {
-        "mtd_contracts": 4592,
-        "mtd_physical_amount": 22960000,
+        "mtd_contracts": 4595,
+        "mtd_physical_amount": 22975000,
         "registered_inventory": 101394888.43,
-        "delivery_to_registered_pct": 22.64,
+        "delivery_to_registered_pct": 22.66,
         "unit": "troy oz"
       },
       "Palladium": {
@@ -382,34 +383,34 @@
     "heaviest_delivery_metals": [
       {
         "metal": "Aluminum",
-        "mtd_contracts": 75,
-        "mtd_physical_amount": 3300000,
+        "mtd_contracts": 76,
+        "mtd_physical_amount": 3344000,
         "registered_inventory": 10185344.4,
-        "delivery_to_registered_pct": 32.4,
+        "delivery_to_registered_pct": 32.83,
         "unit": "lbs"
       },
       {
         "metal": "Silver",
-        "mtd_contracts": 4592,
-        "mtd_physical_amount": 22960000,
+        "mtd_contracts": 4595,
+        "mtd_physical_amount": 22975000,
         "registered_inventory": 101394888.43,
-        "delivery_to_registered_pct": 22.64,
+        "delivery_to_registered_pct": 22.66,
         "unit": "troy oz"
       },
       {
         "metal": "Gold",
-        "mtd_contracts": 33959,
-        "mtd_physical_amount": 3395900,
+        "mtd_contracts": 35436,
+        "mtd_physical_amount": 3543600,
         "registered_inventory": 17588988.63,
-        "delivery_to_registered_pct": 19.31,
+        "delivery_to_registered_pct": 20.15,
         "unit": "troy oz"
       },
       {
         "metal": "Copper",
-        "mtd_contracts": 7279,
-        "mtd_physical_amount": 181975000,
+        "mtd_contracts": 7445,
+        "mtd_physical_amount": 186125000,
         "registered_inventory": 1402770000.0,
-        "delivery_to_registered_pct": 12.97,
+        "delivery_to_registered_pct": 13.27,
         "unit": "lbs"
       },
       {
@@ -505,73 +506,73 @@
   "market_structure": {
     "Gold": {
       "symbol": "GC",
-      "open_interest": 407181,
-      "oi_change": 2735,
-      "volume": 125161,
-      "volume_to_oi_ratio": 0.307,
-      "paper_claims_physical": 40718100,
+      "open_interest": 58735,
+      "oi_change": -2856,
+      "volume": 585045,
+      "volume_to_oi_ratio": 9.961,
+      "paper_claims_physical": 5873500,
       "registered_inventory_converted": 17588988.63,
-      "paper_to_physical_ratio": 2.31,
+      "paper_to_physical_ratio": 0.33,
       "contract_unit": "troy oz",
       "contract_size": 100
     },
     "Silver": {
       "symbol": "SI",
-      "open_interest": 134078,
-      "oi_change": -2042,
-      "volume": 78296,
-      "volume_to_oi_ratio": 0.584,
-      "paper_claims_physical": 670390000,
+      "open_interest": 132475,
+      "oi_change": -1578,
+      "volume": 129642,
+      "volume_to_oi_ratio": 0.979,
+      "paper_claims_physical": 662375000,
       "registered_inventory_converted": 101394888.43,
-      "paper_to_physical_ratio": 6.61,
+      "paper_to_physical_ratio": 6.53,
       "contract_unit": "troy oz",
       "contract_size": 5000
     },
     "Copper": {
       "symbol": "HG",
-      "open_interest": 270812,
-      "oi_change": -1064,
-      "volume": 74300,
-      "volume_to_oi_ratio": 0.274,
-      "paper_claims_physical": 6770300000,
+      "open_interest": 273346,
+      "oi_change": 2179,
+      "volume": 100270,
+      "volume_to_oi_ratio": 0.367,
+      "paper_claims_physical": 6833650000,
       "registered_inventory_converted": 1402770000.0,
-      "paper_to_physical_ratio": 4.83,
+      "paper_to_physical_ratio": 4.87,
       "contract_unit": "lbs",
       "contract_size": 25000
     },
     "Platinum": {
       "symbol": "PL",
-      "open_interest": 69061,
-      "oi_change": -503,
-      "volume": 13164,
-      "volume_to_oi_ratio": 0.191,
-      "paper_claims_physical": 3453050,
+      "open_interest": 69131,
+      "oi_change": 328,
+      "volume": 19465,
+      "volume_to_oi_ratio": 0.282,
+      "paper_claims_physical": 3456550,
       "registered_inventory_converted": 319682.01,
-      "paper_to_physical_ratio": 10.8,
+      "paper_to_physical_ratio": 10.81,
       "contract_unit": "troy oz",
       "contract_size": 50
     },
     "Palladium": {
       "symbol": "PA",
-      "open_interest": 16536,
-      "oi_change": -16,
-      "volume": 5259,
-      "volume_to_oi_ratio": 0.318,
-      "paper_claims_physical": 1653600,
+      "open_interest": 16488,
+      "oi_change": -58,
+      "volume": 7282,
+      "volume_to_oi_ratio": 0.442,
+      "paper_claims_physical": 1648800,
       "registered_inventory_converted": 148317.64,
-      "paper_to_physical_ratio": 11.15,
+      "paper_to_physical_ratio": 11.12,
       "contract_unit": "troy oz",
       "contract_size": 100
     },
     "Aluminum": {
       "symbol": "ALI",
-      "open_interest": 2313,
-      "oi_change": -50,
-      "volume": 584,
-      "volume_to_oi_ratio": 0.252,
-      "paper_claims_physical": 101772000,
+      "open_interest": 2166,
+      "oi_change": -127,
+      "volume": 681,
+      "volume_to_oi_ratio": 0.314,
+      "paper_claims_physical": 95304000,
       "registered_inventory_converted": 10185344.4,
-      "paper_to_physical_ratio": 9.99,
+      "paper_to_physical_ratio": 9.36,
       "contract_unit": "lbs",
       "contract_size": 44000
     }
@@ -580,71 +581,71 @@
     "per_metal": {
       "Gold": {
         "coverage_days": 54.0,
-        "paper_to_physical_ratio": 2.31,
-        "mtd_delivery_to_inventory_pct": 19.31,
+        "paper_to_physical_ratio": 0.33,
+        "mtd_delivery_to_inventory_pct": 20.15,
         "risk_factors": [
-          "High MTD delivery ratio: 19.31%"
+          "High MTD delivery ratio: 20.15%"
         ],
         "risk_level": "MODERATE"
       },
       "Silver": {
         "coverage_days": 44.1,
-        "paper_to_physical_ratio": 6.61,
-        "mtd_delivery_to_inventory_pct": 22.64,
+        "paper_to_physical_ratio": 6.53,
+        "mtd_delivery_to_inventory_pct": 22.66,
         "risk_factors": [
-          "High paper-to-physical ratio: 6.61:1",
-          "High MTD delivery ratio: 22.64%"
+          "High paper-to-physical ratio: 6.53:1",
+          "High MTD delivery ratio: 22.66%"
         ],
         "risk_level": "ELEVATED"
       },
       "Copper": {
         "coverage_days": 79.3,
-        "paper_to_physical_ratio": 4.83,
-        "mtd_delivery_to_inventory_pct": 12.97,
+        "paper_to_physical_ratio": 4.87,
+        "mtd_delivery_to_inventory_pct": 13.27,
         "risk_factors": [
-          "High MTD delivery ratio: 12.97%"
+          "High MTD delivery ratio: 13.27%"
         ],
         "risk_level": "MODERATE"
       },
       "Platinum": {
         "coverage_days": 105.5,
-        "paper_to_physical_ratio": 10.8,
+        "paper_to_physical_ratio": 10.81,
         "mtd_delivery_to_inventory_pct": 7.59,
         "risk_factors": [
-          "High paper-to-physical ratio: 10.8:1"
+          "High paper-to-physical ratio: 10.81:1"
         ],
         "risk_level": "MODERATE"
       },
       "Palladium": {
         "coverage_days": 80.6,
-        "paper_to_physical_ratio": 11.15,
+        "paper_to_physical_ratio": 11.12,
         "mtd_delivery_to_inventory_pct": 6.2,
         "risk_factors": [
-          "High paper-to-physical ratio: 11.15:1"
+          "High paper-to-physical ratio: 11.12:1"
         ],
         "risk_level": "MODERATE"
       },
       "Aluminum": {
         "coverage_days": 18.2,
-        "paper_to_physical_ratio": 9.99,
-        "mtd_delivery_to_inventory_pct": 32.4,
+        "paper_to_physical_ratio": 9.36,
+        "mtd_delivery_to_inventory_pct": 32.83,
         "risk_factors": [
-          "High paper-to-physical ratio: 9.99:1",
-          "High MTD delivery ratio: 32.4%",
+          "High paper-to-physical ratio: 9.36:1",
+          "High MTD delivery ratio: 32.83%",
           "Low coverage: 18.2 days"
         ],
         "risk_level": "HIGH"
       }
     },
     "alerts": [
-      "ALERT: Gold MTD deliveries = 19.31% of registered inventory (exceeds 10% threshold)",
-      "ALERT: Silver paper-to-physical ratio is 6.61:1 (exceeds 5:1 threshold)",
-      "ALERT: Silver MTD deliveries = 22.64% of registered inventory (exceeds 10% threshold)",
-      "ALERT: Copper MTD deliveries = 12.97% of registered inventory (exceeds 10% threshold)",
-      "ALERT: Platinum paper-to-physical ratio is 10.8:1 (exceeds 5:1 threshold)",
-      "ALERT: Palladium paper-to-physical ratio is 11.15:1 (exceeds 5:1 threshold)",
-      "ALERT: Aluminum paper-to-physical ratio is 9.99:1 (exceeds 5:1 threshold)",
-      "ALERT: Aluminum MTD deliveries = 32.4% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Gold MTD deliveries = 20.15% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Silver paper-to-physical ratio is 6.53:1 (exceeds 5:1 threshold)",
+      "ALERT: Silver MTD deliveries = 22.66% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Copper MTD deliveries = 13.27% of registered inventory (exceeds 10% threshold)",
+      "ALERT: Platinum paper-to-physical ratio is 10.81:1 (exceeds 5:1 threshold)",
+      "ALERT: Palladium paper-to-physical ratio is 11.12:1 (exceeds 5:1 threshold)",
+      "ALERT: Aluminum paper-to-physical ratio is 9.36:1 (exceeds 5:1 threshold)",
+      "ALERT: Aluminum MTD deliveries = 32.83% of registered inventory (exceeds 10% threshold)",
       "ALERT: Aluminum registered inventory covers only 18.2 days at current delivery rate"
     ],
     "overall_risk_level": "ELEVATED",
@@ -655,11 +656,10 @@
     "Palladium: 79.37% of warehouse stock is registered, suggesting strong delivery availability.",
     "Zinc: Only 0.0% of warehouse stock is registered (available for delivery), indicating most metal is in eligible (private) storage.",
     "Zinc: ZERO registered inventory across all COMEX depositories. No physical zinc is available for futures delivery.",
-    "Aluminum has the highest delivery-to-inventory ratio at 32.4%, meaning MTD deliveries represent a significant portion of registered stock.",
-    "Palladium has the highest paper-to-physical ratio at 11.15:1, meaning there are 11.15 ounces/lbs of paper claims for every unit of registered physical metal. This indicates potential squeeze risk.",
+    "Aluminum has the highest delivery-to-inventory ratio at 32.83%, meaning MTD deliveries represent a significant portion of registered stock.",
+    "Palladium has the highest paper-to-physical ratio at 11.12:1, meaning there are 11.12 ounces/lbs of paper claims for every unit of registered physical metal. This indicates potential squeeze risk.",
     "Metals with relatively low paper-to-physical exposure: Gold.",
-    "Gold open interest increased by 2,735 contracts to 407,181, suggesting new money entering the market.",
-    "Gold has exceptionally high MTD deliveries of 33,959 contracts (3,395,900 troy oz), indicating massive physical demand.",
+    "Gold has exceptionally high MTD deliveries of 35,436 contracts (3,543,600 troy oz), indicating massive physical demand.",
     "Top delivery firm YTD: JP MORGAN SECURITIES with 91,301 total contracts (44,142 issued, 47,159 stopped) across 6 metals.",
     "Overall COMEX metals market stress: ELEVATED. 1 metals at HIGH risk, 1 at ELEVATED risk.",
     "Silver: At current delivery pace, registered inventory would be exhausted in approximately 44.1 days.",

@@ -719,8 +719,13 @@ def main():
     delivery_data = None
     volume_data = None
     
+    # Data directory (check data/ subfolder first, then project root)
+    data_dir = project_root / 'data'
+    
     # 1. Parse bulletin
-    bulletin_pdf = project_root / 'Section62_Metals_Futures_Products.pdf'
+    bulletin_pdf = data_dir / 'Section62_Metals_Futures_Products.pdf'
+    if not bulletin_pdf.exists():
+        bulletin_pdf = project_root / 'Section62_Metals_Futures_Products.pdf'
     if bulletin_pdf.exists():
         bulletin_data = parse_bulletin_pdf(str(bulletin_pdf))
         with open(project_root / 'public' / 'bulletin.json', 'w') as f:
@@ -732,7 +737,9 @@ def main():
     print()
     
     # 2. Parse delivery
-    delivery_pdf = project_root / 'MetalsIssuesAndStopsReport.pdf'
+    delivery_pdf = data_dir / 'MetalsIssuesAndStopsReport.pdf'
+    if not delivery_pdf.exists():
+        delivery_pdf = project_root / 'MetalsIssuesAndStopsReport.pdf'
     if delivery_pdf.exists():
         delivery_data = parse_delivery_pdf(str(delivery_pdf))
         with open(project_root / 'public' / 'delivery.json', 'w') as f:
@@ -744,7 +751,9 @@ def main():
     print()
     
     # 3. Parse volume summary
-    volume_pdf = project_root / 'Section02B_Summary_Volume_And_Open_Interest_Metals_Futures_And_Options.pdf'
+    volume_pdf = data_dir / 'Section02B_Summary_Volume_And_Open_Interest_Metals_Futures_And_Options.pdf'
+    if not volume_pdf.exists():
+        volume_pdf = project_root / 'Section02B_Summary_Volume_And_Open_Interest_Metals_Futures_And_Options.pdf'
     if volume_pdf.exists():
         volume_data = parse_volume_summary_pdf(str(volume_pdf))
         with open(project_root / 'public' / 'volume_summary.json', 'w') as f:

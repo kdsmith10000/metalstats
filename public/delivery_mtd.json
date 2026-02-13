@@ -43,6 +43,12 @@
           "iso_date": "2026-02-11",
           "daily": 1,
           "cumulative": 76
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
+          "cumulative": 76
         }
       ],
       "total_cumulative": 76
@@ -262,6 +268,12 @@
           "iso_date": "2026-02-11",
           "daily": 3,
           "cumulative": 4595
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
+          "cumulative": 4595
         }
       ],
       "total_cumulative": 4595
@@ -300,6 +312,12 @@
           "date": "02/09/2026",
           "iso_date": "2026-02-09",
           "daily": 1,
+          "cumulative": 92
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
           "cumulative": 92
         }
       ],
@@ -357,6 +375,12 @@
           "date": "02/09/2026",
           "iso_date": "2026-02-09",
           "daily": 20,
+          "cumulative": 485
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
           "cumulative": 485
         }
       ],

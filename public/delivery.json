@@ -216,7 +216,43 @@
           "stopped": 0
         }
       ]
+    },
+    {
+      "metal": "Aluminum",
+      "symbol": "ALI",
+      "contract_month": "FEB26",
+      "settlement": 3026.75,
+      "daily_issued": 0,
+      "daily_stopped": 0,
+      "month_to_date": 76
+    },
+    {
+      "metal": "Silver",
+      "symbol": "SI",
+      "contract_month": "FEB26",
+      "settlement": 75.546,
+      "daily_issued": 0,
+      "daily_stopped": 0,
+      "month_to_date": 4595
+    },
+    {
+      "metal": "Palladium",
+      "symbol": "PA",
+      "contract_month": "FEB26",
+      "settlement": 1656.7,
+      "daily_issued": 0,
+      "daily_stopped": 0,
+      "month_to_date": 92
+    },
+    {
+      "metal": "Platinum",
+      "symbol": "PL",
+      "contract_month": "FEB26",
+      "settlement": 2014.0,
+      "daily_issued": 0,
+      "daily_stopped": 0,
+      "month_to_date": 485
     }
   ],
-  "last_updated": "2026-02-13T01:01:45.527471"
+  "last_updated": "2026-02-13T06:10:35.842524"
 }
