@@ -46,13 +46,25 @@ def get_db_connection():
     return psycopg2.connect(url)
 
 
-# Yahoo Finance futures symbols
+# Yahoo Finance futures symbols (used for historical price backfill)
 YAHOO_SYMBOLS = {
     "GC": "GC=F",
     "SI": "SI=F",
     "HG": "HG=F",
     "PL": "PL=F",
     "PA": "PA=F",
+}
+
+# Spot price sources: physical-metal ETFs that track spot prices closely.
+# Each entry maps COMEX symbol → (ETF ticker, ounces-per-share factor).
+# Spot price per oz = ETF share price / oz_per_share.
+# Copper has no spot ETF so falls back to COMEX futures.
+SPOT_SOURCES = {
+    "GC": ("GLD",  0.09155),   # SPDR Gold Trust  (~0.092 oz/share)
+    "SI": ("SLV",  1.0),       # iShares Silver Trust (~1 oz/share)
+    "HG": ("",     1.0),       # No spot ETF — will fall back to futures
+    "PL": ("PPLT", 0.09385),   # abrdn Platinum ETF (~0.094 oz/share)
+    "PA": ("PALL", 0.09385),   # abrdn Palladium ETF (~0.094 oz/share)
 }
 
 
@@ -113,23 +125,17 @@ def _fetch_yahoo_history(symbol: str, days: int = 365) -> pd.DataFrame | None:
         return None
 
 
-def _fetch_yahoo_realtime_price(symbol: str) -> float | None:
-    """Fetch the latest real-time (or near real-time) price from Yahoo Finance.
+def _fetch_yahoo_chart_price(ticker: str) -> float | None:
+    """Fetch the latest price for any Yahoo Finance ticker.
 
-    Uses the Yahoo Finance chart API with a 1-day range and 1-minute interval
-    to get the most recent market price for the given futures symbol.
-    Falls back to the regularMarketPrice from metadata if intraday data
-    is unavailable.
+    Uses the chart API with 1-day range / 1-minute interval to get
+    the most recent trade price.
     """
     import requests as req
 
-    yf_symbol = YAHOO_SYMBOLS.get(symbol)
-    if not yf_symbol:
-        return None
-
     try:
         url = (
-            f"https://query1.finance.yahoo.com/v8/finance/chart/{yf_symbol}"
+            f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
             f"?range=1d&interval=1m"
         )
         resp = req.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
@@ -143,25 +149,49 @@ def _fetch_yahoo_realtime_price(symbol: str) -> float | None:
 
         meta = result[0].get("meta", {})
 
-        # Best source: regularMarketPrice is the latest trade price
         price = meta.get("regularMarketPrice")
         if price and float(price) > 0:
-            return round(float(price), 2)
+            return float(price)
 
         # Fallback: last close from intraday data
         indicators = result[0].get("indicators", {}).get("quote", [{}])[0]
         closes = indicators.get("close", [])
         if closes:
-            # Walk backwards to find last non-None value
             for c in reversed(closes):
                 if c is not None:
-                    return round(float(c), 2)
+                    return float(c)
 
         return None
 
     except Exception as e:
-        print(f"    Yahoo Finance realtime fetch failed for {symbol}: {e}")
+        print(f"    Yahoo Finance fetch failed for {ticker}: {e}")
         return None
+
+
+def _fetch_yahoo_realtime_price(symbol: str) -> float | None:
+    """Fetch the latest real-time spot price for a COMEX metal symbol.
+
+    Strategy:
+    1. Try the physical-metal ETF (spot-tracking) and convert share price
+       to per-ounce spot using the oz-per-share factor.
+    2. Fall back to COMEX futures if the ETF is unavailable.
+    """
+    # ── Try spot ETF first ──
+    etf_ticker, oz_per_share = SPOT_SOURCES.get(symbol, ("", 1.0))
+    if etf_ticker:
+        etf_price = _fetch_yahoo_chart_price(etf_ticker)
+        if etf_price and etf_price > 0:
+            spot = etf_price / oz_per_share
+            return round(spot, 2)
+
+    # ── Fallback to COMEX futures ──
+    futures_ticker = YAHOO_SYMBOLS.get(symbol)
+    if futures_ticker:
+        futures_price = _fetch_yahoo_chart_price(futures_ticker)
+        if futures_price and futures_price > 0:
+            return round(futures_price, 2)
+
+    return None
 
 
 def fetch_all_data(metal: str, days: int = 365) -> dict:

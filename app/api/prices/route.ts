@@ -4,13 +4,24 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// Yahoo Finance futures symbols for COMEX metals
-const SYMBOLS: Record<string, string> = {
-  Gold: 'GC=F',
-  Silver: 'SI=F',
-  Copper: 'HG=F',
-  Platinum: 'PL=F',
-  Palladium: 'PA=F',
+// ── Spot price sources ──────────────────────────────────────────────────────
+// Primary: physical-metal ETFs that closely track spot prices.
+// We convert from ETF share price → per-ounce (or per-lb) spot using each
+// fund's current ounces-per-share factor.
+// Fallback: COMEX futures symbols (may carry a premium over spot).
+
+interface SpotSource {
+  etf: string;         // Yahoo symbol for the physical ETF
+  ozPerShare: number;  // How many ounces of metal each ETF share represents
+  futures: string;     // COMEX futures symbol as fallback
+}
+
+const SPOT_SOURCES: Record<string, SpotSource> = {
+  Gold:      { etf: 'GLD',  ozPerShare: 0.09155, futures: 'GC=F' },  // SPDR Gold Trust
+  Silver:    { etf: 'SLV',  ozPerShare: 1.0,     futures: 'SI=F' },  // iShares Silver Trust
+  Copper:    { etf: '',      ozPerShare: 1.0,     futures: 'HG=F' },  // No good copper spot ETF
+  Platinum:  { etf: 'PPLT', ozPerShare: 0.09385, futures: 'PL=F' },  // abrdn Platinum ETF
+  Palladium: { etf: 'PALL', ozPerShare: 0.09385, futures: 'PA=F' },  // abrdn Palladium ETF
 };
 
 interface PriceResult {
@@ -21,17 +32,30 @@ interface PriceResult {
   marketState: string;
 }
 
-async function fetchYahooPrice(symbol: string): Promise<PriceResult | null> {
+interface YahooChartMeta {
+  regularMarketPrice?: number;
+  chartPreviousClose?: number;
+  previousClose?: number;
+  regularMarketTime?: number;
+  marketState?: string;
+}
+
+/**
+ * Fetch a price from Yahoo Finance chart API.
+ * Returns the raw price data (no oz conversion — caller handles that).
+ */
+async function fetchYahooChart(symbol: string): Promise<{
+  price: number;
+  prevClose: number;
+  timestamp: number;
+  marketState: string;
+} | null> {
   try {
-    // Use 1-minute interval to get the most recent intraday price
-    // Add cache-busting timestamp to prevent stale CDN/proxy responses
     const cacheBust = Math.floor(Date.now() / 1000);
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1m&range=1d&_=${cacheBust}`;
     const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0',
-      },
-      cache: 'no-store', // Never use Next.js server-side cache — always hit Yahoo
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      cache: 'no-store',
     });
 
     if (!res.ok) return null;
@@ -40,14 +64,12 @@ async function fetchYahooPrice(symbol: string): Promise<PriceResult | null> {
     const result = data?.chart?.result?.[0];
     if (!result) return null;
 
-    const meta = result.meta;
-    if (!meta) return null;
+    const meta: YahooChartMeta = result.meta ?? {};
 
     // Best source: regularMarketPrice from metadata (latest trade)
     let price = meta.regularMarketPrice ?? 0;
 
-    // Fallback: if regularMarketPrice is missing or zero, walk back through
-    // the intraday closes to find the most recent actual tick
+    // Fallback: walk back through intraday closes
     if (!price || price <= 0) {
       const closes = result.indicators?.quote?.[0]?.close;
       if (Array.isArray(closes)) {
@@ -62,14 +84,9 @@ async function fetchYahooPrice(symbol: string): Promise<PriceResult | null> {
 
     if (!price || price <= 0) return null;
 
-    const prevClose = meta.chartPreviousClose ?? meta.previousClose ?? price;
-    const change = price - prevClose;
-    const changePercent = prevClose > 0 ? (change / prevClose) * 100 : 0;
-
     return {
-      price: Math.round(price * 100) / 100,
-      change: Math.round(change * 100) / 100,
-      changePercent: Math.round(changePercent * 100) / 100,
+      price,
+      prevClose: meta.chartPreviousClose ?? meta.previousClose ?? price,
       timestamp: (meta.regularMarketTime ?? 0) * 1000,
       marketState: meta.marketState ?? 'UNKNOWN',
     };
@@ -78,13 +95,56 @@ async function fetchYahooPrice(symbol: string): Promise<PriceResult | null> {
   }
 }
 
+/**
+ * Fetch the spot price for a metal.
+ * 1. Try the physical ETF and convert share price → per-ounce spot
+ * 2. Fall back to COMEX futures if ETF is unavailable
+ */
+async function fetchSpotPrice(metal: string, source: SpotSource): Promise<PriceResult | null> {
+  // ── Try ETF first (spot-tracking) ──
+  if (source.etf) {
+    const etfData = await fetchYahooChart(source.etf);
+    if (etfData) {
+      const spotPrice = etfData.price / source.ozPerShare;
+      const spotPrev = etfData.prevClose / source.ozPerShare;
+      const change = spotPrice - spotPrev;
+      const changePercent = spotPrev > 0 ? (change / spotPrev) * 100 : 0;
+
+      return {
+        price: Math.round(spotPrice * 100) / 100,
+        change: Math.round(change * 100) / 100,
+        changePercent: Math.round(changePercent * 100) / 100,
+        timestamp: etfData.timestamp,
+        marketState: etfData.marketState,
+      };
+    }
+  }
+
+  // ── Fallback to COMEX futures ──
+  const futuresData = await fetchYahooChart(source.futures);
+  if (futuresData) {
+    const change = futuresData.price - futuresData.prevClose;
+    const changePercent = futuresData.prevClose > 0 ? (change / futuresData.prevClose) * 100 : 0;
+
+    return {
+      price: Math.round(futuresData.price * 100) / 100,
+      change: Math.round(change * 100) / 100,
+      changePercent: Math.round(changePercent * 100) / 100,
+      timestamp: futuresData.timestamp,
+      marketState: futuresData.marketState,
+    };
+  }
+
+  return null;
+}
+
 export async function GET() {
   try {
-    // Fetch all prices in parallel
-    const entries = Object.entries(SYMBOLS);
+    // Fetch all spot prices in parallel
+    const entries = Object.entries(SPOT_SOURCES);
     const results = await Promise.all(
-      entries.map(async ([metal, symbol]) => {
-        const result = await fetchYahooPrice(symbol);
+      entries.map(async ([metal, source]) => {
+        const result = await fetchSpotPrice(metal, source);
         return [metal, result] as const;
       })
     );
