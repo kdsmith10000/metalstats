@@ -113,6 +113,57 @@ def _fetch_yahoo_history(symbol: str, days: int = 365) -> pd.DataFrame | None:
         return None
 
 
+def _fetch_yahoo_realtime_price(symbol: str) -> float | None:
+    """Fetch the latest real-time (or near real-time) price from Yahoo Finance.
+
+    Uses the Yahoo Finance chart API with a 1-day range and 1-minute interval
+    to get the most recent market price for the given futures symbol.
+    Falls back to the regularMarketPrice from metadata if intraday data
+    is unavailable.
+    """
+    import requests as req
+
+    yf_symbol = YAHOO_SYMBOLS.get(symbol)
+    if not yf_symbol:
+        return None
+
+    try:
+        url = (
+            f"https://query1.finance.yahoo.com/v8/finance/chart/{yf_symbol}"
+            f"?range=1d&interval=1m"
+        )
+        resp = req.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
+        if resp.status_code != 200:
+            return None
+
+        data = resp.json()
+        result = data.get("chart", {}).get("result", [])
+        if not result:
+            return None
+
+        meta = result[0].get("meta", {})
+
+        # Best source: regularMarketPrice is the latest trade price
+        price = meta.get("regularMarketPrice")
+        if price and float(price) > 0:
+            return round(float(price), 2)
+
+        # Fallback: last close from intraday data
+        indicators = result[0].get("indicators", {}).get("quote", [{}])[0]
+        closes = indicators.get("close", [])
+        if closes:
+            # Walk backwards to find last non-None value
+            for c in reversed(closes):
+                if c is not None:
+                    return round(float(c), 2)
+
+        return None
+
+    except Exception as e:
+        print(f"    Yahoo Finance realtime fetch failed for {symbol}: {e}")
+        return None
+
+
 def fetch_all_data(metal: str, days: int = 365) -> dict:
     """Fetch all historical data for a single metal from the database."""
     symbol = METALS[metal]["symbol"]
@@ -1057,11 +1108,24 @@ def run_forecast_for_metal(metal: str) -> dict:
     data = fetch_all_data(metal, days=365)
 
     prices = data["prices"]
-    current_price = 0.0
+    symbol = METALS[metal]["symbol"]
+
+    # Get the last DB settle price (used for ARIMA model training)
+    db_price = 0.0
     if not prices.empty and "settle" in prices.columns:
         s = prices["settle"].dropna()
         if len(s) > 0:
-            current_price = float(s.iloc[-1])
+            db_price = float(s.iloc[-1])
+
+    # Fetch real-time price from Yahoo Finance for accuracy
+    print(f"    Fetching real-time price from Yahoo Finance...")
+    realtime_price = _fetch_yahoo_realtime_price(symbol)
+    if realtime_price and realtime_price > 0:
+        current_price = realtime_price
+        print(f"    Live price: ${current_price:,.2f} (DB settle: ${db_price:,.2f})")
+    else:
+        current_price = db_price
+        print(f"    Yahoo realtime unavailable, using DB settle: ${current_price:,.2f}")
 
     print(f"    Price history: {len(prices)} days, current: ${current_price:,.2f}")
 
@@ -1099,14 +1163,33 @@ def run_forecast_for_metal(metal: str) -> dict:
     print(f"    Building composite forecast...")
     forecast = composite_forecast(trend, physical, arima, market)
 
+    # ── Rescale ARIMA forecasts to real-time price ─────────────────────────
+    # ARIMA is trained on DB settle prices, so its point forecasts are
+    # anchored to db_price.  When the live price differs we proportionally
+    # shift the low/mid/high values so the *percentage* moves are preserved
+    # but the dollar levels match the live market.
+    forecast_5d = arima.get("forecasts", {}).get("5d", None)
+    forecast_20d = arima.get("forecasts", {}).get("20d", None)
+
+    if db_price > 0 and current_price != db_price:
+        ratio = current_price / db_price
+        for fc in (forecast_5d, forecast_20d):
+            if fc is None:
+                continue
+            fc["low"]  = round(fc["low"]  * ratio, 2)
+            fc["mid"]  = round(fc["mid"]  * ratio, 2)
+            fc["high"] = round(fc["high"] * ratio, 2)
+            # pct_change stays the same (percentage moves are preserved)
+        print(f"    Rescaled ARIMA forecasts by {ratio:.4f}x (live vs DB settle)")
+
     # Assemble final output
     result = {
         "direction": forecast["direction"],
         "confidence": forecast["confidence"],
         "composite_score": forecast["composite_score"],
         "current_price": round(current_price, 2),
-        "forecast_5d": arima.get("forecasts", {}).get("5d", None),
-        "forecast_20d": arima.get("forecasts", {}).get("20d", None),
+        "forecast_5d": forecast_5d,
+        "forecast_20d": forecast_20d,
         "squeeze_probability": forecast["squeeze_probability"],
         "regime": regime,
         "signals": forecast["signals"],
