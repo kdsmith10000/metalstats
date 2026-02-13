@@ -59,8 +59,8 @@ interface VolumeSummaryData {
   date: string;
   parsed_date: string;
   products: VolumeSummaryProduct[];
-  totals: {
-    futures_options: {
+  totals?: {
+    futures_options?: {
       globex_volume: number;
       pnt_volume: number;
       volume: number;
@@ -70,7 +70,7 @@ interface VolumeSummaryData {
       yoy_open_interest: number;
     };
   };
-  last_updated: string;
+  last_updated?: string;
 }
 
 interface DeliveryItem {
@@ -890,7 +890,31 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           {/* Market Totals */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12">
             {(() => {
-              const totals = volumeSummary.totals.futures_options;
+              const totals = volumeSummary.totals?.futures_options;
+              if (!totals) {
+                // Compute totals from products if totals section is missing
+                const products = volumeSummary.products || [];
+                const vol = products.reduce((s, p) => s + (p.total_volume || 0), 0);
+                const oi = products.reduce((s, p) => s + (p.open_interest || 0), 0);
+                const yoyVol = products.reduce((s, p) => s + (p.yoy_volume || 0), 0);
+                const yoyOI = products.reduce((s, p) => s + (p.yoy_open_interest || 0), 0);
+                const volChange = yoyVol > 0 ? ((vol - yoyVol) / yoyVol * 100) : 0;
+                const oiChange = yoyOI > 0 ? ((oi - yoyOI) / yoyOI * 100) : 0;
+                return [
+                  { label: 'Today Volume', value: formatVolume(vol), subtext: 'All Metals Futures' },
+                  { label: '52-Week Ago Volume', value: formatVolume(yoyVol), subtext: `${volChange >= 0 ? '+' : ''}${volChange.toFixed(0)}% YoY`, color: volChange > 0 ? 'text-emerald-500' : volChange < 0 ? 'text-red-500' : '' },
+                  { label: 'Today Open Interest', value: formatNumber(oi), subtext: 'All Metals' },
+                  { label: '52-Week Ago OI', value: formatNumber(yoyOI), subtext: `${oiChange >= 0 ? '+' : ''}${oiChange.toFixed(0)}% YoY`, color: oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : '' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-4 sm:p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
+                    <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</p>
+                    {'subtext' in stat && stat.subtext && (
+                      <p className={`text-[9px] sm:text-xs mt-1 ${stat.color || 'text-slate-400'}`}>{stat.subtext}</p>
+                    )}
+                  </div>
+                ));
+              }
               const volChange = totals.yoy_volume > 0 
                 ? ((totals.volume - totals.yoy_volume) / totals.yoy_volume * 100) 
                 : 0;

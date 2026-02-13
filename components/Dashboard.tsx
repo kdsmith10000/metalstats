@@ -86,8 +86,8 @@ interface VolumeSummaryData {
   date: string;
   parsed_date: string;
   products: VolumeSummaryProduct[];
-  totals: {
-    futures_options: {
+  totals?: {
+    futures_options?: {
       globex_volume: number;
       pnt_volume: number;
       volume: number;
@@ -96,14 +96,14 @@ interface VolumeSummaryData {
       yoy_volume: number;
       yoy_open_interest: number;
     };
-    futures_only: {
+    futures_only?: {
       volume: number;
       open_interest: number;
       oi_change: number;
       yoy_volume: number;
       yoy_open_interest: number;
     };
-    options_only: {
+    options_only?: {
       volume: number;
       open_interest: number;
       oi_change: number;
