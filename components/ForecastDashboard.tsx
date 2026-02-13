@@ -331,14 +331,46 @@ function PriceProjectionChart({ currentPrice, forecast5d, forecast20d, metalColo
           tickFormatter={(v: number) => `$${v.toLocaleString()}`}
         />
         <Tooltip
-          contentStyle={{
-            backgroundColor: isDark ? '#1e293b' : '#ffffff',
-            border: `1px solid ${isDark ? '#334155' : '#e2e8f0'}`,
-            borderRadius: '8px',
-            fontSize: '12px',
+          content={({ active, payload, label }) => {
+            if (!active || !payload?.length) return null;
+            const values: Record<string, number> = {};
+            for (const entry of payload) {
+              if (entry.dataKey && entry.value != null) {
+                values[entry.dataKey as string] = Number(entry.value);
+              }
+            }
+            const fmt = (v: number) => `$${v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            return (
+              <div
+                style={{
+                  backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                  border: `1px solid ${isDark ? '#334155' : '#cbd5e1'}`,
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+                }}
+              >
+                <p style={{ fontSize: '11px', fontWeight: 700, color: isDark ? '#e2e8f0' : '#1e293b', marginBottom: '6px' }}>
+                  {label}
+                </p>
+                {values.mid != null && (
+                  <p style={{ fontSize: '13px', fontWeight: 800, color: metalColor, margin: '2px 0' }}>
+                    Mid: {fmt(values.mid)}
+                  </p>
+                )}
+                {values.high != null && (
+                  <p style={{ fontSize: '11px', fontWeight: 600, color: isDark ? '#94a3b8' : '#475569', margin: '2px 0' }}>
+                    High: {fmt(values.high)}
+                  </p>
+                )}
+                {values.low != null && (
+                  <p style={{ fontSize: '11px', fontWeight: 600, color: isDark ? '#94a3b8' : '#475569', margin: '2px 0' }}>
+                    Low: {fmt(values.low)}
+                  </p>
+                )}
+              </div>
+            );
           }}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          formatter={(value: any) => [`$${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, '']}
         />
         <Area
           type="monotone"
@@ -704,7 +736,17 @@ export default function ForecastDashboard() {
             <Tooltip
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any) => [`${Number(value).toFixed(1)}`, 'Composite Score']}
-              contentStyle={{ borderRadius: '8px', fontSize: '12px' }}
+              contentStyle={{
+                borderRadius: '8px',
+                fontSize: '12px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #cbd5e1',
+                color: '#1e293b',
+                fontWeight: 600,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              }}
+              labelStyle={{ color: '#1e293b', fontWeight: 700, fontSize: '12px' }}
+              itemStyle={{ color: '#475569', fontWeight: 600 }}
             />
             <Bar dataKey="score" radius={[0, 4, 4, 0]} barSize={14}>
               {overviewData.map((entry, index) => (
