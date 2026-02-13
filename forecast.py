@@ -46,6 +46,73 @@ def get_db_connection():
     return psycopg2.connect(url)
 
 
+# Yahoo Finance futures symbols
+YAHOO_SYMBOLS = {
+    "GC": "GC=F",
+    "SI": "SI=F",
+    "HG": "HG=F",
+    "PL": "PL=F",
+    "PA": "PA=F",
+}
+
+
+def _fetch_yahoo_history(symbol: str, days: int = 365) -> pd.DataFrame | None:
+    """Fetch historical daily price data from Yahoo Finance as a fallback."""
+    import requests as req
+
+    yf_symbol = YAHOO_SYMBOLS.get(symbol)
+    if not yf_symbol:
+        return None
+
+    try:
+        # Yahoo Finance chart API: free, no key needed
+        period1 = int((datetime.now() - timedelta(days=days)).timestamp())
+        period2 = int(datetime.now().timestamp())
+        url = (
+            f"https://query1.finance.yahoo.com/v8/finance/chart/{yf_symbol}"
+            f"?period1={period1}&period2={period2}&interval=1d"
+        )
+        resp = req.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+        if resp.status_code != 200:
+            return None
+
+        data = resp.json()
+        result = data.get("chart", {}).get("result", [])
+        if not result:
+            return None
+
+        timestamps = result[0].get("timestamp", [])
+        indicators = result[0].get("indicators", {}).get("quote", [{}])[0]
+        closes = indicators.get("close", [])
+        volumes = indicators.get("volume", [])
+
+        if not timestamps or not closes:
+            return None
+
+        dates = pd.to_datetime(timestamps, unit="s").normalize()
+        df = pd.DataFrame({
+            "settle": closes,
+            "volume": volumes,
+        }, index=dates)
+        df.index.name = "date"
+
+        # Fill OI columns with NaN (Yahoo doesn't provide OI for futures easily)
+        df["open_interest"] = np.nan
+        df["oi_change"] = np.nan
+
+        # Drop rows where price is missing
+        df = df.dropna(subset=["settle"])
+        df["settle"] = pd.to_numeric(df["settle"], errors="coerce")
+        df["volume"] = pd.to_numeric(df["volume"], errors="coerce")
+        df.sort_index(inplace=True)
+
+        return df
+
+    except Exception as e:
+        print(f"    Yahoo Finance fetch failed for {symbol}: {e}")
+        return None
+
+
 def fetch_all_data(metal: str, days: int = 365) -> dict:
     """Fetch all historical data for a single metal from the database."""
     symbol = METALS[metal]["symbol"]
@@ -123,6 +190,23 @@ def fetch_all_data(metal: str, days: int = 365) -> dict:
         for c in ["settle", "volume", "open_interest", "oi_change"]:
             prices_df[c] = pd.to_numeric(prices_df[c], errors="coerce")
         prices_df.sort_index(inplace=True)
+
+    # ── Backfill from Yahoo Finance if DB price history is thin ──────────
+    db_rows = len(prices_df)
+    if db_rows < 60:
+        print(f"    DB only has {db_rows} price rows — fetching Yahoo Finance history...")
+        yf_df = _fetch_yahoo_history(symbol, days)
+        if yf_df is not None and not yf_df.empty:
+            if prices_df.empty:
+                prices_df = yf_df
+            else:
+                # Merge: prefer DB data where dates overlap, backfill older days from Yahoo
+                combined = yf_df.combine_first(prices_df)
+                combined.sort_index(inplace=True)
+                prices_df = combined
+            print(f"    ✓ Backfilled to {len(prices_df)} total price rows from Yahoo Finance")
+        else:
+            print(f"    ✗ Yahoo Finance fetch returned no data")
 
     inventory_df = pd.DataFrame(
         inventory_rows, columns=["date", "registered", "eligible", "total"]
