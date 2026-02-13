@@ -475,6 +475,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           >
             <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Forecast</span>
+            <span className="px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-wide bg-emerald-500 text-white rounded-lg leading-none flex items-center whitespace-nowrap">New</span>
           </button>
         </div>
         
