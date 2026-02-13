@@ -1,0 +1,340 @@
+{
+  "generated_at": "2026-02-13T12:33:17.716458+00:00",
+  "model_version": "1.0.0",
+  "metals": {
+    "Gold": {
+      "direction": "NEUTRAL",
+      "confidence": 30,
+      "composite_score": 42.4,
+      "current_price": 5071.6,
+      "forecast_5d": null,
+      "forecast_20d": null,
+      "squeeze_probability": 2,
+      "regime": "UNKNOWN",
+      "signals": {
+        "trend_momentum": {
+          "score": 50,
+          "details": "Insufficient price data"
+        },
+        "physical_stress": {
+          "score": 42.6,
+          "details": "Inventory z=-5.0, Delivery accel 0.4x, P/P 0.3:1, Coverage 183d"
+        },
+        "arima_model": {
+          "score": 50,
+          "details": "Insufficient data for ARIMA"
+        },
+        "market_activity": {
+          "score": 16.9,
+          "details": "OI contracting 36.0%, volume light"
+        }
+      },
+      "key_drivers": [
+        "Market Activity: bearish (OI contracting 36.0%, volume light)",
+        "Physical Stress: bearish (Inventory z=-5.0, Delivery accel 0.4x, P/P 0.3:1, Coverage 183d)",
+        "Trend Momentum: neutral (Insufficient price data)"
+      ],
+      "anomalies": [],
+      "correlations": {},
+      "trend_indicators": {},
+      "physical_signals": {
+        "inventory_drawdown": {
+          "z_score": -5.0,
+          "change_5d": -1373362.93,
+          "interpretation": "Rapid drawdown"
+        },
+        "delivery_acceleration": {
+          "current_daily": 414,
+          "avg_20d": 961.4,
+          "acceleration_ratio": 0.43,
+          "interpretation": "Below average"
+        },
+        "pp_squeeze": {
+          "current_ratio": 0.33,
+          "roc_5d_pct": -84.97,
+          "squeeze_score": 1.6,
+          "interpretation": "Low"
+        },
+        "coverage_erosion": {
+          "coverage_days": 183.0,
+          "avg_daily_delivery": 961.4,
+          "interpretation": "Adequate"
+        },
+        "eligible_flow": {
+          "registered_change_5d": -1373362.93,
+          "eligible_change_5d": 65841.95,
+          "interpretation": "Registered declining (drawdown)"
+        }
+      },
+      "market_metrics": {
+        "oi_10d_change_pct": -35.97,
+        "volume_5d_avg": 152496.0,
+        "volume_20d_avg": 329936.0,
+        "volume_ratio": 0.46
+      }
+    },
+    "Silver": {
+      "direction": "NEUTRAL",
+      "confidence": 22,
+      "composite_score": 49.2,
+      "current_price": 83.75,
+      "forecast_5d": null,
+      "forecast_20d": null,
+      "squeeze_probability": 49,
+      "regime": "UNKNOWN",
+      "signals": {
+        "trend_momentum": {
+          "score": 50,
+          "details": "Insufficient price data"
+        },
+        "physical_stress": {
+          "score": 60.2,
+          "details": "Inventory z=-5.0, Delivery accel 0.0x, P/P 6.5:1, Coverage 78d"
+        },
+        "arima_model": {
+          "score": 50,
+          "details": "Insufficient data for ARIMA"
+        },
+        "market_activity": {
+          "score": 20.7,
+          "details": "OI contracting 62.7%, volume light"
+        }
+      },
+      "key_drivers": [
+        "Market Activity: bearish (OI contracting 62.7%, volume light)",
+        "Physical Stress: bullish (Inventory z=-5.0, Delivery accel 0.0x, P/P 6.5:1, Coverage 78d)",
+        "Trend Momentum: neutral (Insufficient price data)"
+      ],
+      "anomalies": [],
+      "correlations": {},
+      "trend_indicators": {},
+      "physical_signals": {
+        "inventory_drawdown": {
+          "z_score": -5.0,
+          "change_5d": -2622649.01,
+          "interpretation": "Rapid drawdown"
+        },
+        "delivery_acceleration": {
+          "current_daily": 3,
+          "avg_20d": 261.4,
+          "acceleration_ratio": 0.01,
+          "interpretation": "Below average"
+        },
+        "pp_squeeze": {
+          "current_ratio": 6.53,
+          "roc_5d_pct": -0.99,
+          "squeeze_score": 49.4,
+          "interpretation": "Elevated"
+        },
+        "coverage_erosion": {
+          "coverage_days": 77.6,
+          "avg_daily_delivery": 261.4,
+          "interpretation": "Tight"
+        },
+        "eligible_flow": {
+          "registered_change_5d": -2622649.01,
+          "eligible_change_5d": -16801920.46,
+          "interpretation": "Registered declining (drawdown)"
+        }
+      },
+      "market_metrics": {
+        "oi_10d_change_pct": -62.73,
+        "volume_5d_avg": 106305.0,
+        "volume_20d_avg": 149003.0,
+        "volume_ratio": 0.71
+      }
+    },
+    "Copper": {
+      "direction": "NEUTRAL",
+      "confidence": 32,
+      "composite_score": 52.0,
+      "current_price": 5.95,
+      "forecast_5d": null,
+      "forecast_20d": null,
+      "squeeze_probability": 23,
+      "regime": "UNKNOWN",
+      "signals": {
+        "trend_momentum": {
+          "score": 50,
+          "details": "Insufficient price data"
+        },
+        "physical_stress": {
+          "score": 47.8,
+          "details": "Inventory z=5.0, Delivery accel 1.0x, P/P 4.9:1, Coverage 0d"
+        },
+        "arima_model": {
+          "score": 50,
+          "details": "Insufficient data for ARIMA"
+        },
+        "market_activity": {
+          "score": 68.3,
+          "details": "OI expanding 207.1%, volume light"
+        }
+      },
+      "key_drivers": [
+        "Market Activity: bullish (OI expanding 207.1%, volume light)",
+        "Physical Stress: bearish (Inventory z=5.0, Delivery accel 1.0x, P/P 4.9:1, Coverage 0d)",
+        "Trend Momentum: neutral (Insufficient price data)"
+      ],
+      "anomalies": [],
+      "correlations": {},
+      "trend_indicators": {},
+      "physical_signals": {
+        "inventory_drawdown": {
+          "z_score": 5.0,
+          "change_5d": 29600.0,
+          "interpretation": "Building"
+        },
+        "delivery_acceleration": {
+          "current_daily": 338,
+          "avg_20d": 332.0,
+          "acceleration_ratio": 1.02,
+          "interpretation": "Normal"
+        },
+        "pp_squeeze": {
+          "current_ratio": 4.87,
+          "roc_5d_pct": -48.89,
+          "squeeze_score": 23.4,
+          "interpretation": "Moderate"
+        },
+        "coverage_erosion": {
+          "coverage_days": 0.1,
+          "avg_daily_delivery": 332.0,
+          "interpretation": "Critical"
+        },
+        "eligible_flow": {
+          "registered_change_5d": 29600.0,
+          "eligible_change_5d": -13266.0,
+          "interpretation": "Eligible \u2192 Registered (delivery intent)"
+        }
+      },
+      "market_metrics": {
+        "oi_10d_change_pct": 207.09,
+        "volume_5d_avg": 75086.0,
+        "volume_20d_avg": 135288.0,
+        "volume_ratio": 0.56
+      }
+    },
+    "Platinum": {
+      "direction": "NEUTRAL",
+      "confidence": 39,
+      "composite_score": 49.0,
+      "current_price": 2137.9,
+      "forecast_5d": null,
+      "forecast_20d": null,
+      "squeeze_probability": 66,
+      "regime": "UNKNOWN",
+      "signals": {
+        "trend_momentum": {
+          "score": 50,
+          "details": "Insufficient price data"
+        },
+        "physical_stress": {
+          "score": 48.4,
+          "details": "Delivery accel 0.5x, P/P 10.8:1, Coverage 154d"
+        },
+        "arima_model": {
+          "score": 50,
+          "details": "Insufficient data for ARIMA"
+        },
+        "market_activity": {
+          "score": 47.0,
+          "details": "OI expanding 5.0%, volume light"
+        }
+      },
+      "key_drivers": [
+        "Market Activity: bearish (OI expanding 5.0%, volume light)",
+        "Physical Stress: bearish (Delivery accel 0.5x, P/P 10.8:1, Coverage 154d)",
+        "Trend Momentum: neutral (Insufficient price data)"
+      ],
+      "anomalies": [],
+      "correlations": {},
+      "trend_indicators": {},
+      "physical_signals": {
+        "delivery_acceleration": {
+          "current_daily": 20,
+          "avg_20d": 41.6,
+          "acceleration_ratio": 0.48,
+          "interpretation": "Below average"
+        },
+        "pp_squeeze": {
+          "current_ratio": 10.81,
+          "roc_5d_pct": -3.02,
+          "squeeze_score": 65.9,
+          "interpretation": "Extreme"
+        },
+        "coverage_erosion": {
+          "coverage_days": 153.7,
+          "avg_daily_delivery": 41.6,
+          "interpretation": "Adequate"
+        },
+        "eligible_flow": {
+          "registered_change_5d": -6955.94,
+          "eligible_change_5d": -14933.79,
+          "interpretation": "Registered declining (drawdown)"
+        }
+      },
+      "market_metrics": {
+        "oi_10d_change_pct": 4.97,
+        "volume_5d_avg": 19616.0,
+        "volume_20d_avg": 42031.0,
+        "volume_ratio": 0.47
+      }
+    },
+    "Palladium": {
+      "direction": "BULLISH",
+      "confidence": 34,
+      "composite_score": 62.9,
+      "current_price": 1742.0,
+      "forecast_5d": null,
+      "forecast_20d": null,
+      "squeeze_probability": 93,
+      "regime": "UNKNOWN",
+      "signals": {
+        "trend_momentum": {
+          "score": 50,
+          "details": "Insufficient price data"
+        },
+        "physical_stress": {
+          "score": 79.2,
+          "details": "P/P 11.1:1"
+        },
+        "arima_model": {
+          "score": 50,
+          "details": "Insufficient data for ARIMA"
+        },
+        "market_activity": {
+          "score": 67.8,
+          "details": "OI expanding 26.2%, volume light"
+        }
+      },
+      "key_drivers": [
+        "Physical Stress: bullish (P/P 11.1:1)",
+        "Market Activity: bullish (OI expanding 26.2%, volume light)",
+        "Trend Momentum: neutral (Insufficient price data)"
+      ],
+      "anomalies": [],
+      "correlations": {},
+      "trend_indicators": {},
+      "physical_signals": {
+        "pp_squeeze": {
+          "current_ratio": 11.12,
+          "roc_5d_pct": 93.05,
+          "squeeze_score": 93.4,
+          "interpretation": "Extreme"
+        },
+        "eligible_flow": {
+          "registered_change_5d": 5600.72,
+          "eligible_change_5d": -27193.52,
+          "interpretation": "Eligible \u2192 Registered (delivery intent)"
+        }
+      },
+      "market_metrics": {
+        "oi_10d_change_pct": 26.22,
+        "volume_5d_avg": 4686.0,
+        "volume_20d_avg": 9047.0,
+        "volume_ratio": 0.52
+      }
+    }
+  }
+}

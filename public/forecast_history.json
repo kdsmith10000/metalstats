@@ -1,0 +1,93 @@
+{
+  "forecasts": [
+    {
+      "date": "2026-02-13",
+      "generated_at": "2026-02-13T12:27:35.621817+00:00",
+      "calls": {
+        "Gold": {
+          "direction": "NEUTRAL",
+          "confidence": 30,
+          "composite_score": 42.4,
+          "price_at_forecast": 5071.6
+        },
+        "Silver": {
+          "direction": "NEUTRAL",
+          "confidence": 22,
+          "composite_score": 49.2,
+          "price_at_forecast": 83.75
+        },
+        "Copper": {
+          "direction": "NEUTRAL",
+          "confidence": 32,
+          "composite_score": 52.0,
+          "price_at_forecast": 5.95
+        },
+        "Platinum": {
+          "direction": "NEUTRAL",
+          "confidence": 39,
+          "composite_score": 49.0,
+          "price_at_forecast": 2137.9
+        },
+        "Palladium": {
+          "direction": "BULLISH",
+          "confidence": 34,
+          "composite_score": 62.9,
+          "price_at_forecast": 1742.0
+        }
+      }
+    }
+  ],
+  "accuracy": {
+    "metals": {
+      "Gold": {
+        "total_forecasts": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "pending": 0,
+        "hit_rate": null
+      },
+      "Silver": {
+        "total_forecasts": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "pending": 0,
+        "hit_rate": null
+      },
+      "Copper": {
+        "total_forecasts": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "pending": 0,
+        "hit_rate": null
+      },
+      "Platinum": {
+        "total_forecasts": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "pending": 0,
+        "hit_rate": null
+      },
+      "Palladium": {
+        "total_forecasts": 1,
+        "correct": 0,
+        "incorrect": 0,
+        "pending": 1,
+        "hit_rate": null
+      }
+    },
+    "overall": {
+      "total": 0,
+      "correct": 0,
+      "hit_rate": null
+    },
+    "history": [
+      {
+        "metal": "Palladium",
+        "date": "2026-02-13",
+        "direction": "BULLISH",
+        "price_at_forecast": 1742.0,
+        "correct": null
+      }
+    ]
+  }
+}

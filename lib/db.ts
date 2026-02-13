@@ -1572,3 +1572,419 @@ export async function buildLatestAnalysisFromDb(): Promise<Record<string, unknow
     return null;
   }
 }
+
+
+// ============================================
+// FORECAST TABLES
+// ============================================
+
+export interface ForecastSnapshot {
+  id: number;
+  metal: string;
+  forecast_date: string;
+  direction: string;
+  confidence: number;
+  composite_score: number;
+  price_at_forecast: number;
+  squeeze_probability: number;
+  regime: string;
+  trend_score: number;
+  physical_score: number;
+  arima_score: number;
+  market_score: number;
+  forecast_5d_low: number | null;
+  forecast_5d_mid: number | null;
+  forecast_5d_high: number | null;
+  forecast_20d_low: number | null;
+  forecast_20d_mid: number | null;
+  forecast_20d_high: number | null;
+  key_drivers: string;
+  created_at: Date;
+}
+
+export interface ForecastAccuracy {
+  id: number;
+  forecast_snapshot_id: number;
+  metal: string;
+  forecast_date: string;
+  direction: string;
+  price_at_forecast: number;
+  eval_date: string;
+  eval_horizon_days: number;
+  price_at_eval: number;
+  price_change: number;
+  price_change_pct: number;
+  correct: boolean;
+  created_at: Date;
+}
+
+export interface ForecastPriceTracking {
+  id: number;
+  metal: string;
+  forecast_date: string;
+  tracking_date: string;
+  days_since_forecast: number;
+  price_at_forecast: number;
+  live_price: number;
+  price_change: number;
+  price_change_pct: number;
+  direction_at_forecast: string;
+  is_tracking: boolean;
+  created_at: Date;
+}
+
+// Initialize forecast tables
+export async function initializeForecastTables() {
+  try {
+    // forecast_snapshots: one row per metal per forecast run
+    await sql`
+      CREATE TABLE IF NOT EXISTS forecast_snapshots (
+        id SERIAL PRIMARY KEY,
+        metal VARCHAR(50) NOT NULL,
+        forecast_date DATE NOT NULL,
+        direction VARCHAR(20) NOT NULL,
+        confidence INTEGER NOT NULL DEFAULT 0,
+        composite_score DECIMAL(6, 2) NOT NULL DEFAULT 50,
+        price_at_forecast DECIMAL(15, 4) NOT NULL DEFAULT 0,
+        squeeze_probability INTEGER NOT NULL DEFAULT 0,
+        regime VARCHAR(20) DEFAULT 'UNKNOWN',
+        trend_score DECIMAL(6, 2) DEFAULT 50,
+        physical_score DECIMAL(6, 2) DEFAULT 50,
+        arima_score DECIMAL(6, 2) DEFAULT 50,
+        market_score DECIMAL(6, 2) DEFAULT 50,
+        forecast_5d_low DECIMAL(15, 4),
+        forecast_5d_mid DECIMAL(15, 4),
+        forecast_5d_high DECIMAL(15, 4),
+        forecast_20d_low DECIMAL(15, 4),
+        forecast_20d_mid DECIMAL(15, 4),
+        forecast_20d_high DECIMAL(15, 4),
+        key_drivers TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(metal, forecast_date)
+      )
+    `;
+
+    // forecast_accuracy: evaluated correctness of past forecasts
+    await sql`
+      CREATE TABLE IF NOT EXISTS forecast_accuracy (
+        id SERIAL PRIMARY KEY,
+        forecast_snapshot_id INTEGER REFERENCES forecast_snapshots(id) ON DELETE CASCADE,
+        metal VARCHAR(50) NOT NULL,
+        forecast_date DATE NOT NULL,
+        direction VARCHAR(20) NOT NULL,
+        price_at_forecast DECIMAL(15, 4) NOT NULL,
+        eval_date DATE NOT NULL,
+        eval_horizon_days INTEGER NOT NULL,
+        price_at_eval DECIMAL(15, 4) NOT NULL,
+        price_change DECIMAL(15, 4) NOT NULL DEFAULT 0,
+        price_change_pct DECIMAL(10, 4) NOT NULL DEFAULT 0,
+        correct BOOLEAN NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(metal, forecast_date, eval_horizon_days)
+      )
+    `;
+
+    // forecast_price_tracking: periodic live price captures vs forecast price
+    await sql`
+      CREATE TABLE IF NOT EXISTS forecast_price_tracking (
+        id SERIAL PRIMARY KEY,
+        metal VARCHAR(50) NOT NULL,
+        forecast_date DATE NOT NULL,
+        tracking_date DATE NOT NULL,
+        days_since_forecast INTEGER NOT NULL,
+        price_at_forecast DECIMAL(15, 4) NOT NULL,
+        live_price DECIMAL(15, 4) NOT NULL,
+        price_change DECIMAL(15, 4) NOT NULL DEFAULT 0,
+        price_change_pct DECIMAL(10, 4) NOT NULL DEFAULT 0,
+        direction_at_forecast VARCHAR(20) NOT NULL,
+        is_tracking BOOLEAN NOT NULL DEFAULT false,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(metal, forecast_date, tracking_date)
+      )
+    `;
+
+    // Indexes
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_forecast_snapshots_metal_date
+      ON forecast_snapshots(metal, forecast_date DESC)
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_forecast_accuracy_metal_date
+      ON forecast_accuracy(metal, forecast_date DESC)
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_forecast_price_tracking_metal
+      ON forecast_price_tracking(metal, forecast_date DESC, tracking_date DESC)
+    `;
+
+    console.log('Forecast tables initialized successfully');
+    return true;
+  } catch (error) {
+    console.error('Error initializing forecast tables:', error);
+    throw error;
+  }
+}
+
+// Upsert a forecast snapshot
+export async function upsertForecastSnapshot(
+  metal: string,
+  forecastDate: string,
+  direction: string,
+  confidence: number,
+  compositeScore: number,
+  priceAtForecast: number,
+  squeezeProbability: number,
+  regime: string,
+  trendScore: number,
+  physicalScore: number,
+  arimaScore: number,
+  marketScore: number,
+  forecast5d: { low: number; mid: number; high: number } | null,
+  forecast20d: { low: number; mid: number; high: number } | null,
+  keyDrivers: string[],
+): Promise<number> {
+  try {
+    const result = await sql`
+      INSERT INTO forecast_snapshots (
+        metal, forecast_date, direction, confidence, composite_score,
+        price_at_forecast, squeeze_probability, regime,
+        trend_score, physical_score, arima_score, market_score,
+        forecast_5d_low, forecast_5d_mid, forecast_5d_high,
+        forecast_20d_low, forecast_20d_mid, forecast_20d_high,
+        key_drivers
+      ) VALUES (
+        ${metal}, ${forecastDate}::date, ${direction}, ${confidence}, ${compositeScore},
+        ${priceAtForecast}, ${squeezeProbability}, ${regime},
+        ${trendScore}, ${physicalScore}, ${arimaScore}, ${marketScore},
+        ${forecast5d?.low ?? null}, ${forecast5d?.mid ?? null}, ${forecast5d?.high ?? null},
+        ${forecast20d?.low ?? null}, ${forecast20d?.mid ?? null}, ${forecast20d?.high ?? null},
+        ${keyDrivers.join(' | ')}
+      )
+      ON CONFLICT (metal, forecast_date)
+      DO UPDATE SET
+        direction = EXCLUDED.direction,
+        confidence = EXCLUDED.confidence,
+        composite_score = EXCLUDED.composite_score,
+        price_at_forecast = EXCLUDED.price_at_forecast,
+        squeeze_probability = EXCLUDED.squeeze_probability,
+        regime = EXCLUDED.regime,
+        trend_score = EXCLUDED.trend_score,
+        physical_score = EXCLUDED.physical_score,
+        arima_score = EXCLUDED.arima_score,
+        market_score = EXCLUDED.market_score,
+        forecast_5d_low = EXCLUDED.forecast_5d_low,
+        forecast_5d_mid = EXCLUDED.forecast_5d_mid,
+        forecast_5d_high = EXCLUDED.forecast_5d_high,
+        forecast_20d_low = EXCLUDED.forecast_20d_low,
+        forecast_20d_mid = EXCLUDED.forecast_20d_mid,
+        forecast_20d_high = EXCLUDED.forecast_20d_high,
+        key_drivers = EXCLUDED.key_drivers,
+        created_at = CURRENT_TIMESTAMP
+      RETURNING id
+    `;
+    return (result[0] as { id: number }).id;
+  } catch (error) {
+    console.error(`Error upserting forecast snapshot for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Insert an accuracy evaluation
+export async function insertForecastAccuracy(
+  forecastSnapshotId: number,
+  metal: string,
+  forecastDate: string,
+  direction: string,
+  priceAtForecast: number,
+  evalDate: string,
+  evalHorizonDays: number,
+  priceAtEval: number,
+): Promise<void> {
+  const priceChange = priceAtEval - priceAtForecast;
+  const priceChangePct = priceAtForecast > 0
+    ? (priceChange / priceAtForecast) * 100
+    : 0;
+  const correct =
+    (direction === 'BULLISH' && priceChange > 0) ||
+    (direction === 'BEARISH' && priceChange < 0);
+
+  try {
+    await sql`
+      INSERT INTO forecast_accuracy (
+        forecast_snapshot_id, metal, forecast_date, direction,
+        price_at_forecast, eval_date, eval_horizon_days,
+        price_at_eval, price_change, price_change_pct, correct
+      ) VALUES (
+        ${forecastSnapshotId}, ${metal}, ${forecastDate}::date, ${direction},
+        ${priceAtForecast}, ${evalDate}::date, ${evalHorizonDays},
+        ${priceAtEval}, ${priceChange}, ${priceChangePct}, ${correct}
+      )
+      ON CONFLICT (metal, forecast_date, eval_horizon_days) DO UPDATE SET
+        price_at_eval = EXCLUDED.price_at_eval,
+        price_change = EXCLUDED.price_change,
+        price_change_pct = EXCLUDED.price_change_pct,
+        correct = EXCLUDED.correct,
+        eval_date = EXCLUDED.eval_date,
+        created_at = CURRENT_TIMESTAMP
+    `;
+  } catch (error) {
+    console.error(`Error inserting forecast accuracy for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Insert a price tracking entry
+export async function upsertForecastPriceTracking(
+  metal: string,
+  forecastDate: string,
+  trackingDate: string,
+  daysSinceForecast: number,
+  priceAtForecast: number,
+  livePrice: number,
+  directionAtForecast: string,
+): Promise<void> {
+  const priceChange = livePrice - priceAtForecast;
+  const priceChangePct = priceAtForecast > 0
+    ? (priceChange / priceAtForecast) * 100
+    : 0;
+  const isTracking =
+    (directionAtForecast === 'BULLISH' && priceChange > 0) ||
+    (directionAtForecast === 'BEARISH' && priceChange < 0);
+
+  try {
+    await sql`
+      INSERT INTO forecast_price_tracking (
+        metal, forecast_date, tracking_date, days_since_forecast,
+        price_at_forecast, live_price, price_change, price_change_pct,
+        direction_at_forecast, is_tracking
+      ) VALUES (
+        ${metal}, ${forecastDate}::date, ${trackingDate}::date, ${daysSinceForecast},
+        ${priceAtForecast}, ${livePrice}, ${priceChange}, ${priceChangePct},
+        ${directionAtForecast}, ${isTracking}
+      )
+      ON CONFLICT (metal, forecast_date, tracking_date) DO UPDATE SET
+        live_price = EXCLUDED.live_price,
+        price_change = EXCLUDED.price_change,
+        price_change_pct = EXCLUDED.price_change_pct,
+        is_tracking = EXCLUDED.is_tracking,
+        created_at = CURRENT_TIMESTAMP
+    `;
+  } catch (error) {
+    console.error(`Error upserting price tracking for ${metal}:`, error);
+    throw error;
+  }
+}
+
+// Get forecast history for accuracy display
+export async function getForecastAccuracySummary(days: number = 90): Promise<{
+  metals: Record<string, { total: number; correct: number; incorrect: number; pending: number; hit_rate: number | null }>;
+  overall: { total: number; correct: number; hit_rate: number | null };
+  history: ForecastAccuracy[];
+}> {
+  try {
+    // Get evaluated accuracy records
+    const accuracyRows = await sql`
+      SELECT id, forecast_snapshot_id, metal, forecast_date, direction,
+             price_at_forecast, eval_date, eval_horizon_days,
+             price_at_eval, price_change, price_change_pct, correct, created_at
+      FROM forecast_accuracy
+      WHERE forecast_date >= CURRENT_DATE - ${days}
+      ORDER BY forecast_date DESC, metal
+    `;
+
+    // Get pending (unevaluated) forecast count
+    const pendingRows = await sql`
+      SELECT fs.metal, COUNT(*) as cnt
+      FROM forecast_snapshots fs
+      LEFT JOIN forecast_accuracy fa
+        ON fs.metal = fa.metal AND fs.forecast_date = fa.forecast_date AND fa.eval_horizon_days = 5
+      WHERE fs.forecast_date >= CURRENT_DATE - ${days}
+        AND fs.direction != 'NEUTRAL'
+        AND fa.id IS NULL
+      GROUP BY fs.metal
+    `;
+
+    const pendingByMetal: Record<string, number> = {};
+    for (const row of pendingRows as { metal: string; cnt: string }[]) {
+      pendingByMetal[row.metal] = parseInt(row.cnt);
+    }
+
+    // Aggregate by metal
+    const metals: Record<string, { total: number; correct: number; incorrect: number; pending: number; hit_rate: number | null }> = {};
+    let totalCorrect = 0;
+    let totalEvaluated = 0;
+
+    for (const row of accuracyRows as ForecastAccuracy[]) {
+      if (!metals[row.metal]) {
+        metals[row.metal] = { total: 0, correct: 0, incorrect: 0, pending: pendingByMetal[row.metal] || 0, hit_rate: null };
+      }
+      metals[row.metal].total += 1;
+      if (row.correct) {
+        metals[row.metal].correct += 1;
+        totalCorrect += 1;
+      } else {
+        metals[row.metal].incorrect += 1;
+      }
+      totalEvaluated += 1;
+    }
+
+    // Compute hit rates
+    for (const metal of Object.keys(metals)) {
+      const evaluated = metals[metal].correct + metals[metal].incorrect;
+      metals[metal].hit_rate = evaluated > 0 ? Math.round(metals[metal].correct / evaluated * 100) : null;
+    }
+
+    return {
+      metals,
+      overall: {
+        total: totalEvaluated,
+        correct: totalCorrect,
+        hit_rate: totalEvaluated > 0 ? Math.round(totalCorrect / totalEvaluated * 100) : null,
+      },
+      history: accuracyRows as ForecastAccuracy[],
+    };
+  } catch (error) {
+    console.error('Error fetching forecast accuracy:', error);
+    return { metals: {}, overall: { total: 0, correct: 0, hit_rate: null }, history: [] };
+  }
+}
+
+// Get price tracking for a specific metal
+export async function getForecastPriceTracking(metal: string, days: number = 30): Promise<ForecastPriceTracking[]> {
+  try {
+    const result = await sql`
+      SELECT id, metal, forecast_date, tracking_date, days_since_forecast,
+             price_at_forecast, live_price, price_change, price_change_pct,
+             direction_at_forecast, is_tracking, created_at
+      FROM forecast_price_tracking
+      WHERE metal = ${metal}
+        AND forecast_date >= CURRENT_DATE - ${days}
+      ORDER BY forecast_date DESC, tracking_date DESC
+    `;
+    return result as ForecastPriceTracking[];
+  } catch (error) {
+    console.error(`Error fetching price tracking for ${metal}:`, error);
+    return [];
+  }
+}
+
+// Get all forecast snapshots history
+export async function getForecastHistory(days: number = 90): Promise<ForecastSnapshot[]> {
+  try {
+    const result = await sql`
+      SELECT id, metal, forecast_date, direction, confidence, composite_score,
+             price_at_forecast, squeeze_probability, regime,
+             trend_score, physical_score, arima_score, market_score,
+             forecast_5d_low, forecast_5d_mid, forecast_5d_high,
+             forecast_20d_low, forecast_20d_mid, forecast_20d_high,
+             key_drivers, created_at
+      FROM forecast_snapshots
+      WHERE forecast_date >= CURRENT_DATE - ${days}
+      ORDER BY forecast_date DESC, metal
+    `;
+    return result as ForecastSnapshot[];
+  } catch (error) {
+    console.error('Error fetching forecast history:', error);
+    return [];
+  }
+}
