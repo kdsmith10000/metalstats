@@ -217,7 +217,7 @@ function getOpenInterestForMetal(
   return 0;
 }
 
-export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, deliveryMtdData, deliveryYtdData, lastUpdatedText = 'January 26, 2026' }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, deliveryMtdData, deliveryYtdData, lastUpdatedText = 'Unknown' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
@@ -225,6 +225,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
   const [expandedMetal, setExpandedMetal] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'inventory' | 'bulletin' | 'forecast'>('inventory');
+  const [mtdDropdownOpen, setMtdDropdownOpen] = useState(false);
   
   // Calculate paper/physical ratios for each metal
   const paperPhysicalRatios: Record<string, PaperPhysicalData | null> = {};
@@ -712,7 +713,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {deliveryMtdData && deliveryMtdData.contracts && deliveryMtdData.contracts.length > 0 && (
         <>
           <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pb-12 sm:pb-16 md:pb-24">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16 gap-4">
+            <div className="mb-8 sm:mb-12 md:mb-16">
               <div className="max-w-xl space-y-3 sm:space-y-8">
                 <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
                   MTD Progression
@@ -720,10 +721,30 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 <p className="text-sm sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase">
                   DAILY DELIVERY BUILDUP — {deliveryMtdData.business_date}
                 </p>
+                {/* MTD Progression Dropdown */}
+                <div className="max-w-lg">
+                  <button
+                    onClick={() => setMtdDropdownOpen(!mtdDropdownOpen)}
+                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  >
+                    <Info className="w-3.5 h-3.5" />
+                    <span>What is MTD Progression?</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mtdDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${mtdDropdownOpen ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-500 leading-relaxed">
+                        <strong className="text-slate-600 dark:text-slate-300">Month-to-Date (MTD) Progression</strong> shows how delivery activity accumulates throughout the month. Each bar represents the daily deliveries, while the line tracks the cumulative total. As the month progresses, you can see whether delivery demand is accelerating (steeper curve) or slowing (flatter curve).
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm">
-              <DeliveryMTDChart data={deliveryMtdData} />
+              <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm">
+                <DeliveryMTDChart data={deliveryMtdData} />
+              </div>
             </div>
           </section>
           

@@ -9,7 +9,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Load environment variables
-env_path = Path(__file__).parent.parent / 'data' / '.env'
+env_path = Path(__file__).parent.parent / '.env'
 load_dotenv(env_path)
 
 DATABASE_URL = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL')

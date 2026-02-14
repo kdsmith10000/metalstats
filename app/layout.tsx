@@ -136,8 +136,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Get the last updated timestamp from bulletin/delivery data (most reliable source)
-  let lastUpdatedText = 'February 12, 2026'; // Fallback
-  let lastUpdatedISO = '2026-02-12';
+  let lastUpdatedText = 'Unknown'; // Default to Unknown when no data
+  let lastUpdatedISO = '';
 
   try {
     const bulletinData = (await import('../public/bulletin.json')).default as { last_updated?: string };
@@ -156,6 +156,11 @@ export default async function RootLayout({
     }
   } catch (error) {
     console.error('Failed to parse last updated date:', error);
+  }
+
+  // If we still don't have a valid date, show a message instead of a fake date
+  if (lastUpdatedText === 'Unknown') {
+    lastUpdatedText = 'Data unavailable';
   }
 
   // Dynamic structured data with current date
