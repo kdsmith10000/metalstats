@@ -6,6 +6,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -396,11 +397,6 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Adsterra Banner */}
-        <Script
-          src="https://encouragementglutton.com/d3/f5/01/d3f501bc298fe1e606aaf82856dd6b83.js"
-          strategy="afterInteractive"
-        />
 
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
@@ -419,6 +415,7 @@ export default async function RootLayout({
                 <span className="hidden sm:block text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
                 <NewsletterSignup />
               </div>
+              <LanguageSelector />
               <ThemeToggle />
             </div>
 
