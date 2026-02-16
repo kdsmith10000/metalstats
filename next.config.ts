@@ -47,12 +47,12 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://encouragementglutton.com https://translate.google.com https://translate.googleapis.com", // 'unsafe-eval' needed for Next.js, 'unsafe-inline' for inline scripts
-              "style-src 'self' 'unsafe-inline' https://translate.googleapis.com", // 'unsafe-inline' needed for Tailwind CSS and Next.js
-              "img-src 'self' data: https: blob:",
-              "font-src 'self' data: https: https://fonts.gstatic.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://encouragementglutton.com https://*.google.com https://*.googleapis.com https://*.gstatic.com https://*.google https://va.vercel-scripts.com",
+              "style-src 'self' 'unsafe-inline' https://*.googleapis.com",
+              "img-src 'self' data: https: http: blob:",
+              "font-src 'self' data: https:",
               "connect-src 'self' https:",
-              "frame-src https://translate.google.com",
+              "frame-src https://*.google.com https://*.doubleclick.net",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

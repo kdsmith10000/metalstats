@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Globe, ChevronDown, Check } from 'lucide-react';
 
 const LANGUAGES = [
@@ -20,46 +20,69 @@ const LANGUAGES = [
 
 declare global {
   interface Window {
-    google: {
-      translate: {
-        TranslateElement: new (
+    google?: {
+      translate?: {
+        TranslateElement?: new (
           options: { pageLanguage: string; autoDisplay: boolean },
           elementId: string
         ) => void;
       };
     };
-    googleTranslateElementInit: () => void;
+    googleTranslateElementInit?: () => void;
   }
+}
+
+function triggerGoogleTranslate(langCode: string) {
+  const select = document.querySelector<HTMLSelectElement>(
+    '#google_translate_element select'
+  );
+  if (!select) return false;
+
+  select.value = langCode;
+  select.dispatchEvent(new Event('change', { bubbles: true }));
+  return true;
 }
 
 export default function LanguageSelector() {
   const [open, setOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState('');
-  const [loaded, setLoaded] = useState(false);
+  const [ready, setReady] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const checkReady = useCallback(() => {
+    const select = document.querySelector('#google_translate_element select');
+    if (select) {
+      setReady(true);
+      return true;
+    }
+    return false;
+  }, []);
+
   useEffect(() => {
-    // Load Google Translate script
     if (document.getElementById('google-translate-script')) {
-      setLoaded(true);
-      return;
+      const interval = setInterval(() => {
+        if (checkReady()) clearInterval(interval);
+      }, 500);
+      return () => clearInterval(interval);
     }
 
     window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
+      new window.google!.translate!.TranslateElement!(
         { pageLanguage: 'en', autoDisplay: false },
         'google_translate_element'
       );
-      setLoaded(true);
+      const interval = setInterval(() => {
+        if (checkReady()) clearInterval(interval);
+      }, 500);
     };
 
     const script = document.createElement('script');
     script.id = 'google-translate-script';
     script.src =
-      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
     script.async = true;
     document.head.appendChild(script);
-  }, []);
+  }, [checkReady]);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -75,26 +98,22 @@ export default function LanguageSelector() {
     setCurrentLang(langCode);
     setOpen(false);
 
-    // Drive Google Translate by setting the cookie
-    if (langCode === '') {
-      // Reset to English: remove the translate cookie and reload
-      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + window.location.hostname;
+    if (!triggerGoogleTranslate(langCode)) {
+      document.cookie = `googtrans=/en/${langCode || ''}; path=/;`;
+      document.cookie = `googtrans=/en/${langCode || ''}; path=/; domain=.${window.location.hostname}`;
       window.location.reload();
-      return;
     }
-
-    document.cookie = `googtrans=/en/${langCode}; path=/;`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=.${window.location.hostname}`;
-    window.location.reload();
   }
 
   const activeLang = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
 
   return (
     <div ref={dropdownRef} className="relative">
-      {/* Hidden Google Translate element */}
-      <div id="google_translate_element" className="hidden" />
+      {/* Google Translate element - visually hidden but in DOM */}
+      <div
+        id="google_translate_element"
+        style={{ position: 'absolute', top: -9999, left: -9999, opacity: 0, pointerEvents: 'none' }}
+      />
 
       <button
         onClick={() => setOpen(!open)}
