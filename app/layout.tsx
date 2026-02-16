@@ -396,6 +396,12 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
+        {/* Adsterra Banner */}
+        <Script
+          src="https://encouragementglutton.com/d3/f5/01/d3f501bc298fe1e606aaf82856dd6b83.js"
+          strategy="afterInteractive"
+        />
+
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
@@ -419,6 +425,17 @@ export default async function RootLayout({
             <main>
               {children}
             </main>
+
+            {/* Adsterra Banner Ad */}
+            <div className="w-full flex justify-center py-2">
+              <Script
+                async
+                data-cfasync="false"
+                src="https://encouragementglutton.com/363d95083785b29310b6b0b768b3cacb/invoke.js"
+                strategy="afterInteractive"
+              />
+              <div id="container-363d95083785b29310b6b0b768b3cacb"></div>
+            </div>
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
