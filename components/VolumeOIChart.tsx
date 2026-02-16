@@ -109,7 +109,7 @@ export default function VolumeOIChart({
   const priceChangePercent = firstSettle > 0 ? (priceChange / firstSettle) * 100 : 0;
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="notranslate space-y-4 sm:space-y-6" translate="no">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>

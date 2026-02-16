@@ -603,7 +603,7 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
   const isPositive = Number(changePercent) >= 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8">
+    <div className="notranslate grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8" translate="no">
       <div className="lg:col-span-3 space-y-4 sm:space-y-6">
         {/* Controls Row */}
         <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-between gap-3 sm:gap-4">

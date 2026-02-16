@@ -86,7 +86,7 @@ export default function DeliverySection({ data }: DeliverySectionProps) {
   const totalMTD = sortedDeliveries.reduce((sum, d) => sum + d.month_to_date, 0);
 
   return (
-    <section className="w-full">
+    <section className="notranslate w-full" translate="no">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16 gap-4">
         <div className="max-w-xl space-y-3 sm:space-y-8">

@@ -97,7 +97,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
   const maxDayLabel = maxDay ? formatShortDate(maxDay.date) : '';
 
   return (
-    <div className="space-y-6">
+    <div className="notranslate space-y-6" translate="no">
       {/* Metal Selector */}
       <div className="flex flex-wrap gap-2">
         {mainContracts.map(c => (

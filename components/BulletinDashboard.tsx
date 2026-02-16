@@ -266,7 +266,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
   const totalOI = sortedProducts.reduce((sum, p) => sum + p.total_open_interest, 0);
 
   return (
-    <div className="space-y-12 sm:space-y-20 md:space-y-28">
+    <div className="notranslate space-y-12 sm:space-y-20 md:space-y-28" translate="no">
       {/* Market Activity Section */}
       <div>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16 gap-4">
