@@ -476,7 +476,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           >
             <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Forecast</span>
-            <span className="px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-wide bg-emerald-500 text-white rounded-lg leading-none flex items-center whitespace-nowrap">New</span>
+            <span className="inline-block min-w-[52px] min-h-[28px] sm:min-w-[60px] sm:min-h-[32px] px-4 py-1 text-xs sm:text-sm font-black uppercase tracking-wide bg-emerald-500 text-white rounded-lg text-center leading-7 sm:leading-8 whitespace-nowrap">New</span>
           </button>
         </div>
         
@@ -697,6 +697,11 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* Spacer between sections */}
       <div className="h-12 md:h-20 lg:h-24" />
 
+      {/* Adsterra Banner Ad - between inventory and delivery */}
+      <div className="w-full flex justify-center px-4 sm:px-8 md:px-24 lg:px-48 pb-8 md:pb-12">
+        <div id="container-363d95083785b29310b6b0b768b3cacb"></div>
+      </div>
+
       {/* Delivery Notices Section */}
       {deliveryData && deliveryData.deliveries && deliveryData.deliveries.length > 0 && (
         <>
@@ -834,6 +839,12 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
+              <Link href="/about" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
+                About
+              </Link>
+              <Link href="/contact" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
+                Contact
+              </Link>
               <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer">
                 Privacy
               </Link>

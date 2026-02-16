@@ -4,9 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import ThemeToggle from '@/components/ThemeToggle';
-import NewsletterSignup from '@/components/NewsletterSignup';
-import LanguageSelector from '@/components/LanguageSelector';
+import Navbar from '@/components/Navbar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -371,13 +369,15 @@ export default async function RootLayout({
       },
       {
         '@type': 'SiteNavigationElement',
-        name: ['Dashboard', 'Precious Metal Stats', 'Coverage Ratio & Paper vs Physical', 'Delivery Notices', 'API Documentation'],
+        name: ['Dashboard', 'Precious Metal Stats', 'Coverage Ratio & Paper vs Physical', 'Delivery Notices', 'API Documentation', 'About', 'Contact'],
         url: [
           'https://heavymetalstats.com',
           'https://heavymetalstats.com/precious-metals',
           'https://heavymetalstats.com/learn',
           'https://heavymetalstats.com/learn/delivery',
           'https://heavymetalstats.com/api-info',
+          'https://heavymetalstats.com/about',
+          'https://heavymetalstats.com/contact',
         ],
       },
     ],
@@ -397,42 +397,25 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
+        {/* Adsterra Banner - script loads globally, container is in Dashboard */}
+        <Script
+          async
+          data-cfasync="false"
+          src="https://encouragementglutton.com/363d95083785b29310b6b0b768b3cacb/invoke.js"
+          strategy="afterInteractive"
+        />
 
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <div className="min-h-screen">
-            {/* Theme Toggle & Last Updated - Static position */}
-            <div className="absolute top-3 right-3 sm:top-4 sm:right-6 z-50 flex items-center gap-2 sm:gap-4">
-              {/* Last Updated - Compact on mobile, full on desktop */}
-              <div className="flex flex-col items-end gap-0.5 text-[10px] sm:text-xs text-muted-foreground">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                  <span className="hidden sm:inline">Last updated: {lastUpdatedText} • CME Group</span>
-                  <span className="sm:hidden">{lastUpdatedText}</span>
-                </div>
-                <span className="hidden sm:block text-xs text-slate-400">Updated nightly at 9:30 PM EST</span>
-                <span className="hidden sm:block text-xs text-slate-400">Data is delayed by one day due to CME release schedule</span>
-                <NewsletterSignup />
-              </div>
-              <LanguageSelector />
-              <ThemeToggle />
-            </div>
+          <div className="min-h-screen flex flex-col">
+            {/* Global Navbar */}
+            <Navbar lastUpdatedText={lastUpdatedText} />
 
-            <main>
+            <main className="flex-1">
               {children}
             </main>
 
-            {/* Adsterra Banner Ad */}
-            <div className="w-full flex justify-center py-2">
-              <Script
-                async
-                data-cfasync="false"
-                src="https://encouragementglutton.com/363d95083785b29310b6b0b768b3cacb/invoke.js"
-                strategy="afterInteractive"
-              />
-              <div id="container-363d95083785b29310b6b0b768b3cacb"></div>
-            </div>
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
