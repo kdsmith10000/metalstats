@@ -41,6 +41,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // About & Contact pages (important for AdSense compliance)
+  const sitePages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date('2026-02-16'),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date('2026-02-16'),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+  ];
+
   // Legal pages (rarely change)
   const legalPages: MetadataRoute.Sitemap = [
     {
@@ -57,5 +73,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return [...mainPages, ...infoPages, ...legalPages];
+  return [...mainPages, ...infoPages, ...sitePages, ...legalPages];
 }

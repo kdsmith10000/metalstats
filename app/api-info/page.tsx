@@ -174,6 +174,8 @@ export default function ApiEndpoints() {
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
             <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
             <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/about" className="hover:text-slate-600 dark:hover:text-slate-300">About</Link>
+            <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
             <Link href="/terms" className="hover:text-slate-600 dark:hover:text-slate-300">Terms</Link>
           </nav>

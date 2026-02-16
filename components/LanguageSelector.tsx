@@ -98,12 +98,12 @@ export default function LanguageSelector() {
 
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-zinc-800/80 border border-white/[0.06] hover:bg-zinc-700/80 hover:border-white/10 transition-all duration-200 text-sm text-zinc-300 hover:text-white backdrop-blur-sm"
+        className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-zinc-800/80 border border-white/[0.06] hover:bg-zinc-700/80 hover:border-white/10 transition-all duration-200 text-sm text-zinc-300 hover:text-white backdrop-blur-sm"
         aria-label="Translate page"
         title="Translate page"
       >
         <Globe className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-        <span className="hidden sm:inline text-base leading-none">{activeLang.flag}</span>
+        <span className="hidden sm:inline text-base leading-none -translate-y-0.5">{activeLang.flag}</span>
         <ChevronDown className={`w-3 h-3 opacity-50 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
       </button>
 
