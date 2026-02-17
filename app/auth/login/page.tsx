@@ -36,15 +36,17 @@ export default function LoginPage() {
         email: email.toLowerCase().trim(),
         password,
         callbackUrl,
-        redirect: true,
+        redirect: false,
       });
 
       if (result?.error) {
         setError('Invalid email or password.');
+        setLoading(false);
+      } else {
+        window.location.href = callbackUrl;
       }
     } catch {
       setError('Something went wrong. Please try again.');
-    } finally {
       setLoading(false);
     }
   }
