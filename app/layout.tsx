@@ -400,11 +400,14 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Monetag Ad Tags — Add your zone scripts here once verified:
-            1. In-Page Push (with Anti-Adblock): <Script async src="https://YOUR_DOMAIN/YOUR_IPP_ZONE/invoke.js" strategy="afterInteractive" />
-            2. Vignette Banner: <Script async src="https://YOUR_DOMAIN/YOUR_VIGNETTE_ZONE/invoke.js" strategy="afterInteractive" />
-            3. Push Notifications: <Script async src="https://YOUR_DOMAIN/YOUR_PUSH_ZONE/invoke.js" strategy="afterInteractive" />
-        */}
+        {/* Monetag MultiTag — Popunder, Push, In-Page Push, Vignette */}
+        <Script
+          async
+          data-cfasync="false"
+          src="https://quge5.com/88/tag.min.js"
+          data-zone="211924"
+          strategy="afterInteractive"
+        />
 
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
