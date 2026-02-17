@@ -3,11 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, BarChart3, BookOpen, FileText, Truck, Code, Info, Mail, MessageSquare } from 'lucide-react';
+import { Menu, X, BarChart3, BookOpen, FileText, Truck, Code, Info, Mail } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import LanguageSelector from './LanguageSelector';
 import NewsletterSignup from './NewsletterSignup';
-import UserMenu from './UserMenu';
 
 const NAV_LINKS = [
   { href: '/', label: 'Dashboard', icon: BarChart3 },
@@ -15,7 +14,6 @@ const NAV_LINKS = [
   { href: '/learn', label: 'Learn', icon: BookOpen },
   { href: '/delivery', label: 'Delivery Notices', icon: Truck },
   { href: '/api-info', label: 'API', icon: Code },
-  { href: '/discuss', label: 'Discuss', icon: MessageSquare },
   { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
@@ -145,7 +143,6 @@ export default function Navbar({ lastUpdatedText }: NavbarProps) {
             <NewsletterSignup />
             <LanguageSelector />
             <ThemeToggle />
-            <UserMenu />
 
             {/* Mobile hamburger */}
             <button
