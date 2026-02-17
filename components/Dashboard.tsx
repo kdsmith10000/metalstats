@@ -428,21 +428,6 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               );
             })}
 
-            {/* Newsletter CTA - Desktop only */}
-            <a
-              href="https://buy.stripe.com/fZucN673N8GB5VU67Lfw401"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:flex relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 py-6 sm:px-8 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 bg-gradient-to-br from-amber-500/10 to-amber-600/5 dark:from-amber-500/10 dark:to-amber-400/5 backdrop-blur-2xl border border-amber-500/25 dark:border-amber-400/20 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl overflow-hidden flex-col items-center justify-center text-center gap-3 no-underline"
-            >
-              <div className="relative z-10 flex flex-col items-center gap-2">
-                <span className="text-[9px] font-black text-amber-500/70 dark:text-amber-400/70 uppercase tracking-widest">Daily Intel</span>
-                <span className="text-lg font-black tracking-tight text-amber-600 dark:text-amber-300">Newsletter</span>
-                <div className="mt-1 px-1.5 py-0.5 bg-amber-500/15 dark:bg-amber-400/15 rounded-full border border-amber-500/25 dark:border-amber-400/25">
-                  <span className="text-[5px] font-black text-amber-600 dark:text-amber-300 uppercase tracking-wider">Subscribe</span>
-                </div>
-              </div>
-            </a>
           </div>
           
           {/* Learn Link */}
