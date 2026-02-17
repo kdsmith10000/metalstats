@@ -6,6 +6,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import AuthProvider from '@/components/AuthProvider';
 import Navbar from '@/components/Navbar';
+import MonetAgAdLoader from '@/components/MonetAgAdLoader';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -402,15 +403,6 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Monetag MultiTag — Popunder, Push, In-Page Push, Vignette */}
-        {/* Using native script tag so Monetag verification bot can detect it in raw HTML */}
-        <script
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="211924"
-          async
-          data-cfasync="false"
-        />
-
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
@@ -432,6 +424,7 @@ export default async function RootLayout({
           </div>
         </ThemeProvider>
         </AuthProvider>
+        <MonetAgAdLoader />
         <Analytics />
       </body>
     </html>
