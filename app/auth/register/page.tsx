@@ -9,10 +9,6 @@ const OAUTH_PROVIDERS = [
   { id: 'google', name: 'Google' },
   { id: 'github', name: 'GitHub' },
   { id: 'discord', name: 'Discord' },
-  { id: 'apple', name: 'Apple' },
-  { id: 'twitter', name: 'X (Twitter)' },
-  { id: 'reddit', name: 'Reddit' },
-  { id: 'microsoft-entra-id', name: 'Microsoft' },
 ];
 
 export default function RegisterPage() {

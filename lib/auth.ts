@@ -5,10 +5,6 @@ import NeonAdapter from '@auth/neon-adapter';
 import Google from 'next-auth/providers/google';
 import GitHub from 'next-auth/providers/github';
 import Discord from 'next-auth/providers/discord';
-import Apple from 'next-auth/providers/apple';
-import Reddit from 'next-auth/providers/reddit';
-import MicrosoftEntraId from 'next-auth/providers/microsoft-entra-id';
-import Twitter from 'next-auth/providers/twitter';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { sql } from './db';
@@ -23,10 +19,6 @@ const authConfig: NextAuthConfig = {
     Google,
     GitHub,
     Discord,
-    Apple,
-    Reddit,
-    MicrosoftEntraId,
-    Twitter,
     Credentials({
       name: 'Email & Password',
       credentials: {

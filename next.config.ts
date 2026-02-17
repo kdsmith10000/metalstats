@@ -66,7 +66,7 @@ const nextConfig: NextConfig = {
               "frame-src https://*.google.com https://*.doubleclick.net",
               "frame-ancestors 'none'",
               "base-uri 'self'",
-              "form-action 'self' https://accounts.google.com https://github.com https://discord.com https://appleid.apple.com https://www.reddit.com https://login.microsoftonline.com https://twitter.com https://api.twitter.com",
+              "form-action 'self' https://accounts.google.com https://github.com https://discord.com",
             ].join('; ')
           }
         ],

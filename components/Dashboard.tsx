@@ -397,7 +397,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
                         {/* Buy Physical Link */}
                         {config.buyLink && (
-                          <div className="relative mt-2 sm:mt-3 -mb-4 sm:-mb-6 md:-mb-8" style={{ transform: 'translateY(-15%)' }}>
+                          <div className="relative sm:mt-3 sm:-mb-6 md:-mb-8" style={{ transform: 'translateY(-15%)' }}>
                           <motion.a
                             href={config.buyLink}
                             target="_blank"
@@ -406,13 +406,12 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                             whileHover={{ scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.97 }}
                             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                            className="relative inline-flex items-center justify-center gap-1.5 sm:gap-3 px-4 sm:px-8 py-2 sm:py-3 max-w-full bg-amber-950/80 dark:bg-amber-950/90 border border-amber-500/30 dark:border-amber-400/25 rounded-full no-underline shadow-[0_2px_12px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:border-amber-500/50 dark:hover:border-amber-400/40 transition-all duration-300 overflow-hidden"
+                            className="relative inline-flex items-center justify-center gap-0.5 sm:gap-3 px-1.5 sm:px-8 py-0.5 sm:py-3 max-w-full bg-amber-950/80 dark:bg-amber-950/90 border border-amber-500/30 dark:border-amber-400/25 rounded-full no-underline shadow-[0_2px_12px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:border-amber-500/50 dark:hover:border-amber-400/40 transition-all duration-300 overflow-hidden"
                           >
-                            <span className="relative z-10 w-1.5 sm:w-3 h-2.5 sm:h-3 shrink-0" aria-hidden="true" />
-                            <span className="relative z-10 text-[8px] sm:text-[10px] font-black text-amber-300 uppercase tracking-wider sm:tracking-widest whitespace-nowrap">
+                            <span className="relative z-10 text-[5px] sm:text-[10px] font-black text-amber-300 uppercase tracking-wider sm:tracking-widest whitespace-nowrap">
                               Buy Physical
                             </span>
-                            <ExternalLink className="relative z-10 w-2 h-2 sm:w-3 sm:h-3 text-amber-400/60 shrink-0" style={{ position: 'relative', left: '-5px' }} />
+                            <ExternalLink className="relative z-10 w-1.5 h-1.5 sm:w-3 sm:h-3 text-amber-400/60 shrink-0" style={{ position: 'relative', left: '-3px' }} />
                           </motion.a>
                           </div>
                         )}
