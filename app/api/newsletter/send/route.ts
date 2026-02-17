@@ -9,7 +9,9 @@ import {
 } from '@/lib/db';
 import { generateNewsletter } from '@/lib/newsletter-engine';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 // Verify cron secret for Vercel Cron Jobs
 function isAuthorized(request: Request): boolean {
@@ -70,7 +72,7 @@ export async function POST(request: Request) {
       const personalizedHtml = newsletter.html.replace(/\{\{UNSUBSCRIBE_URL\}\}/g, unsubscribeUrl);
 
       try {
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'Heavy Metal Stats <newsletter@heavymetalstats.com>',
           to: subscriber.email,
           subject: newsletter.subject,

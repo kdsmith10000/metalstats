@@ -3,7 +3,9 @@ import { Resend } from 'resend';
 import { addSubscriber, isSubscribed, isDatabaseAvailable } from '@/lib/db';
 import crypto from 'crypto';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 // Validate email format
 function isValidEmail(email: string): boolean {
@@ -47,7 +49,7 @@ export async function POST(request: Request) {
     // Send welcome email
     const unsubscribeUrl = `https://heavymetalstats.com/api/newsletter/unsubscribe?token=${unsubscribeToken}`;
 
-    await resend.emails.send({
+    await getResend().emails.send({
       from: 'Heavy Metal Stats <newsletter@heavymetalstats.com>',
       to: email.toLowerCase().trim(),
       subject: 'Welcome to Heavy Metal Stats Daily Bulletin',
