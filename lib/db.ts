@@ -142,12 +142,223 @@ export async function initializeDatabase() {
       ON newsletters(report_date DESC)
     `;
 
+    // ── Auth.js tables ──────────────────────────────────────────────────
+
+    // Users table (Auth.js standard + forum extensions)
+    await sql`
+      CREATE TABLE IF NOT EXISTS users (
+        id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+        name TEXT,
+        email TEXT UNIQUE,
+        "emailVerified" TIMESTAMPTZ,
+        image TEXT,
+        password_hash TEXT,
+        display_name TEXT,
+        bio TEXT,
+        role TEXT DEFAULT 'member',
+        newsletter_subscriber_id INTEGER REFERENCES newsletter_subscribers(id),
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        last_seen_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `;
+
+    // OAuth account links (one row per provider per user)
+    await sql`
+      CREATE TABLE IF NOT EXISTS accounts (
+        id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+        "userId" TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        type TEXT NOT NULL,
+        provider TEXT NOT NULL,
+        "providerAccountId" TEXT NOT NULL,
+        refresh_token TEXT,
+        access_token TEXT,
+        expires_at INTEGER,
+        token_type TEXT,
+        scope TEXT,
+        id_token TEXT,
+        session_state TEXT,
+        UNIQUE(provider, "providerAccountId")
+      )
+    `;
+
+    // Database sessions
+    await sql`
+      CREATE TABLE IF NOT EXISTS sessions (
+        id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+        "sessionToken" TEXT UNIQUE NOT NULL,
+        "userId" TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        expires TIMESTAMPTZ NOT NULL
+      )
+    `;
+
+    // Email verification tokens
+    await sql`
+      CREATE TABLE IF NOT EXISTS verification_tokens (
+        identifier TEXT NOT NULL,
+        token TEXT UNIQUE NOT NULL,
+        expires TIMESTAMPTZ NOT NULL,
+        UNIQUE(identifier, token)
+      )
+    `;
+
+    // Auth indexes
+    await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_accounts_user ON accounts("userId")`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions("userId")`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions("sessionToken")`;
+
+    // Add forum extension columns to users (safe to run multiple times)
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash TEXT`;
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS display_name TEXT`;
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT`;
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'member'`;
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS newsletter_subscriber_id INTEGER REFERENCES newsletter_subscribers(id)`;
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW()`;
+    await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS last_seen_at TIMESTAMPTZ DEFAULT NOW()`;
+
+    // ── Forum tables ────────────────────────────────────────────────────
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS forum_categories (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        slug TEXT UNIQUE NOT NULL,
+        description TEXT,
+        display_order INTEGER DEFAULT 0,
+        icon TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS forum_threads (
+        id SERIAL PRIMARY KEY,
+        category_id INTEGER NOT NULL REFERENCES forum_categories(id),
+        author_id TEXT NOT NULL REFERENCES users(id),
+        title TEXT NOT NULL,
+        slug TEXT NOT NULL,
+        is_pinned BOOLEAN DEFAULT FALSE,
+        is_locked BOOLEAN DEFAULT FALSE,
+        view_count INTEGER DEFAULT 0,
+        reply_count INTEGER DEFAULT 0,
+        last_post_at TIMESTAMPTZ DEFAULT NOW(),
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(category_id, slug)
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS forum_posts (
+        id SERIAL PRIMARY KEY,
+        thread_id INTEGER NOT NULL REFERENCES forum_threads(id) ON DELETE CASCADE,
+        author_id TEXT NOT NULL REFERENCES users(id),
+        body TEXT NOT NULL,
+        is_original BOOLEAN DEFAULT FALSE,
+        edited_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS forum_reactions (
+        id SERIAL PRIMARY KEY,
+        post_id INTEGER NOT NULL REFERENCES forum_posts(id) ON DELETE CASCADE,
+        user_id TEXT NOT NULL REFERENCES users(id),
+        reaction_type TEXT NOT NULL DEFAULT 'like',
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(post_id, user_id, reaction_type)
+      )
+    `;
+
+    // Forum indexes
+    await sql`CREATE INDEX IF NOT EXISTS idx_threads_category ON forum_threads(category_id, last_post_at DESC)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_threads_author ON forum_threads(author_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_posts_thread ON forum_posts(thread_id, created_at)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_posts_author ON forum_posts(author_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_reactions_post ON forum_reactions(post_id)`;
+
+    // Seed default forum categories (no-op if they already exist)
+    const categories = [
+      { name: 'Gold', slug: 'gold', description: 'Gold market speculation, COMEX inventory, and price outlook', icon: 'Au', order: 1 },
+      { name: 'Silver', slug: 'silver', description: 'Silver supply/demand dynamics and trading discussion', icon: 'Ag', order: 2 },
+      { name: 'Platinum', slug: 'platinum', description: 'Platinum market analysis and industrial demand', icon: 'Pt', order: 3 },
+      { name: 'Palladium', slug: 'palladium', description: 'Palladium supply constraints and automotive demand', icon: 'Pd', order: 4 },
+      { name: 'Copper', slug: 'copper', description: 'Copper macro trends and warehouse movements', icon: 'Cu', order: 5 },
+      { name: 'Supply & Demand', slug: 'supply-demand', description: 'Cross-metal supply chain analysis and macro outlook', icon: 'SD', order: 6 },
+      { name: 'General', slug: 'general', description: 'Off-topic, introductions, and site feedback', icon: 'GN', order: 7 },
+    ];
+    for (const cat of categories) {
+      await sql`
+        INSERT INTO forum_categories (name, slug, description, icon, display_order)
+        VALUES (${cat.name}, ${cat.slug}, ${cat.description}, ${cat.icon}, ${cat.order})
+        ON CONFLICT (slug) DO NOTHING
+      `;
+    }
+
     console.log('Database tables initialized successfully');
     return true;
   } catch (error) {
     console.error('Error initializing database:', error);
     throw error;
   }
+}
+
+// ── User / Auth helpers ─────────────────────────────────────────────────
+
+export interface ForumUser {
+  id: string;
+  name: string | null;
+  email: string | null;
+  image: string | null;
+  display_name: string | null;
+  bio: string | null;
+  role: string;
+  created_at: Date;
+}
+
+export async function getUserByEmail(email: string): Promise<ForumUser | null> {
+  const result = await sql`SELECT * FROM users WHERE email = ${email} LIMIT 1`;
+  return result.length > 0 ? (result[0] as ForumUser) : null;
+}
+
+export async function getUserById(id: string): Promise<ForumUser | null> {
+  const result = await sql`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
+  return result.length > 0 ? (result[0] as ForumUser) : null;
+}
+
+export async function createCredentialsUser(
+  email: string,
+  passwordHash: string,
+  displayName: string
+): Promise<ForumUser> {
+  const result = await sql`
+    INSERT INTO users (email, password_hash, display_name, name, "emailVerified")
+    VALUES (${email}, ${passwordHash}, ${displayName}, ${displayName}, NOW())
+    RETURNING *
+  `;
+  return result[0] as ForumUser;
+}
+
+export async function getForumCategories() {
+  const result = await sql`
+    SELECT 
+      fc.*,
+      COALESCE(tc.thread_count, 0)::int AS thread_count,
+      COALESCE(pc.post_count, 0)::int AS post_count
+    FROM forum_categories fc
+    LEFT JOIN (
+      SELECT category_id, COUNT(*)::int AS thread_count
+      FROM forum_threads GROUP BY category_id
+    ) tc ON tc.category_id = fc.id
+    LEFT JOIN (
+      SELECT ft.category_id, COUNT(*)::int AS post_count
+      FROM forum_posts fp
+      JOIN forum_threads ft ON ft.id = fp.thread_id
+      GROUP BY ft.category_id
+    ) pc ON pc.category_id = fc.id
+    ORDER BY fc.display_order
+  `;
+  return result;
 }
 
 // Insert or update a metal snapshot

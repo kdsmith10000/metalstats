@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import AuthProvider from '@/components/AuthProvider';
 import Navbar from '@/components/Navbar';
 
 const inter = Inter({
@@ -411,6 +412,7 @@ export default async function RootLayout({
 
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
+        <AuthProvider>
         <ThemeProvider>
           <div className="min-h-screen flex flex-col">
             {/* Global Navbar */}
@@ -428,6 +430,7 @@ export default async function RootLayout({
             />
           </div>
         </ThemeProvider>
+        </AuthProvider>
         <Analytics />
       </body>
     </html>
