@@ -74,7 +74,23 @@ export default function Navbar({ lastUpdatedText }: NavbarProps) {
             className="flex items-center gap-2 sm:gap-2.5 shrink-0"
           >
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-sm">
-              <BarChart3 className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white" />
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="w-4 h-4 sm:w-[18px] sm:h-[18px]"
+                aria-hidden="true"
+              >
+                {/* Three ascending gold-ingot bars — reads as both metal bars and a chart */}
+                {/* Short ingot */}
+                <rect x="2" y="15" width="5.5" height="6" rx="0.6" fill="white" fillOpacity="0.95" />
+                <path d="M2.7 15 L3.3 13.5 L6.8 13.5 L7.5 15Z" fill="white" fillOpacity="0.65" />
+                {/* Medium ingot */}
+                <rect x="9.25" y="10" width="5.5" height="11" rx="0.6" fill="white" fillOpacity="0.95" />
+                <path d="M9.95 10 L10.55 8.5 L14.05 8.5 L14.75 10Z" fill="white" fillOpacity="0.65" />
+                {/* Tall ingot */}
+                <rect x="16.5" y="5" width="5.5" height="16" rx="0.6" fill="white" fillOpacity="0.95" />
+                <path d="M17.2 5 L17.8 3.5 L21.3 3.5 L22 5Z" fill="white" fillOpacity="0.65" />
+              </svg>
             </div>
             <span className="text-sm sm:text-base font-black tracking-tight text-slate-900 dark:text-white uppercase">
               Heavy Metal Stats

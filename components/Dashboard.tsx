@@ -7,9 +7,10 @@ import DeliverySection from './DeliverySection';
 import PaperPhysicalCard from './PaperPhysicalCard';
 import RiskScoreTooltip from './RiskScoreTooltip';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import { ChevronRight, ChevronDown, FileText, BarChart3, FileStack, TrendingUp, Info } from 'lucide-react';
+import { ChevronRight, ChevronDown, FileText, BarChart3, FileStack, TrendingUp, Info, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 // Lazy load new delivery components
 const DeliveryMTDChart = dynamic(() => import('./DeliveryMTDChart'), {
@@ -392,6 +393,26 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                               {paperPhysicalRatios[config.key]!.ratio.toFixed(1)}:1
                             </p>
                           </div>
+                        )}
+
+                        {/* Buy Physical Link */}
+                        {config.buyLink && (
+                          <motion.a
+                            href={config.buyLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            whileHover={{ scale: 1.05, y: -1 }}
+                            whileTap={{ scale: 0.97 }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                            className="relative mt-3 sm:mt-4 inline-flex items-center justify-center gap-1.5 sm:gap-3 px-4 sm:px-8 py-2 sm:py-3 max-w-full bg-amber-950/80 dark:bg-amber-950/90 border border-amber-500/30 dark:border-amber-400/25 rounded-full no-underline shadow-[0_2px_12px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:border-amber-500/50 dark:hover:border-amber-400/40 transition-all duration-300 overflow-hidden"
+                          >
+                            <span className="relative z-10 w-1.5 sm:w-3 h-2.5 sm:h-3 shrink-0" aria-hidden="true" />
+                            <span className="relative z-10 text-[8px] sm:text-[10px] font-black text-amber-300 uppercase tracking-wider sm:tracking-widest whitespace-nowrap">
+                              Buy Physical
+                            </span>
+                            <ExternalLink className="relative z-10 w-2 h-2 sm:w-3 sm:h-3 text-amber-400/60 shrink-0" style={{ position: 'relative', left: '-5px' }} />
+                          </motion.a>
                         )}
                       </div>
                     </div>

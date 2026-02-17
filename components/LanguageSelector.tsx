@@ -99,10 +99,34 @@ export default function LanguageSelector() {
     setOpen(false);
 
     if (langCode === '') {
-      // Restore original English — clear translation cookies and reload
-      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`;
-      window.location.reload();
+      // Restore to English — use Google Translate's own mechanism to properly
+      // revert internal state and cookies (including ones on .google.com we can't clear)
+      const select = document.querySelector<HTMLSelectElement>(
+        '#google_translate_element select'
+      );
+      if (select) {
+        select.value = 'en';
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      // Also clear googtrans cookies on all possible domain variations
+      const hostname = window.location.hostname;
+      const expiry = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
+      document.cookie = `googtrans=; ${expiry}; path=/`;
+      document.cookie = `googtrans=; ${expiry}; path=/; domain=${hostname}`;
+      document.cookie = `googtrans=; ${expiry}; path=/; domain=.${hostname}`;
+      const parts = hostname.split('.');
+      if (parts.length > 2) {
+        const parentDomain = parts.slice(1).join('.');
+        document.cookie = `googtrans=; ${expiry}; path=/; domain=${parentDomain}`;
+        document.cookie = `googtrans=; ${expiry}; path=/; domain=.${parentDomain}`;
+      }
+
+      // Delay reload so Google Translate processes the select change
+      // and clears its own internal state before the page refreshes
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
       return;
     }
 

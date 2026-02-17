@@ -57,6 +57,7 @@ export interface MetalConfig {
   monthlyDemand: number; // Projected Jan 2026 demand in units
   pricePerUnit: number;
   futuresSymbol?: string; // Symbol in bulletin data (e.g., 'GC', 'SI')
+  buyLink?: string; // Optional affiliate link to buy physical metal
 }
 
 // Paper vs Physical ratio calculation
@@ -133,6 +134,7 @@ export const metalConfigs: MetalConfig[] = [
     monthlyDemand: 3543600, // 35,436 contracts * 100 oz (Feb 11 MTD)
     pricePerUnit: 5072,  // Updated to Feb 11 settle price (GC FEB26: 5071.6)
     futuresSymbol: 'GC', // COMEX Gold Futures
+    buyLink: 'https://amzn.to/4aC4PsH',
   },
   {
     key: 'Silver',
@@ -145,6 +147,7 @@ export const metalConfigs: MetalConfig[] = [
     monthlyDemand: 22975000, // 4,595 contracts * 5,000 oz (Feb 11 MTD)
     pricePerUnit: 82,  // SI settle price (~$82/oz)
     futuresSymbol: 'SI', // COMEX Silver Futures
+    buyLink: 'https://amzn.to/4kCAbE4',
   },
   {
     key: 'Platinum',
@@ -157,6 +160,7 @@ export const metalConfigs: MetalConfig[] = [
     monthlyDemand: 24250, // 485 contracts * 50 oz (Feb 10 MTD)
     pricePerUnit: 2109,  // PL settle price
     futuresSymbol: 'PL', // NYMEX Platinum Futures
+    buyLink: 'https://amzn.to/4cxqDZ0',
   },
   {
     key: 'Palladium',
@@ -169,6 +173,7 @@ export const metalConfigs: MetalConfig[] = [
     monthlyDemand: 9200, // 92 contracts * 100 oz (Feb 10 MTD)
     pricePerUnit: 1050,  // PA settle price
     futuresSymbol: 'PA', // NYMEX Palladium Futures
+    buyLink: 'https://amzn.to/4c4Aq8V',
   },
   {
     key: 'Copper',
@@ -181,6 +186,7 @@ export const metalConfigs: MetalConfig[] = [
     monthlyDemand: 93062.5, // 7,445 contracts * 12.5 short tons (Feb 11 MTD)
     pricePerUnit: 11898, // ~$5.949/lb * 2000 lbs/short ton (Feb 11 settle)
     futuresSymbol: 'HG', // COMEX Copper Futures
+    buyLink: 'https://amzn.to/46aarsK',
   },
 ];
 
