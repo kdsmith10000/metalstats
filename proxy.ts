@@ -1,10 +1,32 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Routes that require authentication
+const PROTECTED_PATTERNS = [
+  /^\/discuss\/[^/]+\/new$/,
+  /^\/settings(\/|$)/,
+];
+
 export function proxy(request: NextRequest) {
   // NOTE: www -> non-www redirect is handled by Vercel's domain configuration.
   // Do NOT add a redirect here — it conflicts with Vercel's platform-level redirect
   // and causes a "Redirect error" in Google Search Console.
+
+  const { pathname } = request.nextUrl;
+
+  // Auth route protection: redirect to login if no session on protected routes
+  const isProtected = PROTECTED_PATTERNS.some((pattern) => pattern.test(pathname));
+  if (isProtected) {
+    const sessionToken =
+      request.cookies.get('authjs.session-token')?.value ||
+      request.cookies.get('__Secure-authjs.session-token')?.value;
+
+    if (!sessionToken) {
+      const loginUrl = new URL('/auth/login', request.url);
+      loginUrl.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
 
   const response = NextResponse.next();
 
@@ -31,11 +53,10 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 };
