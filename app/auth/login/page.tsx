@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -13,6 +13,18 @@ const OAUTH_PROVIDERS = [
 ];
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="w-6 h-6 text-amber-500 animate-spin" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/discuss';
   const errorParam = searchParams.get('error');
