@@ -389,6 +389,9 @@ export default async function RootLayout({
         {/* Canonical URLs are handled per-page via Next.js metadata alternates.canonical */}
         {/* DO NOT add a hardcoded <link rel="canonical"> here — it overrides every page's canonical */}
         
+        {/* Monetag Site Verification */}
+        <meta name="monetag" content="f52d6780c45530ade99c1d00179b447e" />
+
         {/* Google AdSense */}
         <Script
           async
@@ -397,13 +400,11 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Adsterra Banner - script loads globally, container is in Dashboard */}
-        <Script
-          async
-          data-cfasync="false"
-          src="https://encouragementglutton.com/363d95083785b29310b6b0b768b3cacb/invoke.js"
-          strategy="afterInteractive"
-        />
+        {/* Monetag Ad Tags — Add your zone scripts here once verified:
+            1. In-Page Push (with Anti-Adblock): <Script async src="https://YOUR_DOMAIN/YOUR_IPP_ZONE/invoke.js" strategy="afterInteractive" />
+            2. Vignette Banner: <Script async src="https://YOUR_DOMAIN/YOUR_VIGNETTE_ZONE/invoke.js" strategy="afterInteractive" />
+            3. Push Notifications: <Script async src="https://YOUR_DOMAIN/YOUR_PUSH_ZONE/invoke.js" strategy="afterInteractive" />
+        */}
 
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>

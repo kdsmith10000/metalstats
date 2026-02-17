@@ -1,1 +1,2 @@
 google.com, pub-1319414449875714, DIRECT, f08c47fec0942fa0
+# Monetag — add your ads.txt lines from the Monetag dashboard here once available

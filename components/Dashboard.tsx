@@ -719,10 +719,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* Spacer between sections */}
       <div className="h-12 md:h-20 lg:h-24" />
 
-      {/* Adsterra Banner Ad - between inventory and delivery */}
-      <div className="w-full flex justify-center px-4 sm:px-8 md:px-24 lg:px-48 pb-8 md:pb-12">
-        <div id="container-363d95083785b29310b6b0b768b3cacb"></div>
-      </div>
+      {/* Monetag ads are loaded globally via layout.tsx — no container div needed */}
 
       {/* Delivery Notices Section */}
       {deliveryData && deliveryData.deliveries && deliveryData.deliveries.length > 0 && (
