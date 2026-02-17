@@ -446,37 +446,38 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         <div className="flex items-center gap-2 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 w-full sm:w-fit mx-auto shadow-inner">
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-2.5 sm:py-4 text-[10px] sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl sm:min-w-[140px] !min-h-0 ${
               activeTab === 'inventory'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <BarChart3 className="w-3.5 h-3.5 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Inventory</span>
           </button>
           <button
             onClick={() => setActiveTab('bulletin')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-2.5 sm:py-4 text-[10px] sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl sm:min-w-[140px] !min-h-0 ${
               activeTab === 'bulletin'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <FileText className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <FileText className="w-3.5 h-3.5 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Bulletin</span>
           </button>
           <button
             onClick={() => setActiveTab('forecast')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-2.5 sm:py-4 text-[10px] sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl sm:min-w-[140px] !min-h-0 ${
               activeTab === 'forecast'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <TrendingUp className="w-3.5 h-3.5 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Forecast</span>
-            <span className="inline-block min-w-[52px] min-h-[28px] sm:min-w-[60px] sm:min-h-[32px] px-4 py-1 text-xs sm:text-sm font-black uppercase tracking-wide bg-emerald-500 text-white rounded-lg text-center leading-7 sm:leading-8 whitespace-nowrap">New</span>
+            <span className="hidden sm:inline-block sm:min-w-[60px] sm:min-h-[32px] px-4 py-1 text-sm font-black uppercase tracking-wide bg-emerald-500 text-white rounded-lg text-center leading-8 whitespace-nowrap">New</span>
+            <span className="sm:hidden inline-block px-1.5 py-0.5 text-[8px] font-black uppercase bg-emerald-500 text-white rounded leading-none">New</span>
           </button>
         </div>
         

@@ -29,12 +29,12 @@ export const metadata: Metadata = {
     'comex ytd delivery',
   ],
   alternates: {
-    canonical: 'https://heavymetalstats.com/learn/delivery',
+    canonical: 'https://heavymetalstats.com/delivery',
   },
   openGraph: {
     title: 'COMEX Delivery Notices: How Physical Gold & Silver Delivery Works',
     description: 'Complete guide to COMEX delivery notices. Learn what issues and stops mean, how physical delivery works for gold, silver, and copper, and why delivery data matters for precious metals analysis.',
-    url: 'https://heavymetalstats.com/learn/delivery',
+    url: 'https://heavymetalstats.com/delivery',
     type: 'article',
   },
 };
@@ -44,19 +44,13 @@ export default function DeliveryLearnPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
       {/* Header */}
       <div className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-6 py-4">
           <Link 
             href="/" 
             className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Dashboard
-          </Link>
-          <Link
-            href="/learn"
-            className="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-          >
-            Coverage & Paper/Physical
           </Link>
         </div>
       </div>
@@ -302,35 +296,21 @@ export default function DeliveryLearnPage() {
           </ul>
         </div>
 
-        {/* CTA */}
-        <div className="flex gap-4">
-          <Link 
-            href="/"
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors text-sm"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Dashboard
-          </Link>
-          <Link 
-            href="/learn"
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-bold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-sm"
-          >
-            Coverage & Paper/Physical
-          </Link>
-        </div>
+
+
       </main>
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-200 dark:border-slate-800">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="w-full px-6 text-center">
           <p className="text-sm text-slate-400">
             Data from CME Group. Informational only — not financial advice.
           </p>
           <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
             <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
-            <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Coverage &amp; Paper/Physical</Link>
-            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API</Link>
             <Link href="/about" className="hover:text-slate-600 dark:hover:text-slate-300">About</Link>
             <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>

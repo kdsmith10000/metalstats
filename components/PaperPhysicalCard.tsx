@@ -79,11 +79,11 @@ export default function PaperPhysicalCard({ metalName, data, unit, compact = fal
       
       {/* Ratio Display */}
       <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-500">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
+          <span className="text-[10px] sm:text-xs font-bold text-slate-500">
             For every 1 {unit.replace(/s$/, '')} of physical metal:
           </span>
-          <span className={`text-2xl font-black ${riskColor}`}>
+          <span className={`text-xl sm:text-2xl font-black ${riskColor}`}>
             {data.ratio.toFixed(2)} paper claims
           </span>
         </div>

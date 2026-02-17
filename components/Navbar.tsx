@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Dashboard', icon: BarChart3 },
   { href: '/precious-metals', label: 'Precious Metals', icon: FileText },
   { href: '/learn', label: 'Learn', icon: BookOpen },
-  { href: '/learn/delivery', label: 'Delivery Notices', icon: Truck },
+  { href: '/delivery', label: 'Delivery Notices', icon: Truck },
   { href: '/api-info', label: 'API', icon: Code },
   { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
@@ -56,7 +56,7 @@ export default function Navbar({ lastUpdatedText }: NavbarProps) {
   }
 
   function isLinkActive(href: string) {
-    if (href === '/learn' && pathname === '/learn/delivery') return false;
+    if (href === '/learn' && pathname === '/delivery') return false;
     return isActive(href);
   }
 
@@ -113,7 +113,7 @@ export default function Navbar({ lastUpdatedText }: NavbarProps) {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-9 h-9 rounded-lg bg-slate-100 dark:bg-zinc-800/80 hover:bg-slate-200 dark:hover:bg-zinc-700/80 flex items-center justify-center transition-colors"
+              className="lg:hidden w-9 h-9 rounded-lg bg-slate-100 dark:bg-zinc-800/80 hover:bg-slate-200 dark:hover:bg-zinc-700/80 flex items-center justify-center transition-colors !min-h-0 !min-w-0"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >
               {mobileOpen ? (

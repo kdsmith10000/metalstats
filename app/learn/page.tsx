@@ -846,27 +846,21 @@ export default function LearnPage() {
           </ul>
         </div>
 
-        {/* CTA */}
-        <Link 
-          href="/"
-          className="inline-flex items-center justify-center gap-3 px-12 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors text-base whitespace-nowrap min-w-[280px]"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          View Coverage Ratios
-        </Link>
+
+
       </main>
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-200 dark:border-slate-800">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="w-full px-6 text-center">
           <p className="text-sm text-slate-400">
             Data from CME Group. Informational only — not financial advice.
           </p>
           <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
             <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
-            <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
-            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API</Link>
             <Link href="/about" className="hover:text-slate-600 dark:hover:text-slate-300">About</Link>
             <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>

@@ -181,10 +181,9 @@ body {
 
 /* Mobile touch improvements */
 @media (max-width: 640px) {
-  /* Larger tap targets on mobile */
+  /* Reasonable tap targets on mobile — height only, no min-width to avoid squashing compact buttons */
   button, a, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 36px;
   }
   
   /* Prevent horizontal scroll */

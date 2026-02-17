@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
+  // Redirects for moved pages
+  async redirects() {
+    return [
+      {
+        source: '/learn/delivery',
+        destination: '/delivery',
+        permanent: true,
+      },
+    ];
+  },
+
   // Security headers
   async headers() {
     return [

@@ -98,9 +98,17 @@ export default function LanguageSelector() {
     setCurrentLang(langCode);
     setOpen(false);
 
+    if (langCode === '') {
+      // Restore original English — clear translation cookies and reload
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`;
+      window.location.reload();
+      return;
+    }
+
     if (!triggerGoogleTranslate(langCode)) {
-      document.cookie = `googtrans=/en/${langCode || ''}; path=/;`;
-      document.cookie = `googtrans=/en/${langCode || ''}; path=/; domain=.${window.location.hostname}`;
+      document.cookie = `googtrans=/en/${langCode}; path=/;`;
+      document.cookie = `googtrans=/en/${langCode}; path=/; domain=.${window.location.hostname}`;
       window.location.reload();
     }
   }
@@ -117,13 +125,13 @@ export default function LanguageSelector() {
 
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-zinc-800/80 border border-white/[0.06] hover:bg-zinc-700/80 hover:border-white/10 transition-all duration-200 text-sm text-zinc-300 hover:text-white backdrop-blur-sm"
+        className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-zinc-800/80 border border-white/[0.06] hover:bg-zinc-700/80 hover:border-white/10 transition-all duration-200 text-sm text-zinc-300 hover:text-white backdrop-blur-sm !min-w-0 !min-h-0"
         aria-label="Translate page"
         title="Translate page"
       >
-        <Globe className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-        <span className="hidden sm:inline text-base leading-none -translate-y-0.5">{activeLang.flag}</span>
-        <ChevronDown className={`w-3 h-3 opacity-50 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
+        <Globe className="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true" />
+        <span className="text-sm sm:text-base leading-none -translate-y-[1px]">{activeLang.flag}</span>
+        <ChevronDown className={`w-3 h-3 opacity-50 transition-transform duration-200 shrink-0 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
       </button>
 
       {open && (

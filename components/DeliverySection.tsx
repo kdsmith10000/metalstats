@@ -64,7 +64,7 @@ function DeliveryExplainer() {
             When a futures contract expires, holders can take physical delivery. An <strong className="text-slate-600 dark:text-slate-300">issue</strong> is a seller delivering metal, a <strong className="text-slate-600 dark:text-slate-300">stop</strong> is a buyer accepting it, and the <strong className="text-slate-600 dark:text-slate-300">settlement</strong> is the final price at which the contract was settled.
           </p>
           <Link
-            href="/learn/delivery"
+            href="/delivery"
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-slate-300 group underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500"
           >
             <span>Learn more about COMEX delivery</span>

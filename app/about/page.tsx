@@ -54,55 +54,60 @@ export default function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-16 px-8 lg:px-24">
-      <div className="max-w-4xl mx-auto">
-        <Link 
-          href="/" 
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-16"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Dashboard
-        </Link>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      {/* Header */}
+      <div className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30">
+        <div className="max-w-4xl mx-auto px-6 py-4">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </Link>
+        </div>
+      </div>
 
-        <div className="mb-16">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 dark:text-white mb-6">
-            About Heavy Metal Stats
-          </h1>
-          <p className="text-lg text-slate-500 dark:text-slate-400">
-            Free COMEX warehouse inventory data for everyone.
+      {/* Main Content */}
+      <main className="flex-1 w-full px-6 py-12 flex flex-col items-center">
+        {/* Title */}
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-3 text-center">
+          About Heavy Metal Stats
+        </h1>
+        <p className="text-lg text-slate-500 dark:text-slate-400 mb-10 text-center max-w-2xl">
+          Free COMEX warehouse inventory data for everyone.
+        </p>
+
+        {sections.map((section, index) => (
+          <div key={index} className="w-full max-w-3xl mb-10">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+              {section.title}
+            </h2>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              {section.content}
+            </p>
+          </div>
+        ))}
+      </main>
+
+      {/* Footer */}
+      <footer className="py-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="w-full px-6 text-center">
+          <p className="text-sm text-slate-400">
+            Data from CME Group. Informational only — not financial advice.
           </p>
-        </div>
-
-        <div className="grid gap-6">
-          {sections.map((section, index) => (
-            <div 
-              key={index}
-              className="p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl shadow-sm"
-            >
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">
-                {section.title}
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                {section.content}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Footer nav for internal linking / crawlability */}
-        <footer className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
-          <nav className="flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+          <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
             <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
             <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
-            <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
-            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API</Link>
             <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
             <Link href="/terms" className="hover:text-slate-600 dark:hover:text-slate-300">Terms</Link>
           </nav>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
   );
 }

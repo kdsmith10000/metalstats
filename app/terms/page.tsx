@@ -105,20 +105,25 @@ export default function TermsOfService() {
           ))}
         </div>
 
-        {/* Footer nav for internal linking / crawlability */}
-        <footer className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
-          <nav className="flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+      </div>
+
+      <footer className="py-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="w-full px-6 text-center">
+          <p className="text-sm text-slate-400">
+            Data from CME Group. Informational only — not financial advice.
+          </p>
+          <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
             <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
             <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
-            <Link href="/learn/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
-            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API &amp; Data Sources</Link>
+            <Link href="/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API</Link>
             <Link href="/about" className="hover:text-slate-600 dark:hover:text-slate-300">About</Link>
             <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
           </nav>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
   );
 }
