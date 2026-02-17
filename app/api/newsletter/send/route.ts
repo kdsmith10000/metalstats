@@ -92,7 +92,7 @@ export async function POST(request: Request) {
       for (const subscriber of expiredTrials) {
         try {
           const unsubscribeUrl = `https://heavymetalstats.com/api/newsletter/unsubscribe?token=${subscriber.unsubscribe_token}`;
-          await resend.emails.send({
+          await getResend().emails.send({
             from: 'Heavy Metal Stats <newsletter@heavymetalstats.com>',
             to: subscriber.email,
             subject: 'Your free trial has ended — Continue for $5/month',
