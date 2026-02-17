@@ -9,7 +9,7 @@ import os
 from datetime import datetime, date
 from collections import defaultdict
 
-BASE_DIR = "/Users/kds/Desktop/metals/metalstats/public"
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 
 # ── Contract specifications ──────────────────────────────────────────────────
 CONTRACT_SIZES = {
