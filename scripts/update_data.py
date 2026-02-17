@@ -486,11 +486,16 @@ def sync_via_api(data, api_url):
     
     print(f"[INFO] Syncing to database via API: {sync_url}")
     
+    headers = {'Content-Type': 'application/json'}
+    cron_secret = os.environ.get('CRON_SECRET')
+    if cron_secret:
+        headers['Authorization'] = f'Bearer {cron_secret}'
+    
     try:
         response = requests.post(
             sync_url,
             json=data,
-            headers={'Content-Type': 'application/json'},
+            headers=headers,
             timeout=30
         )
         

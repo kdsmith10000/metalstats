@@ -145,7 +145,7 @@ export default function DeliveryYTDSection({ data }: DeliveryYTDSectionProps) {
       </div>
 
       {/* Monthly Totals Bar Chart */}
-      <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm mb-6 sm:mb-8">
+      <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm mb-6 sm:mb-8">
         <h3 className="text-xs sm:text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4 sm:mb-6">
           Monthly Delivery Totals
         </h3>
@@ -200,7 +200,7 @@ export default function DeliveryYTDSection({ data }: DeliveryYTDSectionProps) {
       </div>
 
       {/* Firm-Level Table */}
-      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none border-y sm:border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-black/40 backdrop-blur-xl">
+      <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-none border-y sm:border border-slate-200 dark:border-slate-800 bg-white dark:bg-black/40 backdrop-blur-xl">
         <div className="px-4 sm:px-6 py-4 border-b border-slate-200 dark:border-slate-800">
           <h3 className="text-xs sm:text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
             Top Firms — {selectedMetal}

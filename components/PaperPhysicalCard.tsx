@@ -36,7 +36,7 @@ export default function PaperPhysicalCard({ metalName, data, unit, compact = fal
 
   // Full version for expanded detail view
   return (
-    <div className="p-4 sm:p-6 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30">
+    <div className="p-4 sm:p-6 bg-white dark:bg-black/40 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700/30">
       <div className="flex items-center gap-2 mb-4">
         <FileStack className="w-5 h-5 text-slate-500" />
         <h4 className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">

@@ -278,7 +278,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
               DAILY FUTURES VOLUME & OPEN INTEREST — BULLETIN #{data.bulletin_number}
             </p>
           </div>
-          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white/50 dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl w-fit">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl w-fit">
             <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
             <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{displayDate}</span>
           </div>
@@ -409,7 +409,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                 <div key={product.symbol} className="relative">
                   <button
                     onClick={() => setExpandedProduct(isExpanded ? null : product.symbol)}
-                    className="relative w-full text-left p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
+                    className="relative w-full text-left p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                       {/* Product Info */}
@@ -513,7 +513,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
+                        className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/10 shadow-inner"
                       >
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
                           {(() => {
@@ -534,7 +534,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                               { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
                             ];
                             return stats.map((stat, i) => (
-                              <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
+                              <div key={i} className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700/30 text-center">
                                 <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
                                 <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
                                 {'subtext' in stat && stat.subtext && (
@@ -610,7 +610,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Precious Metals Divergence */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
@@ -696,7 +696,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Volume Concentration Analysis */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
@@ -767,7 +767,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Open Interest Trends */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />
@@ -822,7 +822,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Physical Delivery (MTD) - Dynamic from delivery data */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
@@ -906,7 +906,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   { label: 'Today Open Interest', value: formatNumber(oi), subtext: 'All Metals' },
                   { label: '52-Week Ago OI', value: formatNumber(yoyOI), subtext: `${oiChange >= 0 ? '+' : ''}${oiChange.toFixed(0)}% YoY`, color: oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : '' },
                 ].map((stat, i) => (
-                  <div key={i} className="p-4 sm:p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
+                  <div key={i} className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
                     <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
                     <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</p>
                     {'subtext' in stat && stat.subtext && (
@@ -946,7 +946,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   color: oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : ''
                 },
               ].map((stat, i) => (
-                <div key={i} className="p-4 sm:p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
+                <div key={i} className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
                   <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
                   <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</p>
                   {'subtext' in stat && stat.subtext && (
@@ -958,7 +958,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Product Comparison Table */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl">
             <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl mb-4 sm:mb-6">
               Product Breakdown
             </h4>

@@ -117,7 +117,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
 
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3 sm:gap-4">
-        <div className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl border border-white/30 dark:border-slate-700/30 text-center">
+        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl border border-slate-200 dark:border-slate-700/30 text-center">
           <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">
             Cumulative
           </p>
@@ -125,7 +125,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
             {formatNumber(contract.total_cumulative)}
           </p>
         </div>
-        <div className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl border border-white/30 dark:border-slate-700/30 text-center">
+        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl border border-slate-200 dark:border-slate-700/30 text-center">
           <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">
             Avg Daily
           </p>
@@ -133,7 +133,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
             {formatNumber(avgDaily)}
           </p>
         </div>
-        <div className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl border border-white/30 dark:border-slate-700/30 text-center">
+        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl border border-slate-200 dark:border-slate-700/30 text-center">
           <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">
             Peak Day
           </p>

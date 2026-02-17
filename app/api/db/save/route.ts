@@ -1,8 +1,13 @@
 import { sql } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
+import { isAuthorized } from '@/lib/auth';
 
 // POST: Store warehouse data for a specific date
 export async function POST(request: NextRequest) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { date, data } = body; // date: YYYY-MM-DD, data: WarehouseStocksData
@@ -99,7 +104,7 @@ export async function POST(request: NextRequest) {
     const errMsg = error instanceof Error ? error.message : String(error);
     console.error('Error storing data:', error);
     return NextResponse.json(
-      { error: 'Failed to store data', details: errMsg },
+      { error: 'Failed to store data' },
       { status: 500 }
     );
   }

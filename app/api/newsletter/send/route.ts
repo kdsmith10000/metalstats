@@ -8,18 +8,10 @@ import {
   saveNewsletter,
 } from '@/lib/db';
 import { generateNewsletter } from '@/lib/newsletter-engine';
+import { isAuthorized } from '@/lib/auth';
 
 function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
-}
-
-// Verify cron secret for Vercel Cron Jobs
-function isAuthorized(request: Request): boolean {
-  const authHeader = request.headers.get('authorization');
-  const cronSecret = process.env.CRON_SECRET;
-
-  if (!cronSecret) return false;
-  return authHeader === `Bearer ${cronSecret}`;
 }
 
 export async function POST(request: Request) {

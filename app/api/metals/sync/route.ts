@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { upsertMetalSnapshot, initializeDatabase } from '@/lib/db';
+import { isAuthorized } from '@/lib/auth';
 
 interface DepositoryData {
   name: string;
@@ -23,6 +24,10 @@ interface MetalData {
 // POST /api/metals/sync - Sync metals data to the database
 // This endpoint receives data from the Python script or can be called with JSON payload
 export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     // Ensure database tables exist
     await initializeDatabase();

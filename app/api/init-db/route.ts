@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import { initializeDatabase, initializeForecastTables } from '@/lib/db';
+import { isAuthorized } from '@/lib/auth';
 
 // POST /api/init-db - Initialize the database tables
-export async function POST() {
+export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     await initializeDatabase();
     await initializeForecastTables();
@@ -20,7 +25,11 @@ export async function POST() {
 }
 
 // GET /api/init-db - Check if database is ready (for health checks)
-export async function GET() {
+export async function GET(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     await initializeDatabase();
     await initializeForecastTables();

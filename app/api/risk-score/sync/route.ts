@@ -6,6 +6,7 @@ import {
   initializeRiskScoreTables, 
   upsertRiskScore 
 } from '@/lib/db';
+import { isAuthorized } from '@/lib/auth';
 import { 
   metalConfigs, 
   calculateCoverageRatio, 
@@ -32,7 +33,11 @@ interface VolumeSummaryData {
   }>;
 }
 
-export async function POST() {
+export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     if (!isDatabaseAvailable()) {
       return NextResponse.json(
@@ -135,7 +140,7 @@ export async function POST() {
   } catch (error) {
     console.error('Error syncing risk scores:', error);
     return NextResponse.json(
-      { error: 'Failed to sync risk scores', details: String(error) },
+      { error: 'Failed to sync risk scores' },
       { status: 500 }
     );
   }

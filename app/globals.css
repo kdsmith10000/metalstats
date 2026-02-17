@@ -228,6 +228,10 @@ body {
 .skiptranslate {
   display: none !important;
 }
+/* Hide Google Translate loading spinner */
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO {
+  display: none !important;
+}
 
 /* Custom xs breakpoint for very small screens */
 @media (min-width: 475px) {

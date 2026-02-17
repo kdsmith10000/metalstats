@@ -277,9 +277,9 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
       {/* Hero Section */}
-      <section className="relative flex flex-col justify-start overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-white/30 dark:bg-black/20">
+      <section className="relative flex flex-col justify-start overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-black/20">
         {/* Optimized Aurora Background with Silver Tones */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div 
@@ -294,7 +294,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         </div>
 
         {/* Hero Title & Subtitle */}
-        <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-12 sm:pt-24 pb-6 sm:pb-12 md:pt-32 md:pb-16">
+        <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-10 sm:pt-20 pb-2 sm:pb-4 md:pt-24 md:pb-4">
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center">
             <div className="col-span-2 w-full text-left">
               <h1 className="leading-[1.1] tracking-tighter mb-2 sm:mb-4 md:mb-6 text-2xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
@@ -310,7 +310,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         </div>
 
         {/* Spacer */}
-        <div className="h-6 md:h-10 lg:h-12" />
+        <div className="h-0 md:h-2 lg:h-3" />
 
         {/* Stats Cards */}
         <div className="relative w-full px-4 sm:px-8 lg:px-24 pb-16 sm:pb-24 md:pb-32 text-center mx-auto">
@@ -341,7 +341,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 <HoverCard key={config.key} openDelay={0} closeDelay={0}>
                   <HoverCardTrigger asChild>
                     <div 
-                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 py-6 sm:px-8 sm:py-10 md:px-10 md:py-12 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer"
+                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 pt-6 pb-10 sm:px-8 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 bg-white dark:bg-white/5 backdrop-blur-2xl border border-black/30 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer"
                     >
                       {/* Subtle Background Accent Gradient */}
                       <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100`} />
@@ -397,6 +397,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
                         {/* Buy Physical Link */}
                         {config.buyLink && (
+                          <div className="relative mt-2 sm:mt-3 -mb-4 sm:-mb-6 md:-mb-8" style={{ transform: 'translateY(-15%)' }}>
                           <motion.a
                             href={config.buyLink}
                             target="_blank"
@@ -405,7 +406,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                             whileHover={{ scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.97 }}
                             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                            className="relative mt-3 sm:mt-4 inline-flex items-center justify-center gap-1.5 sm:gap-3 px-4 sm:px-8 py-2 sm:py-3 max-w-full bg-amber-950/80 dark:bg-amber-950/90 border border-amber-500/30 dark:border-amber-400/25 rounded-full no-underline shadow-[0_2px_12px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:border-amber-500/50 dark:hover:border-amber-400/40 transition-all duration-300 overflow-hidden"
+                            className="relative inline-flex items-center justify-center gap-1.5 sm:gap-3 px-4 sm:px-8 py-2 sm:py-3 max-w-full bg-amber-950/80 dark:bg-amber-950/90 border border-amber-500/30 dark:border-amber-400/25 rounded-full no-underline shadow-[0_2px_12px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:border-amber-500/50 dark:hover:border-amber-400/40 transition-all duration-300 overflow-hidden"
                           >
                             <span className="relative z-10 w-1.5 sm:w-3 h-2.5 sm:h-3 shrink-0" aria-hidden="true" />
                             <span className="relative z-10 text-[8px] sm:text-[10px] font-black text-amber-300 uppercase tracking-wider sm:tracking-widest whitespace-nowrap">
@@ -413,6 +414,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                             </span>
                             <ExternalLink className="relative z-10 w-2 h-2 sm:w-3 sm:h-3 text-amber-400/60 shrink-0" style={{ position: 'relative', left: '-5px' }} />
                           </motion.a>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -463,7 +465,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       </section>
 
       {/* Navigation Tabs */}
-      <div className="w-full px-3 sm:px-8 lg:px-24 py-4 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
+      <div className="w-full px-3 sm:px-8 lg:px-24 py-4 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
         <div className="flex items-center gap-2 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 w-full sm:w-fit mx-auto shadow-inner">
           <button
             onClick={() => setActiveTab('inventory')}
@@ -525,7 +527,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* No Bulletin Data Message */}
       {activeTab === 'bulletin' && !bulletinData && (
         <section className="w-full px-8 lg:px-24 pb-16">
-          <div className="p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl text-center">
+          <div className="p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl text-center">
             <FileText className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Bulletin Data Available</h3>
             <p className="text-slate-500 dark:text-slate-400">
@@ -578,7 +580,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               >
                 <button
                   onClick={() => setExpandedMetal(isExpanded ? null : config.key)}
-                  className={`relative w-full text-left p-4 sm:p-6 md:p-8 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md`}
+                  className={`relative w-full text-left p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                     {/* Metal Info */}
@@ -631,7 +633,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 </button>
                 {isExpanded && (
                     <div
-                      className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/40 dark:border-white/10 shadow-inner"
+                      className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/10 shadow-inner"
                     >
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8">
                         {[
@@ -664,7 +666,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                             monthChange: null
                           }
                         ].map((stat, i) => (
-                          <div key={i} className="p-3 sm:p-4 bg-white/40 dark:bg-black/40 rounded-xl sm:rounded-2xl border border-white/30 text-center">
+                          <div key={i} className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 text-center">
                             <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
                             <p className="text-base sm:text-lg md:text-xl font-bold">{stat.value}</p>
                             {(stat.dayChange != null || stat.monthChange != null) && (
@@ -766,7 +768,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                   </div>
                 </div>
               </div>
-              <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm">
+              <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm">
                 <DeliveryMTDChart data={deliveryMtdData} />
               </div>
             </div>
@@ -804,7 +806,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             </div>
           </div>
           
-          <div className="p-4 sm:p-8 lg:p-12 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-sm">
+          <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-sm">
             <DemandChart metal="gold" deliveryData={deliveryData} />
           </div>
         </div>
@@ -826,7 +828,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             </div>
           </div>
 
-          <details className="max-w-3xl mb-10 sm:mb-14 md:mb-20 group bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl overflow-hidden">
+          <details className="max-w-3xl mb-10 sm:mb-14 md:mb-20 group bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden">
             <summary className="flex items-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
               <Info className="w-4 h-4 text-slate-400 flex-shrink-0" />
               <span className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300">How does this forecast work?</span>
@@ -844,7 +846,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       )}
 
       {/* Footer */}
-      <footer className="py-8 sm:py-12 md:py-16 bg-white/30 dark:bg-black/20 border-t border-slate-200 dark:border-slate-800">
+      <footer className="mt-auto py-8 sm:py-12 md:py-16 bg-white dark:bg-black/20 border-t border-slate-200 dark:border-slate-800">
         <div className="w-full px-4 sm:px-8 lg:px-24">
           <div className="flex flex-col items-center gap-6 sm:gap-8 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-slate-400">
             <div className="flex items-center gap-3 sm:gap-4">

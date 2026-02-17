@@ -236,11 +236,16 @@ def main():
     api_url = os.environ.get('API_URL', 'http://localhost:3000')
     sync_url = f"{api_url}/api/metals/sync"
     
+    headers = {'Content-Type': 'application/json'}
+    cron_secret = os.environ.get('CRON_SECRET')
+    if cron_secret:
+        headers['Authorization'] = f'Bearer {cron_secret}'
+    
     try:
         response = requests.post(
             sync_url,
             json=all_data,
-            headers={'Content-Type': 'application/json'},
+            headers=headers,
             timeout=30
         )
         

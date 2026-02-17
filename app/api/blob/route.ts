@@ -1,5 +1,6 @@
 import { put, list, head } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
+import { isAuthorized } from '@/lib/auth';
 
 const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 
@@ -35,8 +36,8 @@ export async function GET(request: NextRequest) {
       const data = await response.json();
       
       return NextResponse.json(data);
-    } catch (error: any) {
-      if (error.status === 404) {
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'status' in error && (error as { status: number }).status === 404) {
         return NextResponse.json(
           { error: 'Data not found for this date' },
           { status: 404 }
@@ -44,10 +45,10 @@ export async function GET(request: NextRequest) {
       }
       throw error;
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching blob data:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch data', details: error.message },
+      { error: 'Failed to fetch data' },
       { status: 500 }
     );
   }
@@ -55,6 +56,10 @@ export async function GET(request: NextRequest) {
 
 // POST: Store historical data for a specific date
 export async function POST(request: NextRequest) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     if (!BLOB_READ_WRITE_TOKEN) {
       return NextResponse.json(
@@ -87,10 +92,10 @@ export async function POST(request: NextRequest) {
       url: blob.url,
       pathname: blob.pathname,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error storing blob data:', error);
     return NextResponse.json(
-      { error: 'Failed to store data', details: error.message },
+      { error: 'Failed to store data' },
       { status: 500 }
     );
   }
@@ -117,10 +122,10 @@ export async function LIST() {
       .reverse(); // Most recent first
 
     return NextResponse.json({ dates });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error listing blobs:', error);
     return NextResponse.json(
-      { error: 'Failed to list data', details: error.message },
+      { error: 'Failed to list data' },
       { status: 500 }
     );
   }

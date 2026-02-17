@@ -7,6 +7,7 @@ import {
 } from '@/lib/db';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { isAuthorized } from '@/lib/auth';
 
 // Metal configurations for paper/physical calculations
 const METAL_CONFIGS = [
@@ -25,7 +26,11 @@ function getRiskLevel(ratio: number): string {
 }
 
 // POST /api/paper-physical/sync - Sync paper/physical data from JSON files to database
-export async function POST() {
+export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     if (!isDatabaseAvailable()) {
       return NextResponse.json(

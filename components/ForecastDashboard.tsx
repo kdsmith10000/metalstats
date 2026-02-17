@@ -526,7 +526,7 @@ export default function ForecastDashboard() {
 
   if (error || !forecastData) {
     return (
-      <div className="p-8 text-center bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+      <div className="p-8 text-center bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
         <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto mb-3" />
         <p className="text-sm text-slate-500">{error || 'Forecast data unavailable'}</p>
         <p className="text-xs text-slate-400 mt-1">Run forecast.py to generate predictions</p>
@@ -591,7 +591,7 @@ export default function ForecastDashboard() {
               className={`text-left p-5 rounded-2xl border transition-all duration-300 ${
                 isSelected
                   ? 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 shadow-lg scale-[1.02]'
-                  : 'bg-white/70 dark:bg-black/40 border-white/40 dark:border-white/10 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md'
+                  : 'bg-white dark:bg-black/40 border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md'
               } backdrop-blur-xl`}
             >
               {/* Metal name and price */}
@@ -723,7 +723,7 @@ export default function ForecastDashboard() {
       </div>
 
       {/* Composite Score Overview Bar Chart */}
-      <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+      <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
         <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
           <BarChart3 className="w-4 h-4" />
           Directional Composite Scores
@@ -769,7 +769,7 @@ export default function ForecastDashboard() {
 
       {/* Forecast Accuracy */}
       {accuracyData && accuracyData.overall.total > 0 && (
-        <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+        <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
           <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
             <Target className="w-4 h-4" />
             Forecast Accuracy — Last {accuracyData.overall.total} Forecasts
@@ -820,7 +820,7 @@ export default function ForecastDashboard() {
           {/* Left: Price Projection + Signals */}
           <div className="space-y-6">
             {/* Price Projection Chart */}
-            <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+            <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
                   Price Projection — {selectedMetal}
@@ -864,7 +864,7 @@ export default function ForecastDashboard() {
             </div>
 
             {/* Signal Breakdown */}
-            <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+            <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
               <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4">
                 Signal Breakdown
               </h3>
@@ -889,7 +889,7 @@ export default function ForecastDashboard() {
           {/* Right: Squeeze + Physical + Anomalies + Correlations */}
           <div className="space-y-6">
             {/* Squeeze Probability */}
-            <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+            <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
               <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
                 <Gauge className="w-4 h-4" />
                 Squeeze Analysis
@@ -917,7 +917,7 @@ export default function ForecastDashboard() {
             </div>
 
             {/* Physical Market Signals */}
-            <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+            <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
               <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4">
                 Physical Market Signals
               </h3>
@@ -966,7 +966,7 @@ export default function ForecastDashboard() {
             </div>
 
             {/* Key Drivers */}
-            <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+            <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
               <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-3">
                 Key Drivers
               </h3>
@@ -999,7 +999,7 @@ export default function ForecastDashboard() {
 
             {/* Correlations */}
             {Object.keys(detail.correlations).length > 0 && (
-              <div className="p-6 bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl">
+              <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
                 <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-3">
                   Statistical Correlations
                 </h3>
