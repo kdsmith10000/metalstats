@@ -1,6 +1,6 @@
 {
-  "business_date": "02/12/2026",
-  "parsed_date": "2026-02-12",
+  "business_date": "02/13/2026",
+  "parsed_date": "2026-02-13",
   "products": [
     {
       "metal": "Aluminum",
@@ -9,7 +9,7 @@
       "monthly_totals": {
         "prev_dec": 317,
         "jan": 156,
-        "feb": 76
+        "feb": 77
       },
       "firms": [
         {
@@ -19,16 +19,16 @@
           "issued": {
             "prev_dec": 81,
             "jan": 76,
-            "feb": 23
+            "feb": 24
           },
           "stopped": {
             "prev_dec": 174,
             "jan": 0,
             "feb": 11
           },
-          "total_issued": 180,
+          "total_issued": 181,
           "total_stopped": 185,
-          "total_activity": 365
+          "total_activity": 366
         },
         {
           "code": "167",
@@ -60,11 +60,11 @@
           "stopped": {
             "prev_dec": 95,
             "jan": 60,
-            "feb": 48
+            "feb": 49
           },
           "total_issued": 66,
-          "total_stopped": 203,
-          "total_activity": 269
+          "total_stopped": 204,
+          "total_activity": 270
         },
         {
           "code": "732",
@@ -141,7 +141,7 @@
       "monthly_totals": {
         "prev_dec": 37098,
         "jan": 11862,
-        "feb": 35850
+        "feb": 36092
       },
       "firms": [
         {
@@ -151,16 +151,16 @@
           "issued": {
             "prev_dec": 13084,
             "jan": 1306,
-            "feb": 13273
+            "feb": 13515
           },
           "stopped": {
             "prev_dec": 14321,
             "jan": 3773,
-            "feb": 11702
+            "feb": 11721
           },
-          "total_issued": 27663,
-          "total_stopped": 29796,
-          "total_activity": 57459
+          "total_issued": 27905,
+          "total_stopped": 29815,
+          "total_activity": 57720
         },
         {
           "code": "435",
@@ -192,11 +192,11 @@
           "stopped": {
             "prev_dec": 2838,
             "jan": 811,
-            "feb": 5432
+            "feb": 5465
           },
           "total_issued": 2031,
-          "total_stopped": 9081,
-          "total_activity": 11112
+          "total_stopped": 9114,
+          "total_activity": 11145
         },
         {
           "code": "709",
@@ -228,11 +228,11 @@
           "stopped": {
             "prev_dec": 1799,
             "jan": 1233,
-            "feb": 832
+            "feb": 849
           },
           "total_issued": 4750,
-          "total_stopped": 3864,
-          "total_activity": 8614
+          "total_stopped": 3881,
+          "total_activity": 8631
         },
         {
           "code": "624",
@@ -253,6 +253,24 @@
           "total_activity": 8070
         },
         {
+          "code": "190",
+          "name": "BMO CAPITAL MARKETS",
+          "org": "H",
+          "issued": {
+            "prev_dec": 924,
+            "jan": 422,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 1226,
+            "jan": 0,
+            "feb": 5358
+          },
+          "total_issued": 1346,
+          "total_stopped": 6584,
+          "total_activity": 7930
+        },
+        {
           "code": "099",
           "name": "DEUTSCHE BANK AG",
           "org": "H",
@@ -271,24 +289,6 @@
           "total_activity": 7847
         },
         {
-          "code": "190",
-          "name": "BMO CAPITAL MARKETS",
-          "org": "H",
-          "issued": {
-            "prev_dec": 924,
-            "jan": 422,
-            "feb": 0
-          },
-          "stopped": {
-            "prev_dec": 1226,
-            "jan": 0,
-            "feb": 5248
-          },
-          "total_issued": 1346,
-          "total_stopped": 6474,
-          "total_activity": 7820
-        },
-        {
           "code": "555",
           "name": "BNP PARIBAS SEC CORP",
           "org": "H",
@@ -298,11 +298,11 @@
           },
           "stopped": {
             "prev_dec": 0,
-            "feb": 2820
+            "feb": 2822
           },
           "total_issued": 4200,
-          "total_stopped": 2820,
-          "total_activity": 7020
+          "total_stopped": 2822,
+          "total_activity": 7022
         },
         {
           "code": "118",
@@ -316,11 +316,11 @@
           "stopped": {
             "prev_dec": 753,
             "jan": 0,
-            "feb": 141
+            "feb": 161
           },
           "total_issued": 3088,
-          "total_stopped": 894,
-          "total_activity": 3982
+          "total_stopped": 914,
+          "total_activity": 4002
         },
         {
           "code": "657",
@@ -366,11 +366,11 @@
           },
           "stopped": {
             "prev_dec": 60,
-            "feb": 1299
+            "feb": 1300
           },
           "total_issued": 2114,
-          "total_stopped": 1359,
-          "total_activity": 3473
+          "total_stopped": 1360,
+          "total_activity": 3474
         },
         {
           "code": "323",
@@ -496,11 +496,11 @@
           "stopped": {
             "prev_dec": 125,
             "jan": 47,
-            "feb": 43
+            "feb": 45
           },
           "total_issued": 704,
-          "total_stopped": 215,
-          "total_activity": 919
+          "total_stopped": 217,
+          "total_activity": 921
         },
         {
           "code": "072",
@@ -544,11 +544,11 @@
           },
           "stopped": {
             "prev_dec": 0,
-            "feb": 68
+            "feb": 69
           },
           "total_issued": 665,
-          "total_stopped": 68,
-          "total_activity": 733
+          "total_stopped": 69,
+          "total_activity": 734
         },
         {
           "code": "555",
@@ -558,11 +558,11 @@
             "feb": 105
           },
           "stopped": {
-            "feb": 535
+            "feb": 571
           },
           "total_issued": 105,
-          "total_stopped": 535,
-          "total_activity": 640
+          "total_stopped": 571,
+          "total_activity": 676
         },
         {
           "code": "365",
@@ -574,11 +574,11 @@
           },
           "stopped": {
             "prev_dec": 2,
-            "feb": 51
+            "feb": 52
           },
           "total_issued": 457,
-          "total_stopped": 53,
-          "total_activity": 510
+          "total_stopped": 54,
+          "total_activity": 511
         },
         {
           "code": "132",
@@ -887,7 +887,7 @@
       "monthly_totals": {
         "prev_dec": 20871,
         "jan": 15999,
-        "feb": 7783
+        "feb": 8674
       },
       "firms": [
         {
@@ -897,16 +897,16 @@
           "issued": {
             "prev_dec": 3473,
             "jan": 3871,
-            "feb": 1567
+            "feb": 1654
           },
           "stopped": {
             "prev_dec": 3484,
             "jan": 4023,
-            "feb": 1332
+            "feb": 1578
           },
-          "total_issued": 8911,
-          "total_stopped": 8839,
-          "total_activity": 17750
+          "total_issued": 8998,
+          "total_stopped": 9085,
+          "total_activity": 18083
         },
         {
           "code": "732",
@@ -915,16 +915,16 @@
           "issued": {
             "prev_dec": 2233,
             "jan": 1686,
-            "feb": 1109
+            "feb": 1142
           },
           "stopped": {
             "prev_dec": 2564,
             "jan": 1661,
-            "feb": 516
+            "feb": 535
           },
-          "total_issued": 5028,
-          "total_stopped": 4741,
-          "total_activity": 9769
+          "total_issued": 5061,
+          "total_stopped": 4760,
+          "total_activity": 9821
         },
         {
           "code": "104",
@@ -938,11 +938,11 @@
           "stopped": {
             "prev_dec": 1072,
             "jan": 1118,
-            "feb": 228
+            "feb": 428
           },
           "total_issued": 6432,
-          "total_stopped": 2418,
-          "total_activity": 8850
+          "total_stopped": 2618,
+          "total_activity": 9050
         },
         {
           "code": "661",
@@ -956,11 +956,11 @@
           "stopped": {
             "prev_dec": 2667,
             "jan": 1849,
-            "feb": 1424
+            "feb": 1512
           },
           "total_issued": 2416,
-          "total_stopped": 5940,
-          "total_activity": 8356
+          "total_stopped": 6028,
+          "total_activity": 8444
         },
         {
           "code": "132",
@@ -974,11 +974,11 @@
           "stopped": {
             "prev_dec": 563,
             "jan": 347,
-            "feb": 9
+            "feb": 33
           },
           "total_issued": 5851,
-          "total_stopped": 919,
-          "total_activity": 6770
+          "total_stopped": 943,
+          "total_activity": 6794
         },
         {
           "code": "737",
@@ -987,16 +987,16 @@
           "issued": {
             "prev_dec": 857,
             "jan": 1845,
-            "feb": 433
+            "feb": 460
           },
           "stopped": {
             "prev_dec": 926,
             "jan": 1567,
-            "feb": 453
+            "feb": 519
           },
-          "total_issued": 3135,
-          "total_stopped": 2946,
-          "total_activity": 6081
+          "total_issued": 3162,
+          "total_stopped": 3012,
+          "total_activity": 6174
         },
         {
           "code": "159",
@@ -1005,16 +1005,16 @@
           "issued": {
             "prev_dec": 1370,
             "jan": 689,
-            "feb": 681
+            "feb": 724
           },
           "stopped": {
             "prev_dec": 1622,
             "jan": 630,
-            "feb": 531
+            "feb": 619
           },
-          "total_issued": 2740,
-          "total_stopped": 2783,
-          "total_activity": 5523
+          "total_issued": 2783,
+          "total_stopped": 2871,
+          "total_activity": 5654
         },
         {
           "code": "167",
@@ -1028,11 +1028,11 @@
           "stopped": {
             "prev_dec": 1350,
             "jan": 1708,
-            "feb": 923
+            "feb": 946
           },
           "total_issued": 1511,
-          "total_stopped": 3981,
-          "total_activity": 5492
+          "total_stopped": 4004,
+          "total_activity": 5515
         },
         {
           "code": "690",
@@ -1041,52 +1041,16 @@
           "issued": {
             "prev_dec": 677,
             "jan": 111,
-            "feb": 345
+            "feb": 353
           },
           "stopped": {
             "prev_dec": 649,
             "jan": 180,
-            "feb": 269
-          },
-          "total_issued": 1133,
-          "total_stopped": 1098,
-          "total_activity": 2231
-        },
-        {
-          "code": "152",
-          "name": "DORMAN TRADING, LLC",
-          "org": "C",
-          "issued": {
-            "prev_dec": 352,
-            "jan": 449,
-            "feb": 227
-          },
-          "stopped": {
-            "prev_dec": 357,
-            "jan": 447,
-            "feb": 170
-          },
-          "total_issued": 1028,
-          "total_stopped": 974,
-          "total_activity": 2002
-        },
-        {
-          "code": "905",
-          "name": "ADM",
-          "org": "C",
-          "issued": {
-            "prev_dec": 323,
-            "jan": 70,
-            "feb": 148
-          },
-          "stopped": {
-            "prev_dec": 530,
-            "jan": 587,
             "feb": 308
           },
-          "total_issued": 541,
-          "total_stopped": 1425,
-          "total_activity": 1966
+          "total_issued": 1141,
+          "total_stopped": 1137,
+          "total_activity": 2278
         },
         {
           "code": "190",
@@ -1095,16 +1059,52 @@
           "issued": {
             "prev_dec": 557,
             "jan": 246,
-            "feb": 0
+            "feb": 231
           },
           "stopped": {
             "prev_dec": 419,
             "jan": 113,
             "feb": 603
           },
-          "total_issued": 803,
+          "total_issued": 1034,
           "total_stopped": 1135,
-          "total_activity": 1938
+          "total_activity": 2169
+        },
+        {
+          "code": "152",
+          "name": "DORMAN TRADING, LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 352,
+            "jan": 449,
+            "feb": 238
+          },
+          "stopped": {
+            "prev_dec": 357,
+            "jan": 447,
+            "feb": 197
+          },
+          "total_issued": 1039,
+          "total_stopped": 1001,
+          "total_activity": 2040
+        },
+        {
+          "code": "905",
+          "name": "ADM",
+          "org": "C",
+          "issued": {
+            "prev_dec": 323,
+            "jan": 70,
+            "feb": 151
+          },
+          "stopped": {
+            "prev_dec": 530,
+            "jan": 587,
+            "feb": 356
+          },
+          "total_issued": 544,
+          "total_stopped": 1473,
+          "total_activity": 2017
         },
         {
           "code": "118",
@@ -1207,6 +1207,20 @@
           "total_activity": 1268
         },
         {
+          "code": "732",
+          "name": "RBC CAP MARKETS",
+          "org": "H",
+          "issued": {
+            "feb": 448
+          },
+          "stopped": {
+            "feb": 479
+          },
+          "total_issued": 448,
+          "total_stopped": 479,
+          "total_activity": 927
+        },
+        {
           "code": "365",
           "name": "MAREX CAPITAL MARKET",
           "org": "C",
@@ -1234,11 +1248,11 @@
           "stopped": {
             "prev_dec": 7,
             "jan": 186,
-            "feb": 207
+            "feb": 212
           },
           "total_issued": 283,
-          "total_stopped": 400,
-          "total_activity": 683
+          "total_stopped": 405,
+          "total_activity": 688
         },
         {
           "code": "555",
@@ -1253,20 +1267,6 @@
           "total_issued": 0,
           "total_stopped": 582,
           "total_activity": 582
-        },
-        {
-          "code": "732",
-          "name": "RBC CAP MARKETS",
-          "org": "H",
-          "issued": {
-            "feb": 0
-          },
-          "stopped": {
-            "feb": 469
-          },
-          "total_issued": 0,
-          "total_stopped": 469,
-          "total_activity": 469
         },
         {
           "code": "365",
@@ -1311,6 +1311,20 @@
           "total_activity": 20
         },
         {
+          "code": "435",
+          "name": "SCOTIA CAPITAL (USA)",
+          "org": "H",
+          "issued": {
+            "feb": 0
+          },
+          "stopped": {
+            "feb": 13
+          },
+          "total_issued": 0,
+          "total_stopped": 13,
+          "total_activity": 13
+        },
+        {
           "code": "686",
           "name": "STONEX FINANCIAL INC",
           "org": "H",
@@ -1323,20 +1337,6 @@
           "total_issued": 3,
           "total_stopped": 3,
           "total_activity": 6
-        },
-        {
-          "code": "435",
-          "name": "SCOTIA CAPITAL (USA)",
-          "org": "H",
-          "issued": {
-            "feb": 0
-          },
-          "stopped": {
-            "feb": 5
-          },
-          "total_issued": 0,
-          "total_stopped": 5,
-          "total_activity": 5
         }
       ]
     },
@@ -1434,7 +1434,7 @@
       "monthly_totals": {
         "prev_dec": 687,
         "jan": 255,
-        "feb": 92
+        "feb": 105
       },
       "firms": [
         {
@@ -1462,16 +1462,16 @@
           "issued": {
             "prev_dec": 47,
             "jan": 59,
-            "feb": 6
+            "feb": 19
           },
           "stopped": {
             "prev_dec": 120,
             "jan": 66,
-            "feb": 37
+            "feb": 41
           },
-          "total_issued": 112,
-          "total_stopped": 223,
-          "total_activity": 335
+          "total_issued": 125,
+          "total_stopped": 227,
+          "total_activity": 352
         },
         {
           "code": "323",
@@ -1542,22 +1542,6 @@
           "total_activity": 79
         },
         {
-          "code": "152",
-          "name": "DORMAN TRADING, LLC",
-          "org": "C",
-          "issued": {
-            "prev_dec": 48,
-            "feb": 0
-          },
-          "stopped": {
-            "prev_dec": 2,
-            "feb": 12
-          },
-          "total_issued": 48,
-          "total_stopped": 14,
-          "total_activity": 62
-        },
-        {
           "code": "737",
           "name": "ADVANTAGE FUTURES",
           "org": "C",
@@ -1569,11 +1553,27 @@
           "stopped": {
             "prev_dec": 20,
             "jan": 5,
-            "feb": 1
+            "feb": 6
           },
           "total_issued": 36,
-          "total_stopped": 26,
-          "total_activity": 62
+          "total_stopped": 31,
+          "total_activity": 67
+        },
+        {
+          "code": "152",
+          "name": "DORMAN TRADING, LLC",
+          "org": "C",
+          "issued": {
+            "prev_dec": 48,
+            "feb": 0
+          },
+          "stopped": {
+            "prev_dec": 2,
+            "feb": 16
+          },
+          "total_issued": 48,
+          "total_stopped": 18,
+          "total_activity": 66
         },
         {
           "code": "880",
@@ -3015,5 +3015,5 @@
       ]
     }
   ],
-  "last_updated": "2026-02-13T01:01:46.480318"
+  "last_updated": "2026-02-17T13:36:32.767Z"
 }

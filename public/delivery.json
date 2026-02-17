@@ -1,58 +1,71 @@
 {
-  "business_date": "02/12/2026",
-  "parsed_date": "2026-02-12",
+  "business_date": "02/13/2026",
+  "parsed_date": "2026-02-13",
   "deliveries": [
+    {
+      "metal": "Aluminum",
+      "symbol": "ALI",
+      "contract_name": "FEBRUARY 2026 ALUMINUM FUTURES",
+      "contract_month": "FEB26",
+      "settlement": 3015.75,
+      "delivery_date": "02/18/2026",
+      "daily_issued": 1,
+      "daily_stopped": 1,
+      "month_to_date": 77,
+      "firms": [
+        {
+          "code": "104",
+          "org": "C",
+          "name": "MIZUHO SECURITIES US",
+          "issued": 1,
+          "stopped": 0
+        },
+        {
+          "code": "690",
+          "org": "C",
+          "name": "ABN AMRO CLR USA LLC",
+          "issued": 1,
+          "stopped": 0
+        }
+      ]
+    },
     {
       "metal": "Gold",
       "symbol": "GC",
       "contract_name": "FEBRUARY 2026 COMEX 100 GOLD FUTURES",
       "contract_month": "FEB26",
-      "settlement": 4923.7,
-      "delivery_date": "02/17/2026",
-      "daily_issued": 414,
-      "daily_stopped": 414,
-      "month_to_date": 35850,
+      "settlement": 5022,
+      "delivery_date": "02/18/2026",
+      "daily_issued": 242,
+      "daily_stopped": 242,
+      "month_to_date": 36092,
       "firms": [
-        {
-          "code": "099",
-          "org": "H",
-          "name": "DEUTSCHE BANK AG",
-          "issued": 265,
-          "stopped": 0
-        },
         {
           "code": "118",
           "org": "H",
           "name": "MACQUARIE FUTURES US",
-          "issued": 30,
-          "stopped": 0
-        },
-        {
-          "code": "132",
-          "org": "C",
-          "name": "SG AMERICAS",
-          "issued": 4,
+          "issued": 20,
           "stopped": 0
         },
         {
           "code": "190",
           "org": "H",
           "name": "BMO CAPITAL MARKETS",
-          "issued": 192,
+          "issued": 110,
           "stopped": 0
         },
         {
           "code": "323",
           "org": "C",
           "name": "HSBC",
-          "issued": 2,
+          "issued": 1,
           "stopped": 0
         },
         {
           "code": "363",
           "org": "H",
           "name": "WELLS FARGO SECURITI",
-          "issued": 23,
+          "issued": 17,
           "stopped": 0
         },
         {
@@ -66,42 +79,42 @@
           "code": "555",
           "org": "C",
           "name": "BNP PARIBAS SEC CORP",
-          "issued": 63,
+          "issued": 36,
           "stopped": 0
         },
         {
           "code": "555",
           "org": "H",
           "name": "BNP PARIBAS SEC CORP",
-          "issued": 6,
+          "issued": 2,
           "stopped": 0
         },
         {
           "code": "657",
           "org": "C",
           "name": "MORGAN STANLEY",
-          "issued": 2,
+          "issued": 1,
           "stopped": 0
         },
         {
           "code": "661",
           "org": "C",
           "name": "JP MORGAN SECURITIES",
-          "issued": 145,
-          "stopped": 35
+          "issued": 242,
+          "stopped": 19
         },
         {
           "code": "880",
           "org": "H",
           "name": "CITIGROUP",
-          "issued": 57,
+          "issued": 33,
           "stopped": 0
         },
         {
           "code": "905",
           "org": "C",
           "name": "ADM",
-          "issued": 3,
+          "issued": 2,
           "stopped": 0
         }
       ]
@@ -111,93 +124,134 @@
       "symbol": "HG",
       "contract_name": "FEBRUARY 2026 COMEX COPPER FUTURES",
       "contract_month": "FEB26",
-      "settlement": 5.771,
-      "delivery_date": "02/17/2026",
-      "daily_issued": 338,
-      "daily_stopped": 338,
-      "month_to_date": 7783,
+      "settlement": 5.7925,
+      "delivery_date": "02/18/2026",
+      "daily_issued": 891,
+      "daily_stopped": 891,
+      "month_to_date": 8674,
       "firms": [
         {
           "code": "104",
           "org": "C",
           "name": "MIZUHO SECURITIES US",
-          "issued": 8,
+          "issued": 200,
           "stopped": 0
         },
         {
-          "code": "118",
+          "code": "132",
           "org": "C",
-          "name": "MACQUARIE FUTURES US",
-          "issued": 221,
+          "name": "SG AMERICAS",
+          "issued": 24,
           "stopped": 0
         },
         {
           "code": "152",
           "org": "C",
           "name": "DORMAN TRADING, LLC",
-          "issued": 7,
-          "stopped": 11
+          "issued": 11,
+          "stopped": 27
         },
         {
           "code": "159",
           "org": "C",
           "name": "MAREX CAPITAL MARKET",
-          "issued": 25,
-          "stopped": 43
+          "issued": 43,
+          "stopped": 88
+        },
+        {
+          "code": "167",
+          "org": "C",
+          "name": "MAREX",
+          "issued": 23,
+          "stopped": 0
         },
         {
           "code": "190",
           "org": "H",
           "name": "BMO CAPITAL MARKETS",
-          "issued": 43,
+          "issued": 231,
           "stopped": 0
         },
         {
-          "code": "555",
-          "org": "C",
-          "name": "BNP PARIBAS SEC CORP",
-          "issued": 1,
-          "stopped": 7
+          "code": "435",
+          "org": "H",
+          "name": "SCOTIA CAPITAL (USA)",
+          "issued": 8,
+          "stopped": 0
         },
         {
           "code": "661",
           "org": "C",
           "name": "JP MORGAN SECURITIES",
-          "issued": 40,
+          "issued": 88,
           "stopped": 0
         },
         {
           "code": "661",
           "org": "H",
           "name": "JP MORGAN SECURITIES",
-          "issued": 2,
+          "issued": 5,
           "stopped": 0
         },
         {
           "code": "686",
           "org": "C",
           "name": "STONEX FINANCIAL INC",
-          "issued": 44,
-          "stopped": 105
+          "issued": 87,
+          "stopped": 246
         },
         {
           "code": "690",
           "org": "C",
           "name": "ABN AMRO CLR USA LLC",
-          "issued": 10,
-          "stopped": 16
+          "issued": 8,
+          "stopped": 39
         },
         {
           "code": "732",
           "org": "C",
           "name": "RBC CAP MARKETS",
-          "issued": 14,
-          "stopped": 9
+          "issued": 33,
+          "stopped": 19
         },
         {
           "code": "732",
           "org": "H",
           "name": "RBC CAP MARKETS",
+          "issued": 448,
+          "stopped": 10
+        },
+        {
+          "code": "737",
+          "org": "C",
+          "name": "ADVANTAGE FUTURES",
+          "issued": 27,
+          "stopped": 66
+        },
+        {
+          "code": "905",
+          "org": "C",
+          "name": "ADM",
+          "issued": 3,
+          "stopped": 48
+        }
+      ]
+    },
+    {
+      "metal": "Palladium",
+      "symbol": "PA",
+      "contract_name": "FEBRUARY 2026 PALLADIUM FUTURES NYMEX",
+      "contract_month": "FEB26",
+      "settlement": 1697.5,
+      "delivery_date": "02/18/2026",
+      "daily_issued": 13,
+      "daily_stopped": 13,
+      "month_to_date": 105,
+      "firms": [
+        {
+          "code": "152",
+          "org": "C",
+          "name": "DORMAN TRADING, LLC",
           "issued": 4,
           "stopped": 0
         },
@@ -205,54 +259,18 @@
           "code": "737",
           "org": "C",
           "name": "ADVANTAGE FUTURES",
-          "issued": 16,
-          "stopped": 27
+          "issued": 5,
+          "stopped": 0
         },
         {
           "code": "905",
           "org": "C",
           "name": "ADM",
-          "issued": 20,
-          "stopped": 0
+          "issued": 13,
+          "stopped": 4
         }
       ]
-    },
-    {
-      "metal": "Aluminum",
-      "symbol": "ALI",
-      "contract_month": "FEB26",
-      "settlement": 3026.75,
-      "daily_issued": 0,
-      "daily_stopped": 0,
-      "month_to_date": 76
-    },
-    {
-      "metal": "Silver",
-      "symbol": "SI",
-      "contract_month": "FEB26",
-      "settlement": 75.546,
-      "daily_issued": 0,
-      "daily_stopped": 0,
-      "month_to_date": 4595
-    },
-    {
-      "metal": "Palladium",
-      "symbol": "PA",
-      "contract_month": "FEB26",
-      "settlement": 1656.7,
-      "daily_issued": 0,
-      "daily_stopped": 0,
-      "month_to_date": 92
-    },
-    {
-      "metal": "Platinum",
-      "symbol": "PL",
-      "contract_month": "FEB26",
-      "settlement": 2014.0,
-      "daily_issued": 0,
-      "daily_stopped": 0,
-      "month_to_date": 485
     }
   ],
-  "last_updated": "2026-02-13T06:10:35.842524"
+  "last_updated": "2026-02-17T13:36:32.696Z"
 }

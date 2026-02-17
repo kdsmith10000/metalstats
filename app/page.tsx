@@ -17,17 +17,17 @@ export default async function Home() {
   let dashboardData: WarehouseStocksData;
   
   // Derive last updated date from the most recent data source
-  // Priority: bulletin last_updated > delivery last_updated > warehouse report_date
+  // Priority: bulletin parsed_date > delivery parsed_date > warehouse report_date
   let lastUpdatedText = 'Unknown';
-  const bulletinLastUpdated = bulletinJson?.last_updated;
-  const deliveryLastUpdated = deliveryJson?.last_updated;
+  const bulletinParsedDate = bulletinJson?.parsed_date;
+  const deliveryParsedDate = deliveryJson?.parsed_date;
   const reportDate = data?.Gold?.report_date || data?.Silver?.report_date;
   
-  // Try bulletin/delivery last_updated first (reflects when data was synced)
-  const syncDate = bulletinLastUpdated || deliveryLastUpdated;
-  if (syncDate) {
+  // Use the actual report/business date (parsed_date), not when the script ran
+  const reportDateStr = bulletinParsedDate || deliveryParsedDate;
+  if (reportDateStr) {
     try {
-      const d = new Date(syncDate);
+      const d = new Date(reportDateStr + 'T12:00:00');
       if (!isNaN(d.getTime())) {
         lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
       }

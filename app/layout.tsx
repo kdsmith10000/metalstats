@@ -140,18 +140,19 @@ export default async function RootLayout({
   let lastUpdatedISO = '';
 
   try {
-    const bulletinData = (await import('../public/bulletin.json')).default as { last_updated?: string };
-    const deliveryData = (await import('../public/delivery.json')).default as { last_updated?: string };
-    const syncDate = bulletinData?.last_updated || deliveryData?.last_updated;
-    if (syncDate) {
-      const date = new Date(syncDate);
+    const bulletinData = (await import('../public/bulletin.json')).default as { parsed_date?: string; last_updated?: string };
+    const deliveryData = (await import('../public/delivery.json')).default as { parsed_date?: string; last_updated?: string };
+    // Use the actual report date (parsed_date), not when the parsing script ran (last_updated)
+    const reportDateStr = bulletinData?.parsed_date || deliveryData?.parsed_date;
+    if (reportDateStr) {
+      const date = new Date(reportDateStr + 'T12:00:00');
       if (!isNaN(date.getTime())) {
         lastUpdatedText = date.toLocaleDateString('en-US', {
           month: 'long',
           day: 'numeric',
           year: 'numeric',
         });
-        lastUpdatedISO = date.toISOString().split('T')[0];
+        lastUpdatedISO = reportDateStr;
       }
     }
   } catch (error) {
