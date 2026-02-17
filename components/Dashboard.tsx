@@ -439,8 +439,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               <div className="relative z-10 flex flex-col items-center gap-2">
                 <span className="text-[9px] font-black text-amber-500/70 dark:text-amber-400/70 uppercase tracking-widest">Daily Intel</span>
                 <span className="text-lg font-black tracking-tight text-amber-600 dark:text-amber-300">Newsletter</span>
-                <div className="mt-1 px-4 py-1.5 bg-amber-500/15 dark:bg-amber-400/15 rounded-full border border-amber-500/25 dark:border-amber-400/25">
-                  <span className="text-[9px] font-black text-amber-600 dark:text-amber-300 uppercase tracking-widest">Subscribe</span>
+                <div className="mt-1 px-1.5 py-0.5 bg-amber-500/15 dark:bg-amber-400/15 rounded-full border border-amber-500/25 dark:border-amber-400/25">
+                  <span className="text-[5px] font-black text-amber-600 dark:text-amber-300 uppercase tracking-wider">Subscribe</span>
                 </div>
               </div>
             </a>
