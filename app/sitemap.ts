@@ -41,6 +41,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Blog pages (high SEO value - long-form analysis content)
+  const blogPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/iran-tensions-metals-squeeze`,
+      lastModified: new Date('2026-02-18'),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+  ];
+
   // About & Contact pages (important for AdSense compliance)
   const sitePages: MetadataRoute.Sitemap = [
     {
@@ -73,5 +89,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return [...mainPages, ...infoPages, ...sitePages, ...legalPages];
+  return [...mainPages, ...infoPages, ...blogPages, ...sitePages, ...legalPages];
 }

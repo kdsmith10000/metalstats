@@ -5,7 +5,33 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Iran War Tensions & the Metals Market: Could Supply Disruptions Trigger a Squeeze?',
-  description: 'Analysis of how rising geopolitical tensions with Iran could disrupt precious and base metals supply chains, spike safe-haven demand, and create conditions for a squeeze in gold, silver, and copper markets.',
+  description: 'In-depth analysis of how escalating US-Iran geopolitical tensions could disrupt precious and base metals supply chains, spike safe-haven demand, and create conditions for a historic squeeze in gold, silver, copper, and palladium markets. Includes historical conflict-metals data, COMEX inventory analysis, and current Strait of Hormuz risk assessment.',
+  keywords: [
+    'Iran war metals market',
+    'Iran tensions gold price',
+    'metals supply squeeze',
+    'COMEX silver squeeze',
+    'Iran copper supply disruption',
+    'Strait of Hormuz metals',
+    'gold safe haven Iran conflict',
+    'silver supply deficit 2026',
+    'COMEX registered inventory decline',
+    'paper to physical silver ratio',
+    'LME nickel squeeze',
+    'Hunt Brothers silver',
+    'Iran geopolitical risk metals',
+    'defense spending copper demand',
+    'central bank gold buying',
+    'precious metals war premium',
+    'gold price Iran revolution',
+    'silver industrial demand solar',
+    'COMEX delivery crisis',
+    'metals market squeeze analysis',
+    'Iran nuclear tensions metals',
+    'gold silver copper forecast 2026',
+    'geopolitical risk commodity prices',
+    'palladium supply Russia',
+  ],
   alternates: {
     canonical: 'https://heavymetalstats.com/blog/iran-tensions-metals-squeeze',
   },
@@ -15,18 +41,32 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
     },
   },
   openGraph: {
-    title: 'Iran War Tensions & the Metals Market | Heavy Metal Stats',
-    description: 'How rising Iran tensions could disrupt metals supply chains and trigger a squeeze in gold, silver, and copper.',
+    title: 'Iran War Tensions & the Metals Market: Could Supply Disruptions Trigger a Squeeze?',
+    description: 'How escalating US-Iran tensions could disrupt metals supply chains and trigger a historic squeeze in gold, silver, and copper. Historical precedents, COMEX data analysis, and Strait of Hormuz risk assessment.',
     url: 'https://heavymetalstats.com/blog/iran-tensions-metals-squeeze',
     type: 'article',
+    siteName: 'Heavy Metal Stats',
+    publishedTime: '2026-02-18T12:00:00Z',
+    authors: ['Heavy Metal Stats Research Desk'],
+    section: 'Market Analysis',
+    tags: ['Geopolitics', 'Supply & Demand', 'Gold', 'Silver', 'Copper', 'Iran', 'COMEX', 'Squeeze'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Iran War Tensions & the Metals Market — Squeeze Analysis',
+    description: 'Could US-Iran conflict trigger a historic metals squeeze? Analysis of gold, silver, copper supply risks with COMEX data and historical precedents.',
   },
   other: {
-    'article:published_time': '2026-02-18',
-    'article:author': 'Heavy Metal Stats',
+    'article:published_time': '2026-02-18T12:00:00Z',
+    'article:modified_time': '2026-02-18T12:00:00Z',
+    'article:author': 'Heavy Metal Stats Research Desk',
     'article:section': 'Market Analysis',
+    'article:tag': 'Geopolitics, Supply & Demand, Gold, Silver, Copper, Iran, COMEX, Squeeze',
   },
 };
 
@@ -55,7 +95,7 @@ function SectionCard({ icon: Icon, iconColor, title, children }: {
 
 function KeyPoint({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex gap-3 p-4 ml-6">
+    <div className="flex gap-3 p-3 sm:p-4 ml-1 sm:ml-6">
       <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
       </span>
@@ -83,9 +123,70 @@ function P({ children }: { children: React.ReactNode }) {
   );
 }
 
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Iran War Tensions & the Metals Market: Could Supply Disruptions Trigger a Squeeze?',
+  description: 'In-depth analysis of how escalating US-Iran geopolitical tensions could disrupt precious and base metals supply chains and create conditions for a historic squeeze in gold, silver, copper, and palladium markets.',
+  author: {
+    '@type': 'Organization',
+    name: 'Heavy Metal Stats',
+    url: 'https://heavymetalstats.com',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Heavy Metal Stats',
+    url: 'https://heavymetalstats.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://heavymetalstats.com/icon.svg',
+    },
+  },
+  datePublished: '2026-02-18T12:00:00Z',
+  dateModified: '2026-02-18T12:00:00Z',
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://heavymetalstats.com/blog/iran-tensions-metals-squeeze',
+  },
+  url: 'https://heavymetalstats.com/blog/iran-tensions-metals-squeeze',
+  articleSection: 'Market Analysis',
+  keywords: [
+    'Iran war metals', 'gold safe haven', 'silver squeeze', 'COMEX inventory',
+    'copper supply disruption', 'Strait of Hormuz', 'precious metals geopolitics',
+    'LME nickel squeeze', 'defense spending copper', 'central bank gold buying',
+  ],
+  wordCount: 4200,
+  about: [
+    { '@type': 'Thing', name: 'Gold' },
+    { '@type': 'Thing', name: 'Silver' },
+    { '@type': 'Thing', name: 'Copper' },
+    { '@type': 'Thing', name: 'COMEX' },
+    { '@type': 'Thing', name: 'Iran' },
+    { '@type': 'Thing', name: 'Geopolitical Risk' },
+  ],
+  isPartOf: {
+    '@type': 'Blog',
+    '@id': 'https://heavymetalstats.com/blog',
+    name: 'Heavy Metal Stats Blog',
+    url: 'https://heavymetalstats.com/blog',
+  },
+  breadcrumb: {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://heavymetalstats.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://heavymetalstats.com/blog' },
+      { '@type': 'ListItem', position: 3, name: 'Iran War Tensions & the Metals Market', item: 'https://heavymetalstats.com/blog/iran-tensions-metals-squeeze' },
+    ],
+  },
+};
+
 export default function IranTensionsPost() {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Header */}
       <div className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -140,8 +241,8 @@ export default function IranTensionsPost() {
 
           {/* Abstract */}
           <div className="pb-10 mb-12">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 ml-6">Abstract</h2>
-            <p style={{ textIndent: '2em' }} className="text-slate-600 dark:text-slate-300 leading-loose text-sm italic ml-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 ml-2 sm:ml-6">Abstract</h2>
+            <p style={{ textIndent: '2em' }} className="text-slate-600 dark:text-slate-300 leading-loose text-sm italic ml-2 sm:ml-6">
               This analysis examines how escalating geopolitical tensions between the United States and Iran could create significant disruptions across precious and base metals supply chains. Drawing on historical precedents from the 1979 Iranian Revolution, the 2022 Russia-Ukraine conflict, and the 2022 LME nickel squeeze, we assess the conditions for a potential supply-driven squeeze in the COMEX metals market. Current COMEX inventory data — including critically low registered silver stocks, elevated paper-to-physical ratios, and rising delivery notices — are evaluated alongside Iran&apos;s role in global copper production, Strait of Hormuz trade flows, and surging central bank gold demand. The convergence of structural supply deficits, record industrial demand, and a geopolitical catalyst presents a scenario with significant implications for metals market participants.
             </p>
           </div>
@@ -152,7 +253,7 @@ export default function IranTensionsPost() {
               Geopolitical risk has always been one of the most powerful catalysts in commodities markets. When tensions escalate in regions critical to global resource supply chains, the metals market tends to react swiftly — and sometimes violently. Today, as diplomatic relations with Iran deteriorate and the threat of military conflict looms larger, the conditions are quietly aligning for a potentially historic disruption across precious and base metals. On February 17, 2026, Iran conducted live-fire military drills in the Strait of Hormuz, temporarily closing parts of the waterway through which approximately 20% of global petroleum liquids transit daily <Cite>U.S. Energy Information Administration [EIA], 2025</Cite>.
             </P>
           </div>
-          <div className="mb-72">
+          <div className="mb-24 sm:mb-72">
             <P>
               This isn&apos;t just about gold as a safe-haven play. The ripple effects of an Iran conflict could constrict supply across multiple metals simultaneously — from the copper that powers the global defense-industrial complex to the silver demanded by both investors and manufacturers. When supply tightens and demand surges on both sides of the equation, the result can be a squeeze that catches many market participants off guard. History provides ample precedent for exactly this kind of dislocation.
             </P>
@@ -164,69 +265,69 @@ export default function IranTensionsPost() {
               The relationship between armed conflict and metals prices is well-documented across decades of market data. While each conflict is unique, the pattern of safe-haven demand surges and supply disruptions driving sharp price movements has repeated consistently <Cite>Baur &amp; Lucey, 2014</Cite>.
             </P>
 
-            <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-x-auto ml-6">
-              <table className="w-full text-sm">
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-x-auto ml-2 sm:ml-6">
+              <table className="w-full text-xs sm:text-sm min-w-[480px]">
                 <thead>
                   <tr className="bg-slate-100 dark:bg-slate-800">
-                    <th className="text-left px-4 py-3 font-semibold text-slate-900 dark:text-white">Conflict</th>
-                    <th className="text-left px-4 py-3 font-semibold text-slate-900 dark:text-white">Metal</th>
-                    <th className="text-left px-4 py-3 font-semibold text-slate-900 dark:text-white">Price Move</th>
-                    <th className="text-left px-4 py-3 font-semibold text-slate-900 dark:text-white">Change</th>
+                    <th className="text-left px-3 sm:px-4 py-3 font-semibold text-slate-900 dark:text-white">Conflict</th>
+                    <th className="text-left px-3 sm:px-4 py-3 font-semibold text-slate-900 dark:text-white">Metal</th>
+                    <th className="text-left px-3 sm:px-4 py-3 font-semibold text-slate-900 dark:text-white">Price Move</th>
+                    <th className="text-left px-3 sm:px-4 py-3 font-semibold text-slate-900 dark:text-white">Change</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
                   <tr>
-                    <td className="px-4 py-3">Iranian Revolution (1979–80)</td>
-                    <td className="px-4 py-3">Gold</td>
-                    <td className="px-4 py-3 tabular-nums">$227 → $850/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+274%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Iranian Revolution (1979–80)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Gold</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$227 → $850/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+274%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">9/11 &amp; War on Terror (2001)</td>
-                    <td className="px-4 py-3">Gold</td>
-                    <td className="px-4 py-3 tabular-nums">$271 → $293/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+7.1%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">9/11 &amp; War on Terror (2001)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Gold</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$271 → $293/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+7.1%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">Iraq War buildup (2002–03)</td>
-                    <td className="px-4 py-3">Gold</td>
-                    <td className="px-4 py-3 tabular-nums">$280 → $389/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+39%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Iraq War buildup (2002–03)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Gold</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$280 → $389/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+39%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">Libya / Arab Spring (2011)</td>
-                    <td className="px-4 py-3">Gold</td>
-                    <td className="px-4 py-3 tabular-nums">$1,431 → $1,921/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+34%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Libya / Arab Spring (2011)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Gold</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$1,431 → $1,921/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+34%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">Russia-Crimea (2014)</td>
-                    <td className="px-4 py-3">Palladium</td>
-                    <td className="px-4 py-3 tabular-nums">$720 → $895/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+24%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Russia-Crimea (2014)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Palladium</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$720 → $895/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+24%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">Russia-Ukraine War (2022)</td>
-                    <td className="px-4 py-3">Gold</td>
-                    <td className="px-4 py-3 tabular-nums">$1,800 → $2,070/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+15%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Russia-Ukraine War (2022)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Gold</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$1,800 → $2,070/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+15%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">Russia-Ukraine War (2022)</td>
-                    <td className="px-4 py-3">Palladium</td>
-                    <td className="px-4 py-3 tabular-nums">$1,900 → $3,441/oz</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">+81%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Russia-Ukraine War (2022)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Palladium</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$1,900 → $3,441/oz</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-emerald-600 dark:text-emerald-400">+81%</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">Russia-Ukraine War (2022)</td>
-                    <td className="px-4 py-3">Nickel</td>
-                    <td className="px-4 py-3 tabular-nums">$25K → $101,365/t</td>
-                    <td className="px-4 py-3 font-bold text-red-600 dark:text-red-400">+305%</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Russia-Ukraine War (2022)</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3">Nickel</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 tabular-nums">$25K → $101,365/t</td>
+                    <td className="px-3 sm:px-4 py-2.5 sm:py-3 font-bold text-red-600 dark:text-red-400">+305%</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-slate-400 dark:text-slate-500 mt-2 italic ml-6">
+            <p className="text-xs text-slate-400 dark:text-slate-500 mt-2 italic ml-2 sm:ml-6">
               Sources: SD Bullion (n.d.); Reuters (2011, 2022); World Gold Council (2022); BBC News (2011); CNBC (2014).
             </p>
 
@@ -316,67 +417,67 @@ export default function IranTensionsPost() {
               <strong className="text-slate-900 dark:text-white">The 2022 LME Nickel Squeeze:</strong> When Russia invaded Ukraine, nickel prices tripled in three days from approximately $25,000 to $101,365 per tonne — the most extreme commodity squeeze in modern history. The LME was forced to halt trading for the first time since 1988 and cancelled $12 billion in trades to prevent potential default of multiple clearing members. Tsingshan Holding Group, China&apos;s largest stainless steel producer, faced $19.7 billion in margin calls. Elliott Associates and Jane Street subsequently sued the LME for $472 million <Cite>Reuters, 2022b; London Metal Exchange, 2022</Cite>.
             </P>
 
-            <h3 className="text-base font-bold text-slate-900 dark:text-white mt-10 mb-6 ml-6">Current COMEX Conditions</h3>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mt-10 mb-6 ml-2 sm:ml-6">Current COMEX Conditions</h3>
 
-            <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden ml-6">
-              <table className="w-full text-sm">
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-x-auto ml-2 sm:ml-6">
+              <table className="w-full text-xs sm:text-sm min-w-[520px]">
                 <thead>
                   <tr className="bg-slate-100 dark:bg-slate-800">
-                    <th className="text-left px-4 py-2.5 font-semibold text-slate-900 dark:text-white">Squeeze Condition</th>
-                    <th className="text-left px-4 py-2.5 font-semibold text-slate-900 dark:text-white">Current Status</th>
-                    <th className="text-left px-4 py-2.5 font-semibold text-slate-900 dark:text-white">Source</th>
+                    <th className="text-left px-3 sm:px-4 py-2.5 font-semibold text-slate-900 dark:text-white">Squeeze Condition</th>
+                    <th className="text-left px-3 sm:px-4 py-2.5 font-semibold text-slate-900 dark:text-white">Current Status</th>
+                    <th className="text-left px-3 sm:px-4 py-2.5 font-semibold text-slate-900 dark:text-white">Source</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
                   <tr>
-                    <td className="px-4 py-2.5">Low registered inventory</td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-3 sm:px-4 py-2.5">Low registered inventory</td>
+                    <td className="px-3 sm:px-4 py-2.5">
                       <span className="inline-flex items-center gap-1.5 text-red-600 dark:text-red-400 font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         Silver at ~28M oz (−80% from 2021)
                       </span>
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-slate-400">SchiffGold, 2025</td>
+                    <td className="px-3 sm:px-4 py-2.5 text-xs text-slate-400">SchiffGold, 2025</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2.5">High paper-to-physical ratio</td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-3 sm:px-4 py-2.5">High paper-to-physical ratio</td>
+                    <td className="px-3 sm:px-4 py-2.5">
                       <span className="inline-flex items-center gap-1.5 text-red-600 dark:text-red-400 font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         Silver at 28:1
                       </span>
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-slate-400">SchiffGold, 2025</td>
+                    <td className="px-3 sm:px-4 py-2.5 text-xs text-slate-400">SchiffGold, 2025</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2.5">Rising delivery notices</td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-3 sm:px-4 py-2.5">Rising delivery notices</td>
+                    <td className="px-3 sm:px-4 py-2.5">
                       <span className="inline-flex items-center gap-1.5 text-red-600 dark:text-red-400 font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         Feb 2026 delivery rate at 98%
                       </span>
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-slate-400">COMEX data</td>
+                    <td className="px-3 sm:px-4 py-2.5 text-xs text-slate-400">COMEX data</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2.5">Structural market deficit</td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-3 sm:px-4 py-2.5">Structural market deficit</td>
+                    <td className="px-3 sm:px-4 py-2.5">
                       <span className="inline-flex items-center gap-1.5 text-red-600 dark:text-red-400 font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         Silver: 4th consecutive deficit year
                       </span>
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-slate-400">Silver Institute, 2025</td>
+                    <td className="px-3 sm:px-4 py-2.5 text-xs text-slate-400">Silver Institute, 2025</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2.5">External demand shock</td>
-                    <td className="px-4 py-2.5">
+                    <td className="px-3 sm:px-4 py-2.5">External demand shock</td>
+                    <td className="px-3 sm:px-4 py-2.5">
                       <span className="inline-flex items-center gap-1.5 text-red-600 dark:text-red-400 font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         Iran escalation underway
                       </span>
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-slate-400">AP News, 2026</td>
+                    <td className="px-3 sm:px-4 py-2.5 text-xs text-slate-400">AP News, 2026</td>
                   </tr>
                 </tbody>
               </table>
@@ -393,14 +494,14 @@ export default function IranTensionsPost() {
 
           {/* What to Watch */}
           <div className="border-y-2 border-amber-300 dark:border-amber-500/30 p-8 sm:p-12 mb-10 -mx-6 sm:-mx-10 px-6 sm:px-10">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-5 ml-6">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-5 ml-2 sm:ml-6">
               What to Watch on Heavy Metal Stats
             </h2>
             <div className="text-slate-600 dark:text-slate-300 leading-loose space-y-5">
               <P>
                 If you&apos;re tracking this thesis, here are the key metrics on our dashboard that will signal whether a squeeze is developing:
               </P>
-              <ul className="space-y-4 ml-12">
+              <ul className="space-y-4 ml-4 sm:ml-12">
                 <li className="flex gap-2">
                   <span className="shrink-0 text-amber-500 font-bold">1.</span>
                   <span><strong className="text-slate-900 dark:text-white">Coverage Ratios</strong> — Watch for gold and silver coverage ratios dropping below 5x. This indicates registered inventory can&apos;t cover even 5 months of average delivery demand.</span>
@@ -427,7 +528,7 @@ export default function IranTensionsPost() {
 
           {/* Conclusion */}
           <div className="mb-12">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-5 ml-6">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-5 ml-2 sm:ml-6">
               Conclusion
             </h2>
             <P>
@@ -494,7 +595,7 @@ export default function IranTensionsPost() {
           <p className="text-sm text-slate-400">
             Data from CME Group. Informational only — not financial advice.
           </p>
-          <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+          <nav className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-slate-400">
             <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
             <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>

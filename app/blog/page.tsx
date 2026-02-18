@@ -3,8 +3,30 @@ import { ArrowLeft, Calendar, Clock, ChevronRight, TrendingUp } from 'lucide-rea
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Blog — Metals Market Analysis & Insights',
-  description: 'Expert analysis on precious and base metals markets. Supply and demand insights, COMEX inventory trends, geopolitical impacts, and potential squeeze scenarios for gold, silver, copper, and platinum.',
+  title: 'Blog — Metals Market Analysis, Squeeze Alerts & Geopolitical Insights',
+  description: 'Expert analysis on precious and base metals markets. Supply and demand insights, COMEX inventory trends, geopolitical impacts, short squeeze scenarios, and war-driven price analysis for gold, silver, copper, platinum, and palladium.',
+  keywords: [
+    'metals market analysis',
+    'gold market blog',
+    'silver squeeze analysis',
+    'COMEX inventory analysis',
+    'precious metals blog',
+    'metals market commentary',
+    'gold geopolitical risk',
+    'silver supply demand analysis',
+    'copper market outlook',
+    'metals short squeeze',
+    'gold war premium',
+    'precious metals geopolitics',
+    'COMEX delivery squeeze',
+    'paper to physical ratio analysis',
+    'metals supply chain disruption',
+    'Iran metals market impact',
+    'gold safe haven analysis',
+    'silver industrial demand',
+    'defense spending metals',
+    'metals market forecast',
+  ],
   alternates: {
     canonical: 'https://heavymetalstats.com/blog',
   },
@@ -14,12 +36,21 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
     },
   },
   openGraph: {
-    title: 'Blog — Metals Market Analysis | Heavy Metal Stats',
-    description: 'Expert analysis on precious and base metals markets. Supply and demand insights, COMEX inventory trends, and geopolitical impacts.',
+    title: 'Blog — Metals Market Analysis & Squeeze Alerts | Heavy Metal Stats',
+    description: 'Expert analysis on precious and base metals markets. COMEX data insights, geopolitical risk assessment, supply/demand trends, and squeeze scenario analysis for gold, silver, copper, and platinum.',
     url: 'https://heavymetalstats.com/blog',
+    type: 'website',
+    siteName: 'Heavy Metal Stats',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Metals Market Blog — Analysis & Squeeze Alerts | Heavy Metal Stats',
+    description: 'Expert precious metals analysis. COMEX inventory trends, geopolitical risk, supply/demand insights, and squeeze scenarios for gold, silver, copper & platinum.',
   },
 };
 
@@ -45,12 +76,52 @@ const BLOG_POSTS: BlogPost[] = [
   },
 ];
 
+const blogJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': 'https://heavymetalstats.com/blog',
+  name: 'Heavy Metal Stats Blog — Metals Market Analysis & Insights',
+  description: 'Expert analysis on precious and base metals markets. Supply and demand insights, COMEX inventory trends, geopolitical impacts, and squeeze scenario analysis.',
+  url: 'https://heavymetalstats.com/blog',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Heavy Metal Stats',
+    url: 'https://heavymetalstats.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://heavymetalstats.com/icon.svg',
+    },
+  },
+  blogPost: [
+    {
+      '@type': 'BlogPosting',
+      headline: 'Iran War Tensions & the Metals Market: Could Supply Disruptions Trigger a Squeeze?',
+      description: 'Analysis of how escalating US-Iran tensions could disrupt metals supply chains and trigger a squeeze in gold, silver, and copper.',
+      url: 'https://heavymetalstats.com/blog/iran-tensions-metals-squeeze',
+      datePublished: '2026-02-18T12:00:00Z',
+      author: { '@type': 'Organization', name: 'Heavy Metal Stats' },
+      keywords: 'Iran, gold, silver, copper, COMEX, squeeze, geopolitics',
+    },
+  ],
+  breadcrumb: {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://heavymetalstats.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://heavymetalstats.com/blog' },
+    ],
+  },
+};
+
 export default function BlogIndex() {
   const featured = BLOG_POSTS.find((p) => p.featured);
   const rest = BLOG_POSTS.filter((p) => !p.featured);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
       {/* Header */}
       <div className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/30">
         <div className="max-w-4xl mx-auto px-6 py-4">
@@ -66,10 +137,10 @@ export default function BlogIndex() {
 
       {/* Main Content */}
       <main className="flex-1 w-full px-6 py-12 flex flex-col items-center">
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-3 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-3 text-center">
           Blog
         </h1>
-        <p className="text-lg text-slate-500 dark:text-slate-400 mb-12 text-center max-w-2xl">
+        <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mb-8 sm:mb-12 text-center max-w-2xl px-2">
           Market analysis, supply &amp; demand insights, and geopolitical commentary on the metals market.
         </p>
 
@@ -168,11 +239,12 @@ export default function BlogIndex() {
           <p className="text-sm text-slate-400">
             Data from CME Group. Informational only — not financial advice.
           </p>
-          <nav className="mt-2 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+          <nav className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-slate-400">
             <Link href="/" className="hover:text-slate-600 dark:hover:text-slate-300">Dashboard</Link>
             <Link href="/precious-metals" className="hover:text-slate-600 dark:hover:text-slate-300">Precious Metal Stats</Link>
             <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
             <Link href="/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
+            <Link href="/blog" className="hover:text-slate-600 dark:hover:text-slate-300">Blog</Link>
             <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API</Link>
             <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
