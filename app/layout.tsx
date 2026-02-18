@@ -403,6 +403,14 @@ export default async function RootLayout({
           strategy="afterInteractive"
         />
 
+        {/* Monetag Amazing Tag — OnClick (Popunder) */}
+        <script
+          src="https://quge5.com/88/tag.min.js"
+          data-zone="212145"
+          async
+          data-cfasync="false"
+        />
+
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
