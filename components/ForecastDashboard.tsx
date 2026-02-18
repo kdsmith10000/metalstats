@@ -569,10 +569,15 @@ export default function ForecastDashboard() {
             Prices reflect spot market via physical ETFs, not COMEX futures
           </p>
           <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">
-            Forecast generated {new Date(forecastData.generated_at).toLocaleString('en-US', {
-              month: 'short', day: 'numeric', year: 'numeric',
-              hour: 'numeric', minute: '2-digit',
-            })}
+            Forecast generated {(() => {
+              const d = new Date(forecastData.generated_at);
+              const month = d.toLocaleString('en-US', { month: 'long' });
+              const day = d.getDate();
+              const suffix = [11,12,13].includes(day) ? 'th' : ['st','nd','rd'][(day % 10) - 1] || 'th';
+              const year = d.getFullYear();
+              const time = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit' });
+              return `${month} ${day}${suffix}, ${year}, ${time}`;
+            })()}
           </p>
         </div>
       </div>
