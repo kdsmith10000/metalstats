@@ -1,13 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
-import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import AuthProvider from '@/components/AuthProvider';
 import Navbar from '@/components/Navbar';
-import MonetAgAdLoader from '@/components/MonetAgAdLoader';
-
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-geist-sans',
@@ -126,9 +123,6 @@ export const metadata: Metadata = {
     description: 'Free precious metals statistics dashboard. Live COMEX warehouse stocks, coverage ratios, paper vs physical ratios & delivery data updated daily.',
   },
   category: 'finance',
-  other: {
-    'google-adsense-account': 'ca-pub-1319414449875714',
-  },
 };
 
 export default async function RootLayout({
@@ -392,25 +386,6 @@ export default async function RootLayout({
         {/* Canonical URLs are handled per-page via Next.js metadata alternates.canonical */}
         {/* DO NOT add a hardcoded <link rel="canonical"> here — it overrides every page's canonical */}
         
-        {/* Monetag Site Verification */}
-        <meta name="monetag" content="f52d6780c45530ade99c1d00179b447e" />
-
-        {/* Google AdSense */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1319414449875714"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-
-        {/* Monetag Amazing Tag — OnClick (Popunder) */}
-        <script
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="212145"
-          async
-          data-cfasync="false"
-        />
-
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
@@ -432,7 +407,6 @@ export default async function RootLayout({
           </div>
         </ThemeProvider>
         </AuthProvider>
-        <MonetAgAdLoader />
         <Analytics />
       </body>
     </html>

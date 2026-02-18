@@ -58,7 +58,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.monetag.com https://quge5.com https://5gvci.com https://*.google.com https://*.googleapis.com https://*.gstatic.com https://*.google https://va.vercel-scripts.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.google.com https://*.googleapis.com https://*.gstatic.com https://*.google https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline' https://*.googleapis.com",
               "img-src 'self' data: https: http: blob:",
               "font-src 'self' data: https:",
