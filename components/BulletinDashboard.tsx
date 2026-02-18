@@ -1022,7 +1022,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
       {/* Key Takeaways Section */}
       <div className="mt-16 sm:mt-24 md:mt-40 lg:mt-64 pt-12 sm:pt-16 md:pt-20 lg:pt-32 border-t border-slate-200 dark:border-slate-800">
-        <div className="p-4 sm:p-8 md:p-12 bg-slate-900 dark:bg-black border border-slate-800 shadow-2xl overflow-hidden relative rounded-2xl sm:rounded-none">
+        <div className="p-4 sm:p-8 md:p-12 bg-white dark:bg-black border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden relative rounded-2xl sm:rounded-none">
           <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-emerald-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           
           <div className="relative z-10">
@@ -1031,10 +1031,10 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16">
               <div className="max-w-xl space-y-3 sm:space-y-8">
-                <h2 className="tracking-tighter text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase text-white">
+                <h2 className="tracking-tighter text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase text-slate-900 dark:text-white">
                   Strategic Summary
                 </h2>
-                <p className="text-xs sm:text-base md:text-xl text-slate-400 font-medium uppercase tracking-widest">
+                <p className="text-xs sm:text-base md:text-xl text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest">
                   KEY MARKET TAKEAWAYS & ACTIONABLE INTELLIGENCE
                 </p>
               </div>
@@ -1045,7 +1045,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
             <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-12">
               <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
-              <h4 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tighter">
+              <h4 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">
                 Key Takeaways
               </h4>
             </div>
@@ -1203,7 +1203,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                     <p className={`text-xs sm:text-sm font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] ${item.color}`}>
                       {item.title}
                     </p>
-                    <p className="text-sm sm:text-base md:text-lg text-slate-400 font-medium leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
                       {item.text}
                     </p>
                   </div>
