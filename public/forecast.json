@@ -1,484 +1,344 @@
 {
-  "generated_at": "2026-02-17T14:51:13.056896+00:00",
+  "generated_at": "2026-02-18T12:55:45.944610+00:00",
   "model_version": "1.1.0",
   "metals": {
     "Gold": {
       "direction": "NEUTRAL",
-      "confidence": 23,
-      "composite_score": 51.8,
-      "current_price": 4877.23,
+      "confidence": 31,
+      "composite_score": 51.6,
+      "current_price": 4895.69,
       "forecast_5d": {
-        "low": 4784.43,
-        "mid": 4970.29,
-        "high": 5163.37,
-        "pct_change": 1.91
+        "low": 4720.84,
+        "mid": 4946.84,
+        "high": 5183.64,
+        "pct_change": 1.04
       },
       "forecast_20d": {
-        "low": 4858.35,
-        "mid": 5146.94,
-        "high": 5452.65,
-        "pct_change": 5.53
+        "low": 4647.84,
+        "mid": 5103.49,
+        "high": 5603.8,
+        "pct_change": 4.24
       },
-      "squeeze_probability": 42,
+      "squeeze_probability": 30,
       "regime": "RANGING",
       "signals": {
         "trend_momentum": {
           "score": 52.3,
-          "details": "SMA5 > SMA20, MACD bearish, RSI 45, ROC(10) +6.0%"
+          "details": "SMA5 > SMA20, MACD bearish, RSI 40, ROC(10) +0.9%"
         },
         "physical_stress": {
-          "score": 48.2,
-          "details": "Inventory z=-5.0, Delivery accel 0.3x, P/P 2.4:1, Coverage 200d"
+          "score": 50,
+          "details": "No physical signals"
         },
         "arima_model": {
-          "score": 69.1,
-          "details": "ARIMA(1, 1, 1) projects +1.9% over 5d"
+          "score": 60.4,
+          "details": "ARIMA(0, 1, 0) projects +1.0% over 5d"
         },
         "market_activity": {
-          "score": 36.1,
-          "details": "OI contracting 26.2%, volume elevated"
+          "score": 42.5,
+          "details": "volume light"
         }
       },
       "key_drivers": [
-        "Arima Model: bullish (ARIMA(1, 1, 1) projects +1.9% over 5d)",
-        "Market Activity: bearish (OI contracting 26.2%, volume elevated)",
-        "Trend Momentum: bullish (SMA5 > SMA20, MACD bearish, RSI 45, ROC(10) +6.0%)"
+        "Arima Model: bullish (ARIMA(0, 1, 0) projects +1.0% over 5d)",
+        "Market Activity: bearish (volume light)",
+        "Trend Momentum: bullish (SMA5 > SMA20, MACD bearish, RSI 40, ROC(10) +0.9%)"
       ],
-      "anomalies": [
-        {
-          "metric": "trading_volume",
-          "z_score": 3.74,
-          "description": "Unusually high trading volume (above normal by 3.7 std dev)"
-        }
-      ],
+      "anomalies": [],
       "correlations": {},
       "trend_indicators": {
-        "sma5": 4983.88,
-        "sma20": 4959.97,
-        "sma50": 4621.3,
-        "rsi": 45.4,
+        "sma5": 4969.98,
+        "sma20": 4968.71,
+        "sma50": 4635.75,
+        "rsi": 40.4,
         "macd_bullish": "False",
-        "macd_histogram": -22.7947,
-        "bollinger_position": 0.41,
-        "roc_10d": 5.97,
-        "volatility_10d": 2.657,
-        "volatility_20d": 3.5638
+        "macd_histogram": -24.6362,
+        "bollinger_position": 0.471,
+        "roc_10d": 0.94,
+        "volatility_10d": 1.9333,
+        "volatility_20d": 3.4989
       },
-      "physical_signals": {
-        "inventory_drawdown": {
-          "z_score": -5.0,
-          "change_5d": -1373362.93,
-          "interpretation": "Rapid drawdown"
-        },
-        "delivery_acceleration": {
-          "current_daily": 242,
-          "avg_20d": 881.4,
-          "acceleration_ratio": 0.27,
-          "interpretation": "Below average"
-        },
-        "pp_squeeze": {
-          "current_ratio": 2.35,
-          "roc_5d_pct": 5.53,
-          "squeeze_score": 42.3,
-          "interpretation": "Moderate"
-        },
-        "coverage_erosion": {
-          "coverage_days": 199.5,
-          "avg_daily_delivery": 881.4,
-          "interpretation": "Adequate"
-        },
-        "eligible_flow": {
-          "registered_change_5d": -1373362.93,
-          "eligible_change_5d": 65841.95,
-          "interpretation": "Registered declining (drawdown)"
-        }
-      },
+      "physical_signals": {},
       "market_metrics": {
-        "oi_10d_change_pct": -26.17,
-        "volume_5d_avg": 24457.0,
-        "volume_20d_avg": 14045.0,
-        "volume_ratio": 1.74
+        "volume_5d_avg": 7334.0,
+        "volume_20d_avg": 9769.0,
+        "volume_ratio": 0.75
       }
     },
     "Silver": {
       "direction": "NEUTRAL",
-      "confidence": 21,
-      "composite_score": 54.7,
-      "current_price": 65.6,
+      "confidence": 16,
+      "composite_score": 55.2,
+      "current_price": 66.37,
       "forecast_5d": {
-        "low": 60.95,
-        "mid": 67.22,
-        "high": 74.13,
-        "pct_change": 2.47
+        "low": 61.06,
+        "mid": 67.32,
+        "high": 74.21,
+        "pct_change": 1.43
       },
       "forecast_20d": {
-        "low": 58.25,
-        "mid": 70.5,
-        "high": 85.33,
-        "pct_change": 7.47
+        "low": 58.44,
+        "mid": 70.66,
+        "high": 85.45,
+        "pct_change": 6.47
       },
-      "squeeze_probability": 70,
+      "squeeze_probability": 30,
       "regime": "RANGING",
       "signals": {
         "trend_momentum": {
-          "score": 33.0,
-          "details": "SMA5 < SMA20, MACD bearish, RSI 31, ROC(10) -4.4%"
+          "score": 33.8,
+          "details": "SMA5 < SMA20, MACD bearish, RSI 27, ROC(10) -9.3%"
         },
         "physical_stress": {
-          "score": 63.9,
-          "details": "Inventory z=-5.0, Delivery accel 0.0x, P/P 7.2:1, Coverage 81d"
+          "score": 50,
+          "details": "No physical signals"
         },
         "arima_model": {
-          "score": 74.7,
-          "details": "ARIMA(0, 1, 1) projects +2.5% over 5d"
+          "score": 64.3,
+          "details": "ARIMA(0, 1, 1) projects +1.4% over 5d"
         },
         "market_activity": {
-          "score": 50.0,
-          "details": "OI contracting 34.8%, volume elevated"
+          "score": 97.8,
+          "details": "volume elevated"
         }
       },
       "key_drivers": [
-        "Arima Model: bullish (ARIMA(0, 1, 1) projects +2.5% over 5d)",
-        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 31, ROC(10) -4.4%)",
-        "Physical Stress: bullish (Inventory z=-5.0, Delivery accel 0.0x, P/P 7.2:1, Coverage 81d)"
+        "Market Activity: bullish (volume elevated)",
+        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 27, ROC(10) -9.3%)",
+        "Arima Model: bullish (ARIMA(0, 1, 1) projects +1.4% over 5d)"
       ],
       "anomalies": [
         {
           "metric": "trading_volume",
-          "z_score": 5.29,
-          "description": "Unusually high trading volume (above normal by 5.3 std dev)"
+          "z_score": 5.2,
+          "description": "Unusually high trading volume (above normal by 5.2 std dev)"
         }
       ],
       "correlations": {},
       "trend_indicators": {
-        "sma5": 78.15,
-        "sma20": 88.97,
-        "sma50": 78.48,
-        "rsi": 31.5,
+        "sma5": 77.19,
+        "sma20": 88.03,
+        "sma50": 78.86,
+        "rsi": 26.7,
         "macd_bullish": "False",
-        "macd_histogram": -2.5897,
-        "bollinger_position": 0.221,
-        "roc_10d": -4.43,
-        "volatility_10d": 6.3345,
-        "volatility_20d": 9.6215
+        "macd_histogram": -2.3552,
+        "bollinger_position": 0.277,
+        "roc_10d": -9.27,
+        "volatility_10d": 5.7185,
+        "volatility_20d": 9.4923
       },
-      "physical_signals": {
-        "inventory_drawdown": {
-          "z_score": -5.0,
-          "change_5d": -10170965.82,
-          "interpretation": "Rapid drawdown"
-        },
-        "delivery_acceleration": {
-          "current_daily": 0,
-          "avg_20d": 228.8,
-          "acceleration_ratio": 0.0,
-          "interpretation": "Below average"
-        },
-        "pp_squeeze": {
-          "current_ratio": 7.18,
-          "roc_5d_pct": 7.83,
-          "squeeze_score": 70.1,
-          "interpretation": "Elevated"
-        },
-        "coverage_erosion": {
-          "coverage_days": 81.2,
-          "avg_daily_delivery": 228.8,
-          "interpretation": "Tight"
-        },
-        "eligible_flow": {
-          "registered_change_5d": -10170965.82,
-          "eligible_change_5d": -17251573.4,
-          "interpretation": "Registered declining (drawdown)"
-        }
-      },
+      "physical_signals": {},
       "market_metrics": {
-        "oi_10d_change_pct": -34.84,
-        "volume_5d_avg": 9102.0,
-        "volume_20d_avg": 2684.0,
-        "volume_ratio": 3.39
+        "volume_5d_avg": 2860.0,
+        "volume_20d_avg": 1102.0,
+        "volume_ratio": 2.59
       }
     },
     "Copper": {
-      "direction": "BULLISH",
-      "confidence": 22,
-      "composite_score": 66.0,
-      "current_price": 5.66,
+      "direction": "NEUTRAL",
+      "confidence": 25,
+      "composite_score": 51.5,
+      "current_price": 5.71,
       "forecast_5d": {
-        "low": 5.26,
-        "mid": 5.66,
-        "high": 6.1,
+        "low": 5.31,
+        "mid": 5.71,
+        "high": 6.15,
         "pct_change": 0.0
       },
       "forecast_20d": {
-        "low": 4.89,
-        "mid": 5.66,
-        "high": 6.56,
+        "low": 4.93,
+        "mid": 5.71,
+        "high": 6.62,
         "pct_change": 0.0
       },
-      "squeeze_probability": 84,
+      "squeeze_probability": 30,
       "regime": "RANGING",
       "signals": {
         "trend_momentum": {
-          "score": 33.7,
-          "details": "SMA5 < SMA20, MACD bearish, RSI 45, ROC(10) -2.4%"
+          "score": 42.2,
+          "details": "SMA5 < SMA20, MACD bearish, RSI 45, ROC(10) -5.8%"
         },
         "physical_stress": {
-          "score": 88.3,
-          "details": "Inventory z=-5.0, Delivery accel 2.3x, P/P 9.1:1, Coverage 0d"
+          "score": 50,
+          "details": "No physical signals"
         },
         "arima_model": {
           "score": 50.0,
           "details": "ARIMA(0, 1, 0) projects +0.0% over 5d"
         },
         "market_activity": {
-          "score": 100.0,
-          "details": "OI expanding 222.2%, volume elevated"
+          "score": 75.8,
+          "details": "volume elevated"
         }
       },
       "key_drivers": [
-        "Market Activity: bullish (OI expanding 222.2%, volume elevated)",
-        "Physical Stress: bullish (Inventory z=-5.0, Delivery accel 2.3x, P/P 9.1:1, Coverage 0d)",
-        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 45, ROC(10) -2.4%)"
+        "Market Activity: bullish (volume elevated)",
+        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 45, ROC(10) -5.8%)",
+        "Physical Stress: neutral (No physical signals)"
       ],
       "anomalies": [
         {
           "metric": "trading_volume",
-          "z_score": 5.27,
-          "description": "Unusually high trading volume (above normal by 5.3 std dev)"
+          "z_score": 4.89,
+          "description": "Unusually high trading volume (above normal by 4.9 std dev)"
         }
       ],
       "correlations": {},
       "trend_indicators": {
-        "sma5": 5.81,
-        "sma20": 5.87,
-        "sma50": 5.7,
-        "rsi": 45.4,
+        "sma5": 5.77,
+        "sma20": 5.86,
+        "sma50": 5.71,
+        "rsi": 45.2,
         "macd_bullish": "False",
-        "macd_histogram": -0.0386,
-        "bollinger_position": 0.08,
-        "roc_10d": -2.4,
-        "volatility_10d": 2.4493,
-        "volatility_20d": 2.5041
+        "macd_histogram": -0.0409,
+        "bollinger_position": 0.208,
+        "roc_10d": -5.76,
+        "volatility_10d": 1.9856,
+        "volatility_20d": 2.5521
       },
-      "physical_signals": {
-        "inventory_drawdown": {
-          "z_score": -5.0,
-          "change_5d": -304503.0,
-          "interpretation": "Rapid drawdown"
-        },
-        "delivery_acceleration": {
-          "current_daily": 891,
-          "avg_20d": 394.1,
-          "acceleration_ratio": 2.26,
-          "interpretation": "Surging"
-        },
-        "pp_squeeze": {
-          "current_ratio": 9.12,
-          "roc_5d_pct": 83.17,
-          "squeeze_score": 83.8,
-          "interpretation": "Elevated"
-        },
-        "coverage_erosion": {
-          "coverage_days": 0.0,
-          "avg_daily_delivery": 394.1,
-          "interpretation": "Critical"
-        },
-        "eligible_flow": {
-          "registered_change_5d": -304503.0,
-          "eligible_change_5d": -227081.0,
-          "interpretation": "Registered declining (drawdown)"
-        }
-      },
+      "physical_signals": {},
       "market_metrics": {
-        "oi_10d_change_pct": 222.17,
-        "volume_5d_avg": 7423.0,
-        "volume_20d_avg": 2698.0,
-        "volume_ratio": 2.75
+        "volume_5d_avg": 2870.0,
+        "volume_20d_avg": 1544.0,
+        "volume_ratio": 1.86
       }
     },
     "Platinum": {
       "direction": "NEUTRAL",
-      "confidence": 17,
-      "composite_score": 57.3,
-      "current_price": 1941.08,
+      "confidence": 15,
+      "composite_score": 55.0,
+      "current_price": 1949.17,
       "forecast_5d": {
-        "low": 1825.12,
-        "mid": 1976.25,
-        "high": 2139.9,
-        "pct_change": 1.81
+        "low": 1820.53,
+        "mid": 1970.9,
+        "high": 2133.67,
+        "pct_change": 1.11
       },
       "forecast_20d": {
-        "low": 1766.37,
-        "mid": 2062.81,
-        "high": 2409.01,
-        "pct_change": 6.27
+        "low": 1762.95,
+        "mid": 2057.9,
+        "high": 2402.21,
+        "pct_change": 5.58
       },
-      "squeeze_probability": 70,
+      "squeeze_probability": 30,
       "regime": "RANGING",
       "signals": {
         "trend_momentum": {
-          "score": 33.2,
-          "details": "SMA5 < SMA20, MACD bearish, RSI 29, ROC(10) -3.1%"
+          "score": 34.3,
+          "details": "SMA5 < SMA20, MACD bearish, RSI 26, ROC(10) -6.1%"
         },
         "physical_stress": {
-          "score": 53.5,
-          "details": "Inventory z=-5.0, Delivery accel 0.0x, P/P 10.8:1, Coverage 184d"
+          "score": 50,
+          "details": "No physical signals"
         },
         "arima_model": {
-          "score": 68.1,
-          "details": "ARIMA(1, 1, 0) projects +1.8% over 5d"
+          "score": 61.1,
+          "details": "ARIMA(1, 1, 0) projects +1.1% over 5d"
         },
         "market_activity": {
           "score": 100.0,
-          "details": "OI expanding 78.7%, volume elevated"
+          "details": "volume elevated"
         }
       },
       "key_drivers": [
-        "Market Activity: bullish (OI expanding 78.7%, volume elevated)",
-        "Arima Model: bullish (ARIMA(1, 1, 0) projects +1.8% over 5d)",
-        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 29, ROC(10) -3.1%)"
+        "Market Activity: bullish (volume elevated)",
+        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 26, ROC(10) -6.1%)",
+        "Arima Model: bullish (ARIMA(1, 1, 0) projects +1.1% over 5d)"
       ],
       "anomalies": [
         {
           "metric": "trading_volume",
-          "z_score": 5.29,
-          "description": "Unusually high trading volume (above normal by 5.3 std dev)"
+          "z_score": 5.25,
+          "description": "Unusually high trading volume (above normal by 5.2 std dev)"
         }
       ],
       "correlations": {},
       "trend_indicators": {
-        "sma5": 2068.82,
-        "sma20": 2296.35,
-        "sma50": 2161.8,
-        "rsi": 29.4,
+        "sma5": 2059.26,
+        "sma20": 2276.96,
+        "sma50": 2169.58,
+        "rsi": 26.2,
         "macd_bullish": "False",
-        "macd_histogram": -43.3628,
-        "bollinger_position": 0.25,
-        "roc_10d": -3.06,
-        "volatility_10d": 3.3571,
-        "volatility_20d": 6.1719
+        "macd_histogram": -37.0798,
+        "bollinger_position": 0.3,
+        "roc_10d": -6.14,
+        "volatility_10d": 3.0649,
+        "volatility_20d": 6.0632
       },
-      "physical_signals": {
-        "inventory_drawdown": {
-          "z_score": -5.0,
-          "change_5d": -6955.94,
-          "interpretation": "Rapid drawdown"
-        },
-        "delivery_acceleration": {
-          "current_daily": 0,
-          "avg_20d": 34.7,
-          "acceleration_ratio": 0.0,
-          "interpretation": "Below average"
-        },
-        "pp_squeeze": {
-          "current_ratio": 10.77,
-          "roc_5d_pct": -1.09,
-          "squeeze_score": 69.5,
-          "interpretation": "Extreme"
-        },
-        "coverage_erosion": {
-          "coverage_days": 184.4,
-          "avg_daily_delivery": 34.7,
-          "interpretation": "Adequate"
-        },
-        "eligible_flow": {
-          "registered_change_5d": -6955.94,
-          "eligible_change_5d": -14933.79,
-          "interpretation": "Registered declining (drawdown)"
-        }
-      },
+      "physical_signals": {},
       "market_metrics": {
-        "oi_10d_change_pct": 78.71,
-        "volume_5d_avg": 2543.0,
-        "volume_20d_avg": 680.0,
-        "volume_ratio": 3.74
+        "volume_5d_avg": 567.0,
+        "volume_20d_avg": 182.0,
+        "volume_ratio": 3.12
       }
     },
     "Palladium": {
       "direction": "NEUTRAL",
-      "confidence": 18,
-      "composite_score": 58.7,
-      "current_price": 1606.07,
+      "confidence": 10,
+      "composite_score": 52.0,
+      "current_price": 1635.91,
       "forecast_5d": {
-        "low": 1481.24,
-        "mid": 1606.16,
-        "high": 1741.62,
-        "pct_change": 0.01
+        "low": 1496.54,
+        "mid": 1622.64,
+        "high": 1759.37,
+        "pct_change": -0.81
       },
       "forecast_20d": {
-        "low": 1372.41,
-        "mid": 1606.16,
-        "high": 1879.71,
-        "pct_change": 0.01
+        "low": 1386.78,
+        "mid": 1622.65,
+        "high": 1898.64,
+        "pct_change": -0.81
       },
-      "squeeze_probability": 94,
+      "squeeze_probability": 30,
       "regime": "RANGING",
       "signals": {
         "trend_momentum": {
-          "score": 36.8,
-          "details": "SMA5 < SMA20, MACD bearish, RSI 40, ROC(10) +0.4%"
+          "score": 37.0,
+          "details": "SMA5 < SMA20, MACD bearish, RSI 32, ROC(10) +0.3%"
         },
         "physical_stress": {
-          "score": 64.7,
-          "details": "Inventory z=0.0, P/P 11.3:1"
+          "score": 50,
+          "details": "No physical signals"
         },
         "arima_model": {
-          "score": 50.1,
-          "details": "ARIMA(1, 1, 0) projects +0.0% over 5d"
+          "score": 41.9,
+          "details": "ARIMA(1, 1, 0) projects -0.8% over 5d"
         },
         "market_activity": {
           "score": 100.0,
-          "details": "OI expanding 57.6%, volume elevated"
+          "details": "volume elevated"
         }
       },
       "key_drivers": [
-        "Market Activity: bullish (OI expanding 57.6%, volume elevated)",
-        "Physical Stress: bullish (Inventory z=0.0, P/P 11.3:1)",
-        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 40, ROC(10) +0.4%)"
+        "Market Activity: bullish (volume elevated)",
+        "Trend Momentum: bearish (SMA5 < SMA20, MACD bearish, RSI 32, ROC(10) +0.3%)",
+        "Arima Model: bearish (ARIMA(1, 1, 0) projects -0.8% over 5d)"
       ],
       "anomalies": [
         {
           "metric": "trading_volume",
-          "z_score": 5.29,
+          "z_score": 5.28,
           "description": "Unusually high trading volume (above normal by 5.3 std dev)"
         }
       ],
       "correlations": {},
       "trend_indicators": {
-        "sma5": 1700.56,
-        "sma20": 1812.3,
-        "sma50": 1750.76,
-        "rsi": 40.0,
+        "sma5": 1702.06,
+        "sma20": 1804.27,
+        "sma50": 1756.33,
+        "rsi": 32.0,
         "macd_bullish": "False",
-        "macd_histogram": -21.0847,
-        "bollinger_position": 0.303,
-        "roc_10d": 0.42,
-        "volatility_10d": 2.5202,
-        "volatility_20d": 6.077
+        "macd_histogram": -15.0645,
+        "bollinger_position": 0.411,
+        "roc_10d": 0.34,
+        "volatility_10d": 2.7659,
+        "volatility_20d": 6.0759
       },
-      "physical_signals": {
-        "inventory_drawdown": {
-          "z_score": 0.0,
-          "change_5d": 0.0,
-          "interpretation": "Normal"
-        },
-        "pp_squeeze": {
-          "current_ratio": 11.28,
-          "roc_5d_pct": 98.85,
-          "squeeze_score": 94.2,
-          "interpretation": "Extreme"
-        },
-        "eligible_flow": {
-          "registered_change_5d": 0.0,
-          "eligible_change_5d": -21592.79,
-          "interpretation": "Stable"
-        }
-      },
+      "physical_signals": {},
       "market_metrics": {
-        "oi_10d_change_pct": 57.6,
-        "volume_5d_avg": 1305.0,
-        "volume_20d_avg": 336.0,
-        "volume_ratio": 3.88
+        "volume_5d_avg": 177.0,
+        "volume_20d_avg": 53.0,
+        "volume_ratio": 3.35
       }
     }
   }

@@ -137,7 +137,7 @@ export default function Navbar({ lastUpdatedText }: NavbarProps) {
             {/* Last updated — desktop only */}
             <div className="hidden xl:flex items-center gap-1.5 text-[11px] text-muted-foreground mr-1">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" />
-              <span>{lastUpdatedText}</span>
+              <span>Last Updated: {lastUpdatedText}</span>
             </div>
 
             <NewsletterSignup />
@@ -169,7 +169,7 @@ export default function Navbar({ lastUpdatedText }: NavbarProps) {
             {/* Last updated — shown in mobile menu */}
             <div className="flex items-center gap-1.5 px-6 pt-3 pb-1 text-[11px] text-muted-foreground">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" />
-              <span>Updated: {lastUpdatedText}</span>
+              <span>Last Updated: {lastUpdatedText}</span>
             </div>
 
             <div className="px-3 py-2">

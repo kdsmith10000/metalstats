@@ -487,7 +487,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         <div className="sm:hidden flex flex-col items-center justify-center gap-0.5 mt-2 text-[10px] text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" />
-            <span>Updated: {lastUpdatedText}</span>
+            <span>Last Updated: {lastUpdatedText}</span>
           </div>
           <span className="text-slate-400">Nightly at 9:30 PM EST • CME data delayed 1 day</span>
         </div>

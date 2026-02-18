@@ -38,12 +38,24 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 # DATA FETCHING
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def get_db_connection():
-    """Get a psycopg2 connection from DATABASE_URL."""
+def get_db_connection(retries: int = 3, delay: float = 2.0):
+    """Get a psycopg2 connection from DATABASE_URL with retry logic for Neon serverless."""
+    import time
     url = os.environ.get("DATABASE_URL") or os.environ.get("DATABASE_URL_UNPOOLED")
     if not url:
         raise RuntimeError("DATABASE_URL not set")
-    return psycopg2.connect(url)
+    for attempt in range(1, retries + 1):
+        try:
+            conn = psycopg2.connect(url, connect_timeout=10,
+                                    options="-c statement_timeout=30000")
+            return conn
+        except psycopg2.OperationalError as e:
+            if attempt < retries:
+                print(f"    DB connection attempt {attempt}/{retries} failed, retrying in {delay}s...")
+                time.sleep(delay)
+                delay *= 2
+            else:
+                raise
 
 
 # Yahoo Finance futures symbols (used for historical price backfill)
@@ -194,71 +206,196 @@ def _fetch_yahoo_realtime_price(symbol: str) -> float | None:
     return None
 
 
-def fetch_all_data(metal: str, days: int = 365) -> dict:
-    """Fetch all historical data for a single metal from the database."""
+def _load_local_json(filename: str) -> dict | list | None:
+    """Load a JSON file from the public directory."""
+    path = os.path.join(BASE_DIR, filename)
+    if os.path.exists(path):
+        try:
+            with open(path) as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            return None
+    return None
+
+
+def _build_local_inventory_df(metal: str) -> pd.DataFrame:
+    """Build inventory DataFrame from local data.json."""
+    data = _load_local_json("data.json")
+    if not data:
+        return pd.DataFrame()
+    metal_key = metal.lower()
+    metal_data = data.get(metal_key, {})
+    if not metal_data:
+        return pd.DataFrame()
+    rows = []
+    date_str = data.get("last_updated", "")
+    date = pd.to_datetime(date_str, errors="coerce") if date_str else pd.Timestamp.now()
+    reg = metal_data.get("registered", 0)
+    elig = metal_data.get("eligible", 0)
+    total = metal_data.get("total", reg + elig)
+    rows.append({"date": date, "registered": reg, "eligible": elig, "total": total})
+    df = pd.DataFrame(rows)
+    df["date"] = pd.to_datetime(df["date"])
+    df.set_index("date", inplace=True)
+    for c in ["registered", "eligible", "total"]:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    return df
+
+
+def _build_local_delivery_df(metal: str) -> pd.DataFrame:
+    """Build delivery DataFrame from local delivery.json."""
+    data = _load_local_json("delivery.json")
+    if not data:
+        return pd.DataFrame()
+    metals_data = data.get("metals", {})
+    metal_data = metals_data.get(metal, {})
+    if not metal_data:
+        return pd.DataFrame()
+    date_str = data.get("report_date", "")
+    date = pd.to_datetime(date_str, errors="coerce") if date_str else pd.Timestamp.now()
+    rows = [{
+        "date": date,
+        "settlement_price": metal_data.get("settlement_price", 0),
+        "daily_issued": metal_data.get("daily_issued", 0),
+        "daily_stopped": metal_data.get("daily_stopped", 0),
+        "month_to_date": metal_data.get("month_to_date", 0),
+    }]
+    df = pd.DataFrame(rows)
+    df["date"] = pd.to_datetime(df["date"])
+    df.set_index("date", inplace=True)
+    for c in ["settlement_price", "daily_issued", "daily_stopped", "month_to_date"]:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    return df
+
+
+def _build_local_oi_df(metal: str) -> pd.DataFrame:
+    """Build open interest DataFrame from local volume_summary.json."""
+    data = _load_local_json("volume_summary.json")
+    if not data:
+        return pd.DataFrame()
     symbol = METALS[metal]["symbol"]
-    conn = get_db_connection()
+    products = data.get("products", [])
+    for p in products:
+        if p.get("symbol") == symbol:
+            date_str = data.get("trade_date", "")
+            date = pd.to_datetime(date_str, errors="coerce") if date_str else pd.Timestamp.now()
+            rows = [{
+                "date": date,
+                "open_interest": p.get("open_interest", 0),
+                "oi_change": p.get("oi_change", 0),
+                "total_volume": p.get("total_volume", 0),
+            }]
+            df = pd.DataFrame(rows)
+            df["date"] = pd.to_datetime(df["date"])
+            df.set_index("date", inplace=True)
+            for c in ["open_interest", "oi_change", "total_volume"]:
+                df[c] = pd.to_numeric(df[c], errors="coerce")
+            return df
+    return pd.DataFrame()
+
+
+def _build_local_risk_df(metal: str) -> pd.DataFrame:
+    """Build risk DataFrame from local analysis_summary.json."""
+    data = _load_local_json("analysis_summary.json")
+    if not data:
+        return pd.DataFrame()
+    metal_key = metal.lower()
+    metal_data = data.get(metal_key, {})
+    risk = metal_data.get("risk_score", {})
+    if not risk:
+        return pd.DataFrame()
+    date_str = data.get("generated_at", "")
+    date = pd.to_datetime(date_str, errors="coerce") if date_str else pd.Timestamp.now()
+    rows = [{
+        "date": date,
+        "composite_score": risk.get("composite_score", 50),
+        "coverage_risk": risk.get("coverage_risk", 50),
+        "paper_physical_risk": risk.get("paper_physical_risk", 50),
+        "inventory_trend_risk": risk.get("inventory_trend_risk", 50),
+        "delivery_velocity_risk": risk.get("delivery_velocity_risk", 50),
+        "market_activity_risk": risk.get("market_activity_risk", 50),
+    }]
+    df = pd.DataFrame(rows)
+    df["date"] = pd.to_datetime(df["date"])
+    df.set_index("date", inplace=True)
+    for c in df.columns:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    return df
+
+
+def fetch_all_data(metal: str, days: int = 365) -> dict:
+    """Fetch all historical data for a single metal from the database,
+    falling back to Yahoo Finance + local JSON files on DB failure."""
+    symbol = METALS[metal]["symbol"]
+
+    bulletin_rows = []
+    inventory_rows = []
+    delivery_rows = []
+    oi_rows = []
+    pp_rows = []
+    risk_rows = []
+    db_ok = False
+
     try:
-        cur = conn.cursor()
+        conn = get_db_connection()
+        try:
+            cur = conn.cursor()
 
-        # 1. Bulletin snapshots (price, volume, OI)
-        cur.execute("""
-            SELECT date, front_month_settle, total_volume, total_open_interest, total_oi_change
-            FROM bulletin_snapshots
-            WHERE symbol = %s AND date >= CURRENT_DATE - %s
-            ORDER BY date ASC
-        """, (symbol, days))
-        bulletin_rows = cur.fetchall()
+            cur.execute("""
+                SELECT date, front_month_settle, total_volume, total_open_interest, total_oi_change
+                FROM bulletin_snapshots
+                WHERE symbol = %s AND date >= CURRENT_DATE - %s
+                ORDER BY date ASC
+            """, (symbol, days))
+            bulletin_rows = cur.fetchall()
 
-        # 2. Metal snapshots (warehouse inventory)
-        cur.execute("""
-            SELECT report_date, registered, eligible, total
-            FROM metal_snapshots
-            WHERE metal = %s AND report_date >= CURRENT_DATE - %s
-            ORDER BY report_date ASC
-        """, (metal, days))
-        inventory_rows = cur.fetchall()
+            cur.execute("""
+                SELECT report_date, registered, eligible, total
+                FROM metal_snapshots
+                WHERE metal = %s AND report_date >= CURRENT_DATE - %s
+                ORDER BY report_date ASC
+            """, (metal, days))
+            inventory_rows = cur.fetchall()
 
-        # 3. Delivery snapshots
-        cur.execute("""
-            SELECT report_date, settlement_price, daily_issued, daily_stopped, month_to_date
-            FROM delivery_snapshots
-            WHERE metal = %s AND report_date >= CURRENT_DATE - %s
-            ORDER BY report_date ASC
-        """, (metal, days))
-        delivery_rows = cur.fetchall()
+            cur.execute("""
+                SELECT report_date, settlement_price, daily_issued, daily_stopped, month_to_date
+                FROM delivery_snapshots
+                WHERE metal = %s AND report_date >= CURRENT_DATE - %s
+                ORDER BY report_date ASC
+            """, (metal, days))
+            delivery_rows = cur.fetchall()
 
-        # 4. Open interest snapshots
-        cur.execute("""
-            SELECT report_date, open_interest, oi_change, total_volume
-            FROM open_interest_snapshots
-            WHERE symbol = %s AND report_date >= CURRENT_DATE - %s
-            ORDER BY report_date ASC
-        """, (symbol, days))
-        oi_rows = cur.fetchall()
+            cur.execute("""
+                SELECT report_date, open_interest, oi_change, total_volume
+                FROM open_interest_snapshots
+                WHERE symbol = %s AND report_date >= CURRENT_DATE - %s
+                ORDER BY report_date ASC
+            """, (symbol, days))
+            oi_rows = cur.fetchall()
 
-        # 5. Paper/physical snapshots
-        cur.execute("""
-            SELECT report_date, paper_physical_ratio, registered_inventory, open_interest
-            FROM paper_physical_snapshots
-            WHERE metal = %s AND report_date >= CURRENT_DATE - %s
-            ORDER BY report_date ASC
-        """, (metal, days))
-        pp_rows = cur.fetchall()
+            cur.execute("""
+                SELECT report_date, paper_physical_ratio, registered_inventory, open_interest
+                FROM paper_physical_snapshots
+                WHERE metal = %s AND report_date >= CURRENT_DATE - %s
+                ORDER BY report_date ASC
+            """, (metal, days))
+            pp_rows = cur.fetchall()
 
-        # 6. Risk score snapshots
-        cur.execute("""
-            SELECT report_date, composite_score, coverage_risk, paper_physical_risk,
-                   inventory_trend_risk, delivery_velocity_risk, market_activity_risk
-            FROM risk_score_snapshots
-            WHERE metal = %s AND report_date >= CURRENT_DATE - %s
-            ORDER BY report_date ASC
-        """, (metal, days))
-        risk_rows = cur.fetchall()
+            cur.execute("""
+                SELECT report_date, composite_score, coverage_risk, paper_physical_risk,
+                       inventory_trend_risk, delivery_velocity_risk, market_activity_risk
+                FROM risk_score_snapshots
+                WHERE metal = %s AND report_date >= CURRENT_DATE - %s
+                ORDER BY report_date ASC
+            """, (metal, days))
+            risk_rows = cur.fetchall()
 
-        cur.close()
-    finally:
-        conn.close()
+            cur.close()
+            db_ok = True
+        finally:
+            conn.close()
+    except Exception as e:
+        print(f"    DB connection failed, using Yahoo Finance + local JSON fallback: {e}")
 
     # ── Build DataFrames ─────────────────────────────────────────────────
     prices_df = pd.DataFrame(
@@ -281,7 +418,6 @@ def fetch_all_data(metal: str, days: int = 365) -> dict:
             if prices_df.empty:
                 prices_df = yf_df
             else:
-                # Merge: prefer DB data where dates overlap, backfill older days from Yahoo
                 combined = yf_df.combine_first(prices_df)
                 combined.sort_index(inplace=True)
                 prices_df = combined
@@ -289,40 +425,47 @@ def fetch_all_data(metal: str, days: int = 365) -> dict:
         else:
             print(f"    ✗ Yahoo Finance fetch returned no data")
 
+    # ── Build supplementary DataFrames (DB or local fallback) ────────────
     inventory_df = pd.DataFrame(
         inventory_rows, columns=["date", "registered", "eligible", "total"]
-    )
+    ) if inventory_rows else pd.DataFrame()
     if not inventory_df.empty:
         inventory_df["date"] = pd.to_datetime(inventory_df["date"])
         inventory_df.set_index("date", inplace=True)
         for c in ["registered", "eligible", "total"]:
             inventory_df[c] = pd.to_numeric(inventory_df[c], errors="coerce")
         inventory_df.sort_index(inplace=True)
+    elif not db_ok:
+        inventory_df = _build_local_inventory_df(metal)
 
     delivery_df = pd.DataFrame(
         delivery_rows,
         columns=["date", "settlement_price", "daily_issued", "daily_stopped", "month_to_date"]
-    )
+    ) if delivery_rows else pd.DataFrame()
     if not delivery_df.empty:
         delivery_df["date"] = pd.to_datetime(delivery_df["date"])
         delivery_df.set_index("date", inplace=True)
         for c in ["settlement_price", "daily_issued", "daily_stopped", "month_to_date"]:
             delivery_df[c] = pd.to_numeric(delivery_df[c], errors="coerce")
         delivery_df.sort_index(inplace=True)
+    elif not db_ok:
+        delivery_df = _build_local_delivery_df(metal)
 
     oi_df = pd.DataFrame(
         oi_rows, columns=["date", "open_interest", "oi_change", "total_volume"]
-    )
+    ) if oi_rows else pd.DataFrame()
     if not oi_df.empty:
         oi_df["date"] = pd.to_datetime(oi_df["date"])
         oi_df.set_index("date", inplace=True)
         for c in ["open_interest", "oi_change", "total_volume"]:
             oi_df[c] = pd.to_numeric(oi_df[c], errors="coerce")
         oi_df.sort_index(inplace=True)
+    elif not db_ok:
+        oi_df = _build_local_oi_df(metal)
 
     pp_df = pd.DataFrame(
         pp_rows, columns=["date", "pp_ratio", "registered_inventory", "open_interest"]
-    )
+    ) if pp_rows else pd.DataFrame()
     if not pp_df.empty:
         pp_df["date"] = pd.to_datetime(pp_df["date"])
         pp_df.set_index("date", inplace=True)
@@ -334,13 +477,15 @@ def fetch_all_data(metal: str, days: int = 365) -> dict:
         risk_rows,
         columns=["date", "composite_score", "coverage_risk", "paper_physical_risk",
                   "inventory_trend_risk", "delivery_velocity_risk", "market_activity_risk"]
-    )
+    ) if risk_rows else pd.DataFrame()
     if not risk_df.empty:
         risk_df["date"] = pd.to_datetime(risk_df["date"])
         risk_df.set_index("date", inplace=True)
         for c in risk_df.columns:
             risk_df[c] = pd.to_numeric(risk_df[c], errors="coerce")
         risk_df.sort_index(inplace=True)
+    elif not db_ok:
+        risk_df = _build_local_risk_df(metal)
 
     return {
         "prices": prices_df,
@@ -1255,7 +1400,13 @@ def _py(val):
 def update_forecast_history(output: dict, json_default):
     """Write forecast snapshots to DB, evaluate past accuracy, track prices."""
     today = datetime.now().strftime("%Y-%m-%d")
-    conn = get_db_connection()
+
+    try:
+        conn = get_db_connection()
+    except Exception as e:
+        print(f"  DB connection failed for forecast history, writing local JSON only: {e}")
+        _write_accuracy_json_backup(output)
+        return
 
     try:
         cur = conn.cursor()
