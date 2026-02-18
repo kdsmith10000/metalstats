@@ -1,6 +1,6 @@
 {
-  "business_date": "02/13/2026",
-  "parsed_date": "2026-02-13",
+  "business_date": "02/17/2026",
+  "parsed_date": "2026-02-17",
   "contracts": [
     {
       "metal": "Aluminum",
@@ -130,9 +130,15 @@
           "iso_date": "2026-02-13",
           "daily": 242,
           "cumulative": 36092
+        },
+        {
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 96,
+          "cumulative": 36188
         }
       ],
-      "total_cumulative": 36092
+      "total_cumulative": 36188
     },
     {
       "metal": "Copper",
@@ -211,24 +217,15 @@
           "iso_date": "2026-02-13",
           "daily": 891,
           "cumulative": 8674
-        }
-      ],
-      "total_cumulative": 8674
-    },
-    {
-      "metal": "Micro Gold",
-      "symbol": "MGC",
-      "contract_name": "FEBRUARY 2026 MICRO GOLD FUTURES",
-      "contract_month": "FEB26",
-      "daily_data": [
+        },
         {
-          "date": "02/11/2026",
-          "iso_date": "2026-02-11",
-          "daily": 10,
-          "cumulative": 10
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 560,
+          "cumulative": 9234
         }
       ],
-      "total_cumulative": 10
+      "total_cumulative": 9234
     },
     {
       "metal": "Silver",
@@ -295,9 +292,15 @@
           "iso_date": "2026-02-11",
           "daily": 3,
           "cumulative": 4595
+        },
+        {
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 29,
+          "cumulative": 4624
         }
       ],
-      "total_cumulative": 4595
+      "total_cumulative": 4624
     },
     {
       "metal": "Palladium",
@@ -340,9 +343,15 @@
           "iso_date": "2026-02-13",
           "daily": 13,
           "cumulative": 105
+        },
+        {
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 7,
+          "cumulative": 112
         }
       ],
-      "total_cumulative": 105
+      "total_cumulative": 112
     },
     {
       "metal": "Platinum",
@@ -402,5 +411,5 @@
       "total_cumulative": 485
     }
   ],
-  "last_updated": "2026-02-17T13:36:32.712Z"
+  "last_updated": "2026-02-17T23:43:25.584111"
 }
