@@ -83,18 +83,18 @@
         "hit_rate": null
       },
       "Silver": {
-        "total_forecasts": 0,
+        "total_forecasts": 1,
         "correct": 0,
-        "incorrect": 0,
+        "incorrect": 1,
         "pending": 0,
-        "hit_rate": null
+        "hit_rate": 0.0
       },
       "Copper": {
-        "total_forecasts": 0,
-        "correct": 0,
+        "total_forecasts": 1,
+        "correct": 1,
         "incorrect": 0,
         "pending": 0,
-        "hit_rate": null
+        "hit_rate": 100.0
       },
       "Platinum": {
         "total_forecasts": 0,
@@ -104,17 +104,17 @@
         "hit_rate": null
       },
       "Palladium": {
-        "total_forecasts": 1,
+        "total_forecasts": 2,
         "correct": 0,
-        "incorrect": 0,
+        "incorrect": 1,
         "pending": 1,
-        "hit_rate": null
+        "hit_rate": 0.0
       }
     },
     "overall": {
-      "total": 0,
-      "correct": 0,
-      "hit_rate": null
+      "total": 3,
+      "correct": 1,
+      "hit_rate": 33.3
     },
     "history": [
       {
@@ -123,6 +123,39 @@
         "direction": "BULLISH",
         "price_at_forecast": 1742.0,
         "correct": null
+      },
+      {
+        "metal": "Silver",
+        "date": "2026-02-17",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 65.6,
+        "eval_date": "2026-02-17",
+        "price_at_eval": 66.3675,
+        "price_change_pct": 1.17,
+        "correct": false,
+        "note": "Manual entry: Silver moved +1.17% with NEUTRAL call"
+      },
+      {
+        "metal": "Copper",
+        "date": "2026-02-17",
+        "direction": "BULLISH",
+        "price_at_forecast": 5.66,
+        "eval_date": "2026-02-17",
+        "price_at_eval": 5.69,
+        "price_change_pct": 0.53,
+        "correct": true,
+        "note": "Manual entry: Copper moved +0.53% with BULLISH call"
+      },
+      {
+        "metal": "Palladium",
+        "date": "2026-02-17",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 1606.07,
+        "eval_date": "2026-02-17",
+        "price_at_eval": 1635.9429,
+        "price_change_pct": 1.86,
+        "correct": false,
+        "note": "Manual entry: Palladium moved +1.86% with NEUTRAL call"
       }
     ]
   }
