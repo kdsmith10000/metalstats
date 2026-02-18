@@ -1,21 +1,21 @@
 {
-  "report_date": "2026-02-13",
-  "generated_at": "2026-02-17T13:39:03.095Z",
+  "report_date": "2026-02-17",
+  "generated_at": "2026-02-18T12:36:08.526Z",
   "market_overview": {
     "metals_analyzed": 5,
-    "average_risk_score": 48,
+    "average_risk_score": 49,
     "average_risk_level": "MODERATE",
-    "high_risk_metals": 1,
+    "high_risk_metals": 2,
     "risk_ranking": [
       {
         "metal": "Copper",
-        "score": 65,
+        "score": 66,
         "level": "HIGH"
       },
       {
         "metal": "Silver",
-        "score": 49,
-        "level": "MODERATE"
+        "score": 55,
+        "level": "HIGH"
       },
       {
         "metal": "Gold",
@@ -37,27 +37,27 @@
   "paper_physical": [
     {
       "metal": "Gold",
-      "ratio": 2.35,
+      "ratio": 2.36,
       "risk_level": "MODERATE"
     },
     {
       "metal": "Silver",
-      "ratio": 7.18,
+      "ratio": 7.14,
       "risk_level": "HIGH"
     },
     {
       "metal": "Copper",
-      "ratio": 9.12,
+      "ratio": 9.31,
       "risk_level": "HIGH"
     },
     {
       "metal": "Platinum",
-      "ratio": 10.77,
+      "ratio": 10.84,
       "risk_level": "EXTREME"
     },
     {
       "metal": "Palladium",
-      "ratio": 11.28,
+      "ratio": 11.31,
       "risk_level": "EXTREME"
     }
   ]
