@@ -102,6 +102,7 @@ export default function About() {
             <Link href="/learn" className="hover:text-slate-600 dark:hover:text-slate-300">Learn</Link>
             <Link href="/delivery" className="hover:text-slate-600 dark:hover:text-slate-300">Delivery Notices</Link>
             <Link href="/api-info" className="hover:text-slate-600 dark:hover:text-slate-300">API</Link>
+            <Link href="/blog" className="hover:text-slate-600 dark:hover:text-slate-300">Blog</Link>
             <Link href="/contact" className="hover:text-slate-600 dark:hover:text-slate-300">Contact</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy</Link>
             <Link href="/terms" className="hover:text-slate-600 dark:hover:text-slate-300">Terms</Link>

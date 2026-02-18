@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, BarChart3, BookOpen, FileText, Truck, Code, Info, Mail } from 'lucide-react';
+import { Menu, X, BarChart3, BookOpen, FileText, Truck, Code, Info, Mail, Newspaper } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import LanguageSelector from './LanguageSelector';
 import NewsletterSignup from './NewsletterSignup';
@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: '/precious-metals', label: 'Precious Metals', icon: FileText },
   { href: '/learn', label: 'Learn', icon: BookOpen },
   { href: '/delivery', label: 'Delivery Notices', icon: Truck },
+  { href: '/blog', label: 'Blog', icon: Newspaper },
   { href: '/api-info', label: 'API', icon: Code },
   { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
