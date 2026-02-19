@@ -117,7 +117,7 @@ export async function POST(request: Request) {
 // ─── Trial Expired Email ───────────────────────────────────────────
 
 function buildTrialExpiredEmail(_email: string, unsubscribeUrl: string): string {
-  const checkoutUrl = 'https://buy.stripe.com/fZucN673N8GB5VU67Lfw401';
+  const checkoutUrl = 'https://buy.stripe.com/fZucN6fAj1e9fwugMpfw402';
 
   return `
 <!DOCTYPE html>

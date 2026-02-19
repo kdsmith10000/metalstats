@@ -28,6 +28,7 @@ import {
   ArrowDownRight,
   Info,
   Target,
+  ChevronDown,
 } from 'lucide-react';
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -189,6 +190,65 @@ function DirectionBadge({ direction, confidence }: { direction: string; confiden
       <Icon className={`w-4 h-4 ${config.text}`} />
       <span className={`text-sm font-bold tracking-wide ${config.text}`}>{direction}</span>
       <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{confidence}%</span>
+    </div>
+  );
+}
+
+function SignalDropdown({ label, score, details, colors, barColor, direction }: {
+  label: string;
+  score: number;
+  details: string;
+  colors: string;
+  barColor: string;
+  direction: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const roundedScore = Math.round(score);
+
+  const signalDescriptions: Record<string, string> = {
+    'Trend Momentum': 'Measures price trend strength using moving averages (SMA5/SMA20), MACD crossovers, RSI momentum, and rate of change. Scores above 60 indicate bullish trend alignment; below 40 signals bearish pressure.',
+    'Physical Stress': 'Tracks physical market tightness: inventory drawdowns, delivery acceleration, paper-to-physical ratios, coverage erosion, and eligible-to-registered flow shifts. Higher scores signal supply stress.',
+    'Arima Model': 'Statistical time-series forecast using Auto-ARIMA. Projects price direction over 5-day and 20-day windows with confidence intervals. Score reflects projected percentage change direction.',
+    'Market Activity': 'Evaluates trading volume relative to historical averages and open interest expansion/contraction. Elevated volume with rising OI suggests strong conviction; divergences may signal reversals.',
+  };
+
+  const desc = signalDescriptions[label] || '';
+
+  return (
+    <div className={`border-l-2 border-b border-r overflow-hidden transition-all ${colors}`}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left cursor-pointer"
+      >
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider">{label}</span>
+            <span className={`text-[9px] sm:text-[10px] font-black uppercase px-1 sm:px-1.5 py-0.5 ${
+              direction === 'bullish' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+              : direction === 'bearish' ? 'bg-red-500/20 text-red-600 dark:text-red-400'
+              : 'bg-slate-500/20 text-slate-500 dark:text-slate-400'
+            }`}>{direction}</span>
+          </div>
+          <div className="mt-1 sm:mt-1.5 flex items-center gap-2">
+            <div className="flex-1 h-1 sm:h-1.5 bg-black/5 dark:bg-white/5 overflow-hidden">
+              <div className={`h-full transition-all duration-700 ${barColor}`} style={{ width: `${roundedScore}%` }} />
+            </div>
+            <span className="text-xs sm:text-sm font-black tabular-nums w-7 sm:w-8 text-right">{roundedScore}</span>
+          </div>
+        </div>
+        <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="px-3 sm:px-4 pb-2.5 sm:pb-3 space-y-1.5 sm:space-y-2 border-t border-current/10 ml-3 sm:ml-5">
+          {desc && (
+            <p className="text-[10px] sm:text-[11px] leading-relaxed opacity-70 pt-1.5 sm:pt-2">{desc}</p>
+          )}
+          <div className="flex items-start gap-1.5 sm:gap-2 pt-0.5 sm:pt-1">
+            <Activity className="w-3 h-3 sm:w-3.5 sm:h-3.5 mt-0.5 flex-shrink-0 opacity-60" />
+            <p className="text-[11px] sm:text-xs font-semibold leading-relaxed">{details || 'No details available'}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -781,11 +841,11 @@ export default function ForecastDashboard() {
           {/* Signals + Squeeze + Drivers — consolidated */}
           <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl space-y-5">
             {/* Signal pills */}
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-3">
+            <div className="pl-2 sm:pl-8">
+              <h3 className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-2 sm:mb-3 pl-6 sm:pl-14">
                 Signals
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="space-y-0 divide-y divide-slate-200/50 dark:divide-white/5">
                 {Object.entries(detail.signals).map(([key, signal]) => {
                   const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                   const direction = signal.score >= 60 ? 'bullish' : signal.score <= 40 ? 'bearish' : 'neutral';
@@ -794,11 +854,13 @@ export default function ForecastDashboard() {
                     : direction === 'bearish'
                     ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/40'
                     : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50';
+                  const barColor = direction === 'bullish'
+                    ? 'bg-emerald-500'
+                    : direction === 'bearish'
+                    ? 'bg-red-500'
+                    : 'bg-slate-400 dark:bg-slate-500';
                   return (
-                    <span key={key} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${colors}`}>
-                      {label}
-                      <span className="font-black">{Math.round(signal.score)}</span>
-                    </span>
+                    <SignalDropdown key={key} label={label} score={signal.score} details={signal.details} colors={colors} barColor={barColor} direction={direction} />
                   );
                 })}
               </div>
@@ -817,66 +879,26 @@ export default function ForecastDashboard() {
               </div>
             </div>
 
-            {/* Squeeze + Physical — compact row */}
-            {(detail.squeeze_probability > 0 || Object.keys(detail.physical_signals).length > 0) && (
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-3">
-                  Physical & Squeeze
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${
-                    detail.squeeze_probability > 60
-                      ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/40'
-                      : detail.squeeze_probability > 30
-                      ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40'
-                      : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50'
-                  }`}>
-                    <Gauge className="w-3 h-3" />
-                    Squeeze {detail.squeeze_probability > 60 ? 'HIGH' : detail.squeeze_probability > 30 ? 'MED' : 'LOW'} {detail.squeeze_probability}%
-                  </span>
-                  {detail.physical_signals.pp_squeeze?.current_ratio && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 text-xs font-semibold">
-                      Paper/Physical {detail.physical_signals.pp_squeeze.current_ratio.toFixed(1)}:1
-                    </span>
-                  )}
-                  {detail.physical_signals.coverage_erosion?.coverage_days && (
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${
-                      detail.physical_signals.coverage_erosion.coverage_days < 90
-                        ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/40'
-                        : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50'
-                    }`}>
-                      Coverage {detail.physical_signals.coverage_erosion.coverage_days.toFixed(0)}d
-                    </span>
-                  )}
-                  {detail.physical_signals.delivery_acceleration?.acceleration_ratio && (
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${
-                      detail.physical_signals.delivery_acceleration.acceleration_ratio > 1.2
-                        ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/40'
-                        : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50'
-                    }`}>
-                      Delivery {detail.physical_signals.delivery_acceleration.acceleration_ratio.toFixed(1)}x avg
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Key Drivers — inline */}
-            {detail.key_drivers.length > 0 && (
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-2">
-                  Key Drivers
-                </h3>
-                <ul className="space-y-1.5">
-                  {detail.key_drivers.map((driver, i) => (
-                    <li key={i} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
-                      <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
-                      {driver}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {/* Squeeze + Drivers — single line */}
+            <div className="flex flex-wrap items-start gap-x-4 gap-y-2">
+              {(detail.squeeze_probability > 0 || Object.keys(detail.physical_signals).length > 0) && (
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold whitespace-nowrap ${
+                  detail.squeeze_probability > 60
+                    ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/40'
+                    : detail.squeeze_probability > 30
+                    ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40'
+                    : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50'
+                }`}>
+                  <Gauge className="w-3 h-3" />
+                  Squeeze {detail.squeeze_probability > 60 ? 'HIGH' : detail.squeeze_probability > 30 ? 'MED' : 'LOW'} {detail.squeeze_probability}%
+                </span>
+              )}
+              {detail.key_drivers.length > 0 && (
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {detail.key_drivers.join(' · ')}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}
