@@ -807,13 +807,13 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             </div>
           </div>
 
-          <details className="max-w-3xl mb-10 sm:mb-14 md:mb-20 group bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden">
-            <summary className="flex items-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+          <details className="max-w-3xl mb-10 sm:mb-14 md:mb-20 group">
+            <summary className="flex items-center gap-2 py-2 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
               <Info className="w-4 h-4 text-slate-400 flex-shrink-0" />
               <span className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300">How does this forecast work?</span>
               <ChevronDown className="w-4 h-4 text-slate-400 ml-auto transition-transform duration-200 group-open:rotate-180" />
             </summary>
-            <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0">
+            <div className="pt-2 pb-4">
               <p className="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 Forecasts combine four weighted layers: <span className="font-semibold text-slate-800 dark:text-slate-200">physical stress (35%)</span> tracks COMEX inventory, deliveries, and paper-to-physical leverage; <span className="font-semibold text-slate-800 dark:text-slate-200">trend analysis (30%)</span> uses moving averages, RSI, and MACD; <span className="font-semibold text-slate-800 dark:text-slate-200">ARIMA modeling (20%)</span> projects 5- and 20-day price ranges; and <span className="font-semibold text-slate-800 dark:text-slate-200">market activity (15%)</span> monitors volume and open interest. The composite produces a directional call with a confidence score based on signal agreement.
               </p>
