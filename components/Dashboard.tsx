@@ -815,7 +815,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             </summary>
             <div className="pt-2 pb-4">
               <p className="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Forecasts combine four weighted layers: <span className="font-semibold text-slate-800 dark:text-slate-200">physical stress (35%)</span> tracks COMEX inventory, deliveries, and paper-to-physical leverage; <span className="font-semibold text-slate-800 dark:text-slate-200">trend analysis (30%)</span> uses moving averages, RSI, and MACD; <span className="font-semibold text-slate-800 dark:text-slate-200">ARIMA modeling (20%)</span> projects 5- and 20-day price ranges; and <span className="font-semibold text-slate-800 dark:text-slate-200">market activity (15%)</span> monitors volume and open interest. The composite produces a directional call with a confidence score based on signal agreement.
+                Forecasts combine four weighted layers: <span className="font-semibold text-slate-800 dark:text-slate-200">physical stress (35%)</span> tracks COMEX inventory, deliveries, and paper-to-physical leverage; <span className="font-semibold text-slate-800 dark:text-slate-200">trend analysis (30%)</span> uses moving averages, RSI, and MACD; <span className="font-semibold text-slate-800 dark:text-slate-200">ARIMA modeling (20%)</span> projects 5-day and 20-day price ranges; and <span className="font-semibold text-slate-800 dark:text-slate-200">market activity (15%)</span> monitors volume and open interest. The composite produces a directional call with a confidence score based on signal agreement.
               </p>
             </div>
           </details>
