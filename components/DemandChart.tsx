@@ -62,7 +62,7 @@ interface DemandChartProps {
 const baselineMonthlyData: Record<MetalType, MonthlyDataPoint[]> = {
   gold: [
     { month: 'Jan', y2025: 2370, y2026: 11862 },
-    { month: 'Feb', y2025: 3300, y2026: 33616 },
+    { month: 'Feb', y2025: 3300, y2026: 36569 },
     { month: 'Mar', y2025: 2400, y2026: null },
     { month: 'Apr', y2025: 6200, y2026: null },
     { month: 'May', y2025: 2100, y2026: null },
@@ -76,7 +76,7 @@ const baselineMonthlyData: Record<MetalType, MonthlyDataPoint[]> = {
   ],
   silver: [
     { month: 'Jan', y2025: 3083, y2026: 9889 },
-    { month: 'Feb', y2025: 2800, y2026: 4061 },
+    { month: 'Feb', y2025: 2800, y2026: 4639 },
     { month: 'Mar', y2025: 5100, y2026: null },
     { month: 'Apr', y2025: 3200, y2026: null },
     { month: 'May', y2025: 4500, y2026: null },
@@ -90,7 +90,7 @@ const baselineMonthlyData: Record<MetalType, MonthlyDataPoint[]> = {
   ],
   aluminum: [
     { month: 'Jan', y2025: 209, y2026: 156 },
-    { month: 'Feb', y2025: 98, y2026: 73 },
+    { month: 'Feb', y2025: 98, y2026: 77 },
     { month: 'Mar', y2025: 159, y2026: null },
     { month: 'Apr', y2025: 300, y2026: null },
     { month: 'May', y2025: 169, y2026: null },
@@ -104,7 +104,7 @@ const baselineMonthlyData: Record<MetalType, MonthlyDataPoint[]> = {
   ],
   copper: [
     { month: 'Jan', y2025: 4200, y2026: 15999 },
-    { month: 'Feb', y2025: 3800, y2026: 6808 },
+    { month: 'Feb', y2025: 3800, y2026: 9702 },
     { month: 'Mar', y2025: 4500, y2026: null },
     { month: 'Apr', y2025: 5100, y2026: null },
     { month: 'May', y2025: 4700, y2026: null },
@@ -134,6 +134,13 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 4', dateKey: '2026-02-04', contracts: 2692 },
     { day: 'Feb 5', dateKey: '2026-02-05', contracts: 498 },
     { day: 'Feb 6', dateKey: '2026-02-06', contracts: 1114 },
+    { day: 'Feb 9', dateKey: '2026-02-09', contracts: 167 },
+    { day: 'Feb 10', dateKey: '2026-02-10', contracts: 176 },
+    { day: 'Feb 11', dateKey: '2026-02-11', contracts: 1477 },
+    { day: 'Feb 12', dateKey: '2026-02-12', contracts: 414 },
+    { day: 'Feb 13', dateKey: '2026-02-13', contracts: 242 },
+    { day: 'Feb 17', dateKey: '2026-02-17', contracts: 96 },
+    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 381 },
   ],
   silver: [
     { day: 'Jan 22', dateKey: '2026-01-22', contracts: 139 },
@@ -148,6 +155,13 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 4', dateKey: '2026-02-04', contracts: 608 },
     { day: 'Feb 5', dateKey: '2026-02-05', contracts: 181 },
     { day: 'Feb 6', dateKey: '2026-02-06', contracts: 317 },
+    { day: 'Feb 9', dateKey: '2026-02-09', contracts: 429 },
+    { day: 'Feb 10', dateKey: '2026-02-10', contracts: 102 },
+    { day: 'Feb 11', dateKey: '2026-02-11', contracts: 3 },
+    { day: 'Feb 12', dateKey: '2026-02-12', contracts: 0 },
+    { day: 'Feb 13', dateKey: '2026-02-13', contracts: 0 },
+    { day: 'Feb 17', dateKey: '2026-02-17', contracts: 29 },
+    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 15 },
   ],
   aluminum: [
     { day: 'Jan 22', dateKey: '2026-01-22', contracts: 20 },
@@ -161,7 +175,14 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 3', dateKey: '2026-02-03', contracts: 65 },
     { day: 'Feb 4', dateKey: '2026-02-04', contracts: 0 },
     { day: 'Feb 5', dateKey: '2026-02-05', contracts: 4 },
-    { day: 'Feb 6', dateKey: '2026-02-06', contracts: 0 },
+    { day: 'Feb 6', dateKey: '2026-02-06', contracts: 1 },
+    { day: 'Feb 9', dateKey: '2026-02-09', contracts: 0 },
+    { day: 'Feb 10', dateKey: '2026-02-10', contracts: 1 },
+    { day: 'Feb 11', dateKey: '2026-02-11', contracts: 1 },
+    { day: 'Feb 12', dateKey: '2026-02-12', contracts: 0 },
+    { day: 'Feb 13', dateKey: '2026-02-13', contracts: 1 },
+    { day: 'Feb 17', dateKey: '2026-02-17', contracts: 0 },
+    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 0 },
   ],
   copper: [
     { day: 'Jan 22', dateKey: '2026-01-22', contracts: 356 },
@@ -176,6 +197,13 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 4', dateKey: '2026-02-04', contracts: 439 },
     { day: 'Feb 5', dateKey: '2026-02-05', contracts: 610 },
     { day: 'Feb 6', dateKey: '2026-02-06', contracts: 309 },
+    { day: 'Feb 9', dateKey: '2026-02-09', contracts: 290 },
+    { day: 'Feb 10', dateKey: '2026-02-10', contracts: 181 },
+    { day: 'Feb 11', dateKey: '2026-02-11', contracts: 166 },
+    { day: 'Feb 12', dateKey: '2026-02-12', contracts: 338 },
+    { day: 'Feb 13', dateKey: '2026-02-13', contracts: 891 },
+    { day: 'Feb 17', dateKey: '2026-02-17', contracts: 560 },
+    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 468 },
   ],
 };
 
