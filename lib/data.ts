@@ -130,9 +130,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fcd34d',
     unit: 'oz',
     contractSize: 100,
-    // Feb 2026 MTD: 35,436 contracts = 3,543,600 oz actual delivery demand
-    monthlyDemand: 3543600, // 35,436 contracts * 100 oz (Feb 11 MTD)
-    pricePerUnit: 5072,  // Updated to Feb 11 settle price (GC FEB26: 5071.6)
+    // Feb 2026 MTD: 36,569 contracts = 3,656,900 oz actual delivery demand
+    monthlyDemand: 3656900, // 36,569 contracts * 100 oz (Feb 18 MTD)
+    pricePerUnit: 4987,  // Updated to Feb 18 settle price (GC FEB26: 4986.5)
     futuresSymbol: 'GC', // COMEX Gold Futures
     buyLink: 'https://amzn.to/4aC4PsH',
   },
@@ -143,9 +143,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#cbd5e1',
     unit: 'oz',
     contractSize: 5000,
-    // Feb 2026 MTD: 4,595 contracts = 22,975,000 oz actual delivery demand
-    monthlyDemand: 22975000, // 4,595 contracts * 5,000 oz (Feb 11 MTD)
-    pricePerUnit: 82,  // SI settle price (~$82/oz)
+    // Feb 2026 MTD: 4,639 contracts = 23,195,000 oz actual delivery demand
+    monthlyDemand: 23195000, // 4,639 contracts * 5,000 oz (Feb 18 MTD)
+    pricePerUnit: 78,  // SI settle price (~$77.51/oz, Feb 18)
     futuresSymbol: 'SI', // COMEX Silver Futures
     buyLink: 'https://amzn.to/4kCAbE4',
   },
@@ -157,7 +157,7 @@ export const metalConfigs: MetalConfig[] = [
     unit: 'oz',
     contractSize: 50, // PL is 50 oz per contract
     // Feb 2026 MTD: 485 contracts = 24,250 oz
-    monthlyDemand: 24250, // 485 contracts * 50 oz (Feb 10 MTD)
+    monthlyDemand: 24250, // 485 contracts * 50 oz (Feb 18 MTD)
     pricePerUnit: 2109,  // PL settle price
     futuresSymbol: 'PL', // NYMEX Platinum Futures
     buyLink: 'https://amzn.to/4cxqDZ0',
@@ -169,8 +169,8 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#a5b4fc',
     unit: 'oz',
     contractSize: 100, // PA is 100 oz per contract
-    // Feb 2026 MTD: 92 contracts = 9,200 oz
-    monthlyDemand: 9200, // 92 contracts * 100 oz (Feb 10 MTD)
+    // Feb 2026 MTD: 112 contracts = 11,200 oz
+    monthlyDemand: 11200, // 112 contracts * 100 oz (Feb 18 MTD)
     pricePerUnit: 1050,  // PA settle price
     futuresSymbol: 'PA', // NYMEX Palladium Futures
     buyLink: 'https://amzn.to/4c4Aq8V',
@@ -182,9 +182,9 @@ export const metalConfigs: MetalConfig[] = [
     colorDark: '#fb923c',
     unit: 'short tons', // COMEX warehouse stocks are in short tons
     contractSize: 12.5, // 25,000 lbs = 12.5 short tons per contract
-    // Feb 2026 MTD: 7,445 contracts = 93,062.5 short tons actual delivery demand
-    monthlyDemand: 93062.5, // 7,445 contracts * 12.5 short tons (Feb 11 MTD)
-    pricePerUnit: 11898, // ~$5.949/lb * 2000 lbs/short ton (Feb 11 settle)
+    // Feb 2026 MTD: 9,702 contracts = 121,275 short tons actual delivery demand
+    monthlyDemand: 121275, // 9,702 contracts * 12.5 short tons (Feb 18 MTD)
+    pricePerUnit: 11587, // ~$5.7935/lb * 2000 lbs/short ton (Feb 18 settle)
     futuresSymbol: 'HG', // COMEX Copper Futures
     buyLink: 'https://amzn.to/46aarsK',
   },
