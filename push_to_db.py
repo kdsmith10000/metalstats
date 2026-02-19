@@ -25,7 +25,7 @@ PUBLIC_DIR = BASE_DIR / "public"
 ENV_FILE = BASE_DIR / "app" / ".env"
 
 # Report date for this data push
-REPORT_DATE = "2026-02-12"
+REPORT_DATE = "2026-02-18"
 
 # Metal → futures symbol mapping
 METAL_SYMBOL_MAP = {
