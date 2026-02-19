@@ -41,13 +41,16 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 def get_db_connection(retries: int = 3, delay: float = 2.0):
     """Get a psycopg2 connection from DATABASE_URL with retry logic for Neon serverless."""
     import time
-    url = os.environ.get("DATABASE_URL") or os.environ.get("DATABASE_URL_UNPOOLED")
+    url = os.environ.get("DATABASE_URL_UNPOOLED") or os.environ.get("DATABASE_URL")
     if not url:
         raise RuntimeError("DATABASE_URL not set")
+    is_pooled = "-pooler" in (url or "")
     for attempt in range(1, retries + 1):
         try:
-            conn = psycopg2.connect(url, connect_timeout=10,
-                                    options="-c statement_timeout=30000")
+            kwargs = dict(connect_timeout=10)
+            if not is_pooled:
+                kwargs["options"] = "-c statement_timeout=30000"
+            conn = psycopg2.connect(url, **kwargs)
             return conn
         except psycopg2.OperationalError as e:
             if attempt < retries:

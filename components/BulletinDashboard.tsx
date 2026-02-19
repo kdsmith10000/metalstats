@@ -1183,19 +1183,31 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                 }
 
                 // Market-wide summary
-                if (volumeSummary?.totals?.futures_options) {
-                  const totals = volumeSummary.totals.futures_options;
-                  const volYoYChange = totals.yoy_volume > 0 ? ((totals.volume - totals.yoy_volume) / totals.yoy_volume * 100).toFixed(0) : '0';
-                  const oiYoYChange = totals.yoy_open_interest > 0 ? ((totals.open_interest - totals.yoy_open_interest) / totals.yoy_open_interest * 100).toFixed(0) : '0';
-                  const allNeg = gc && si && hg && pl && pa && [gc, si, hg, pl, pa, ali].filter(Boolean).every(m => m!.priceChange < 0);
-                  const marketTone = allNeg 
-                    ? 'Broad risk-off session with all major metals declining. Macro headwinds or USD strength likely driving the selloff.'
-                    : 'Mixed session across the metals complex.';
-                  takeaways.push({
-                    title: "Market Overview",
-                    text: `Total metals volume: ${formatVolume(totals.volume)} contracts (${parseInt(volYoYChange) > 0 ? '+' : ''}${volYoYChange}% YoY). Aggregate OI: ${formatNumber(totals.open_interest)} (${parseInt(oiYoYChange) > 0 ? '+' : ''}${oiYoYChange}% YoY, daily chg: ${totals.oi_change > 0 ? '+' : ''}${formatNumber(totals.oi_change)}). ${marketTone}`,
-                    color: "text-cyan-500"
-                  });
+                {
+                  const totals = volumeSummary?.totals?.futures_options;
+                  const products = volumeSummary?.products || [];
+                  const totalVol = totals?.volume ?? products.reduce((s, p) => s + (p.total_volume || 0), 0);
+                  const totalOI = totals?.open_interest ?? products.reduce((s, p) => s + (p.open_interest || 0), 0);
+                  const totalOIChg = totals?.oi_change ?? products.reduce((s, p) => s + (p.oi_change || 0), 0);
+                  const yoyVol = totals?.yoy_volume ?? products.reduce((s, p) => s + (p.yoy_volume || 0), 0);
+                  const yoyOI = totals?.yoy_open_interest ?? products.reduce((s, p) => s + (p.yoy_open_interest || 0), 0);
+                  
+                  if (totalVol > 0) {
+                    const volYoYChange = yoyVol > 0 ? ((totalVol - yoyVol) / yoyVol * 100).toFixed(0) : '0';
+                    const oiYoYChange = yoyOI > 0 ? ((totalOI - yoyOI) / yoyOI * 100).toFixed(0) : '0';
+                    const allNeg = gc && si && hg && pl && pa && [gc, si, hg, pl, pa, ali].filter(Boolean).every(m => m!.priceChange < 0);
+                    const allPos = gc && si && hg && pl && pa && [gc, si, hg, pl, pa, ali].filter(Boolean).every(m => m!.priceChange > 0);
+                    const marketTone = allNeg 
+                      ? 'Broad risk-off session with all major metals declining. Macro headwinds or USD strength likely driving the selloff.'
+                      : allPos
+                      ? 'Broad risk-on session with all major metals advancing. Macro tailwinds or USD weakness fueling the rally.'
+                      : 'Mixed session across the metals complex.';
+                    takeaways.push({
+                      title: "Market Overview",
+                      text: `Total metals volume: ${formatVolume(totalVol)} contracts (${parseInt(volYoYChange) > 0 ? '+' : ''}${volYoYChange}% YoY). Aggregate OI: ${formatNumber(totalOI)} (${parseInt(oiYoYChange) > 0 ? '+' : ''}${oiYoYChange}% YoY, daily chg: ${totalOIChg > 0 ? '+' : ''}${formatNumber(totalOIChg)}). ${marketTone}`,
+                      color: "text-cyan-500"
+                    });
+                  }
                 }
                 
                 return takeaways.map((item, i) => (
