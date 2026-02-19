@@ -1038,14 +1038,6 @@ export default function ForecastDashboard() {
         </div>
       )}
 
-      {/* Disclaimer */}
-      <div className="p-4 bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/50 dark:border-slate-700/30 rounded-xl">
-        <p className="text-[10px] text-slate-400 leading-relaxed text-center">
-          <span className="font-bold">DISCLAIMER:</span> These forecasts are statistical projections based on COMEX physical market data and time-series models.
-          They do not constitute financial advice or investment recommendations. All models carry inherent uncertainty — confidence
-          intervals and signal agreement metrics are provided for transparency. Past correlations do not guarantee future results.
-        </p>
-      </div>
     </div>
   );
 }
