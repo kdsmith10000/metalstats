@@ -20,9 +20,6 @@ export const metadata = {
     description: 'Learn about Heavy Metal Stats — a free, independent dashboard tracking COMEX warehouse inventory data for precious and base metals.',
     url: 'https://heavymetalstats.com/about',
   },
-  other: {
-    'google-adsense-account': 'ca-pub-1319414449875714',
-  },
 };
 
 export default function About() {

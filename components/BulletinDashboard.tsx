@@ -693,16 +693,16 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Volume Concentration Analysis */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
-            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-none flex items-center justify-center">
+          <div className="p-4 sm:p-5 md:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/10 rounded-none flex items-center justify-center">
                 <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
                 Volume Concentration
               </h4>
             </div>
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4">
               {(() => {
                 const gc = data.products.find(p => p.symbol === 'GC');
                 const si = data.products.find(p => p.symbol === 'SI');
@@ -819,9 +819,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Physical Delivery (MTD) - Dynamic from delivery data */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
-            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-none flex items-center justify-center">
+          <div className="p-4 sm:p-5 md:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/10 rounded-none flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
@@ -849,16 +849,16 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   return [
                     { label: 'No delivery data', value: '—', daily: 0 }
                   ].map((item, i) => (
-                    <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800 text-center col-span-2">
+                    <div key={i} className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800 text-center col-span-2">
                       <p className="text-sm text-slate-400">{item.label}</p>
                     </div>
                   ));
                 }
                 
                 return items.map((item, i) => (
-                  <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800 text-center">
-                    <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{item.label}</p>
-                    <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{item.value}</p>
+                  <div key={i} className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800 text-center">
+                    <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{item.label}</p>
+                    <p className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 dark:text-white tabular-nums">{item.value}</p>
                     {item.daily > 0 && (
                       <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1">+{formatNumber(item.daily)} today</p>
                     )}
@@ -1050,11 +1050,12 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               {(() => {
-                // Helper to get data from volumeSummary (preferred) or bulletin (fallback)
                 const getMetalData = (symbol: string) => {
                   const vsProduct = volumeSummary?.products?.find(p => p.symbol === symbol);
                   const bulletinProduct = data.products.find(p => p.symbol === symbol);
                   const frontContract = bulletinProduct?.contracts?.[0];
+                  const activeContract = bulletinProduct?.contracts?.reduce((best, c) =>
+                    c.globex_volume > (best?.globex_volume || 0) ? c : best, bulletinProduct?.contracts?.[0]);
                   
                   if (vsProduct) {
                     return {
@@ -1063,6 +1064,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                       oiChange: vsProduct.oi_change,
                       settle: frontContract?.settle || 0,
                       priceChange: frontContract?.change || 0,
+                      activeSettle: activeContract?.settle || frontContract?.settle || 0,
+                      activeChange: activeContract?.change || frontContract?.change || 0,
+                      activeMonth: activeContract?.month || frontContract?.month || '',
                       yoyOI: vsProduct.yoy_open_interest,
                       yoyVol: vsProduct.yoy_volume,
                     };
@@ -1073,6 +1077,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                       oiChange: bulletinProduct.total_oi_change,
                       settle: frontContract?.settle || 0,
                       priceChange: frontContract?.change || 0,
+                      activeSettle: activeContract?.settle || frontContract?.settle || 0,
+                      activeChange: activeContract?.change || frontContract?.change || 0,
+                      activeMonth: activeContract?.month || frontContract?.month || '',
                       yoyOI: 0,
                       yoyVol: 0,
                     };
@@ -1080,7 +1087,6 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   return null;
                 };
                 
-                // Get delivery data for context
                 const getDeliveryMTD = (metal: string) => {
                   return deliveryData?.deliveries?.find(d => d.metal === metal);
                 };
@@ -1096,91 +1102,188 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                 const silverDelivery = getDeliveryMTD('Silver');
                 const copperDelivery = getDeliveryMTD('Copper');
                 const platDelivery = getDeliveryMTD('Platinum');
+                const palladiumDelivery = getDeliveryMTD('Palladium');
                 
-                const takeaways = [];
+                const takeaways: Array<{title: string; text: string; color: string}> = [];
                 
+                // --- GOLD ---
                 if (gc) {
-                  const priceDir = gc.priceChange > 0 ? 'rallied' : gc.priceChange < 0 ? 'fell' : 'was unchanged';
-                  const priceChgAbs = Math.abs(gc.priceChange).toFixed(2);
-                  const priceChgPct = gc.settle > 0 ? ((gc.priceChange / (gc.settle - gc.priceChange)) * 100).toFixed(2) : '0.00';
-                  const oiSignal = gc.oiChange > 0 
-                    ? 'with rising OI — new longs entering, bullish conviction' 
-                    : gc.oiChange < -3000 
-                      ? 'with heavy OI liquidation — long profit-taking or stop-outs' 
-                      : gc.oiChange < 0 
-                        ? 'with declining OI — position unwinding' 
-                        : 'with flat OI — consolidation';
-                  const deliveryNote = goldDelivery ? ` MTD delivery notices at ${formatNumber(goldDelivery.month_to_date)} contracts (+${formatNumber(goldDelivery.daily_issued)} today).` : '';
+                  const priceChgAbs = Math.abs(gc.activeChange).toFixed(2);
+                  const prevPrice = gc.activeSettle - gc.activeChange;
+                  const priceChgPct = prevPrice > 0 ? ((gc.activeChange / prevPrice) * 100).toFixed(2) : '0.00';
+                  const broke5k = gc.activeSettle >= 5000 && prevPrice < 5000;
+                  const above5k = gc.activeSettle >= 5000;
+                  
+                  let headline: string;
+                  if (broke5k) {
+                    headline = `Gold shattered the $5,000 barrier, settling at $${gc.activeSettle.toFixed(2)} on ${gc.activeMonth} (+$${priceChgAbs}, +${priceChgPct}%).`;
+                  } else if (above5k) {
+                    headline = `Gold extended gains above $5,000, settling at $${gc.activeSettle.toFixed(2)} on ${gc.activeMonth} (+$${priceChgAbs}, +${priceChgPct}%).`;
+                  } else {
+                    const dir = gc.activeChange > 0 ? 'rallied' : gc.activeChange < 0 ? 'fell' : 'was unchanged';
+                    headline = `Gold ${dir} $${priceChgAbs} (${priceChgPct}%) to $${gc.activeSettle.toFixed(2)} on ${gc.activeMonth}.`;
+                  }
+                  
+                  const oiNote = gc.oiChange > 2000
+                    ? `OI surged +${formatNumber(gc.oiChange)} to ${formatNumber(gc.openInterest)} — fresh longs entering with conviction, classic bullish confirmation.`
+                    : gc.oiChange > 0
+                      ? `OI rose +${formatNumber(gc.oiChange)} to ${formatNumber(gc.openInterest)} — new positions building.`
+                      : gc.oiChange < -3000
+                        ? `OI liquidated ${formatNumber(gc.oiChange)} to ${formatNumber(gc.openInterest)} — heavy profit-taking or stop-outs.`
+                        : gc.oiChange < 0
+                          ? `OI declined ${formatNumber(gc.oiChange)} to ${formatNumber(gc.openInterest)} — position unwinding.`
+                          : `OI flat at ${formatNumber(gc.openInterest)} — consolidation phase.`;
+                  
+                  let deliveryNote = '';
+                  if (goldDelivery) {
+                    const dailyVsMtd = goldDelivery.month_to_date > 0 ? ((goldDelivery.daily_issued / goldDelivery.month_to_date) * 100).toFixed(1) : '0';
+                    const isWindDown = goldDelivery.daily_issued < 50;
+                    deliveryNote = isWindDown
+                      ? ` Delivery cycle winding down — only ${formatNumber(goldDelivery.daily_issued)} notices today vs ${formatNumber(goldDelivery.month_to_date)} MTD. Front-month obligations nearly settled.`
+                      : ` MTD delivery notices at ${formatNumber(goldDelivery.month_to_date)} contracts (+${formatNumber(goldDelivery.daily_issued)} today, ${dailyVsMtd}% of MTD).`;
+                  }
+                  
+                  const yoyNote = gc.yoyVol > 0
+                    ? ` Volume ${gc.volume > gc.yoyVol ? 'down' : 'up'} ${Math.abs(((gc.volume - gc.yoyVol) / gc.yoyVol) * 100).toFixed(0)}% YoY.`
+                    : '';
+                  
                   takeaways.push({
-                    title: "Gold — Price Action & Flow",
-                    text: `Gold ${priceDir} $${priceChgAbs} (${priceChgPct}%) to $${gc.settle.toFixed(2)} on ${formatVolume(gc.volume)} contracts ${oiSignal}. OI at ${formatNumber(gc.openInterest)} (${gc.oiChange > 0 ? '+' : ''}${formatNumber(gc.oiChange)}).${deliveryNote}`,
-                    color: gc.priceChange >= 0 ? "text-emerald-500" : "text-red-500"
+                    title: above5k ? "Gold — $5,000 Era" : "Gold — Price Action & Flow",
+                    text: `${headline} Volume: ${formatVolume(gc.volume)} contracts.${yoyNote} ${oiNote}${deliveryNote}`,
+                    color: gc.activeChange >= 0 ? "text-amber-500" : "text-red-500"
                   });
                 }
                 
+                // --- SILVER ---
                 if (si) {
-                  const priceDir = si.priceChange > 0 ? 'gained' : si.priceChange < 0 ? 'dropped' : 'held';
                   const priceChgAbs = Math.abs(si.priceChange).toFixed(3);
-                  const priceChgPct = si.settle > 0 ? ((si.priceChange / (si.settle - si.priceChange)) * 100).toFixed(2) : '0.00';
-                  const oiSignal = si.oiChange < -3000 
-                    ? 'Aggressive liquidation signals capitulation or forced selling.' 
-                    : si.oiChange < 0 
-                      ? 'Declining OI suggests position closing ahead of further moves.'
-                      : 'Rising OI indicates fresh positioning.';
-                  const deliveryNote = silverDelivery ? ` MTD deliveries: ${formatNumber(silverDelivery.month_to_date)} contracts.` : '';
+                  const prevPrice = si.settle - si.priceChange;
+                  const priceChgPct = prevPrice > 0 ? ((si.priceChange / prevPrice) * 100).toFixed(2) : '0.00';
+                  const dir = si.priceChange > 0 ? 'surged' : si.priceChange < 0 ? 'dropped' : 'held';
+                  
+                  const priceUpOiDown = si.priceChange > 0 && si.oiChange < 0;
+                  const oiNote = priceUpOiDown
+                    ? `OI fell ${formatNumber(Math.abs(si.oiChange))} to ${formatNumber(si.openInterest)} despite the rally — classic short-covering signal. Existing shorts forced to cover, not new longs committing.`
+                    : si.oiChange < -3000
+                      ? `OI collapsed ${formatNumber(si.oiChange)} to ${formatNumber(si.openInterest)} — aggressive liquidation signals capitulation.`
+                      : si.oiChange < 0
+                        ? `OI slipped ${formatNumber(si.oiChange)} to ${formatNumber(si.openInterest)} — position reduction.`
+                        : si.oiChange > 1000
+                          ? `OI jumped +${formatNumber(si.oiChange)} to ${formatNumber(si.openInterest)} — fresh positioning with conviction.`
+                          : `OI at ${formatNumber(si.openInterest)} (${si.oiChange > 0 ? '+' : ''}${formatNumber(si.oiChange)}).`;
+                  
+                  let deliveryNote = '';
+                  if (silverDelivery) {
+                    deliveryNote = ` MTD deliveries: ${formatNumber(silverDelivery.month_to_date)} contracts (+${formatNumber(silverDelivery.daily_issued)} today).`;
+                  }
+                  
+                  const gsRatio = gc && si.settle > 0 ? (gc.activeSettle / si.settle).toFixed(1) : null;
+                  const ratioNote = gsRatio ? ` Gold/Silver ratio: ${gsRatio}x.` : '';
+                  
                   takeaways.push({
-                    title: "Silver — Volatility & Positioning",
-                    text: `Silver ${priceDir} ${priceChgAbs} (${priceChgPct}%) to ${si.settle.toFixed(3)} with ${formatVolume(si.volume)} vol. OI ${si.oiChange > 0 ? 'up' : 'down'} ${formatNumber(Math.abs(si.oiChange))} to ${formatNumber(si.openInterest)}. ${oiSignal}${deliveryNote}`,
+                    title: priceUpOiDown ? "Silver — Short-Covering Rally" : "Silver — Volatility & Positioning",
+                    text: `Silver ${dir} ${priceChgAbs} (${priceChgPct}%) to ${si.settle.toFixed(3)}/oz on ${formatVolume(si.volume)} contracts. ${oiNote}${deliveryNote}${ratioNote}`,
                     color: si.priceChange >= 0 ? "text-emerald-500" : "text-red-500"
                   });
                 }
                 
+                // --- COPPER ---
                 if (hg) {
-                  const priceDir = hg.priceChange > 0 ? 'advanced' : hg.priceChange < 0 ? 'retreated' : 'flat';
                   const priceChgPct = hg.settle > 0 ? ((hg.priceChange / (hg.settle - hg.priceChange)) * 100).toFixed(2) : '0.00';
-                  const copperNote = copperDelivery ? ` Physical delivery MTD: ${formatNumber(copperDelivery.month_to_date)} contracts (+${formatNumber(copperDelivery.daily_issued)} today).` : '';
-                  const oiSignal = hg.oiChange > 0 
-                    ? 'with fresh buying interest' 
-                    : hg.oiChange < -1000 
-                      ? 'with significant position reduction'
-                      : 'with modest position trimming';
+                  const dir = hg.priceChange > 0 ? 'advanced' : hg.priceChange < 0 ? 'retreated' : 'held flat';
+                  
+                  const priceUpOiDown = hg.priceChange > 0 && hg.oiChange < -1000;
+                  const oiNote = priceUpOiDown
+                    ? `Despite the rally, OI shed ${formatNumber(Math.abs(hg.oiChange))} contracts to ${formatNumber(hg.openInterest)} — price-driven short-covering or profit-taking, not fresh commitment. Watch for follow-through.`
+                    : hg.oiChange > 1000
+                      ? `OI surged +${formatNumber(hg.oiChange)} to ${formatNumber(hg.openInterest)} — fresh buying interest.`
+                      : hg.oiChange < -1000
+                        ? `OI reduced by ${formatNumber(Math.abs(hg.oiChange))} to ${formatNumber(hg.openInterest)} — significant position trimming.`
+                        : `OI at ${formatNumber(hg.openInterest)} (${hg.oiChange > 0 ? '+' : ''}${formatNumber(hg.oiChange)}).`;
+                  
+                  let deliveryNote = '';
+                  if (copperDelivery) {
+                    const isSurge = copperDelivery.daily_issued > 500;
+                    deliveryNote = isSurge
+                      ? ` Physical delivery spike: +${formatNumber(copperDelivery.daily_issued)} contracts today, pushing MTD to ${formatNumber(copperDelivery.month_to_date)}. Heavy physical demand despite futures liquidation — paper-physical divergence warrants monitoring.`
+                      : ` Physical delivery MTD: ${formatNumber(copperDelivery.month_to_date)} contracts (+${formatNumber(copperDelivery.daily_issued)} today).`;
+                  }
+                  
                   takeaways.push({
-                    title: "Copper — Industrial Barometer",
-                    text: `Copper ${priceDir} ${Math.abs(hg.priceChange).toFixed(4)} (${priceChgPct}%) to $${hg.settle.toFixed(4)}/lb ${oiSignal}. OI at ${formatNumber(hg.openInterest)} (${hg.oiChange > 0 ? '+' : ''}${formatNumber(hg.oiChange)}).${copperNote}`,
+                    title: copperDelivery && copperDelivery.daily_issued > 500 ? "Copper — Delivery Surge & Liquidation Paradox" : "Copper — Industrial Barometer",
+                    text: `Copper ${dir} ${Math.abs(hg.priceChange).toFixed(4)} (${priceChgPct}%) to $${hg.settle.toFixed(4)}/lb on ${formatVolume(hg.volume)} contracts. ${oiNote}${deliveryNote}`,
                     color: "text-orange-500"
                   });
                 }
                 
+                // --- PGM COMPLEX ---
                 if (pl && pa) {
-                  const plDir = pl.priceChange > 0 ? '+' : '';
-                  const paDir = pa.priceChange > 0 ? '+' : '';
+                  const plPrevPrice = pl.settle - pl.priceChange;
+                  const plPct = plPrevPrice > 0 ? ((pl.priceChange / plPrevPrice) * 100).toFixed(1) : '0.0';
+                  const paPrevPrice = pa.settle - pa.priceChange;
+                  const paPct = paPrevPrice > 0 ? ((pa.priceChange / paPrevPrice) * 100).toFixed(1) : '0.0';
+                  
                   const netOiChange = pl.oiChange + pa.oiChange;
-                  const pgmSignal = netOiChange > 0 ? 'net accumulation in the sector' : 'broad-based PGM liquidation';
-                  const platNote = platDelivery ? ` Platinum MTD deliveries: ${formatNumber(platDelivery.month_to_date)}.` : '';
+                  const bothUp = pl.priceChange > 0 && pa.priceChange > 0;
+                  const pgmSignal = bothUp
+                    ? 'Synchronized PGM rally suggests broad auto-catalyst sector optimism or supply-side concerns.'
+                    : 'Divergent PGM moves — watch for auto-sector rotation signals.';
+                  
+                  let deliveryNote = '';
+                  if (platDelivery || palladiumDelivery) {
+                    const parts = [];
+                    if (platDelivery) parts.push(`Platinum MTD: ${formatNumber(platDelivery.month_to_date)}`);
+                    if (palladiumDelivery) parts.push(`Palladium MTD: ${formatNumber(palladiumDelivery.month_to_date)}`);
+                    deliveryNote = ` Deliveries — ${parts.join(', ')}.`;
+                  }
+                  
+                  const plOiYoYNote = pl.yoyOI > 0
+                    ? ` Platinum OI ${pl.openInterest < pl.yoyOI ? 'down' : 'up'} ${Math.abs(((pl.openInterest - pl.yoyOI) / pl.yoyOI) * 100).toFixed(0)}% YoY.`
+                    : '';
+                  
                   takeaways.push({
                     title: "PGM Complex — Auto-Catalyst Outlook",
-                    text: `Platinum ${plDir}$${pl.priceChange.toFixed(2)} to $${pl.settle.toFixed(2)} (OI ${pl.oiChange > 0 ? '+' : ''}${formatNumber(pl.oiChange)}). Palladium ${paDir}$${pa.priceChange.toFixed(2)} to $${pa.settle.toFixed(2)} (OI ${pa.oiChange > 0 ? '+' : ''}${formatNumber(pa.oiChange)}). Combined ${pgmSignal}.${platNote}`,
+                    text: `Platinum +$${pl.priceChange.toFixed(2)} (+${plPct}%) to $${pl.settle.toFixed(2)} (OI ${pl.oiChange > 0 ? '+' : ''}${formatNumber(pl.oiChange)}). Palladium +$${pa.priceChange.toFixed(2)} (+${paPct}%) to $${pa.settle.toFixed(2)} (OI ${pa.oiChange > 0 ? '+' : ''}${formatNumber(pa.oiChange)}). ${pgmSignal} Net PGM OI ${netOiChange > 0 ? '+' : ''}${formatNumber(netOiChange)}.${plOiYoYNote}${deliveryNote}`,
                     color: "text-violet-500"
                   });
                 }
                 
+                // --- ALUMINUM ---
                 if (ali) {
-                  const priceDir = ali.priceChange > 0 ? 'rose' : ali.priceChange < 0 ? 'fell' : 'was unchanged';
                   const priceChgAbs = Math.abs(ali.priceChange).toFixed(2);
-                  const priceChgPct = ali.settle > 0 ? ((ali.priceChange / (ali.settle - ali.priceChange)) * 100).toFixed(2) : '0.00';
-                  const oiSignal = ali.oiChange > 0
-                    ? 'with fresh positioning entering'
-                    : ali.oiChange < 0
-                      ? 'with position unwinding'
-                      : 'with flat OI';
+                  const prevPrice = ali.settle - ali.priceChange;
+                  const priceChgPct = prevPrice > 0 ? ((ali.priceChange / prevPrice) * 100).toFixed(2) : '0.00';
+                  const dir = ali.priceChange > 0 ? 'rose' : ali.priceChange < 0 ? 'fell' : 'was unchanged';
                   takeaways.push({
                     title: "Aluminum — Industrial Demand",
-                    text: `Aluminum ${priceDir} $${priceChgAbs} (${priceChgPct}%) to $${ali.settle.toFixed(2)}/mt on ${formatVolume(ali.volume)} contracts ${oiSignal}. OI at ${formatNumber(ali.openInterest)} (${ali.oiChange > 0 ? '+' : ''}${formatNumber(ali.oiChange)}).`,
+                    text: `Aluminum ${dir} $${priceChgAbs} (${priceChgPct}%) to $${ali.settle.toFixed(2)}/mt on ${formatVolume(ali.volume)} contracts. OI at ${formatNumber(ali.openInterest)} (${ali.oiChange > 0 ? '+' : ''}${formatNumber(ali.oiChange)}).`,
                     color: "text-slate-400"
                   });
                 }
 
-                // Market-wide summary
+                // --- DELIVERY FLOW INTELLIGENCE ---
+                {
+                  const deliveryMetals = [goldDelivery, silverDelivery, copperDelivery, platDelivery, palladiumDelivery].filter(Boolean);
+                  if (deliveryMetals.length >= 2) {
+                    const totalMTD = deliveryMetals.reduce((s, d) => s + (d?.month_to_date || 0), 0);
+                    const totalToday = deliveryMetals.reduce((s, d) => s + (d?.daily_issued || 0), 0);
+                    
+                    const topMTD = [...deliveryMetals].sort((a, b) => (b?.month_to_date || 0) - (a?.month_to_date || 0));
+                    const topToday = [...deliveryMetals].sort((a, b) => (b?.daily_issued || 0) - (a?.daily_issued || 0));
+                    
+                    const dominantMetal = topMTD[0]?.metal || '';
+                    const dominantPct = totalMTD > 0 ? ((topMTD[0]?.month_to_date || 0) / totalMTD * 100).toFixed(0) : '0';
+                    const todayLeader = topToday[0]?.metal || '';
+                    
+                    takeaways.push({
+                      title: "Delivery Flow Intelligence",
+                      text: `${formatNumber(totalMTD)} total contracts delivered MTD across ${deliveryMetals.length} metals (+${formatNumber(totalToday)} today). ${dominantMetal} dominates at ${dominantPct}% of flow (${formatNumber(topMTD[0]?.month_to_date || 0)} contracts). Today's most active: ${todayLeader} with ${formatNumber(topToday[0]?.daily_issued || 0)} notices. Physical delivery activity reflects real metal movement between counterparties — elevated levels signal genuine commercial demand.`,
+                      color: "text-blue-500"
+                    });
+                  }
+                }
+
+                // --- MARKET OVERVIEW ---
                 {
                   const totals = volumeSummary?.totals?.futures_options;
                   const products = volumeSummary?.products || [];
@@ -1193,16 +1296,25 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   if (totalVol > 0) {
                     const volYoYChange = yoyVol > 0 ? ((totalVol - yoyVol) / yoyVol * 100).toFixed(0) : '0';
                     const oiYoYChange = yoyOI > 0 ? ((totalOI - yoyOI) / yoyOI * 100).toFixed(0) : '0';
-                    const allNeg = gc && si && hg && pl && pa && [gc, si, hg, pl, pa, ali].filter(Boolean).every(m => m!.priceChange < 0);
-                    const allPos = gc && si && hg && pl && pa && [gc, si, hg, pl, pa, ali].filter(Boolean).every(m => m!.priceChange > 0);
-                    const marketTone = allNeg 
-                      ? 'Broad risk-off session with all major metals declining. Macro headwinds or USD strength likely driving the selloff.'
-                      : allPos
-                      ? 'Broad risk-on session with all major metals advancing. Macro tailwinds or USD weakness fueling the rally.'
-                      : 'Mixed session across the metals complex.';
+                    const metals = [gc, si, hg, pl, pa, ali].filter(Boolean);
+                    const allNeg = metals.length > 0 && metals.every(m => m!.priceChange < 0);
+                    const allPos = metals.length > 0 && metals.every(m => m!.priceChange > 0);
+                    const numUp = metals.filter(m => m!.priceChange > 0).length;
+                    
+                    let marketTone: string;
+                    if (allPos) {
+                      marketTone = `Broad-based risk-on session with all ${metals.length} metals advancing in unison. This synchronized strength points to macro tailwinds — likely USD weakness, dovish central bank signals, or inflation hedging demand. Cross-asset correlation elevated.`;
+                    } else if (allNeg) {
+                      marketTone = `Broad risk-off session with all ${metals.length} metals declining. Macro headwinds or USD strength likely driving the synchronized selloff.`;
+                    } else if (numUp >= metals.length - 1) {
+                      marketTone = `Near-unanimously bullish session with ${numUp}/${metals.length} metals advancing. Broad precious and base metal participation suggests macro-driven move.`;
+                    } else {
+                      marketTone = `Mixed session — ${numUp}/${metals.length} metals positive. Watch for sector rotation between precious and industrial names.`;
+                    }
+                    
                     takeaways.push({
-                      title: "Market Overview",
-                      text: `Total metals volume: ${formatVolume(totalVol)} contracts (${parseInt(volYoYChange) > 0 ? '+' : ''}${volYoYChange}% YoY). Aggregate OI: ${formatNumber(totalOI)} (${parseInt(oiYoYChange) > 0 ? '+' : ''}${oiYoYChange}% YoY, daily chg: ${totalOIChg > 0 ? '+' : ''}${formatNumber(totalOIChg)}). ${marketTone}`,
+                      title: "Market Overview — Cross-Asset Summary",
+                      text: `Total metals complex volume: ${formatVolume(totalVol)} contracts (${parseInt(volYoYChange) > 0 ? '+' : ''}${volYoYChange}% YoY). Aggregate open interest: ${formatNumber(totalOI)} (${parseInt(oiYoYChange) > 0 ? '+' : ''}${oiYoYChange}% YoY, daily change: ${totalOIChg > 0 ? '+' : ''}${formatNumber(totalOIChg)}). ${marketTone}`,
                       color: "text-cyan-500"
                     });
                   }

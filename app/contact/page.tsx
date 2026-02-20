@@ -20,9 +20,6 @@ export const metadata = {
     description: 'Get in touch with Heavy Metal Stats. Questions, feedback, or suggestions about our COMEX metals inventory tracker?',
     url: 'https://heavymetalstats.com/contact',
   },
-  other: {
-    'google-adsense-account': 'ca-pub-1319414449875714',
-  },
 };
 
 export default function Contact() {

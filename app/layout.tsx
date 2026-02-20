@@ -133,6 +133,9 @@ export const metadata: Metadata = {
     description: 'Free precious metals statistics dashboard. Live COMEX warehouse stocks, coverage ratios, paper vs physical ratios & delivery data updated daily.',
   },
   category: 'finance',
+  other: {
+    'google-adsense-account': 'ca-pub-1319414449875714',
+  },
 };
 
 export default async function RootLayout({
@@ -402,7 +405,11 @@ export default async function RootLayout({
       <head>
         {/* Canonical URLs are handled per-page via Next.js metadata alternates.canonical */}
         {/* DO NOT add a hardcoded <link rel="canonical"> here — it overrides every page's canonical */}
-        
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1319414449875714"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
