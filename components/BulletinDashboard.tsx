@@ -1026,7 +1026,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           
           <div className="relative z-10">
             {/* Added spacer at the top of the card to move everything down */}
-            <div className="h-4 sm:h-12 md:h-20 lg:h-32" />
+            <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
 
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16">
               <div className="max-w-xl space-y-3 sm:space-y-8">
@@ -1039,8 +1039,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
               </div>
             </div>
 
-            {/* Spacer to move Key Takeaways block further down */}
-            <div className="h-4 sm:h-12 md:h-20 lg:h-24" />
+            <div className="h-4 sm:h-6 md:h-8" />
 
             <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-12">
               <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
