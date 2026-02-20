@@ -104,7 +104,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
           <button
             key={c.metal}
             onClick={() => setSelectedMetal(c.metal)}
-            className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider rounded-none transition-all ${
               selectedMetal === c.metal
                 ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -117,7 +117,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
 
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3 sm:gap-4">
-        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl border border-slate-200 dark:border-slate-700/30 text-center">
+        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-none border border-slate-200 dark:border-slate-700/30 text-center">
           <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">
             Cumulative
           </p>
@@ -125,7 +125,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
             {formatNumber(contract.total_cumulative)}
           </p>
         </div>
-        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl border border-slate-200 dark:border-slate-700/30 text-center">
+        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-none border border-slate-200 dark:border-slate-700/30 text-center">
           <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">
             Avg Daily
           </p>
@@ -133,7 +133,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
             {formatNumber(avgDaily)}
           </p>
         </div>
-        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl border border-slate-200 dark:border-slate-700/30 text-center">
+        <div className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-none border border-slate-200 dark:border-slate-700/30 text-center">
           <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">
             Peak Day
           </p>
@@ -197,7 +197,7 @@ export default function DeliveryMTDChart({ data }: DeliveryMTDChartProps) {
               dataKey="daily"
               fill={color}
               opacity={0.8}
-              radius={[4, 4, 0, 0]}
+              radius={[0, 0, 0, 0]}
               name="daily"
             />
             <Line

@@ -186,7 +186,7 @@ function DirectionBadge({ direction, confidence }: { direction: string; confiden
   const Icon = config.icon;
 
   return (
-    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border ${config.bg} ${config.border}`}>
+    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-none border ${config.bg} ${config.border}`}>
       <Icon className={`w-4 h-4 ${config.text}`} />
       <span className={`text-sm font-bold tracking-wide ${config.text}`}>{direction}</span>
       <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{confidence}%</span>
@@ -486,10 +486,10 @@ export default function ForecastDashboard() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl animate-pulse" />
+        <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-none animate-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl animate-pulse" />
+            <div key={i} className="h-64 bg-slate-200 dark:bg-slate-800 rounded-none animate-pulse" />
           ))}
         </div>
       </div>
@@ -498,7 +498,7 @@ export default function ForecastDashboard() {
 
   if (error || !forecastData) {
     return (
-      <div className="p-8 text-center bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
+      <div className="p-8 text-center bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none">
         <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto mb-3" />
         <p className="text-sm text-slate-500">{error || 'Forecast data unavailable'}</p>
         <p className="text-xs text-slate-400 mt-1">Run forecast.py to generate predictions</p>
@@ -565,14 +565,14 @@ export default function ForecastDashboard() {
             <button
               key={name}
               onClick={() => setSelectedMetal(isSelected ? null : name)}
-              className={`text-left p-5 rounded-2xl border transition-all duration-300 ${
+              className={`text-left p-5 sm:p-7 md:p-8 rounded-none border transition-all duration-300 ${
                 isSelected
                   ? 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 shadow-lg scale-[1.02]'
                   : 'bg-white dark:bg-black/40 border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md'
               } backdrop-blur-xl`}
             >
               {/* Metal name and price */}
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-3 mt-1 sm:mt-2 md:mt-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
                   <span className="text-sm font-bold text-slate-900 dark:text-white">{name}</span>
@@ -639,7 +639,7 @@ export default function ForecastDashboard() {
                   (fc.direction === 'BULLISH' && diff < 0) ||
                   (fc.direction === 'BEARISH' && diff > 0);
                 return (
-                  <div className={`mb-2 px-2 py-1 rounded-lg text-[10px] font-semibold ${
+                  <div className={`mb-2 px-2 py-1 rounded-none text-[10px] font-semibold ${
                     correct ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' :
                     wrong ? 'bg-red-500/10 text-red-600 dark:text-red-400' :
                     'bg-slate-500/10 text-slate-500'
@@ -700,7 +700,7 @@ export default function ForecastDashboard() {
       </div>
 
       {/* Composite Score Overview Bar Chart */}
-      <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
+      <div className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none">
         <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
           <BarChart3 className="w-4 h-4" />
           Directional Composite Scores
@@ -746,14 +746,14 @@ export default function ForecastDashboard() {
 
       {/* Forecast Accuracy */}
       {accuracyData && accuracyData.overall.total > 0 && (
-        <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
+        <div className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none">
           <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
             <Target className="w-4 h-4" />
             Forecast Accuracy — Last {accuracyData.overall.total} Forecasts
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {/* Overall */}
-            <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-center col-span-2 sm:col-span-3 lg:col-span-1">
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-none text-center col-span-2 sm:col-span-3 lg:col-span-1">
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Overall</p>
               <p className={`text-2xl font-black ${
                 (accuracyData.overall.hit_rate ?? 0) >= 60 ? 'text-emerald-500' :
@@ -769,7 +769,7 @@ export default function ForecastDashboard() {
             {Object.entries(accuracyData.metals).map(([metal, acc]) => {
               const color = METAL_COLORS[metal]?.primary || '#94a3b8';
               return (
-                <div key={metal} className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-center">
+                <div key={metal} className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-none text-center">
                   <div className="flex items-center justify-center gap-1.5 mb-1">
                     <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }} />
                     <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{metal}</p>
@@ -795,7 +795,7 @@ export default function ForecastDashboard() {
       {detail && selectedMetal && detailColor && (
         <div className="space-y-6">
           {/* Price Projection Chart */}
-          <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl">
+          <div className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
                 Price Projection — {selectedMetal}
@@ -812,7 +812,7 @@ export default function ForecastDashboard() {
             />
             {detail.forecast_5d && (
               <div className="mt-4 grid grid-cols-2 gap-4">
-                <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-none">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">5-Day Range</p>
                   <p className="text-sm font-bold text-slate-900 dark:text-white">
                     ${detail.forecast_5d.low.toLocaleString()} — ${detail.forecast_5d.high.toLocaleString()}
@@ -823,7 +823,7 @@ export default function ForecastDashboard() {
                   </p>
                 </div>
                 {detail.forecast_20d && (
-                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-none">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">20-Day Range</p>
                     <p className="text-sm font-bold text-slate-900 dark:text-white">
                       ${detail.forecast_20d.low.toLocaleString()} — ${detail.forecast_20d.high.toLocaleString()}
@@ -839,7 +839,7 @@ export default function ForecastDashboard() {
           </div>
 
           {/* Signals + Squeeze + Drivers — consolidated */}
-          <div className="p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl space-y-5">
+          <div className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none space-y-5">
             {/* Signal pills */}
             <div className="pl-2 sm:pl-8">
               <h3 className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-2 sm:mb-3 pl-6 sm:pl-14">

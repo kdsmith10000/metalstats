@@ -133,7 +133,7 @@ export default function DeliveryYTDSection({ data }: DeliveryYTDSectionProps) {
           <button
             key={p.metal}
             onClick={() => { setSelectedMetal(p.metal); setShowAllFirms(false); }}
-            className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider rounded-none transition-all ${
               selectedMetal === p.metal
                 ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -145,7 +145,7 @@ export default function DeliveryYTDSection({ data }: DeliveryYTDSectionProps) {
       </div>
 
       {/* Monthly Totals Bar Chart */}
-      <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm mb-6 sm:mb-8">
+      <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm mb-6 sm:mb-8">
         <h3 className="text-xs sm:text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4 sm:mb-6">
           Monthly Delivery Totals
         </h3>
@@ -182,7 +182,7 @@ export default function DeliveryYTDSection({ data }: DeliveryYTDSectionProps) {
                 formatter={(value: any) => [formatNumber(Number(value) || 0), 'Contracts']}
                 labelStyle={{ color: isDark ? '#94a3b8' : '#64748b', fontWeight: 800, marginBottom: 4 }}
               />
-              <Bar dataKey="total" radius={[6, 6, 0, 0]}>
+              <Bar dataKey="total" radius={[0, 0, 0, 0]}>
                 {monthlyChartData.map((entry, index) => (
                   <Cell
                     key={index}

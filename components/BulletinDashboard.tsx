@@ -278,14 +278,14 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
               DAILY FUTURES VOLUME & OPEN INTEREST — BULLETIN #{data.bulletin_number}
             </p>
           </div>
-          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl w-fit">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-none w-fit">
             <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
             <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{displayDate}</span>
           </div>
         </div>
 
         {/* Sortable Column Headers */}
-        <div className="hidden sm:flex items-center justify-between gap-4 px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl mb-3 sm:mb-4">
+        <div className="hidden sm:flex items-center justify-between gap-4 px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-none mb-3 sm:mb-4">
           <div className="flex items-center gap-4 sm:gap-6 lg:gap-12 min-w-[200px] lg:min-w-[280px]">
             <button
               onClick={() => toggleSort('_cards', 'month')}
@@ -409,17 +409,17 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                 <div key={product.symbol} className="relative">
                   <button
                     onClick={() => setExpandedProduct(isExpanded ? null : product.symbol)}
-                    className="relative w-full text-left p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
+                    className="relative w-full text-left p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm hover:shadow-md transition-all duration-300"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                       {/* Product Info */}
                       <div className="flex items-center gap-4 sm:gap-6 lg:gap-12">
                         <div className="relative flex-shrink-0">
                           <div 
-                            className="absolute -inset-1.5 sm:-inset-2 rounded-xl sm:rounded-2xl blur-md opacity-20"
+                            className="absolute -inset-1.5 sm:-inset-2 rounded-none blur-md opacity-20"
                             style={{ backgroundColor: prodConfig?.color || '#64748b' }}
                           />
-                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-slate-900 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl shadow-lg">
+                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-slate-900 rounded-none flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl shadow-lg">
                             {product.symbol.substring(0, 2).toUpperCase()}
                           </div>
                         </div>
@@ -473,7 +473,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                           </p>
                         </div>
                         
-                        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
+                        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-none flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}>
                           <ChevronRight className="w-5 h-5 text-slate-400" />
                         </div>
                       </div>
@@ -500,7 +500,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                             </p>
                           </div>
                         </div>
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-90' : ''}`}>
+                        <div className={`w-8 h-8 rounded-none flex items-center justify-center bg-slate-100 dark:bg-slate-800 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-90' : ''}`}>
                           <ChevronRight className="w-4 h-4 text-slate-400" />
                         </div>
                       </div>
@@ -513,7 +513,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/10 shadow-inner"
+                        className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-none border border-slate-200 dark:border-white/10 shadow-inner"
                       >
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-8 mb-4 sm:mb-8">
                           {(() => {
@@ -534,7 +534,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                               { label: 'PNT Volume', value: formatNumber(product.contracts.reduce((sum, c) => sum + c.pnt_volume, 0)) }
                             ];
                             return stats.map((stat, i) => (
-                              <div key={i} className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700/30 text-center">
+                              <div key={i} className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-none border border-slate-200 dark:border-slate-700/30 text-center">
                                 <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
                                 <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color || ''}`}>{stat.value}</p>
                                 {'subtext' in stat && stat.subtext && (
@@ -607,9 +607,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Precious Metals Divergence */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 rounded-none flex items-center justify-center">
                 <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
@@ -667,7 +667,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   const isPositive = dailyChange > 0;
                   const isNegative = dailyChange < 0;
                   return (
-                    <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800">
                       <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${getIconColor(dailyChange)} mt-0.5 sm:mt-1 flex-shrink-0`} />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
@@ -678,7 +678,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                           OI chg: {isPositive ? '+' : ''}{formatNumber(dailyChange)} • Vol: {formatVolume(metal.volume)}
                         </p>
                       </div>
-                      <div className={`flex-shrink-0 px-2 py-1 rounded-lg text-xs sm:text-sm font-bold tabular-nums ${
+                      <div className={`flex-shrink-0 px-2 py-1 rounded-none text-xs sm:text-sm font-bold tabular-nums ${
                         isPositive ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' : 
                         isNegative ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 
                         'bg-slate-100 dark:bg-slate-800 text-slate-500'
@@ -693,9 +693,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Volume Concentration Analysis */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-none flex items-center justify-center">
                 <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
@@ -730,7 +730,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                         <span>Gold vs Silver Volume</span>
                         <span>{siVol > gcVol ? `${ratio}x Silver` : gcVol > siVol ? `${(gcVol/siVol).toFixed(1)}x Gold` : 'Even'}</span>
                       </div>
-                      <div className="h-2.5 sm:h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
+                      <div className="h-2.5 sm:h-3 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden flex">
                         <div className="h-full bg-amber-500" style={{ width: `${goldPercent}%` }} />
                         <div className="h-full bg-slate-400" style={{ width: `${silverPercent}%` }} />
                       </div>
@@ -741,7 +741,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
                     <div className="grid grid-cols-1 gap-3 sm:gap-4">
                       {gc && gcFront && (
-                        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800">
                           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                             <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Gold Front-Month</span>
                             {gcFront.month} accounts for {gcFrontPercent}% of GC volume ({formatVolume(gcFront.globex_volume)} / {formatVolume(gc.total_volume)})
@@ -749,7 +749,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                         </div>
                       )}
                       {pl && plFront && (
-                        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                        <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800">
                           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                             <span className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs block mb-0.5 sm:mb-1">Platinum Activity</span>
                             {plFront.month} captures {plFrontPercent}% of PL volume ({formatVolume(plFront.globex_volume)} / {formatVolume(pl.total_volume)})
@@ -764,9 +764,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Open Interest Trends */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 rounded-none flex items-center justify-center">
                 <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
@@ -803,7 +803,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   const color = change > 0 ? 'text-emerald-500' : change < 0 ? 'text-red-500' : 'text-slate-400';
                   
                   return (
-                    <div key={i} className="flex items-center justify-between p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <div key={i} className="flex items-center justify-between p-3 sm:p-4 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800">
                       <div>
                         <p className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-[10px] sm:text-xs mb-0.5 sm:mb-1">{metal.name}</p>
                         <p className="text-xs sm:text-sm text-slate-500 font-medium">{getSignal(change)}</p>
@@ -819,9 +819,9 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Physical Delivery (MTD) - Dynamic from delivery data */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-none flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
               </div>
               <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl">
@@ -849,14 +849,14 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   return [
                     { label: 'No delivery data', value: '—', daily: 0 }
                   ].map((item, i) => (
-                    <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 text-center col-span-2">
+                    <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800 text-center col-span-2">
                       <p className="text-sm text-slate-400">{item.label}</p>
                     </div>
                   ));
                 }
                 
                 return items.map((item, i) => (
-                  <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
+                  <div key={i} className="p-3 sm:p-4 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded-none border border-slate-100 dark:border-slate-800 text-center">
                     <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{item.label}</p>
                     <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{item.value}</p>
                     {item.daily > 0 && (
@@ -905,7 +905,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   { label: 'Today Open Interest', value: formatNumber(oi), subtext: 'All Metals' },
                   { label: '52-Week Ago OI', value: formatNumber(yoyOI), subtext: `${oiChange >= 0 ? '+' : ''}${oiChange.toFixed(0)}% YoY`, color: oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : '' },
                 ].map((stat, i) => (
-                  <div key={i} className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
+                  <div key={i} className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none text-center">
                     <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
                     <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</p>
                     {'subtext' in stat && stat.subtext && (
@@ -945,7 +945,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   color: oiChange > 0 ? 'text-emerald-500' : oiChange < 0 ? 'text-red-500' : ''
                 },
               ].map((stat, i) => (
-                <div key={i} className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl sm:rounded-2xl text-center">
+                <div key={i} className="p-4 sm:p-6 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none text-center">
                   <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
                   <p className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</p>
                   {'subtext' in stat && stat.subtext && (
@@ -957,7 +957,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
 
           {/* Product Comparison Table */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl">
+          <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none">
             <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tighter text-base sm:text-lg md:text-xl mb-4 sm:mb-6">
               Product Breakdown
             </h4>
@@ -1021,7 +1021,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
 
       {/* Key Takeaways Section */}
       <div className="mt-16 sm:mt-24 md:mt-40 lg:mt-64 pt-12 sm:pt-16 md:pt-20 lg:pt-32 border-t border-slate-200 dark:border-slate-800">
-        <div className="p-4 sm:p-8 md:p-12 bg-white dark:bg-black border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden relative rounded-2xl sm:rounded-none">
+        <div className="p-4 sm:p-8 md:p-12 bg-white dark:bg-black border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden relative rounded-none">
           <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-emerald-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           
           <div className="relative z-10">

@@ -1,7 +1,7 @@
 'use client';
 
 import { PaperPhysicalData, getPaperPhysicalRiskColor, getPaperPhysicalBgColor, formatNumber } from '@/lib/data';
-import { FileStack, Coins } from 'lucide-react';
+import { FileStack } from 'lucide-react';
 
 interface PaperPhysicalCardProps {
   metalName: string;
@@ -10,12 +10,34 @@ interface PaperPhysicalCardProps {
   compact?: boolean;
 }
 
+function getRiskBorderColor(riskLevel: PaperPhysicalData['riskLevel']): string {
+  switch (riskLevel) {
+    case 'LOW': return 'border-emerald-500/20';
+    case 'MODERATE': return 'border-amber-500/20';
+    case 'HIGH': return 'border-orange-500/20';
+    case 'EXTREME': return 'border-red-500/20';
+  }
+}
+
+function getRiskGlowColor(riskLevel: PaperPhysicalData['riskLevel']): string {
+  switch (riskLevel) {
+    case 'LOW': return 'bg-emerald-500';
+    case 'MODERATE': return 'bg-amber-500';
+    case 'HIGH': return 'bg-orange-500';
+    case 'EXTREME': return 'bg-red-500';
+  }
+}
+
 export default function PaperPhysicalCard({ metalName, data, unit, compact = false }: PaperPhysicalCardProps) {
   const riskColor = getPaperPhysicalRiskColor(data.riskLevel);
   const bgColor = getPaperPhysicalBgColor(data.riskLevel);
-  
+  const borderColor = getRiskBorderColor(data.riskLevel);
+  const glowColor = getRiskGlowColor(data.riskLevel);
+
+  const physicalPercent = Math.min(100 / data.ratio, 100);
+  const paperPercent = 100 - physicalPercent;
+
   if (compact) {
-    // Compact version for hero cards
     return (
       <div className="flex flex-col items-center gap-1">
         <div className="flex items-center gap-1.5">
@@ -34,94 +56,73 @@ export default function PaperPhysicalCard({ metalName, data, unit, compact = fal
     );
   }
 
-  // Full version for expanded detail view
   return (
-    <div className="p-4 sm:p-6 bg-white dark:bg-black/40 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700/30">
-      <div className="flex items-center gap-2 mb-4">
-        <FileStack className="w-5 h-5 text-slate-500" />
-        <h4 className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+    <div className={`relative overflow-hidden border ${borderColor} bg-white dark:bg-slate-900/60 backdrop-blur-xl`}>
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4 flex items-center justify-between">
+        <span className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
           Paper vs Physical
-        </h4>
-        <span className={`ml-auto text-[10px] font-black uppercase px-2 py-1 rounded-full ${bgColor} text-white`}>
-          {data.riskLevel} LEVERAGE
+        </span>
+        <span className={`text-[10px] font-black uppercase px-2.5 py-1 ${bgColor} text-white tracking-wide`}>
+          {data.riskLevel}
         </span>
       </div>
-      
-      <div className="grid grid-cols-2 gap-4">
-        {/* Paper Side */}
-        <div className="text-center p-3 bg-slate-100/50 dark:bg-slate-800/50 rounded-xl">
-          <div className="flex items-center justify-center gap-1.5 mb-2">
-            <FileStack className="w-4 h-4 text-blue-500" />
-            <span className="text-[10px] font-black text-slate-400 uppercase">Paper Claims</span>
-          </div>
-          <p className="text-xl font-black text-slate-900 dark:text-white">
+
+      {/* Ratio Hero */}
+      <div className="px-5 pb-5">
+        <div className="flex items-baseline gap-2">
+          <span className={`text-4xl sm:text-5xl font-black tabular-nums tracking-tight ${riskColor}`}>
+            {data.ratio.toFixed(1)}
+          </span>
+          <span className="text-sm font-bold text-slate-400 dark:text-slate-500">: 1</span>
+        </div>
+        <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+          paper claims per physical {unit.replace(/s$/, '')}
+        </p>
+      </div>
+
+      {/* Proportion Bar */}
+      <div className="px-5 pb-4">
+        <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex gap-px">
+          <div
+            className={`h-full rounded-full ${glowColor} opacity-90 transition-all duration-700`}
+            style={{ width: `${physicalPercent}%` }}
+          />
+          <div
+            className="h-full rounded-full bg-blue-500 opacity-60 transition-all duration-700"
+            style={{ width: `${paperPercent}%` }}
+          />
+        </div>
+        <div className="flex justify-between mt-2 text-[10px] font-bold">
+          <span className={riskColor}>Physical {physicalPercent.toFixed(0)}%</span>
+          <span className="text-blue-500/70">Paper {paperPercent.toFixed(0)}%</span>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="mx-5 border-t border-slate-100 dark:border-slate-800" />
+
+      {/* Stats Row */}
+      <div className="grid grid-cols-2 divide-x divide-slate-100 dark:divide-slate-800">
+        <div className="px-5 py-4">
+          <p className="text-[10px] font-black text-blue-500/70 uppercase tracking-wider mb-1">Paper</p>
+          <p className="text-base sm:text-lg font-black tabular-nums text-slate-900 dark:text-white">
             {formatNumber(data.openInterestOz)}
           </p>
-          <p className="text-[9px] text-slate-400 mt-1">
+          <p className="text-[10px] text-slate-400 mt-0.5 tabular-nums">
             {formatNumber(data.openInterest)} contracts
           </p>
         </div>
-        
-        {/* Physical Side */}
-        <div className="text-center p-3 bg-slate-100/50 dark:bg-slate-800/50 rounded-xl">
-          <div className="flex items-center justify-center gap-1.5 mb-2">
-            <Coins className="w-4 h-4 text-amber-500" />
-            <span className="text-[10px] font-black text-slate-400 uppercase">Physical Metal</span>
-          </div>
-          <p className="text-xl font-black text-slate-900 dark:text-white">
+        <div className="px-5 py-4">
+          <p className={`text-[10px] font-black uppercase tracking-wider mb-1 ${riskColor} opacity-80`}>Physical</p>
+          <p className="text-base sm:text-lg font-black tabular-nums text-slate-900 dark:text-white">
             {formatNumber(data.registeredInventory)}
           </p>
-          <p className="text-[9px] text-slate-400 mt-1">
+          <p className="text-[10px] text-slate-400 mt-0.5">
             registered {unit}
           </p>
         </div>
       </div>
-      
-      {/* Ratio Display */}
-      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
-          <span className="text-[10px] sm:text-xs font-bold text-slate-500">
-            For every 1 {unit.replace(/s$/, '')} of physical metal:
-          </span>
-          <span className={`text-xl sm:text-2xl font-black ${riskColor}`}>
-            {data.ratio.toFixed(2)} paper claims
-          </span>
-        </div>
-        
-        {/* Visual Bar */}
-        <div className="mt-3 h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex">
-          <div 
-            className="h-full bg-amber-500 transition-all duration-500"
-            style={{ width: `${Math.min(100 / data.ratio, 100)}%` }}
-            title="Physical"
-          />
-          <div 
-            className="h-full bg-blue-500 transition-all duration-500"
-            style={{ width: `${Math.min(100 - (100 / data.ratio), 99)}%` }}
-            title="Paper"
-          />
-        </div>
-        <div className="flex justify-between mt-1 text-[9px] font-bold">
-          <span className="text-amber-500">Physical</span>
-          <span className="text-blue-500">Paper</span>
-        </div>
-      </div>
-      
-      {/* Explanation */}
-      <p className="mt-4 text-[10px] text-slate-400 leading-relaxed">
-        {data.riskLevel === 'EXTREME' && 
-          `Warning: ${data.ratio.toFixed(1)}x more paper claims than physical metal. If holders demand delivery simultaneously, COMEX cannot fulfill all claims.`
-        }
-        {data.riskLevel === 'HIGH' && 
-          `Elevated leverage: ${data.ratio.toFixed(1)}x paper claims per unit of physical. Market is vulnerable to delivery squeezes.`
-        }
-        {data.riskLevel === 'MODERATE' && 
-          `Moderate leverage: ${data.ratio.toFixed(1)}x paper claims per physical unit. Standard futures market dynamics.`
-        }
-        {data.riskLevel === 'LOW' && 
-          `Low leverage: ${data.ratio.toFixed(1)}x paper claims per physical unit. Healthy physical backing.`
-        }
-      </p>
     </div>
   );
 }

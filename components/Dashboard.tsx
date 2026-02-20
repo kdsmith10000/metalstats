@@ -15,28 +15,28 @@ import { motion } from 'framer-motion';
 // Lazy load new delivery components
 const DeliveryMTDChart = dynamic(() => import('./DeliveryMTDChart'), {
   ssr: false,
-  loading: () => <div className="h-80 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-80 bg-slate-200 dark:bg-slate-800 rounded-none" />
 });
 
 const DeliveryYTDSection = dynamic(() => import('./DeliveryYTDSection'), {
   ssr: false,
-  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-none" />
 });
 
 // Lazy load heavy chart components
 const DemandChart = dynamic(() => import('./DemandChart'), {
   ssr: false,
-  loading: () => <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-none" />
 });
 
 const BulletinDashboard = dynamic(() => import('./BulletinDashboard'), {
   ssr: false,
-  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-none" />
 });
 
 const ForecastDashboard = dynamic(() => import('./ForecastDashboard'), {
   ssr: false,
-  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-2xl animate-pulse" />
+  loading: () => <div className="h-96 bg-slate-200 dark:bg-slate-800 rounded-none animate-pulse" />
 });
 
 interface BulletinData {
@@ -341,7 +341,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 <HoverCard key={config.key} openDelay={0} closeDelay={0}>
                   <HoverCardTrigger asChild>
                     <div 
-                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 pt-6 pb-10 sm:px-8 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 bg-white dark:bg-white/5 backdrop-blur-2xl border border-black/30 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer"
+                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 pt-6 pb-10 sm:px-8 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 bg-white dark:bg-white/5 backdrop-blur-2xl border border-black/30 dark:border-white/10 rounded-none shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer"
                     >
                       {/* Subtle Background Accent Gradient */}
                       <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100`} />
@@ -445,10 +445,10 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
       {/* Navigation Tabs */}
       <div className="w-full px-3 sm:px-8 lg:px-24 py-4 sm:py-10 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-black/30 backdrop-blur-sm sticky top-0 z-40">
-        <div className="flex items-center gap-1.5 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 w-full sm:w-fit mx-auto shadow-inner rounded-xl sm:rounded-2xl">
+        <div className="flex items-center gap-1.5 sm:gap-4 p-1.5 sm:p-2.5 bg-slate-100 dark:bg-slate-800 w-full sm:w-fit mx-auto shadow-inner rounded-none">
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-4 sm:py-4 min-h-[48px] sm:min-h-0 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl sm:min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-4 sm:py-4 min-h-[48px] sm:min-h-0 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-none sm:min-w-[140px] ${
               activeTab === 'inventory'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
@@ -459,7 +459,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </button>
           <button
             onClick={() => setActiveTab('bulletin')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-4 sm:py-4 min-h-[48px] sm:min-h-0 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl sm:min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-4 sm:py-4 min-h-[48px] sm:min-h-0 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-none sm:min-w-[140px] ${
               activeTab === 'bulletin'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
@@ -470,7 +470,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </button>
           <button
             onClick={() => setActiveTab('forecast')}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-4 sm:py-4 min-h-[48px] sm:min-h-0 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-lg sm:rounded-2xl sm:min-w-[140px] ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-3 px-3 sm:px-8 py-4 sm:py-4 min-h-[48px] sm:min-h-0 text-xs sm:text-base font-black uppercase tracking-wide sm:tracking-wider rounded-none sm:min-w-[140px] ${
               activeTab === 'forecast'
                 ? 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-white shadow-lg ring-1 sm:ring-2 ring-slate-200 dark:ring-slate-700'
                 : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700/60'
@@ -506,7 +506,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* No Bulletin Data Message */}
       {activeTab === 'bulletin' && !bulletinData && (
         <section className="w-full px-8 lg:px-24 pb-16">
-          <div className="p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl text-center">
+          <div className="p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none text-center">
             <FileText className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Bulletin Data Available</h3>
             <p className="text-slate-500 dark:text-slate-400">
@@ -525,10 +525,10 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {/* Spacer between hero and supply section */}
       <div className="h-4 md:h-8 lg:h-12" />
 
-      <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-32 md:pb-48">
+      <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pt-8 sm:pt-10 md:pt-14 pb-16 sm:pb-32 md:pb-48">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16">
-          <div className="max-w-xl space-y-4 sm:space-y-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 md:mb-10">
+          <div className="max-w-xl space-y-3 sm:space-y-5">
             <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
               Supply Overview
             </h2>
@@ -559,14 +559,14 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               >
                 <button
                   onClick={() => setExpandedMetal(isExpanded ? null : config.key)}
-                  className={`relative w-full text-left p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md`}
+                  className={`relative w-full text-left p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm hover:shadow-md`}
                 >
                   <div className="flex items-center justify-between gap-3 sm:gap-6 lg:gap-8">
                     {/* Metal Info */}
                     <div className="flex items-center gap-3 sm:gap-6 lg:gap-12 min-w-0">
                       <div className="relative flex-shrink-0">
-                        <div className={`absolute -inset-1.5 sm:-inset-2 bg-gradient-to-tr ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'} rounded-xl sm:rounded-2xl blur-md opacity-20`} />
-                        <div className="relative w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-slate-900 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold text-sm sm:text-lg md:text-xl shadow-lg">
+                        <div className={`absolute -inset-1.5 sm:-inset-2 bg-gradient-to-tr ${isStress ? 'from-red-500 to-orange-500' : 'from-slate-400 to-slate-600'} rounded-none blur-md opacity-20`} />
+                        <div className="relative w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-slate-900 rounded-none flex items-center justify-center text-white font-bold text-sm sm:text-lg md:text-xl shadow-lg">
                           {config.name.substring(0, 2).toUpperCase()}
                         </div>
                       </div>
@@ -600,7 +600,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                           </p>
                         </div>
                         
-                        <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 rotate-90 align-top">
+                        <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-none flex items-center justify-center bg-slate-100 dark:bg-slate-800 rotate-90 align-top">
                           <ChevronRight 
                             className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-400" 
                             style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
@@ -612,7 +612,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 </button>
                 {isExpanded && (
                     <div
-                      className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/10 shadow-inner"
+                      className="mt-3 sm:mt-6 p-4 sm:p-6 md:p-8 bg-slate-50 dark:bg-white/5 backdrop-blur-xl rounded-none border border-slate-200 dark:border-white/10 shadow-inner"
                     >
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8">
                         {[
@@ -645,7 +645,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                             monthChange: null
                           }
                         ].map((stat, i) => (
-                          <div key={i} className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 text-center">
+                          <div key={i} className="p-3 sm:p-4 bg-white dark:bg-black/40 rounded-none border border-slate-200 dark:border-white/10 text-center">
                             <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase mb-0.5 sm:mb-1 tracking-wider">{stat.label}</p>
                             <p className="text-base sm:text-lg md:text-xl font-bold">{stat.value}</p>
                             {(stat.dayChange != null || stat.monthChange != null) && (
@@ -747,7 +747,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                   </div>
                 </div>
               </div>
-              <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-sm">
+              <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
                 <DeliveryMTDChart data={deliveryMtdData} />
               </div>
             </div>
