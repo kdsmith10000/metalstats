@@ -788,6 +788,9 @@ export default function ForecastDashboard() {
               );
             })}
           </div>
+          <p className="mt-4 text-[10px] text-slate-400 dark:text-slate-500 leading-relaxed">
+            Accuracy is published for transparency only. Forecasts are model-generated estimates, not investment advice. Past performance does not guarantee future results.
+          </p>
         </div>
       )}
 

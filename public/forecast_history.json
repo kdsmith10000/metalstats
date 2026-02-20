@@ -19,20 +19,20 @@
         "Copper": {
           "direction": "NEUTRAL",
           "confidence": 32,
-          "composite_score": 52.0,
+          "composite_score": 52,
           "price_at_forecast": 5.95
         },
         "Platinum": {
           "direction": "NEUTRAL",
           "confidence": 39,
-          "composite_score": 49.0,
+          "composite_score": 49,
           "price_at_forecast": 2137.9
         },
         "Palladium": {
           "direction": "BULLISH",
           "confidence": 34,
           "composite_score": 62.9,
-          "price_at_forecast": 1742.0
+          "price_at_forecast": 1742
         }
       }
     },
@@ -55,7 +55,7 @@
         "Copper": {
           "direction": "BULLISH",
           "confidence": 22,
-          "composite_score": 66.0,
+          "composite_score": 66,
           "price_at_forecast": 5.66
         },
         "Platinum": {
@@ -97,50 +97,45 @@
         "Platinum": {
           "direction": "NEUTRAL",
           "confidence": 15,
-          "composite_score": 55.0,
+          "composite_score": 55,
           "price_at_forecast": 1949.17
         },
         "Palladium": {
           "direction": "NEUTRAL",
           "confidence": 10,
-          "composite_score": 52.0,
+          "composite_score": 52,
           "price_at_forecast": 1635.91
         }
       }
     },
     {
       "date": "2026-02-19",
-      "generated_at": "2026-02-19T11:33:10.588822+00:00",
+      "generated_at": "2026-02-20T03:24:07.965888+00:00",
       "calls": {
         "Gold": {
           "direction": "NEUTRAL",
-          "confidence": 27,
-          "composite_score": 50.1,
-          "price_at_forecast": 5005.79
+          "confidence": 29,
+          "composite_score": 51
         },
         "Silver": {
           "direction": "NEUTRAL",
-          "confidence": 19,
-          "composite_score": 54.8,
-          "price_at_forecast": 70.09
+          "confidence": 28,
+          "composite_score": 55.2
         },
         "Copper": {
-          "direction": "NEUTRAL",
-          "confidence": 25,
-          "composite_score": 50.8,
-          "price_at_forecast": 5.74
+          "direction": "BULLISH",
+          "confidence": 21,
+          "composite_score": 60.7
         },
         "Platinum": {
           "direction": "NEUTRAL",
-          "confidence": 17,
-          "composite_score": 56.4,
-          "price_at_forecast": 2016.73
+          "confidence": 30,
+          "composite_score": 52.5
         },
         "Palladium": {
           "direction": "NEUTRAL",
-          "confidence": 13,
-          "composite_score": 53.9,
-          "price_at_forecast": 1669.05
+          "confidence": 28,
+          "composite_score": 44.5
         }
       }
     }
@@ -148,86 +143,189 @@
   "accuracy": {
     "metals": {
       "Gold": {
-        "total_forecasts": 0,
-        "correct": 0,
-        "incorrect": 0,
+        "total_forecasts": 2,
+        "correct": 1,
+        "incorrect": 1,
         "pending": 0,
-        "hit_rate": null
+        "hit_rate": 50
       },
       "Silver": {
-        "total_forecasts": 1,
-        "correct": 0,
-        "incorrect": 1,
+        "total_forecasts": 3,
+        "correct": 1,
+        "incorrect": 2,
         "pending": 0,
-        "hit_rate": 0.0
+        "hit_rate": 33.3
       },
       "Copper": {
-        "total_forecasts": 1,
-        "correct": 1,
-        "incorrect": 0,
+        "total_forecasts": 3,
+        "correct": 2,
+        "incorrect": 1,
         "pending": 0,
-        "hit_rate": 100.0
+        "hit_rate": 66.7
       },
       "Platinum": {
-        "total_forecasts": 0,
-        "correct": 0,
-        "incorrect": 0,
+        "total_forecasts": 2,
+        "correct": 1,
+        "incorrect": 1,
         "pending": 0,
-        "hit_rate": null
+        "hit_rate": 50
       },
       "Palladium": {
-        "total_forecasts": 2,
-        "correct": 0,
-        "incorrect": 1,
-        "pending": 1,
-        "hit_rate": 0.0
+        "total_forecasts": 3,
+        "correct": 1,
+        "incorrect": 2,
+        "pending": 0,
+        "hit_rate": 33.3
       }
     },
     "overall": {
-      "total": 3,
-      "correct": 1,
-      "hit_rate": 33.3
+      "total": 13,
+      "correct": 6,
+      "hit_rate": 46.2
     },
     "history": [
       {
+        "metal": "Copper",
+        "date": "Fri Feb 13 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 5.75,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 5.78,
+        "price_change_pct": 0.52,
+        "correct": true,
+        "eval_horizon_days": 5
+      },
+      {
+        "metal": "Gold",
+        "date": "Fri Feb 13 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 5022.17,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 5005.79,
+        "price_change_pct": -0.33,
+        "correct": true,
+        "eval_horizon_days": 5
+      },
+      {
         "metal": "Palladium",
-        "date": "2026-02-13",
+        "date": "Fri Feb 13 2026",
         "direction": "BULLISH",
-        "price_at_forecast": 1742.0,
-        "correct": null
+        "price_at_forecast": 1615.45,
+        "eval_date": "Thu Feb 19 2026",
+        "price_at_eval": 1629.41,
+        "price_change_pct": 0.86,
+        "correct": true,
+        "eval_horizon_days": 5
+      },
+      {
+        "metal": "Platinum",
+        "date": "Fri Feb 13 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 2001.49,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 2016.73,
+        "price_change_pct": 0.76,
+        "correct": true,
+        "eval_horizon_days": 5
       },
       {
         "metal": "Silver",
-        "date": "2026-02-17",
+        "date": "Fri Feb 13 2026",
         "direction": "NEUTRAL",
-        "price_at_forecast": 65.6,
-        "eval_date": "2026-02-17",
-        "price_at_eval": 66.3675,
-        "price_change_pct": 1.17,
-        "correct": false,
-        "note": "Manual entry: Silver moved +1.17% with NEUTRAL call"
+        "price_at_forecast": 70.36,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 70.09,
+        "price_change_pct": -0.38,
+        "correct": true,
+        "eval_horizon_days": 5
       },
       {
         "metal": "Copper",
-        "date": "2026-02-17",
+        "date": "Tue Feb 17 2026",
         "direction": "BULLISH",
         "price_at_forecast": 5.66,
-        "eval_date": "2026-02-17",
+        "eval_date": "Tue Feb 17 2026",
         "price_at_eval": 5.69,
         "price_change_pct": 0.53,
         "correct": true,
-        "note": "Manual entry: Copper moved +0.53% with BULLISH call"
+        "eval_horizon_days": 1
       },
       {
         "metal": "Palladium",
-        "date": "2026-02-17",
+        "date": "Tue Feb 17 2026",
         "direction": "NEUTRAL",
         "price_at_forecast": 1606.07,
-        "eval_date": "2026-02-17",
+        "eval_date": "Tue Feb 17 2026",
         "price_at_eval": 1635.9429,
         "price_change_pct": 1.86,
         "correct": false,
-        "note": "Manual entry: Palladium moved +1.86% with NEUTRAL call"
+        "eval_horizon_days": 1
+      },
+      {
+        "metal": "Silver",
+        "date": "Tue Feb 17 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 65.6,
+        "eval_date": "Tue Feb 17 2026",
+        "price_at_eval": 66.3675,
+        "price_change_pct": 1.17,
+        "correct": false,
+        "eval_horizon_days": 1
+      },
+      {
+        "metal": "Copper",
+        "date": "Wed Feb 18 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 5.71,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 5.78,
+        "price_change_pct": 1.23,
+        "correct": false,
+        "eval_horizon_days": 0
+      },
+      {
+        "metal": "Gold",
+        "date": "Wed Feb 18 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 4895.69,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 5005.79,
+        "price_change_pct": 2.25,
+        "correct": false,
+        "eval_horizon_days": 0
+      },
+      {
+        "metal": "Palladium",
+        "date": "Wed Feb 18 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 1635.91,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 1669.05,
+        "price_change_pct": 2.03,
+        "correct": false,
+        "eval_horizon_days": 0
+      },
+      {
+        "metal": "Platinum",
+        "date": "Wed Feb 18 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 1949.17,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 2016.73,
+        "price_change_pct": 3.47,
+        "correct": false,
+        "eval_horizon_days": 0
+      },
+      {
+        "metal": "Silver",
+        "date": "Wed Feb 18 2026",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 66.37,
+        "eval_date": "Wed Feb 18 2026",
+        "price_at_eval": 70.09,
+        "price_change_pct": 5.6,
+        "correct": false,
+        "eval_horizon_days": 0
       }
     ]
   }
