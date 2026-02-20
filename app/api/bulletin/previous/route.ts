@@ -49,9 +49,8 @@ function getDb() {
   return neon(process.env.DATABASE_URL);
 }
 
-// Force dynamic rendering - no caching
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: previous-day data changes once/day, cache for 5 minutes
+export const revalidate = 300;
 
 // GET: Retrieve previous day's OI data (for comparison with current)
 // Uses open_interest_snapshots table which has accurate data from volume_summary
@@ -156,10 +155,9 @@ export async function GET() {
 
     return NextResponse.json({
       currentDate: latestDate,
-      previousDate: latestDate,
+      previousDate: priorDate ?? latestDate,
       current: latestProducts,
-      previous: latestProducts,
-      // Also include prior date data for deeper comparison
+      previous: priorDate ? priorProducts : latestProducts,
       priorDate: priorDate,
       prior: priorProducts,
     });
