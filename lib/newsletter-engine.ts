@@ -51,8 +51,14 @@ function formatNumber(num: number): string {
   return num.toLocaleString('en-US');
 }
 
-function formatPrice(num: number): string {
-  return num.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 2 });
+function formatPrice(num: number | string): string {
+  const n = typeof num === 'string' ? parseFloat(num) : num;
+  if (isNaN(n)) return String(num);
+  const hasCents = Math.abs(n % 1) >= 0.005;
+  return n.toLocaleString('en-US', {
+    minimumFractionDigits: hasCents ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
 }
 
 function metalLabel(name: string): string {
@@ -316,6 +322,77 @@ function generatePaperPhysicalCheck(analysis: any, prevPP: PaperPhysicalSnapshot
 }
 
 // ============================================
+// FORECAST SUMMARY
+// ============================================
+
+function getDirectionColor(direction: string): string {
+  switch (direction.toUpperCase()) {
+    case 'BULLISH': return '#22c55e';
+    case 'BEARISH': return '#ef4444';
+    default: return '#94a3b8';
+  }
+}
+
+function getDirectionBg(direction: string): string {
+  switch (direction.toUpperCase()) {
+    case 'BULLISH': return '#052e16';
+    case 'BEARISH': return '#451a1a';
+    default: return '#1e293b';
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function generateForecastSummary(forecast: any): string {
+  if (!forecast || !forecast.metals) return '';
+
+  const metalOrder = ['Gold', 'Silver', 'Copper', 'Platinum', 'Palladium'];
+  const rows: string[] = [];
+
+  for (const metal of metalOrder) {
+    const fc = forecast.metals[metal];
+    if (!fc) continue;
+
+    const dir = fc.direction || 'NEUTRAL';
+    const conf = fc.confidence || 0;
+    const price = fc.current_price || 0;
+    const fc5d = fc.forecast_5d;
+    const signals = fc.signals || {};
+
+    const topSignal = fc.key_drivers?.[0] || '';
+    const rangeStr = fc5d ? `$${formatPrice(fc5d.low)} – $${formatPrice(fc5d.high)}` : 'N/A';
+    const pctStr = fc5d && fc5d.pct_change !== 0 ? `${fc5d.pct_change > 0 ? '+' : ''}${fc5d.pct_change.toFixed(1)}%` : 'flat';
+
+    const signalBars = Object.entries(signals).map(([key, val]: [string, unknown]) => {
+      const s = val as { score: number };
+      const score = s.score || 50;
+      const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const barColor = score >= 60 ? '#22c55e' : score <= 40 ? '#ef4444' : '#64748b';
+      return `<span style="display:inline-block;margin-right:8px;font-size:11px;color:${barColor};font-weight:600;">${label}: ${Math.round(score)}</span>`;
+    }).join('');
+
+    rows.push(`
+      <tr>
+        <td style="padding:14px 12px;border-bottom:1px solid #334155;">
+          <div style="margin-bottom:6px;">
+            <span style="font-size:14px;color:#f8fafc;font-weight:700;">${metal}</span>
+            <span style="display:inline-block;margin-left:8px;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700;color:${getDirectionColor(dir)};background-color:${getDirectionBg(dir)};">${dir} (${conf}%)</span>
+          </div>
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:4px;">
+            Price: <strong style="color:#f8fafc;">$${formatPrice(price)}</strong> &nbsp;|&nbsp; 5-Day Range: ${rangeStr} (${pctStr})
+          </div>
+          <div style="margin-bottom:4px;">${signalBars}</div>
+          ${topSignal ? `<div style="font-size:11px;color:#64748b;font-style:italic;">Top driver: ${topSignal}</div>` : ''}
+        </td>
+      </tr>
+    `);
+  }
+
+  if (rows.length === 0) return '';
+
+  return rows.join('');
+}
+
+// ============================================
 // MAIN GENERATOR
 // ============================================
 
@@ -341,6 +418,7 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
   }
 
   const bulletin = loadJsonFile('bulletin.json');
+  const forecast = loadJsonFile('forecast.json');
 
   if (!analysis) {
     console.error('No analysis data available (DB empty and analysis_summary.json not found)');
@@ -366,6 +444,7 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
   const whatChangedRows = generateWhatChanged(analysis, prevRiskScores, prevOI, prevPP);
   const riskRadarRows = generateRiskRadar(analysis, prevRiskScores);
   const keyAlerts = generateKeyAlerts(analysis);
+  const forecastRows = generateForecastSummary(forecast);
   const ppRows = generatePaperPhysicalCheck(analysis, prevPP);
 
   const subject = `COMEX Daily Analysis — ${formatDate(releaseDate)}`;
@@ -450,6 +529,21 @@ export async function generateNewsletter(): Promise<GeneratedNewsletter | null> 
               ${keyAlerts}
             </td>
           </tr>
+
+          <!-- FORECAST OUTLOOK -->
+          ${forecastRows ? `<tr>
+            <td style="padding:0 32px 24px;">
+              <h2 style="margin:0 0 12px;font-size:14px;color:#f59e0b;font-weight:700;text-transform:uppercase;letter-spacing:1px;">
+                Forecast Outlook
+              </h2>
+              <p style="margin:0 0 12px;font-size:12px;color:#64748b;">
+                Generated ${forecast?.generated_at ? new Date(forecast.generated_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'today'} using trend, ARIMA, physical stress &amp; market activity signals.
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f172a;border-radius:8px;overflow:hidden;">
+                ${forecastRows}
+              </table>
+            </td>
+          </tr>` : ''}
 
           <!-- PAPER vs PHYSICAL -->
           <tr>

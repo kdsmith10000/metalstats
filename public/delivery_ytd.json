@@ -1,6 +1,6 @@
 {
-  "business_date": "02/18/2026",
-  "parsed_date": "2026-02-18",
+  "business_date": "02/19/2026",
+  "parsed_date": "2026-02-19",
   "products": [
     {
       "metal": "Aluminum",
@@ -3017,5 +3017,5 @@
       ]
     }
   ],
-  "last_updated": "2026-02-18T22:21:46.037343"
+  "last_updated": "2026-02-19T20:46:00.000000"
 }

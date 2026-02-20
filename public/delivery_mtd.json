@@ -1,6 +1,6 @@
 {
-  "business_date": "02/18/2026",
-  "parsed_date": "2026-02-18",
+  "business_date": "02/19/2026",
+  "parsed_date": "2026-02-19",
   "contracts": [
     {
       "metal": "Aluminum",
@@ -138,8 +138,8 @@
           "cumulative": 36188
         },
         {
-          "date": "02/18/2026",
-          "iso_date": "2026-02-18",
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
           "daily": 381,
           "cumulative": 36569
         }
@@ -231,8 +231,8 @@
           "cumulative": 9234
         },
         {
-          "date": "02/18/2026",
-          "iso_date": "2026-02-18",
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
           "daily": 468,
           "cumulative": 9702
         }
@@ -312,8 +312,8 @@
           "cumulative": 4624
         },
         {
-          "date": "02/18/2026",
-          "iso_date": "2026-02-18",
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
           "daily": 15,
           "cumulative": 4639
         }
@@ -429,5 +429,5 @@
       "total_cumulative": 485
     }
   ],
-  "last_updated": "2026-02-18T22:21:45.046869"
+  "last_updated": "2026-02-19T20:46:00.000000"
 }

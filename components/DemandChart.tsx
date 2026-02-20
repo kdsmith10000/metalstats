@@ -140,7 +140,7 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 12', dateKey: '2026-02-12', contracts: 414 },
     { day: 'Feb 13', dateKey: '2026-02-13', contracts: 242 },
     { day: 'Feb 17', dateKey: '2026-02-17', contracts: 96 },
-    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 381 },
+    { day: 'Feb 19', dateKey: '2026-02-19', contracts: 381 },
   ],
   silver: [
     { day: 'Jan 22', dateKey: '2026-01-22', contracts: 139 },
@@ -161,7 +161,7 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 12', dateKey: '2026-02-12', contracts: 0 },
     { day: 'Feb 13', dateKey: '2026-02-13', contracts: 0 },
     { day: 'Feb 17', dateKey: '2026-02-17', contracts: 29 },
-    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 15 },
+    { day: 'Feb 19', dateKey: '2026-02-19', contracts: 15 },
   ],
   aluminum: [
     { day: 'Jan 22', dateKey: '2026-01-22', contracts: 20 },
@@ -182,7 +182,7 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 12', dateKey: '2026-02-12', contracts: 0 },
     { day: 'Feb 13', dateKey: '2026-02-13', contracts: 1 },
     { day: 'Feb 17', dateKey: '2026-02-17', contracts: 0 },
-    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 0 },
+    { day: 'Feb 19', dateKey: '2026-02-19', contracts: 0 },
   ],
   copper: [
     { day: 'Jan 22', dateKey: '2026-01-22', contracts: 356 },
@@ -203,7 +203,7 @@ const baselineDailyData: Record<MetalType, DailyDataPoint[]> = {
     { day: 'Feb 12', dateKey: '2026-02-12', contracts: 338 },
     { day: 'Feb 13', dateKey: '2026-02-13', contracts: 891 },
     { day: 'Feb 17', dateKey: '2026-02-17', contracts: 560 },
-    { day: 'Feb 18', dateKey: '2026-02-18', contracts: 468 },
+    { day: 'Feb 19', dateKey: '2026-02-19', contracts: 468 },
   ],
 };
 

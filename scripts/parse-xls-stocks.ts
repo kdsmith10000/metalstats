@@ -427,6 +427,12 @@ async function main() {
 
   // ── 1. Parse each XLS file ────────────────────────────────────────────
 
+  // Gold file may have a browser download suffix like "(1)"
+  const goldFile = ["Gold_Stocks.xls", "Gold_Stocks (1).xls"]
+    .map((f) => path.join(DATA_DIR, f))
+    .find((p) => fs.existsSync(p));
+  const gold = goldFile ? parseSingleMetal(goldFile, "Gold") : null;
+
   const silver = parseSingleMetal(
     path.join(DATA_DIR, "Silver_stocks.xls"),
     "Silver"
@@ -462,16 +468,11 @@ async function main() {
 
   // ── 3. Build the output data object ───────────────────────────────────
 
-  // Keep existing Gold entry if present (no Gold XLS in data/)
   const output: Record<string, unknown> = {};
 
-  if (existing["Gold"]) {
-    output["Gold"] = existing["Gold"];
-    console.log(`  Keeping existing Gold data`);
-  }
-
-  // Newly parsed metals in canonical order
+  // Newly parsed metals in canonical order (Gold first)
   const parsedMetals: [string, MetalEntry | null][] = [
+    ["Gold", gold],
     ["Silver", silver],
     ["Copper", copper],
     ["Platinum", platinum],
@@ -559,14 +560,6 @@ async function main() {
   if (!dbUrl) {
     console.log("\n[WARN] DATABASE_URL not found; skipping database upload");
     return;
-  }
-
-  // Include Gold from existing if we kept it
-  if (existing["Gold"] && !allForDb["Gold"]) {
-    const g = existing["Gold"] as MetalEntry;
-    if (g.report_date && g.depositories) {
-      allForDb["Gold"] = g;
-    }
   }
 
   await uploadToDatabase(allForDb, dbUrl);

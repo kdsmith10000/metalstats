@@ -605,9 +605,6 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
         </div>
 
-        {/* Spacer between header and content */}
-        <div className="h-6 sm:h-12 md:h-20 lg:h-24" />
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Precious Metals Divergence */}
           <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[2rem] shadow-sm">
@@ -872,6 +869,8 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
           </div>
         </div>
       </div>
+
+      <div className="h-8 sm:h-12 md:h-20 lg:h-24" />
 
       {/* Year-over-Year Comparison Section */}
       {volumeSummary && volumeSummary.products.length > 0 && (
