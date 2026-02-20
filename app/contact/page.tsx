@@ -25,8 +25,8 @@ export const metadata = {
 export default function Contact() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
-      <div className="flex-1 py-16 px-8 lg:px-24">
-        <div className="max-w-4xl mx-auto">
+      <div className="flex-1 flex items-center justify-center py-16 px-8 lg:px-24">
+        <div className="max-w-4xl w-full">
           <Link 
             href="/" 
             className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-16"
