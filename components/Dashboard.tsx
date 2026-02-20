@@ -1,6 +1,6 @@
 'use client';
 
-import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, formatPercentChange, getPercentChangeColor, calculatePaperPhysicalRatio, getPaperPhysicalRiskColor, getPaperPhysicalBgColor, PaperPhysicalData } from '@/lib/data';
+import { WarehouseStocksData, metalConfigs, formatNumber, calculateCoverageRatio, getSupplyStatus, formatPercentChange, getPercentChangeColor, calculatePaperPhysicalRatio, getPaperPhysicalRiskColor, getPaperPhysicalBgColor, PaperPhysicalData } from '@/lib/data';
 import { calculateCompositeRiskScore, RiskScore, RiskFactors } from '@/lib/riskScore';
 import dynamic from 'next/dynamic';
 import DeliverySection from './DeliverySection';
@@ -336,6 +336,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               }
               
               const riskScore = riskScores[config.key];
+              const supplyStatus = getSupplyStatus(ratio);
+              const coverageDays = (ratio * 30).toFixed(1);
               
               return (
                 <HoverCard key={config.key} openDelay={0} closeDelay={0}>
@@ -361,9 +363,16 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                         </p>
                         <div className="mt-2 sm:mt-3 md:mt-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-full border border-slate-200/50 dark:border-slate-700/50">
                           <p className="text-[8px] sm:text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
-                            Coverage
+                            {coverageDays} days
                           </p>
                         </div>
+                        <p className={`mt-1 text-[8px] sm:text-[9px] font-black uppercase tracking-widest ${
+                          supplyStatus.status === 'STRESS' ? 'text-red-500' : 
+                          supplyStatus.status === 'WATCH' ? 'text-amber-500' : 
+                          'text-emerald-500'
+                        }`}>
+                          {supplyStatus.status}
+                        </p>
                         
                         {/* Ratio Change - Shows absolute change and percent change */}
                         {ratioChange !== null && (
@@ -547,6 +556,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
             const ratio = calculateCoverageRatio(metalData.totals.registered, config.monthlyDemand);
             const isStress = ratio < 5;
             const isWatch = ratio >= 5 && ratio < 12;
+            const rowSupplyStatus = getSupplyStatus(ratio);
+            const rowCoverageDays = (ratio * 30).toFixed(1);
             const registeredPercent = metalData.totals.total > 0 
               ? (metalData.totals.registered / metalData.totals.total) * 100 
               : 0;
@@ -594,9 +605,16 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
 
                       <div className="flex items-center gap-2 sm:gap-4">
                         <div className="text-right">
-                          <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Coverage</p>
+                          <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">{rowCoverageDays} days</p>
                           <p className={`text-xl sm:text-3xl md:text-4xl font-black tabular-nums ${isStress ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
                             {ratio.toFixed(2)}x
+                          </p>
+                          <p className={`text-[8px] sm:text-[9px] font-black uppercase tracking-widest ${
+                            rowSupplyStatus.status === 'STRESS' ? 'text-red-500' : 
+                            rowSupplyStatus.status === 'WATCH' ? 'text-amber-500' : 
+                            'text-emerald-500'
+                          }`}>
+                            {rowSupplyStatus.status}
                           </p>
                         </div>
                         
