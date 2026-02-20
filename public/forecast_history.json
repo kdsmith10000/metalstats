@@ -141,37 +141,37 @@
     },
     {
       "date": "2026-02-20",
-      "generated_at": "2026-02-20T11:59:57.825753+00:00",
+      "generated_at": "2026-02-20T12:52:29.437652+00:00",
       "calls": {
+        "Copper": {
+          "direction": "BULLISH",
+          "confidence": 26,
+          "composite_score": 62.8,
+          "price_at_forecast": 5.76
+        },
         "Gold": {
           "direction": "NEUTRAL",
-          "confidence": 32,
-          "composite_score": 51.8,
+          "confidence": 34,
+          "composite_score": 52.4,
           "price_at_forecast": 5019.77
+        },
+        "Palladium": {
+          "direction": "NEUTRAL",
+          "confidence": 18,
+          "composite_score": 46.1,
+          "price_at_forecast": 1629.41
+        },
+        "Platinum": {
+          "direction": "NEUTRAL",
+          "confidence": 31,
+          "composite_score": 51.4,
+          "price_at_forecast": 2007.99
         },
         "Silver": {
           "direction": "NEUTRAL",
           "confidence": 25,
-          "composite_score": 59.0,
+          "composite_score": 59.3,
           "price_at_forecast": 71.01
-        },
-        "Copper": {
-          "direction": "NEUTRAL",
-          "confidence": 26,
-          "composite_score": 52.0,
-          "price_at_forecast": 5.75
-        },
-        "Platinum": {
-          "direction": "NEUTRAL",
-          "confidence": 20,
-          "composite_score": 57.1,
-          "price_at_forecast": 2007.99
-        },
-        "Palladium": {
-          "direction": "NEUTRAL",
-          "confidence": 14,
-          "composite_score": 54.3,
-          "price_at_forecast": 1629.41
         }
       }
     }
