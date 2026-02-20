@@ -138,13 +138,19 @@
           "cumulative": 36188
         },
         {
-          "date": "02/19/2026",
-          "iso_date": "2026-02-19",
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
           "daily": 381,
           "cumulative": 36569
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 9,
+          "cumulative": 36578
         }
       ],
-      "total_cumulative": 36569
+      "total_cumulative": 36578
     },
     {
       "metal": "Copper",
@@ -231,13 +237,34 @@
           "cumulative": 9234
         },
         {
-          "date": "02/19/2026",
-          "iso_date": "2026-02-19",
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
           "daily": 468,
           "cumulative": 9702
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 933,
+          "cumulative": 10635
         }
       ],
-      "total_cumulative": 9702
+      "total_cumulative": 10635
+    },
+    {
+      "metal": "Micro Gold",
+      "symbol": "MGC",
+      "contract_name": "FEBRUARY 2026 MICRO GOLD FUTURES",
+      "contract_month": "FEB26",
+      "daily_data": [
+        {
+          "date": "02/11/2026",
+          "iso_date": "2026-02-11",
+          "daily": 10,
+          "cumulative": 10
+        }
+      ],
+      "total_cumulative": 10
     },
     {
       "metal": "Silver",
@@ -312,13 +339,19 @@
           "cumulative": 4624
         },
         {
-          "date": "02/19/2026",
-          "iso_date": "2026-02-19",
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
           "daily": 15,
           "cumulative": 4639
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 50,
+          "cumulative": 4689
         }
       ],
-      "total_cumulative": 4639
+      "total_cumulative": 4689
     },
     {
       "metal": "Palladium",
@@ -429,5 +462,5 @@
       "total_cumulative": 485
     }
   ],
-  "last_updated": "2026-02-19T20:46:00.000000"
+  "last_updated": "2026-02-20T02:57:04.612Z"
 }
