@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: forecast data changes once/day, cache for 5 minutes
+export const revalidate = 300;
 
 export async function GET() {
   try {

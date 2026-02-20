@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { isDatabaseAvailable, getLatestRiskScores } from '@/lib/db';
 
+// ISR: risk scores change once/day, cache for 5 minutes
+export const revalidate = 300;
+
 export async function GET() {
   try {
     if (!isDatabaseAvailable()) {

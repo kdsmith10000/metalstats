@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getWarehouseDataWithChanges, getLatestSnapshots } from '@/lib/db';
 
+// ISR: metals data changes once/day, cache for 5 minutes
+export const revalidate = 300;
+
 // GET /api/metals - Get all metals data with percent changes
 export async function GET() {
   try {

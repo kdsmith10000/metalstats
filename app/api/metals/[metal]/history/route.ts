@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getMetalHistory } from '@/lib/db';
 
+// ISR: metals history changes once/day, cache for 5 minutes
+export const revalidate = 300;
+
 // GET /api/metals/[metal]/history - Get historical data for a specific metal
 export async function GET(
   request: Request,

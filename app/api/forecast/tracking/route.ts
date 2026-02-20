@@ -2,8 +2,8 @@ import { NextResponse, NextRequest } from 'next/server';
 import { isDatabaseAvailable, getForecastPriceTracking, upsertForecastPriceTracking } from '@/lib/db';
 import { sql } from '@/lib/db';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR for GET; POST is always dynamic in Next.js
+export const revalidate = 60;
 
 // GET: Retrieve price tracking data for a metal
 export async function GET(request: NextRequest) {

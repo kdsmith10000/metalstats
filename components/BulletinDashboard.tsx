@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { TrendingUp, TrendingDown, BarChart3, Activity, AlertTriangle, Zap, PieChart, ArrowUpRight, ArrowDownRight, Minus, ChevronRight, Calendar, Info, ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart3, Activity, AlertTriangle, Zap, PieChart, ArrowUpRight, ArrowDownRight, Minus, ChevronRight, Calendar, Info, ChevronUp, ChevronDown, ChevronsUpDown, HelpCircle } from 'lucide-react';
 import { formatNumber, formatPriceChange, formatVolume } from '@/lib/data';
 import { useState, useEffect } from 'react';
 
@@ -139,6 +139,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
   const [sortConfigs, setSortConfigs] = useState<Record<string, SortConfig>>({});
   const [previousDayData, setPreviousDayData] = useState<PreviousDayData | null>(null);
   const [previousDate, setPreviousDate] = useState<string | null>(null);
+  const [showBulletinInfo, setShowBulletinInfo] = useState(false);
   
   // Fetch previous day's OI data from database
   useEffect(() => {
@@ -278,9 +279,28 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
               DAILY FUTURES VOLUME & OPEN INTEREST — BULLETIN #{data.bulletin_number}
             </p>
           </div>
-          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-none w-fit">
-            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
-            <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{displayDate}</span>
+          <div className="flex items-center gap-0">
+            <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-white dark:bg-black/20 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-none w-fit">
+              <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
+              <span className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{displayDate}</span>
+            </div>
+            <div className="relative flex items-center ml-1.5">
+              <button
+                onClick={() => setShowBulletinInfo(v => !v)}
+                className="flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                aria-label="Bulletin info"
+              >
+                <HelpCircle className="w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
+              </button>
+              {showBulletinInfo && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowBulletinInfo(false)} />
+                  <div className="absolute right-0 top-full mt-2 w-56 sm:w-72 px-3 py-2 rounded-lg bg-slate-800 dark:bg-slate-700 text-xs sm:text-sm text-slate-200 shadow-lg z-50">
+                    Bulletins reflect the previous trading day&apos;s activity and are published nightly by CME Group.
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
 

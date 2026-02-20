@@ -1,6 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getPaperPhysicalHistory, isDatabaseAvailable } from '@/lib/db';
 
+// ISR: history data changes once/day, cache for 5 minutes
+export const revalidate = 300;
+
 // GET /api/paper-physical/[metal]/history - Get paper/physical history for a metal
 export async function GET(
   request: NextRequest,

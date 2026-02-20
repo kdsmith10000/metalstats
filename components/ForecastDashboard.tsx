@@ -439,7 +439,7 @@ export default function ForecastDashboard() {
       }
     };
     fetchPrices();
-    const interval = setInterval(fetchPrices, 60_000);
+    const interval = setInterval(fetchPrices, 300_000);
     return () => clearInterval(interval);
   }, []);
 

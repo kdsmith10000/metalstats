@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft, MessageSquare, Users, Lock } from 'lucide-react';
 import { getForumCategories, isDatabaseAvailable } from '@/lib/db';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: re-generate at most every 60 seconds
+export const revalidate = 60;
 
 const CATEGORY_COLORS: Record<string, string> = {
   gold: 'from-amber-500 to-yellow-600',

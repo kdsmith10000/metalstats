@@ -8,33 +8,43 @@ import volumeSummaryJson from '../public/volume_summary.json';
 import deliveryMtdJson from '../public/delivery_mtd.json';
 import deliveryYtdJson from '../public/delivery_ytd.json';
 
-// Force dynamic rendering to ensure fresh data on each request
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: re-generate at most every 5 minutes (COMEX data only changes once/day)
+export const revalidate = 300;
 
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
   let dashboardData: WarehouseStocksData;
   
-  // Derive last updated date from the most recent data source
-  // Priority: bulletin parsed_date > delivery parsed_date > warehouse report_date
+  // Derive last updated date from when data was actually processed/published
+  // Priority: bulletin last_updated > delivery last_updated > bulletin parsed_date > warehouse report_date
   let lastUpdatedText = 'Unknown';
+  const bulletinLastUpdated = bulletinJson?.last_updated;
   const bulletinParsedDate = bulletinJson?.parsed_date;
   const deliveryParsedDate = deliveryJson?.parsed_date;
   const reportDate = data?.Gold?.report_date || data?.Silver?.report_date;
-  
-  // Use the actual report/business date (parsed_date), not when the script ran
-  const reportDateStr = bulletinParsedDate || deliveryParsedDate;
-  if (reportDateStr) {
+
+  const timestampStr = bulletinLastUpdated || (deliveryJson as Record<string, unknown>)?.last_updated as string | undefined;
+  if (timestampStr) {
     try {
-      const d = new Date(reportDateStr + 'T12:00:00');
+      const d = new Date(timestampStr);
       if (!isNaN(d.getTime())) {
         lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
       }
     } catch { /* fall through */ }
   }
-  
-  // Fallback to warehouse report_date
+
+  if (lastUpdatedText === 'Unknown') {
+    const reportDateStr = bulletinParsedDate || deliveryParsedDate;
+    if (reportDateStr) {
+      try {
+        const d = new Date(reportDateStr + 'T12:00:00');
+        if (!isNaN(d.getTime())) {
+          lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+      } catch { /* fall through */ }
+    }
+  }
+
   if (lastUpdatedText === 'Unknown' && reportDate) {
     try {
       const parts = reportDate.split('/');

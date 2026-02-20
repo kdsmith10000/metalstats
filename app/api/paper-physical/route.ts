@@ -5,6 +5,9 @@ import {
   isDatabaseAvailable 
 } from '@/lib/db';
 
+// ISR: paper/physical ratios change once/day, cache for 5 minutes
+export const revalidate = 300;
+
 // GET /api/paper-physical - Get latest paper/physical ratios
 export async function GET() {
   try {

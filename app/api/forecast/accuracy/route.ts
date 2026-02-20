@@ -3,8 +3,8 @@ import { isDatabaseAvailable, getForecastAccuracySummary } from '@/lib/db';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: accuracy data changes once/day, cache for 5 minutes
+export const revalidate = 300;
 
 export async function GET() {
   // Try DB first

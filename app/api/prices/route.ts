@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 
-// Force dynamic rendering, no server-side caching for fresh prices
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: cache prices for 60s on the server (markets move slowly enough)
+export const revalidate = 60;
 
 // ── Spot price sources ──────────────────────────────────────────────────────
 // Primary: physical-metal ETFs that closely track spot prices.
@@ -51,11 +50,10 @@ async function fetchYahooChart(symbol: string): Promise<{
   marketState: string;
 } | null> {
   try {
-    const cacheBust = Math.floor(Date.now() / 1000);
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1m&range=1d&_=${cacheBust}`;
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1m&range=1d`;
     const res = await fetch(url, {
       headers: { 'User-Agent': 'Mozilla/5.0' },
-      cache: 'no-store',
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) return null;
