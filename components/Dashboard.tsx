@@ -161,6 +161,11 @@ interface DeliveryYTDData {
   last_updated: string;
 }
 
+interface DeliveryHistoryForChart {
+  daily: Record<string, Array<{ date: string; dailyIssued: number; dailyStopped: number; monthToDate: number; settlement: number }>>;
+  monthly: Record<string, Array<{ year: number; month: number; monthName: string; total: number }>>;
+}
+
 interface DashboardProps {
   data: WarehouseStocksData;
   bulletinData?: BulletinData | null;
@@ -168,6 +173,7 @@ interface DashboardProps {
   volumeSummaryData?: VolumeSummaryData | null;
   deliveryMtdData?: DeliveryMTDData | null;
   deliveryYtdData?: DeliveryYTDData | null;
+  deliveryHistoryData?: DeliveryHistoryForChart | null;
   lastUpdatedText?: string;
 }
 
@@ -218,7 +224,7 @@ function getOpenInterestForMetal(
   return 0;
 }
 
-export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, deliveryMtdData, deliveryYtdData, lastUpdatedText = 'Unknown' }: DashboardProps) {
+export default function Dashboard({ data, bulletinData, deliveryData, volumeSummaryData, deliveryMtdData, deliveryYtdData, deliveryHistoryData, lastUpdatedText = 'Unknown' }: DashboardProps) {
   const activeMetals = metalConfigs.filter(config => {
     const metalData = data[config.key];
     return metalData && metalData.totals.total > 0;
@@ -305,7 +311,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                 Advanced analytics for global warehouse inventory levels and supply-demand coverage metrics.
               </p>
             </div>
-            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6">
+            <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6">
             {activeMetals.map(config => {
               const metalData = data[config.key];
               if (!metalData) return null;
@@ -330,11 +336,12 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               const supplyStatus = getSupplyStatus(ratio);
               const coverageDays = (ratio * 30).toFixed(1);
               
+              const isMobileOnly = config.key === 'Aluminum';
               return (
                 <HoverCard key={config.key} openDelay={0} closeDelay={0}>
                   <HoverCardTrigger asChild>
                     <div 
-                      className="relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 pt-6 pb-10 sm:px-8 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 bg-white dark:bg-white/5 backdrop-blur-2xl border border-black/30 dark:border-white/10 rounded-none shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer"
+                      className={`relative group min-w-0 sm:min-w-[220px] md:min-w-[260px] px-4 pt-6 pb-10 sm:px-8 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 bg-white dark:bg-white/5 backdrop-blur-2xl border border-black/30 dark:border-white/10 rounded-none shadow-xl hover:shadow-2xl overflow-hidden cursor-pointer${isMobileOnly ? ' sm:hidden' : ''}`}
                     >
                       {/* Subtle Background Accent Gradient */}
                       <div className={`absolute -inset-2 bg-gradient-to-br ${isStress ? 'from-red-500/5 to-transparent' : 'from-emerald-500/5 to-transparent'} opacity-0 group-hover:opacity-100`} />
@@ -796,7 +803,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </div>
           
           <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-sm">
-            <DemandChart metal="gold" deliveryData={deliveryData} />
+            <DemandChart metal="gold" deliveryData={deliveryData} deliveryHistoryData={deliveryHistoryData} />
           </div>
         </div>
       </section>

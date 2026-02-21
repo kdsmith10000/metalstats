@@ -188,6 +188,17 @@ export const metalConfigs: MetalConfig[] = [
     futuresSymbol: 'HG', // COMEX Copper Futures
     buyLink: 'https://amzn.to/46aarsK',
   },
+  {
+    key: 'Aluminum',
+    name: 'Aluminum',
+    color: '#6b7280',
+    colorDark: '#9ca3af',
+    unit: 'metric tons',
+    contractSize: 25, // ALI = 25 metric tons per contract
+    monthlyDemand: 1925, // 77 contracts * 25 MT (Feb 19 MTD)
+    pricePerUnit: 2993, // ALI settle ~$2,992.50/MT (Feb 19)
+    futuresSymbol: 'ALI', // COMEX Physical Aluminum Futures
+  },
 ];
 
 // Calculate coverage ratio and status
