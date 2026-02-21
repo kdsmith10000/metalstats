@@ -803,7 +803,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           </div>
           
           <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-sm">
-            <DemandChart metal="gold" deliveryData={deliveryData} deliveryHistoryData={deliveryHistoryData} />
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            <DemandChart metal="gold" deliveryData={deliveryData} deliveryHistoryData={deliveryHistoryData as any} />
           </div>
         </div>
       </section>
