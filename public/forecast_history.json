@@ -178,20 +178,6 @@
   ],
   "accuracy": {
     "metals": {
-      "Gold": {
-        "total_forecasts": 2,
-        "correct": 1,
-        "incorrect": 1,
-        "pending": 0,
-        "hit_rate": 50
-      },
-      "Silver": {
-        "total_forecasts": 3,
-        "correct": 1,
-        "incorrect": 2,
-        "pending": 0,
-        "hit_rate": 33.3
-      },
       "Copper": {
         "total_forecasts": 3,
         "correct": 2,
@@ -199,14 +185,28 @@
         "pending": 0,
         "hit_rate": 66.7
       },
+      "Gold": {
+        "total_forecasts": 2,
+        "correct": 1,
+        "incorrect": 1,
+        "pending": 0,
+        "hit_rate": 50.0
+      },
+      "Palladium": {
+        "total_forecasts": 4,
+        "correct": 2,
+        "incorrect": 2,
+        "pending": 0,
+        "hit_rate": 50.0
+      },
       "Platinum": {
         "total_forecasts": 2,
         "correct": 1,
         "incorrect": 1,
         "pending": 0,
-        "hit_rate": 50
+        "hit_rate": 50.0
       },
-      "Palladium": {
+      "Silver": {
         "total_forecasts": 3,
         "correct": 1,
         "incorrect": 2,
@@ -215,72 +215,72 @@
       }
     },
     "overall": {
-      "total": 13,
-      "correct": 6,
-      "hit_rate": 46.2
+      "total": 14,
+      "correct": 7,
+      "hit_rate": 50.0
     },
     "history": [
       {
         "metal": "Copper",
-        "date": "Fri Feb 13 2026",
+        "date": "2026-02-18",
         "direction": "NEUTRAL",
-        "price_at_forecast": 5.75,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 5.71,
+        "eval_date": "2026-02-18",
         "price_at_eval": 5.78,
-        "price_change_pct": 0.52,
-        "correct": true,
-        "eval_horizon_days": 5
+        "price_change_pct": 1.2259,
+        "correct": false,
+        "eval_horizon_days": 0
       },
       {
         "metal": "Gold",
-        "date": "Fri Feb 13 2026",
+        "date": "2026-02-18",
         "direction": "NEUTRAL",
-        "price_at_forecast": 5022.17,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 4895.69,
+        "eval_date": "2026-02-18",
         "price_at_eval": 5005.79,
-        "price_change_pct": -0.33,
-        "correct": true,
-        "eval_horizon_days": 5
+        "price_change_pct": 2.2489,
+        "correct": false,
+        "eval_horizon_days": 0
       },
       {
         "metal": "Palladium",
-        "date": "Fri Feb 13 2026",
-        "direction": "BULLISH",
-        "price_at_forecast": 1615.45,
-        "eval_date": "Thu Feb 19 2026",
-        "price_at_eval": 1629.41,
-        "price_change_pct": 0.86,
-        "correct": true,
-        "eval_horizon_days": 5
+        "date": "2026-02-18",
+        "direction": "NEUTRAL",
+        "price_at_forecast": 1635.91,
+        "eval_date": "2026-02-18",
+        "price_at_eval": 1669.05,
+        "price_change_pct": 2.0258,
+        "correct": false,
+        "eval_horizon_days": 0
       },
       {
         "metal": "Platinum",
-        "date": "Fri Feb 13 2026",
+        "date": "2026-02-18",
         "direction": "NEUTRAL",
-        "price_at_forecast": 2001.49,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 1949.17,
+        "eval_date": "2026-02-18",
         "price_at_eval": 2016.73,
-        "price_change_pct": 0.76,
-        "correct": true,
-        "eval_horizon_days": 5
+        "price_change_pct": 3.4661,
+        "correct": false,
+        "eval_horizon_days": 0
       },
       {
         "metal": "Silver",
-        "date": "Fri Feb 13 2026",
+        "date": "2026-02-18",
         "direction": "NEUTRAL",
-        "price_at_forecast": 70.36,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 66.37,
+        "eval_date": "2026-02-18",
         "price_at_eval": 70.09,
-        "price_change_pct": -0.38,
-        "correct": true,
-        "eval_horizon_days": 5
+        "price_change_pct": 5.6049,
+        "correct": false,
+        "eval_horizon_days": 0
       },
       {
         "metal": "Copper",
-        "date": "Tue Feb 17 2026",
+        "date": "2026-02-17",
         "direction": "BULLISH",
         "price_at_forecast": 5.66,
-        "eval_date": "Tue Feb 17 2026",
+        "eval_date": "2026-02-17",
         "price_at_eval": 5.69,
         "price_change_pct": 0.53,
         "correct": true,
@@ -288,10 +288,10 @@
       },
       {
         "metal": "Palladium",
-        "date": "Tue Feb 17 2026",
+        "date": "2026-02-17",
         "direction": "NEUTRAL",
         "price_at_forecast": 1606.07,
-        "eval_date": "Tue Feb 17 2026",
+        "eval_date": "2026-02-17",
         "price_at_eval": 1635.9429,
         "price_change_pct": 1.86,
         "correct": false,
@@ -299,69 +299,80 @@
       },
       {
         "metal": "Silver",
-        "date": "Tue Feb 17 2026",
+        "date": "2026-02-17",
         "direction": "NEUTRAL",
         "price_at_forecast": 65.6,
-        "eval_date": "Tue Feb 17 2026",
+        "eval_date": "2026-02-17",
         "price_at_eval": 66.3675,
         "price_change_pct": 1.17,
         "correct": false,
         "eval_horizon_days": 1
       },
       {
+        "metal": "Palladium",
+        "date": "2026-02-16",
+        "direction": "BULLISH",
+        "price_at_forecast": 1635.27,
+        "eval_date": "2026-02-20",
+        "price_at_eval": 1700.59,
+        "price_change_pct": 3.9944,
+        "correct": true,
+        "eval_horizon_days": 5
+      },
+      {
         "metal": "Copper",
-        "date": "Wed Feb 18 2026",
+        "date": "2026-02-13",
         "direction": "NEUTRAL",
-        "price_at_forecast": 5.71,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 5.75,
+        "eval_date": "2026-02-18",
         "price_at_eval": 5.78,
-        "price_change_pct": 1.23,
-        "correct": false,
-        "eval_horizon_days": 0
+        "price_change_pct": 0.5217,
+        "correct": true,
+        "eval_horizon_days": 5
       },
       {
         "metal": "Gold",
-        "date": "Wed Feb 18 2026",
+        "date": "2026-02-13",
         "direction": "NEUTRAL",
-        "price_at_forecast": 4895.69,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 5022.17,
+        "eval_date": "2026-02-18",
         "price_at_eval": 5005.79,
-        "price_change_pct": 2.25,
-        "correct": false,
-        "eval_horizon_days": 0
+        "price_change_pct": -0.3262,
+        "correct": true,
+        "eval_horizon_days": 5
       },
       {
         "metal": "Palladium",
-        "date": "Wed Feb 18 2026",
-        "direction": "NEUTRAL",
-        "price_at_forecast": 1635.91,
-        "eval_date": "Wed Feb 18 2026",
-        "price_at_eval": 1669.05,
-        "price_change_pct": 2.03,
-        "correct": false,
-        "eval_horizon_days": 0
+        "date": "2026-02-13",
+        "direction": "BULLISH",
+        "price_at_forecast": 1615.45,
+        "eval_date": "2026-02-19",
+        "price_at_eval": 1629.41,
+        "price_change_pct": 0.8642,
+        "correct": true,
+        "eval_horizon_days": 5
       },
       {
         "metal": "Platinum",
-        "date": "Wed Feb 18 2026",
+        "date": "2026-02-13",
         "direction": "NEUTRAL",
-        "price_at_forecast": 1949.17,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 2001.49,
+        "eval_date": "2026-02-18",
         "price_at_eval": 2016.73,
-        "price_change_pct": 3.47,
-        "correct": false,
-        "eval_horizon_days": 0
+        "price_change_pct": 0.7614,
+        "correct": true,
+        "eval_horizon_days": 5
       },
       {
         "metal": "Silver",
-        "date": "Wed Feb 18 2026",
+        "date": "2026-02-13",
         "direction": "NEUTRAL",
-        "price_at_forecast": 66.37,
-        "eval_date": "Wed Feb 18 2026",
+        "price_at_forecast": 70.36,
+        "eval_date": "2026-02-18",
         "price_at_eval": 70.09,
-        "price_change_pct": 5.6,
-        "correct": false,
-        "eval_horizon_days": 0
+        "price_change_pct": -0.3837,
+        "correct": true,
+        "eval_horizon_days": 5
       }
     ]
   }

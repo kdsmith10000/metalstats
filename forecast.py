@@ -1690,18 +1690,86 @@ def update_forecast_history(output: dict, json_default):
             if total_all > 0:
                 print(f"    {'Overall':<12} {correct_all}/{total_all} correct ({round(correct_all/total_all*100)}%)")
 
+        # ── 6. Query full accuracy data from DB for JSON backup ──────────
+        db_accuracy = _query_accuracy_from_db(conn)
+
         cur.close()
     except Exception as e:
         print(f"  ERROR writing forecast history to DB: {e}")
+        db_accuracy = None
         conn.rollback()
     finally:
         conn.close()
 
     # Also write a local JSON backup for the accuracy API fallback
-    _write_accuracy_json_backup(output)
+    _write_accuracy_json_backup(output, db_accuracy)
 
 
-def _write_accuracy_json_backup(output: dict):
+def _query_accuracy_from_db(conn) -> dict | None:
+    """Pull the full accuracy summary + history from the DB for JSON backup."""
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT metal, forecast_date, direction, price_at_forecast,
+                   eval_date, eval_horizon_days, price_at_eval,
+                   price_change_pct, correct
+            FROM forecast_accuracy
+            WHERE forecast_date >= CURRENT_DATE - 90
+            ORDER BY forecast_date DESC, metal
+        """)
+        rows = cur.fetchall()
+        cur.close()
+
+        if not rows:
+            return None
+
+        metals: dict = {}
+        total_correct = 0
+        total_evaluated = 0
+        history = []
+
+        for metal, fdate, direction, p_fore, e_date, horizon, p_eval, pct, correct in rows:
+            if metal not in metals:
+                metals[metal] = {"total_forecasts": 0, "correct": 0, "incorrect": 0, "pending": 0, "hit_rate": 0}
+            metals[metal]["total_forecasts"] += 1
+            if correct:
+                metals[metal]["correct"] += 1
+                total_correct += 1
+            else:
+                metals[metal]["incorrect"] += 1
+            total_evaluated += 1
+
+            history.append({
+                "metal": metal,
+                "date": str(fdate),
+                "direction": direction,
+                "price_at_forecast": float(p_fore),
+                "eval_date": str(e_date),
+                "price_at_eval": float(p_eval),
+                "price_change_pct": float(pct),
+                "correct": correct,
+                "eval_horizon_days": horizon,
+            })
+
+        for m in metals:
+            evaluated = metals[m]["correct"] + metals[m]["incorrect"]
+            metals[m]["hit_rate"] = round(metals[m]["correct"] / evaluated * 100, 1) if evaluated > 0 else 0
+
+        return {
+            "metals": metals,
+            "overall": {
+                "total": total_evaluated,
+                "correct": total_correct,
+                "hit_rate": round(total_correct / total_evaluated * 100, 1) if total_evaluated > 0 else 0,
+            },
+            "history": history,
+        }
+    except Exception as e:
+        print(f"  Warning: could not query accuracy for JSON backup: {e}")
+        return None
+
+
+def _write_accuracy_json_backup(output: dict, db_accuracy: dict | None = None):
     """Write a local JSON backup of forecast history for API fallback."""
     history_path = os.path.join(BASE_DIR, "forecast_history.json")
     today = datetime.now().strftime("%Y-%m-%d")
@@ -1732,6 +1800,10 @@ def _write_accuracy_json_backup(output: dict):
     # Keep last 90 days
     cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
     history["forecasts"] = [e for e in history["forecasts"] if e["date"] >= cutoff]
+
+    # Sync accuracy from DB if available
+    if db_accuracy:
+        history["accuracy"] = db_accuracy
 
     def jdefault(obj):
         if isinstance(obj, (np.integer,)): return int(obj)
