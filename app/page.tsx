@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Dashboard from '@/components/Dashboard';
 import { WarehouseStocksData } from '@/lib/data';
 import { getWarehouseDataWithChanges, getLatestSnapshots, isDatabaseAvailable } from '@/lib/db';
@@ -10,6 +11,57 @@ import deliveryYtdJson from '../public/delivery_ytd.json';
 
 // ISR: re-generate at most every 5 minutes (COMEX data only changes once/day)
 export const revalidate = 300;
+
+function formatOz(value: number): string {
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(0)}K`;
+  return value.toFixed(0);
+}
+
+function getDataDate(): string {
+  const dateStr = bulletinJson?.parsed_date || deliveryJson?.parsed_date
+    || data?.Gold?.report_date;
+  if (!dateStr) return '';
+  try {
+    const d = dateStr.includes('/') 
+      ? new Date(parseInt(dateStr.split('/')[2]), parseInt(dateStr.split('/')[0]) - 1, parseInt(dateStr.split('/')[1]))
+      : new Date(dateStr + 'T12:00:00');
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch { return ''; }
+}
+
+export function generateMetadata(): Metadata {
+  const silverReg = (data as Record<string, { totals?: { registered?: number } }>)?.Silver?.totals?.registered;
+  const goldReg = (data as Record<string, { totals?: { registered?: number } }>)?.Gold?.totals?.registered;
+  const dateLabel = getDataDate();
+
+  const silverStr = silverReg ? formatOz(silverReg) : null;
+  const goldStr = goldReg ? formatOz(goldReg) : null;
+
+  const dateSuffix = dateLabel ? ` (${dateLabel})` : '';
+
+  const title = silverStr && goldStr
+    ? `COMEX Silver: ${silverStr} oz | Gold: ${goldStr} oz Registered${dateSuffix} — Heavy Metal Stats`
+    : `Precious Metal Stats & COMEX Inventory Data — Heavy Metal Stats${dateSuffix}`;
+
+  const description = silverStr && goldStr && dateLabel
+    ? `COMEX registered inventory as of ${dateLabel}: Silver ${silverStr} oz, Gold ${goldStr} oz. Free daily warehouse stocks, coverage ratios, paper vs physical ratios & delivery data from CME Group.`
+    : undefined;
+
+  return {
+    title,
+    ...(description && { description }),
+    openGraph: {
+      title,
+      ...(description && { description }),
+    },
+    twitter: {
+      title,
+      ...(description && { description }),
+    },
+  };
+}
 
 export default async function Home() {
   // Try to fetch from database first (includes percent changes)
