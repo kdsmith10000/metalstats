@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Dashboard from '@/components/Dashboard';
 import { WarehouseStocksData } from '@/lib/data';
-import { getWarehouseDataWithChanges, getLatestSnapshots, isDatabaseAvailable } from '@/lib/db';
+import { getWarehouseDataWithChanges, getLatestSnapshots, isDatabaseAvailable, getDeliveryHistoryForChart } from '@/lib/db';
+import type { DeliveryHistoryForChart } from '@/lib/db';
 import data from '../public/data.json';
 import bulletinJson from '../public/bulletin.json';
 import deliveryJson from '../public/delivery.json';
@@ -149,6 +150,12 @@ export default async function Home() {
   const deliveryMtdData = (deliveryMtdJson as any) || null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deliveryYtdData = (deliveryYtdJson as any) || null;
+
+  // Pre-fetch delivery history server-side so DemandChart doesn't need client-side API calls
+  let deliveryHistoryData: DeliveryHistoryForChart | null = null;
+  try {
+    deliveryHistoryData = await getDeliveryHistoryForChart();
+  } catch { /* non-critical — chart falls back to client fetch */ }
   
   return (
     <>
@@ -163,7 +170,7 @@ export default async function Home() {
         </p>
       </header>
 
-      <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} volumeSummaryData={volumeSummaryData} deliveryMtdData={deliveryMtdData} deliveryYtdData={deliveryYtdData} lastUpdatedText={lastUpdatedText} />
+      <Dashboard data={dashboardData} bulletinData={bulletinData} deliveryData={deliveryData} volumeSummaryData={volumeSummaryData} deliveryMtdData={deliveryMtdData} deliveryYtdData={deliveryYtdData} deliveryHistoryData={deliveryHistoryData} lastUpdatedText={lastUpdatedText} />
 
     </>
   );
