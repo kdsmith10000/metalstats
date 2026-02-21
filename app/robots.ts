@@ -6,38 +6,61 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        // Default rules for all crawlers
         userAgent: '*',
         allow: '/',
         disallow: [
           '/private/',
           '/api/',
-          '/_next/',      // Next.js internal files
-          '/static/',     // Static assets (if any)
+          '/_next/',
+          '/static/',
+          '/opengraph-image',
+          '/twitter-image',
+          '/auth/',
         ],
       },
       {
-        // Google's main crawler - full access
         userAgent: 'Googlebot',
         allow: '/',
+        disallow: [
+          '/api/',
+          '/opengraph-image',
+          '/twitter-image',
+          '/auth/',
+        ],
       },
       {
-        // Google's image crawler
         userAgent: 'Googlebot-Image',
-        allow: '/',
+        allow: [
+          '/',
+          '/opengraph-image',
+          '/twitter-image',
+        ],
+        disallow: [
+          '/api/',
+          '/auth/',
+        ],
       },
       {
-        // Bing crawler
         userAgent: 'Bingbot',
         allow: '/',
+        disallow: [
+          '/api/',
+          '/opengraph-image',
+          '/twitter-image',
+          '/auth/',
+        ],
       },
       {
-        // DuckDuckGo crawler
         userAgent: 'DuckDuckBot',
         allow: '/',
+        disallow: [
+          '/api/',
+          '/opengraph-image',
+          '/twitter-image',
+          '/auth/',
+        ],
       },
       {
-        // Block AI training crawlers (optional - remove if you want AI indexing)
         userAgent: 'GPTBot',
         disallow: '/',
       },
@@ -51,6 +74,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
   };
 }

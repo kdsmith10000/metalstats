@@ -293,28 +293,19 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
           <div className="absolute inset-0 bg-white/5 dark:bg-black/5 backdrop-blur-[1px]" />
         </div>
 
-        {/* Hero Title & Subtitle */}
-        <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-10 sm:pt-20 pb-2 sm:pb-4 md:pt-24 md:pb-4">
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center">
-            <div className="col-span-2 w-full text-left">
-              <h1 className="leading-[1.1] tracking-tighter mb-2 sm:mb-4 md:mb-6 text-2xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
+        {/* Title + Stats Cards */}
+        <div className="relative w-full px-4 sm:px-8 lg:px-24 pt-10 sm:pt-20 md:pt-24 pb-16 sm:pb-24 md:pb-32 flex justify-center">
+          <div className="inline-flex flex-col items-start">
+            <div className="text-left mb-3 sm:mb-4 md:mb-6">
+              <h1 className="leading-[1.1] tracking-tighter mb-1 sm:mb-2 md:mb-3 text-2xl sm:text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
                 COMEX Metals
                 <span className="text-muted-foreground font-medium block sm:inline"> — Inventory</span>
               </h1>
-
               <p className="leading-relaxed text-xs sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium">
                 Advanced analytics for global warehouse inventory levels and supply-demand coverage metrics.
               </p>
             </div>
-          </div>
-        </div>
-
-        {/* Spacer */}
-        <div className="h-0 md:h-2 lg:h-3" />
-
-        {/* Stats Cards */}
-        <div className="relative w-full px-4 sm:px-8 lg:px-24 pb-16 sm:pb-24 md:pb-32 text-center mx-auto">
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 md:gap-6">
             {activeMetals.map(config => {
               const metalData = data[config.key];
               if (!metalData) return null;
@@ -448,6 +439,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
               <span>What is coverage ratio &amp; paper vs physical? Learn about supply and demand here</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
+          </div>
           </div>
         </div>
       </section>

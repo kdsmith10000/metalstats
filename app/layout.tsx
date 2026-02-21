@@ -213,14 +213,6 @@ export default async function RootLayout({
             url: 'https://heavymetalstats.com/icon.svg',
           },
         },
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: {
-            '@type': 'EntryPoint',
-            urlTemplate: 'https://heavymetalstats.com/?q={search_term_string}',
-          },
-          'query-input': 'required name=search_term_string',
-        },
       },
       {
         '@type': 'Dataset',

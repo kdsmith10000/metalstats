@@ -1272,6 +1272,38 @@ export async function initializeNewsletterTable() {
   }
 }
 
+// Create or upgrade a subscriber to 'paid' status (used by Stripe webhook).
+// If the subscriber doesn't exist yet, creates a new record.
+// If they exist (even if inactive/cancelled), reactivates and upgrades to paid.
+export async function createPaidSubscriber(
+  email: string,
+  unsubscribeToken: string,
+  stripeCustomerId?: string,
+  stripeSubscriptionId?: string
+): Promise<NewsletterSubscriber> {
+  try {
+    const result = await sql`
+      INSERT INTO newsletter_subscribers (email, unsubscribe_token, active, subscription_status, stripe_customer_id, stripe_subscription_id)
+      VALUES (${email.toLowerCase().trim()}, ${unsubscribeToken}, TRUE, 'paid', ${stripeCustomerId || null}, ${stripeSubscriptionId || null})
+      ON CONFLICT (email)
+      DO UPDATE SET
+        active = TRUE,
+        subscription_status = 'paid',
+        unsubscribe_token = CASE
+          WHEN newsletter_subscribers.unsubscribe_token IS NULL THEN EXCLUDED.unsubscribe_token
+          ELSE newsletter_subscribers.unsubscribe_token
+        END,
+        stripe_customer_id = COALESCE(EXCLUDED.stripe_customer_id, newsletter_subscribers.stripe_customer_id),
+        stripe_subscription_id = COALESCE(EXCLUDED.stripe_subscription_id, newsletter_subscribers.stripe_subscription_id)
+      RETURNING id, email, subscribed_at, unsubscribe_token, active, subscription_status, trial_ends_at, stripe_customer_id, stripe_subscription_id
+    `;
+    return result[0] as NewsletterSubscriber;
+  } catch (error) {
+    console.error('Error creating paid subscriber:', error);
+    throw error;
+  }
+}
+
 // Add a new subscriber with trial status (or reactivate if previously unsubscribed)
 export async function addSubscriber(email: string, unsubscribeToken: string): Promise<NewsletterSubscriber> {
   try {
@@ -1368,6 +1400,7 @@ export async function updateSubscriptionStatus(
     const result = await sql`
       UPDATE newsletter_subscribers
       SET subscription_status = ${status},
+          active = CASE WHEN ${status} = 'paid' THEN TRUE ELSE active END,
           stripe_customer_id = COALESCE(${stripeCustomerId || null}, stripe_customer_id),
           stripe_subscription_id = COALESCE(${stripeSubscriptionId || null}, stripe_subscription_id)
       WHERE email = ${email.toLowerCase().trim()}
