@@ -79,7 +79,8 @@ export default async function Home() {
   const timestampStr = bulletinLastUpdated || (deliveryJson as Record<string, unknown>)?.last_updated as string | undefined;
   if (timestampStr) {
     try {
-      const d = new Date(timestampStr);
+      const datePart = timestampStr.split('T')[0];
+      const d = new Date(datePart + 'T12:00:00');
       if (!isNaN(d.getTime())) {
         lastUpdatedText = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
       }

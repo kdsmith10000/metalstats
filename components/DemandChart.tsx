@@ -439,7 +439,7 @@ const MonthlyTooltip = (props: any) => {
 export default function DemandChart({ metal = 'gold', deliveryData, deliveryHistoryData }: DemandChartProps) {
   const { theme } = useTheme();
   const [selectedMetal, setSelectedMetal] = useState<MetalType>(metal);
-  const [timeRange, setTimeRange] = useState<TimeRange>('monthly');
+  const [timeRange, setTimeRange] = useState<TimeRange>('daily');
   const isDark = theme === 'dark';
 
   // Start with deep-copied baseline data

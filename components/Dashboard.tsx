@@ -736,7 +736,8 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
         <>
           <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pb-12 sm:pb-16 md:pb-24">
             <div className="mb-8 sm:mb-12 md:mb-16">
-              <div className="max-w-xl space-y-3 sm:space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div className="max-w-xl space-y-3 sm:space-y-8">
                 <h2 className="tracking-tighter text-3xl sm:text-4xl md:text-5xl font-black uppercase">
                   MTD Progression
                 </h2>
@@ -763,6 +764,18 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
                     </div>
                   </div>
                 </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">
+                    MTD Total
+                  </p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black tabular-nums" style={{ color: '#f59e0b' }}>
+                    {deliveryMtdData.contracts
+                      .filter(c => ['Gold', 'Silver', 'Copper', 'Platinum', 'Palladium', 'Aluminum'].includes(c.metal))
+                      .reduce((sum: number, c: { total_cumulative: number }) => sum + c.total_cumulative, 0)
+                      .toLocaleString('en-US')}
+                  </p>
+                </div>
               </div>
               <div className="p-4 sm:p-8 lg:p-12 bg-white dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-none shadow-sm">
                 <DeliveryMTDChart data={deliveryMtdData} />
@@ -778,7 +791,7 @@ export default function Dashboard({ data, bulletinData, deliveryData, volumeSumm
       {deliveryYtdData && deliveryYtdData.products && deliveryYtdData.products.length > 0 && (
         <>
           <section className="w-full px-4 sm:px-8 md:pl-24 lg:pl-48 pb-12 sm:pb-16 md:pb-24">
-            <DeliveryYTDSection data={deliveryYtdData} />
+            <DeliveryYTDSection data={deliveryYtdData} mtdData={deliveryMtdData} />
           </section>
           
           <div className="h-8 sm:h-12 md:h-20 lg:h-24" />

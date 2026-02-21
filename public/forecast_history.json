@@ -174,6 +174,42 @@
           "price_at_forecast": 71.01
         }
       }
+    },
+    {
+      "date": "2026-02-21",
+      "generated_at": "2026-02-21T15:45:19.061631+00:00",
+      "calls": {
+        "Gold": {
+          "direction": "NEUTRAL",
+          "confidence": 18,
+          "composite_score": 51.7,
+          "price_at_forecast": 5118.73
+        },
+        "Silver": {
+          "direction": "BULLISH",
+          "confidence": 22,
+          "composite_score": 55.8,
+          "price_at_forecast": 76.62
+        },
+        "Copper": {
+          "direction": "BULLISH",
+          "confidence": 27,
+          "composite_score": 65.7,
+          "price_at_forecast": 5.84
+        },
+        "Platinum": {
+          "direction": "NEUTRAL",
+          "confidence": 17,
+          "composite_score": 49.5,
+          "price_at_forecast": 2093.66
+        },
+        "Palladium": {
+          "direction": "BEARISH",
+          "confidence": 26,
+          "composite_score": 42.9,
+          "price_at_forecast": 1700.59
+        }
+      }
     }
   ],
   "accuracy": {

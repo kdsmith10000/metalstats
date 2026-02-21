@@ -1,5 +1,5 @@
 import { neon } from '@neondatabase/serverless';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
 // ISR: bulletin data changes once/day, cache for 5 minutes
 export const revalidate = 300;
@@ -15,6 +15,26 @@ interface BulletinRow {
   front_month_change: number | string;
 }
 
+interface BulletinProduct {
+  symbol: string;
+  name: string;
+  contracts?: Array<{
+    month: string;
+    settle: number;
+    change: number;
+    globex_volume: number;
+    pnt_volume: number;
+  }>;
+  total_volume: number;
+  total_open_interest: number;
+  total_oi_change: number;
+}
+
+interface BulletinPayload {
+  parsed_date: string;
+  products: BulletinProduct[];
+}
+
 function isDatabaseConfigured(): boolean {
   return !!process.env.DATABASE_URL;
 }
@@ -24,6 +44,75 @@ function getDb() {
     throw new Error('DATABASE_URL not configured');
   }
   return neon(process.env.DATABASE_URL);
+}
+
+// POST: Sync bulletin JSON data to the database via Neon HTTP driver.
+// Accepts the same JSON structure as public/bulletin.json.
+export async function POST(request: NextRequest) {
+  if (!isDatabaseConfigured()) {
+    return NextResponse.json(
+      { error: 'Database not configured' },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const sql = getDb();
+    const body: BulletinPayload = await request.json();
+
+    if (!body.parsed_date || !body.products?.length) {
+      return NextResponse.json(
+        { error: 'Missing parsed_date or products' },
+        { status: 400 }
+      );
+    }
+
+    let saved = 0;
+    for (const product of body.products) {
+      const front = product.contracts?.[0] ?? null;
+
+      await sql`
+        INSERT INTO bulletin_snapshots (
+          date, symbol, product_name,
+          total_volume, total_open_interest, total_oi_change,
+          front_month, front_month_settle, front_month_change
+        ) VALUES (
+          ${body.parsed_date}::date,
+          ${product.symbol},
+          ${product.name},
+          ${product.total_volume},
+          ${product.total_open_interest},
+          ${product.total_oi_change},
+          ${front?.month ?? null},
+          ${front?.settle ?? null},
+          ${front?.change ?? null}
+        )
+        ON CONFLICT (date, symbol) DO UPDATE SET
+          product_name = EXCLUDED.product_name,
+          total_volume = EXCLUDED.total_volume,
+          total_open_interest = EXCLUDED.total_open_interest,
+          total_oi_change = EXCLUDED.total_oi_change,
+          front_month = EXCLUDED.front_month,
+          front_month_settle = EXCLUDED.front_month_settle,
+          front_month_change = EXCLUDED.front_month_change,
+          created_at = CURRENT_TIMESTAMP
+      `;
+      saved++;
+    }
+
+    return NextResponse.json({
+      ok: true,
+      date: body.parsed_date,
+      saved,
+    });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error syncing bulletin data:', error);
+    return NextResponse.json(
+      { error: 'Failed to sync bulletin data', details: errorMessage },
+      { status: 500 }
+    );
+  }
 }
 
 // GET: Retrieve latest bulletin data

@@ -1,6 +1,6 @@
 {
-  "business_date": "02/19/2026",
-  "parsed_date": "2026-02-19",
+  "business_date": "02/20/2026",
+  "parsed_date": "2026-02-20",
   "contracts": [
     {
       "metal": "Aluminum",
@@ -21,6 +21,12 @@
           "cumulative": 69
         },
         {
+          "date": "02/04/2026",
+          "iso_date": "2026-02-04",
+          "daily": 0,
+          "cumulative": 69
+        },
+        {
           "date": "02/05/2026",
           "iso_date": "2026-02-05",
           "daily": 4,
@@ -30,6 +36,12 @@
           "date": "02/06/2026",
           "iso_date": "2026-02-06",
           "daily": 1,
+          "cumulative": 74
+        },
+        {
+          "date": "02/09/2026",
+          "iso_date": "2026-02-09",
+          "daily": 0,
           "cumulative": 74
         },
         {
@@ -45,13 +57,43 @@
           "cumulative": 76
         },
         {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
+          "cumulative": 76
+        },
+        {
           "date": "02/13/2026",
           "iso_date": "2026-02-13",
           "daily": 1,
           "cumulative": 77
+        },
+        {
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 0,
+          "cumulative": 77
+        },
+        {
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
+          "daily": 0,
+          "cumulative": 77
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 0,
+          "cumulative": 77
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 1,
+          "cumulative": 78
         }
       ],
-      "total_cumulative": 77
+      "total_cumulative": 78
     },
     {
       "metal": "Gold",
@@ -147,6 +189,12 @@
           "date": "02/19/2026",
           "iso_date": "2026-02-19",
           "daily": 9,
+          "cumulative": 36578
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 0,
           "cumulative": 36578
         }
       ],
@@ -247,9 +295,15 @@
           "iso_date": "2026-02-19",
           "daily": 933,
           "cumulative": 10635
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 547,
+          "cumulative": 11182
         }
       ],
-      "total_cumulative": 10635
+      "total_cumulative": 11182
     },
     {
       "metal": "Micro Gold",
@@ -261,6 +315,42 @@
           "date": "02/11/2026",
           "iso_date": "2026-02-11",
           "daily": 10,
+          "cumulative": 10
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
+          "cumulative": 10
+        },
+        {
+          "date": "02/13/2026",
+          "iso_date": "2026-02-13",
+          "daily": 0,
+          "cumulative": 10
+        },
+        {
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 0,
+          "cumulative": 10
+        },
+        {
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
+          "daily": 0,
+          "cumulative": 10
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 0,
+          "cumulative": 10
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 0,
           "cumulative": 10
         }
       ],
@@ -333,6 +423,18 @@
           "cumulative": 4595
         },
         {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
+          "cumulative": 4595
+        },
+        {
+          "date": "02/13/2026",
+          "iso_date": "2026-02-13",
+          "daily": 0,
+          "cumulative": 4595
+        },
+        {
           "date": "02/17/2026",
           "iso_date": "2026-02-17",
           "daily": 29,
@@ -349,9 +451,15 @@
           "iso_date": "2026-02-19",
           "daily": 50,
           "cumulative": 4689
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 6,
+          "cumulative": 4695
         }
       ],
-      "total_cumulative": 4689
+      "total_cumulative": 4695
     },
     {
       "metal": "Palladium",
@@ -378,6 +486,24 @@
           "cumulative": 87
         },
         {
+          "date": "02/03/2026",
+          "iso_date": "2026-02-03",
+          "daily": 0,
+          "cumulative": 87
+        },
+        {
+          "date": "02/04/2026",
+          "iso_date": "2026-02-04",
+          "daily": 0,
+          "cumulative": 87
+        },
+        {
+          "date": "02/05/2026",
+          "iso_date": "2026-02-05",
+          "daily": 0,
+          "cumulative": 87
+        },
+        {
           "date": "02/06/2026",
           "iso_date": "2026-02-06",
           "daily": 4,
@@ -387,6 +513,24 @@
           "date": "02/09/2026",
           "iso_date": "2026-02-09",
           "daily": 1,
+          "cumulative": 92
+        },
+        {
+          "date": "02/10/2026",
+          "iso_date": "2026-02-10",
+          "daily": 0,
+          "cumulative": 92
+        },
+        {
+          "date": "02/11/2026",
+          "iso_date": "2026-02-11",
+          "daily": 0,
+          "cumulative": 92
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
           "cumulative": 92
         },
         {
@@ -400,9 +544,27 @@
           "iso_date": "2026-02-17",
           "daily": 7,
           "cumulative": 112
+        },
+        {
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
+          "daily": 0,
+          "cumulative": 112
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 0,
+          "cumulative": 112
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 2,
+          "cumulative": 114
         }
       ],
-      "total_cumulative": 112
+      "total_cumulative": 114
     },
     {
       "metal": "Platinum",
@@ -457,10 +619,58 @@
           "iso_date": "2026-02-09",
           "daily": 20,
           "cumulative": 485
+        },
+        {
+          "date": "02/10/2026",
+          "iso_date": "2026-02-10",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/11/2026",
+          "iso_date": "2026-02-11",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/12/2026",
+          "iso_date": "2026-02-12",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/13/2026",
+          "iso_date": "2026-02-13",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/17/2026",
+          "iso_date": "2026-02-17",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/18/2026",
+          "iso_date": "2026-02-18",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/19/2026",
+          "iso_date": "2026-02-19",
+          "daily": 0,
+          "cumulative": 485
+        },
+        {
+          "date": "02/20/2026",
+          "iso_date": "2026-02-20",
+          "daily": 0,
+          "cumulative": 485
         }
       ],
       "total_cumulative": 485
     }
   ],
-  "last_updated": "2026-02-20T02:57:04.612Z"
+  "last_updated": "2026-02-21T10:55:42.523733"
 }

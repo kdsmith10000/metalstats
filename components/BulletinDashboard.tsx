@@ -141,11 +141,19 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
   const [previousDate, setPreviousDate] = useState<string | null>(null);
   const [showBulletinInfo, setShowBulletinInfo] = useState(false);
   
-  // Fetch previous day's OI data from database
+  // Fetch previous day's bulletin data from database for comparison.
+  // Passes the current bulletin's parsed_date so the API returns the
+  // snapshot from the day immediately before (e.g. Bulletin #33 when
+  // viewing Bulletin #34).
   useEffect(() => {
     const fetchPreviousData = async () => {
       try {
-        const response = await fetch('/api/bulletin/previous');
+        const params = new URLSearchParams();
+        if (data.parsed_date) {
+          params.set('currentDate', data.parsed_date);
+        }
+        const url = `/api/bulletin/previous${params.toString() ? `?${params}` : ''}`;
+        const response = await fetch(url);
         if (response.ok) {
           const result = await response.json();
           setPreviousDayData(result.previous);
@@ -156,7 +164,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
       }
     };
     fetchPreviousData();
-  }, []);
+  }, [data.parsed_date]);
   
   // Get sort config for a product, default to month ascending
   const getSortConfig = (symbol: string): SortConfig => {
@@ -1164,7 +1172,7 @@ export default function BulletinDashboard({ data, volumeSummary, deliveryData }:
                   }
                   
                   const yoyNote = gc.yoyVol > 0
-                    ? ` Volume ${gc.volume > gc.yoyVol ? 'down' : 'up'} ${Math.abs(((gc.volume - gc.yoyVol) / gc.yoyVol) * 100).toFixed(0)}% YoY.`
+                    ? ` Volume ${gc.volume >= gc.yoyVol ? 'up' : 'down'} ${Math.abs(((gc.volume - gc.yoyVol) / gc.yoyVol) * 100).toFixed(0)}% YoY.`
                     : '';
                   
                   takeaways.push({
