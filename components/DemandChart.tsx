@@ -47,9 +47,15 @@ interface DeliveryDataProp {
   last_updated: string;
 }
 
-interface DemandChartProps {
+interface DeliveryHistoryForChart {
+  daily: Record<string, Array<{ date: string; dailyIssued: number; dailyStopped: number; monthToDate: number; settlement: number }>>;
+  monthly: Record<string, Array<{ year: number; month: number; monthName: string; total: number }>>;
+}
+
+export interface DemandChartProps {
   metal?: MetalType;
   deliveryData?: DeliveryDataProp | null;
+  deliveryHistoryData?: DeliveryHistoryForChart | null;
 }
 
 // ============================================
@@ -430,7 +436,7 @@ const MonthlyTooltip = (props: any) => {
 // MAIN COMPONENT
 // ============================================
 
-export default function DemandChart({ metal = 'gold', deliveryData }: DemandChartProps) {
+export default function DemandChart({ metal = 'gold', deliveryData, deliveryHistoryData }: DemandChartProps) {
   const { theme } = useTheme();
   const [selectedMetal, setSelectedMetal] = useState<MetalType>(metal);
   const [timeRange, setTimeRange] = useState<TimeRange>('monthly');
@@ -501,40 +507,48 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
         }
       }
 
-      // Step 2: Fetch from API and merge (API data takes priority)
+      // Step 2: Use server-provided history (SSR prop) or fall back to client fetch
       try {
-        const fetches = metals.flatMap(m => [
-          fetch(`/api/delivery/history?metal=${metalDbNames[m]}&days=60&aggregate=daily`).then(r => r.ok ? r.json() : null).catch(() => null),
-          fetch(`/api/delivery/history?metal=${metalDbNames[m]}&days=730&aggregate=monthly`).then(r => r.ok ? r.json() : null).catch(() => null),
-        ]);
+        let dailyByMetal: Record<string, Array<{ date: string; dailyIssued: number }>> = {};
+        let monthlyByMetal: Record<string, Array<{ year: number; monthName: string; total: number }>> = {};
 
-        const results = await Promise.all(fetches);
-        if (cancelled) return;
+        if (deliveryHistoryData) {
+          dailyByMetal = deliveryHistoryData.daily;
+          monthlyByMetal = deliveryHistoryData.monthly;
+        } else {
+          const fetches = metals.flatMap(m => [
+            fetch(`/api/delivery/history?metal=${metalDbNames[m]}&days=60&aggregate=daily`).then(r => r.ok ? r.json() : null).catch(() => null),
+            fetch(`/api/delivery/history?metal=${metalDbNames[m]}&days=730&aggregate=monthly`).then(r => r.ok ? r.json() : null).catch(() => null),
+          ]);
+          const results = await Promise.all(fetches);
+          if (cancelled) return;
+          for (let i = 0; i < metals.length; i++) {
+            const dbName = metalDbNames[metals[i]];
+            if (results[i * 2]?.history) dailyByMetal[dbName] = results[i * 2].history;
+            if (results[i * 2 + 1]?.history) monthlyByMetal[dbName] = results[i * 2 + 1].history;
+          }
+        }
 
-        for (let i = 0; i < metals.length; i++) {
-          const m = metals[i];
-          const dailyResult = results[i * 2];
-          const monthlyResult = results[i * 2 + 1];
+        for (const m of metals) {
+          const dbName = metalDbNames[m];
+          const dailyHistory = dailyByMetal[dbName];
+          const monthlyHistory = monthlyByMetal[dbName];
 
-          // Merge API daily data
-          if (dailyResult?.history?.length > 0) {
-            for (const h of dailyResult.history) {
+          if (dailyHistory?.length > 0) {
+            for (const h of dailyHistory) {
               const dateKey = normalizeDate(String(h.date));
               const dayLabel = formatDateLabel(dateKey);
               const existingIdx = mergedDaily[m].findIndex(d => d.dateKey === dateKey);
               if (existingIdx >= 0) {
-                // API overrides baseline for matching dates
                 mergedDaily[m][existingIdx].contracts = h.dailyIssued;
               } else {
-                // New date from API — add it
                 mergedDaily[m].push({ day: dayLabel, dateKey, contracts: h.dailyIssued });
               }
             }
           }
 
-          // Merge API monthly data
-          if (monthlyResult?.history?.length > 0) {
-            for (const h of monthlyResult.history) {
+          if (monthlyHistory?.length > 0) {
+            for (const h of monthlyHistory) {
               const monthName = h.monthName;
               const monthEntry = mergedMonthly[m].find(d => d.month === monthName);
               if (monthEntry) {
@@ -544,7 +558,6 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
                     monthEntry.y2026 = h.total;
                   }
                 } else if (h.year === 2025) {
-                  // API 2025 data overrides baseline if available
                   monthEntry.y2025 = h.total;
                 }
               }
@@ -552,7 +565,7 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
           }
         }
       } catch (err) {
-        console.warn('Failed to fetch delivery history from API:', err);
+        console.warn('Failed to merge delivery history:', err);
       }
 
       if (cancelled) return;
@@ -574,7 +587,7 @@ export default function DemandChart({ metal = 'gold', deliveryData }: DemandChar
 
     fetchAndMerge();
     return () => { cancelled = true; };
-  }, [deliveryData]);
+  }, [deliveryData, deliveryHistoryData]);
 
   // ============================================
   // COMPUTED VALUES
