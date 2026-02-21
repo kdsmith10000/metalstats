@@ -2192,7 +2192,7 @@ export async function upsertForecastPriceTracking(
 
 // Get forecast history for accuracy display
 export async function getForecastAccuracySummary(days: number = 90): Promise<{
-  metals: Record<string, { total: number; correct: number; incorrect: number; pending: number; hit_rate: number | null }>;
+  metals: Record<string, { total_forecasts: number; correct: number; incorrect: number; pending: number; hit_rate: number | null }>;
   overall: { total: number; correct: number; hit_rate: number | null };
   history: ForecastAccuracy[];
 }> {
@@ -2225,15 +2225,15 @@ export async function getForecastAccuracySummary(days: number = 90): Promise<{
     }
 
     // Aggregate by metal
-    const metals: Record<string, { total: number; correct: number; incorrect: number; pending: number; hit_rate: number | null }> = {};
+    const metals: Record<string, { total_forecasts: number; correct: number; incorrect: number; pending: number; hit_rate: number | null }> = {};
     let totalCorrect = 0;
     let totalEvaluated = 0;
 
     for (const row of accuracyRows as ForecastAccuracy[]) {
       if (!metals[row.metal]) {
-        metals[row.metal] = { total: 0, correct: 0, incorrect: 0, pending: pendingByMetal[row.metal] || 0, hit_rate: null };
+        metals[row.metal] = { total_forecasts: 0, correct: 0, incorrect: 0, pending: pendingByMetal[row.metal] || 0, hit_rate: null };
       }
-      metals[row.metal].total += 1;
+      metals[row.metal].total_forecasts += 1;
       if (row.correct) {
         metals[row.metal].correct += 1;
         totalCorrect += 1;

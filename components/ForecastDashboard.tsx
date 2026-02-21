@@ -759,7 +759,7 @@ export default function ForecastDashboard() {
                 (accuracyData.overall.hit_rate ?? 0) >= 60 ? 'text-emerald-500' :
                 (accuracyData.overall.hit_rate ?? 0) >= 45 ? 'text-amber-500' : 'text-red-500'
               }`}>
-                {accuracyData.overall.hit_rate !== null ? `${accuracyData.overall.hit_rate}%` : '—'}
+                {accuracyData.overall.hit_rate !== null ? `${Math.round(accuracyData.overall.hit_rate)}%` : '—'}
               </p>
               <p className="text-[10px] text-slate-400 mt-0.5">
                 {accuracyData.overall.correct}/{accuracyData.overall.total} correct
@@ -778,11 +778,10 @@ export default function ForecastDashboard() {
                     (acc.hit_rate ?? 0) >= 60 ? 'text-emerald-500' :
                     (acc.hit_rate ?? 0) >= 45 ? 'text-amber-500' : 'text-red-500'
                   }`}>
-                    {acc.hit_rate !== null ? `${acc.hit_rate}%` : '—'}
+                    {acc.hit_rate !== null ? `${Math.round(acc.hit_rate)}%` : '—'}
                   </p>
                   <p className="text-[10px] text-slate-400 mt-0.5">
-                    {acc.correct}/{acc.total_forecasts}
-                    {acc.pending > 0 && ` (+${acc.pending} pending)`}
+                    {acc.correct}/{acc.total_forecasts} correct
                   </p>
                 </div>
               );
