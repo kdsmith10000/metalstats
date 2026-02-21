@@ -1,8 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { NextResponse, NextRequest } from 'next/server';
 
-// ISR: history data changes once/day, cache for 5 minutes
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 
 interface HistoryRow {
   date: string;

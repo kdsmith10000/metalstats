@@ -1602,6 +1602,77 @@ export async function getPreviousPaperPhysical(): Promise<PaperPhysicalSnapshot[
   }
 }
 
+// Batch-fetch delivery history for the DemandChart (daily + monthly for all metals).
+// Returns a shape that can be serialised into the RSC payload so the client never
+// needs to call /api/delivery/history at all.
+export interface DeliveryHistoryForChart {
+  daily: Record<string, Array<{ date: string; dailyIssued: number; dailyStopped: number; monthToDate: number; settlement: number }>>;
+  monthly: Record<string, Array<{ year: number; month: number; monthName: string; total: number }>>;
+}
+
+export async function getDeliveryHistoryForChart(): Promise<DeliveryHistoryForChart | null> {
+  if (!isDatabaseAvailable()) return null;
+  try {
+    const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const [dailyRows, monthlyRows] = await Promise.all([
+      sql`
+        SELECT metal,
+               report_date,
+               daily_issued,
+               daily_stopped,
+               month_to_date,
+               settlement_price
+        FROM delivery_snapshots
+        WHERE report_date >= CURRENT_DATE - 60
+        ORDER BY report_date ASC
+      `,
+      sql`
+        SELECT metal,
+               EXTRACT(YEAR FROM report_date)::int  AS year,
+               EXTRACT(MONTH FROM report_date)::int AS month,
+               MAX(month_to_date)                   AS month_total
+        FROM delivery_snapshots
+        WHERE report_date >= CURRENT_DATE - 730
+        GROUP BY metal, EXTRACT(YEAR FROM report_date), EXTRACT(MONTH FROM report_date)
+        ORDER BY year ASC, month ASC
+      `,
+    ]);
+
+    const daily: DeliveryHistoryForChart['daily'] = {};
+    for (const row of dailyRows as Array<{ metal: string; report_date: string | Date; daily_issued: number | string; daily_stopped: number | string; month_to_date: number | string; settlement_price: number | string }>) {
+      const metal = row.metal;
+      if (!daily[metal]) daily[metal] = [];
+      const rd = row.report_date;
+      const date = rd instanceof Date ? rd.toISOString().split('T')[0] : String(rd).split('T')[0];
+      daily[metal].push({
+        date,
+        dailyIssued: parseInt(String(row.daily_issued)) || 0,
+        dailyStopped: parseInt(String(row.daily_stopped)) || 0,
+        monthToDate: parseInt(String(row.month_to_date)) || 0,
+        settlement: parseFloat(String(row.settlement_price)) || 0,
+      });
+    }
+
+    const monthly: DeliveryHistoryForChart['monthly'] = {};
+    for (const row of monthlyRows as Array<{ metal: string; year: number; month: number; month_total: number | string }>) {
+      const metal = row.metal;
+      if (!monthly[metal]) monthly[metal] = [];
+      monthly[metal].push({
+        year: Number(row.year),
+        month: Number(row.month),
+        monthName: monthNames[Number(row.month)],
+        total: parseInt(String(row.month_total)) || 0,
+      });
+    }
+
+    return { daily, monthly };
+  } catch (error) {
+    console.error('Error fetching delivery history for chart:', error);
+    return null;
+  }
+}
+
 // Get delivery history for all metals (for charts)
 export async function getAllDeliveryHistory(days: number = 30): Promise<DeliverySnapshot[]> {
   try {
@@ -2132,7 +2203,7 @@ export async function getForecastAccuracySummary(days: number = 90): Promise<{
              price_at_forecast, eval_date, eval_horizon_days,
              price_at_eval, price_change, price_change_pct, correct, created_at
       FROM forecast_accuracy
-      WHERE forecast_date >= CURRENT_DATE - ${days}
+      WHERE forecast_date >= CURRENT_DATE - ${days}::integer
       ORDER BY forecast_date DESC, metal
     `;
 
@@ -2142,7 +2213,7 @@ export async function getForecastAccuracySummary(days: number = 90): Promise<{
       FROM forecast_snapshots fs
       LEFT JOIN forecast_accuracy fa
         ON fs.metal = fa.metal AND fs.forecast_date = fa.forecast_date AND fa.eval_horizon_days = 5
-      WHERE fs.forecast_date >= CURRENT_DATE - ${days}
+      WHERE fs.forecast_date >= CURRENT_DATE - ${days}::integer
         AND fs.direction != 'NEUTRAL'
         AND fa.id IS NULL
       GROUP BY fs.metal
@@ -2202,7 +2273,7 @@ export async function getForecastPriceTracking(metal: string, days: number = 30)
              direction_at_forecast, is_tracking, created_at
       FROM forecast_price_tracking
       WHERE metal = ${metal}
-        AND forecast_date >= CURRENT_DATE - ${days}
+        AND forecast_date >= CURRENT_DATE - ${days}::integer
       ORDER BY forecast_date DESC, tracking_date DESC
     `;
     return result as ForecastPriceTracking[];
@@ -2223,7 +2294,7 @@ export async function getForecastHistory(days: number = 90): Promise<ForecastSna
              forecast_20d_low, forecast_20d_mid, forecast_20d_high,
              key_drivers, created_at
       FROM forecast_snapshots
-      WHERE forecast_date >= CURRENT_DATE - ${days}
+      WHERE forecast_date >= CURRENT_DATE - ${days}::integer
       ORDER BY forecast_date DESC, metal
     `;
     return result as ForecastSnapshot[];

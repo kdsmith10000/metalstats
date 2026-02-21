@@ -1,8 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { NextResponse, NextRequest } from 'next/server';
 
-// ISR: delivery data changes once/day, cache for 5 minutes
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 
 interface DeliveryRow {
   metal: string;
@@ -107,6 +106,8 @@ export async function GET(request: NextRequest) {
         aggregate: 'monthly',
         days,
         history: monthly,
+      }, {
+        headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
       });
     } else {
       // Daily: return raw daily delivery data
@@ -138,6 +139,8 @@ export async function GET(request: NextRequest) {
         aggregate: 'daily',
         days,
         history,
+      }, {
+        headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
       });
     }
   } catch (error: unknown) {
